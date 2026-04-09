@@ -1,0 +1,17 @@
+{
+  "name": "nexus-lab",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Claude Codeエコシステム向けツール・テンプレート集",
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace=packages/create-mcp-server",
+    "test": "npm run test --workspace=packages/create-mcp-server",
+    "dev": "npm run dev --workspace=packages/create-mcp-server"
+  },
+  "keywords": ["claude-code", "mcp", "agent", "template"],
+  "license": "MIT"
+}
