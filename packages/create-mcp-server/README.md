@@ -1,9 +1,9 @@
-# create-mcp-server
+# @nexus-lab/create-mcp-server
 
 Scaffold a new [Model Context Protocol](https://modelcontextprotocol.io/) server in seconds.
 
 ```bash
-npm create mcp-server my-server
+npx @nexus-lab/create-mcp-server my-server
 ```
 
 ## Features
@@ -16,44 +16,44 @@ npm create mcp-server my-server
 
 ## Templates
 
-### `minimal`
+### `minimal` (default)
 The simplest possible MCP server. One tool, stdio transport.
 
 ```bash
-npm create mcp-server my-server -- --template minimal
+npx @nexus-lab/create-mcp-server my-server --template minimal
 ```
 
 ### `full`
 Tools, resources, prompts, and testing all wired up.
 
 ```bash
-npm create mcp-server my-server -- --template full
+npx @nexus-lab/create-mcp-server my-server --template full
 ```
 
 ### `http`
 Streamable HTTP transport with Express. Ready for remote deployment.
 
 ```bash
-npm create mcp-server my-server -- --template http
+npx @nexus-lab/create-mcp-server my-server --template http
 ```
 
 ## Usage
 
 ```bash
 # Interactive mode
-npm create mcp-server
+npx @nexus-lab/create-mcp-server
 
 # With project name
-npm create mcp-server my-server
+npx @nexus-lab/create-mcp-server my-server
 
 # With template
-npm create mcp-server my-server -- --template full
+npx @nexus-lab/create-mcp-server my-server --template full
 
 # Skip npm install
-npm create mcp-server my-server -- --no-install
+npx @nexus-lab/create-mcp-server my-server --no-install
 
 # Skip git init
-npm create mcp-server my-server -- --no-git
+npx @nexus-lab/create-mcp-server my-server --no-git
 ```
 
 ## What you get
@@ -102,4 +102,4 @@ To use with Claude Code, add to your MCP config:
 
 ## License
 
-MIT — [Nexus Lab](https://github.com/nexus-lab)
+MIT — [Nexus Lab](https://github.com/jk0236158-design/nexus-lab)
