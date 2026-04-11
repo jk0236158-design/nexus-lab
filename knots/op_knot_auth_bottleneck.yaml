@@ -1,0 +1,30 @@
+knot_id: op_knot_auth_bottleneck
+knot_type: operational
+description: >
+  認証・アカウント系の作業はAIが単独で完了できず、必ずオーナーの手を借りる必要がある。
+  2FA、ブラウザ認証、アカウント作成がボトルネックになる。
+
+trigger:
+  action_type: authentication
+  requires_browser: true
+
+effect:
+  blocked_time_minutes: +10
+  owner_interrupt_required: true
+  retry_count: ">= 2"
+
+compensation:
+  prepare_auth_requirements_in_advance: true  # セッション前にオーナーに伝える
+  use_token_based_auth: preferred              # CLIトークンを先に準備
+  batch_auth_tasks: true                       # 認証系作業をまとめて依頼
+
+hardness: L2
+activation: high
+observed_count: 3
+first_observed: "2026-04-10"
+last_observed: "2026-04-11"
+sessions_observed: ["2026-04-10", "2026-04-11"]
+notes:
+  - "npm 2FA (セキュリティキー方式) × CLIが3回失敗"
+  - "GitHub nexus-lab-zen へのpush権限で2回ブロック"
+  - "Zenn連携でコラボレーター追加が必要だった"

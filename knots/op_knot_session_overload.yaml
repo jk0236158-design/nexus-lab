@@ -1,0 +1,26 @@
+knot_id: op_knot_session_overload
+knot_type: quality
+description: >
+  1セッションで成果物を詰め込みすぎると、後半の品質チェックが甘くなる。
+  v0.2.0でdatabaseテンプレートがnpmパッケージに同梱されたまま公開された件など。
+
+trigger:
+  output_count: ">= 5"
+  session_duration: long
+
+effect:
+  review_thoroughness: -0.3
+  unintended_inclusion_rate: +0.2
+  documentation_quality: -0.2
+
+compensation:
+  max_outputs_per_session: 5
+  mandatory_qa_review_after: 3  # 3成果物以降はQAレビュー必須
+  end_of_session_audit: true
+
+hardness: L1
+activation: high
+observed_count: 1
+first_observed: "2026-04-11"
+last_observed: "2026-04-11"
+sessions_observed: ["2026-04-11"]

@@ -1,0 +1,27 @@
+knot_id: op_knot_name_collision
+knot_type: process
+description: >
+  市場調査で「実質空き」と判断した名前が、実際にはnpmで取られていた。
+  調査時点の情報と公開時点の実態にズレがある。
+
+trigger:
+  action: npm_publish
+  name_type: unscoped
+  market_research_result: "available"
+
+effect:
+  publish_failure_rate: +1.0
+  time_loss_minutes: +15
+  forced_rename: true
+
+compensation:
+  pre_publish_name_check: mandatory  # npm view で直前に確認
+  prefer_scoped_names: true          # 最初から@スコープ付きを選ぶ
+  reserve_name_early: true           # 調査直後にplaceholderで名前を確保
+
+hardness: L1
+activation: medium
+observed_count: 1
+first_observed: "2026-04-10"
+last_observed: "2026-04-10"
+sessions_observed: ["2026-04-10"]
