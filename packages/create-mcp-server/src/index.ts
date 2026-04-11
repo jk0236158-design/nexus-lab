@@ -10,7 +10,7 @@ const program = new Command();
 program
   .name("create-mcp-server")
   .description("Scaffold a new MCP server project with TypeScript and secure defaults")
-  .version("0.1.1")
+  .version("0.2.0")
   .argument("[project-name]", "Name of the project to create")
   .option("-t, --template <template>", "Template to use (minimal, full, http)", "minimal")
   .option("--no-install", "Skip npm install")

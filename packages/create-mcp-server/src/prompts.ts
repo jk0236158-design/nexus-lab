@@ -4,7 +4,7 @@ import chalk from "chalk";
 export interface ProjectConfig {
   projectName: string;
   description: string;
-  template: "minimal" | "full" | "http";
+  template: "minimal" | "full" | "http" | "database";
   install: boolean;
   git: boolean;
 }
@@ -21,6 +21,10 @@ const TEMPLATES = [
   {
     title: `${chalk.bold("http")} ${chalk.dim("— Streamable HTTP transport with Express")}`,
     value: "http",
+  },
+  {
+    title: `${chalk.bold.yellow("database")} ${chalk.dim("— SQLite + Drizzle ORM + CRUD")} ${chalk.yellow("★ Premium")}`,
+    value: "database",
   },
 ] as const;
 

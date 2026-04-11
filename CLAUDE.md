@@ -32,14 +32,16 @@ Owner (jk023) — 最終意思決定者・スポンサー
 ## Product Roadmap
 
 ### Phase 1: Foundation (Month 1)
-- [ ] 会社構造・開発環境セットアップ
-- [ ] 市場調査・競合分析
-- [ ] MVP仕様策定
-- [ ] コアライブラリ開発
-- [ ] MCPサーバーテンプレート v0.1
+- [x] 会社構造・開発環境セットアップ
+- [x] 市場調査・競合分析
+- [x] MVP仕様策定
+- [x] コアライブラリ開発
+- [x] MCPサーバーテンプレート v0.1 → v0.1.1公開済み
+- [x] Zenn記事公開（2本）
+- [ ] プレミアムテンプレート販売開始（database）
 
 ### Phase 2: Beta (Month 2)
-- [ ] テンプレート拡充
+- [ ] テンプレート拡充（auth, api-proxy）
 - [ ] ドキュメントサイト構築
 - [ ] ベータ公開・フィードバック収集
 
@@ -61,7 +63,7 @@ Owner (jk023) — 最終意思決定者・スポンサー
 ### create-mcp-server (v0.1 — Phase 1)
 MCPサーバーをワンコマンドでスキャフォールディングするCLIツール。
 
-**使い方:** `npm create mcp-server my-server`
+**使い方:** `npx @nexus-lab/create-mcp-server my-server`
 
 **テンプレート:**
 - `minimal` — 最小構成。1ツール、stdioトランスポート

@@ -14,7 +14,25 @@ function getTemplatesDir(): string {
   return fs.existsSync(devPath) ? devPath : srcPath;
 }
 
+const PREMIUM_TEMPLATES = new Set(["database"]);
+
 export async function generateProject(config: ProjectConfig): Promise<void> {
+  // Premium templates are not bundled — redirect to purchase page
+  if (PREMIUM_TEMPLATES.has(config.template)) {
+    console.log();
+    console.log(chalk.yellow.bold("  ★ Premium Template"));
+    console.log();
+    console.log(`  The ${chalk.bold(config.template)} template is a premium template.`);
+    console.log(`  It includes production-ready database integration with:`);
+    console.log(`  • SQLite + Drizzle ORM`);
+    console.log(`  • Full CRUD tools (create, list, get, update, delete)`);
+    console.log(`  • Test suite + migration support`);
+    console.log();
+    console.log(`  ${chalk.cyan("Get it here:")} https://nexus-lab.gumroad.com/l/mcp-database`);
+    console.log();
+    return;
+  }
+
   const targetDir = path.resolve(process.cwd(), config.projectName);
 
   if (await fs.pathExists(targetDir)) {
