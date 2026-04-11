@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "zen-memory": {
+      "command": "node",
+      "args": ["packages/zen-memory-server/dist/index.js"],
+      "env": {
+        "MEMORY_DB_PATH": "C:\\Users\\jk023\\.zen\\memory.db"
+      }
+    }
+  }
+}
