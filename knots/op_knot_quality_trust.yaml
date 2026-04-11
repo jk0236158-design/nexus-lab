@@ -1,0 +1,34 @@
+knot_id: op_knot_quality_trust
+knot_type: quality
+description: >
+  AI製プロダクトへの品質不信は最大のリスク。
+  「AIが作ったから微妙」と思われた時点で負け。
+  品質検証をスキップして出荷すると、信頼を失い、ユーザーの不安を裏付ける結果になる。
+
+trigger:
+  output_without_qa_review: true
+  template_not_tested_e2e: true
+  delegation_to_qa: false
+
+effect:
+  user_trust: -0.5
+  repeat_usage_rate: -0.3
+  negative_perception_of_ai: +0.4
+
+compensation:
+  qa_engineer_required: true           # 全成果物にQAレビュー必須
+  e2e_test_before_publish: true        # npx生成→ビルド→実行を出荷前に確認
+  security_audit_on_templates: true    # 依存関係・入力検証をチェック
+  max_outputs_without_review: 0        # レビューなし出荷は0
+
+hardness: L2
+activation: high
+observed_count: 2
+first_observed: "2026-04-11"
+last_observed: "2026-04-11"
+sessions_observed: ["2026-04-11"]
+notes:
+  - "v0.2.0でdatabaseテンプレートが意図せずnpmに同梱された"
+  - "fullテンプレートのcalculate関数がFunction constructorを使用 — セキュリティリスク"
+  - "httpテンプレートのMCP SDK最新仕様との整合性を未確認のまま出荷"
+  - "zen-memory-serverの実際のMCP通信テスト未実施"
