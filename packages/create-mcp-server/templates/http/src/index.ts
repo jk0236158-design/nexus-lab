@@ -47,11 +47,12 @@ app.post("/mcp", async (req, res) => {
     }
 
     // No valid session — create a new one (expects an initialize request)
-    const newSessionId = randomUUID();
     const transport = new StreamableHTTPServerTransport({
-      sessionId: newSessionId,
+      sessionIdGenerator: () => randomUUID(),
     });
 
+    // Register transport after creation (sessionId is generated internally)
+    const newSessionId = transport.sessionId!;
     transports.set(newSessionId, transport);
 
     // Clean up on close

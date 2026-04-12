@@ -20,7 +20,7 @@ export function registerResources(server: McpServer): void {
   server.resource(
     "app-config",
     "config://app",
-    "Application configuration data",
+    { description: "Application configuration data" },
     async () => ({
       contents: [
         {

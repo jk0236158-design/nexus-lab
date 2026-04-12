@@ -7,6 +7,7 @@ export function greet(name: string): string {
 }
 
 // Safe expression evaluator — exported for direct testing
+// Uses a recursive-descent parser instead of Function constructor.
 export function calculate(expression: string): string {
   // Allow only digits, operators, parentheses, dots, and spaces
   const sanitized = expression.replace(/\s/g, "");
@@ -16,8 +17,63 @@ export function calculate(expression: string): string {
     );
   }
 
-  // Use Function constructor for safe-ish evaluation of arithmetic
-  const result = new Function(`"use strict"; return (${sanitized});`)();
+  let pos = 0;
+
+  function parseExpression(): number {
+    let left = parseTerm();
+    while (pos < sanitized.length && (sanitized[pos] === "+" || sanitized[pos] === "-")) {
+      const op = sanitized[pos++];
+      const right = parseTerm();
+      left = op === "+" ? left + right : left - right;
+    }
+    return left;
+  }
+
+  function parseTerm(): number {
+    let left = parseFactor();
+    while (pos < sanitized.length && (sanitized[pos] === "*" || sanitized[pos] === "/")) {
+      const op = sanitized[pos++];
+      const right = parseFactor();
+      left = op === "*" ? left * right : left / right;
+    }
+    return left;
+  }
+
+  function parseFactor(): number {
+    // Unary plus/minus
+    if (sanitized[pos] === "+" || sanitized[pos] === "-") {
+      const op = sanitized[pos++];
+      const value = parseFactor();
+      return op === "-" ? -value : value;
+    }
+
+    // Parenthesized sub-expression
+    if (sanitized[pos] === "(") {
+      pos++; // skip '('
+      const value = parseExpression();
+      if (sanitized[pos] !== ")") {
+        throw new Error("Invalid expression. Only numbers and +, -, *, /, (, ) are allowed.");
+      }
+      pos++; // skip ')'
+      return value;
+    }
+
+    // Number literal (integer or decimal)
+    const start = pos;
+    while (pos < sanitized.length && (sanitized[pos] >= "0" && sanitized[pos] <= "9" || sanitized[pos] === ".")) {
+      pos++;
+    }
+    if (pos === start) {
+      throw new Error("Invalid expression. Only numbers and +, -, *, /, (, ) are allowed.");
+    }
+    return parseFloat(sanitized.slice(start, pos));
+  }
+
+  const result = parseExpression();
+
+  if (pos !== sanitized.length) {
+    throw new Error("Invalid expression. Only numbers and +, -, *, /, (, ) are allowed.");
+  }
 
   if (typeof result !== "number" || !Number.isFinite(result)) {
     throw new Error("Expression did not evaluate to a finite number.");

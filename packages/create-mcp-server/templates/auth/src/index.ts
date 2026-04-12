@@ -37,7 +37,7 @@ app.all("/mcp", authMiddleware, rateLimitMiddleware(), async (req, res) => {
     setCurrentUser(req.user);
 
     const transport = new StreamableHTTPServerTransport({
-      sessionId: randomUUID(),
+      sessionIdGenerator: () => randomUUID(),
     });
 
     // Connect the server to the transport

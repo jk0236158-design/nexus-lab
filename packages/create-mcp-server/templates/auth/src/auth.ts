@@ -1,5 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
+import type { StringValue } from "ms";
+import { timingSafeEqual } from "node:crypto";
 
 /**
  * Authenticated user context attached to the request.
@@ -52,7 +54,18 @@ function getValidApiKeys(): Set<string> {
 function validateApiKey(key: string): boolean {
   const validKeys = getValidApiKeys();
   if (validKeys.size === 0) return false;
-  return validKeys.has(key);
+
+  const inputBuf = Buffer.from(key);
+  for (const validKey of validKeys) {
+    const validBuf = Buffer.from(validKey);
+    if (
+      inputBuf.length === validBuf.length &&
+      timingSafeEqual(inputBuf, validBuf)
+    ) {
+      return true;
+    }
+  }
+  return false;
 }
 
 /**
@@ -143,7 +156,7 @@ export function authMiddleware(
 export function generateToken(
   userId: string,
   role: "admin" | "user" = "user",
-  expiresIn: string = "24h",
+  expiresIn: StringValue | number = "24h",
 ): string {
   const secret = getJwtSecret();
   return jwt.sign({ sub: userId, role }, secret, { expiresIn });
