@@ -78,6 +78,28 @@ Owner (jk023) — 最終意思決定者・スポンサー
 - [ ] 収益化モデル実装
 - [ ] コミュニティ形成
 
+## 兄弟プロジェクト連携: Kai (Weekly Signal Desk)
+
+オーナーは別プロジェクト **Kai Company Lab** (codex) も運営している。
+- AI: **Kai** (OpenAI Codex)
+- 事業: B2B向け競合・市場シグナル定期レポート
+- 場所: `C:\Users\jk023\Desktop\codex\`
+
+### 共有連絡スペース
+`C:\Users\jk023\.shared-ops\` にZen・Kai・オーナーの連絡スペースがある。
+
+**セッション開始時:**
+1. `~/.shared-ops/board/` にKaiやオーナーからのメッセージがないか確認
+2. `~/.shared-ops/owner-decisions/` に新しい経営判断がないか確認
+
+**セッション終了時:**
+1. `~/.shared-ops/status/zen_status.md` を更新
+2. Kaiに伝えたいことがあれば `~/.shared-ops/board/` にメッセージを置く
+
+### 注意
+- Kaiのプロジェクト (codex) のファイルは**読み取り専用** — 書き込み禁止
+- 連携は共有スペース (`~/.shared-ops/`) 経由で行う
+
 ## Tech Stack
 - Language: TypeScript
 - Runtime: Node.js
