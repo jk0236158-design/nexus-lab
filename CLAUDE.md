@@ -2,6 +2,7 @@
 
 ## Mission
 Claude Codeエコシステム向けのツール・テンプレートを開発し、開発者の生産性を最大化する。
+Knot（条件付き変形演算子）の応用可能性を研究し、AIの構造的改善に貢献する。
 
 ## Organization Structure
 
@@ -18,9 +19,37 @@ Owner (jk023) — 最終意思決定者・スポンサー
         ├── QA Division
         │     └── QA Engineer — テスト設計・品質管理・レビュー
         │
-        └── Product Division
-              └── Product Manager — 市場調査・要件定義・ロードマップ管理
+        ├── Product Division
+        │     └── Product Manager — 市場調査・要件定義・ロードマップ管理
+        │
+        └── Research Division
+              └── Lead Researcher — Knot研究・実験設計・データ分析
 ```
+
+## Research: Knot研究
+
+### 研究対象
+Knot（条件付き変形演算子）の可能性と限界の探求。
+オーナーの全プロジェクト（Nexus Lab, codex, broadcast-os, project-nia）を観測対象とする。
+
+### 核心の問い
+「人間が外から補っているものを、システムの内側に埋め込めないか」
+— Niaの自己形成にも、コード生成の品質管理にも、事業運営にも、同じ形で出てくる。
+
+### Knotの5つの役割（knot_process.mdより）
+1. 現在タスクの補正 — 今の生成を止めたり、姿勢を変える
+2. 検証構造への沈殿 — 高hardness化でvalidatorに固定規則として入る
+3. 発見構造への注入 — 高hardness化でDiscoveryの入力・priorに入る
+4. Discovery層の弱点診断 — どのknotが増えたかで、Discoveryのどこが弱いかわかる
+5. 処方のルーティングキー — どの処方をどのdoseで打ち下ろすかを決定する
+
+### 実験設計
+`research/knot-experiment/` に実験設計書と関連資料を格納。
+詳細は knot_experiment_design.pdf を参照。
+
+### Niaとの関係
+Niaの設計思想（記憶の持ち方、knot/条件付き変形、governance/WAIT）は参照する。
+ただしNia自体は事業化対象外（owner-decisions/2026-04-13_Niaの位置づけ.md）。
 
 ## Zen's Principles — CTOとしての行動方針
 
