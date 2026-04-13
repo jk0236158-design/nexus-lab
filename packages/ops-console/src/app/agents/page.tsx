@@ -110,14 +110,14 @@ function SessionHistoryTable({ metrics }: { metrics: SessionMetrics[] }) {
               <td className="py-2.5 pr-4 text-right">
                 <span
                   className={
-                    m.qualityScore >= 0.8
+                    m.qualityScore >= 4
                       ? 'text-emerald-400'
-                      : m.qualityScore >= 0.5
+                      : m.qualityScore >= 3
                         ? 'text-amber-400'
                         : 'text-red-400'
                   }
                 >
-                  {Math.round(m.qualityScore * 100)}%
+                  {m.qualityScore}/5
                 </span>
               </td>
               <td className="py-2.5 pr-4 text-right text-zinc-300">
@@ -143,6 +143,8 @@ function SessionHistoryTable({ metrics }: { metrics: SessionMetrics[] }) {
     </div>
   );
 }
+
+export const dynamic = 'force-dynamic';
 
 export default function AgentsPage() {
   const agentStatuses = getAgentStatuses();

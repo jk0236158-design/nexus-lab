@@ -2,6 +2,8 @@ import { getZenKnots } from '@/lib/data/zen-reader';
 import { getKaiKnots } from '@/lib/data/kai-reader';
 import { KnotList } from '@/components/knots/knot-list';
 
+export const dynamic = 'force-dynamic';
+
 export default function KnotsPage() {
   const zenKnots = getZenKnots();
   const kaiKnots = getKaiKnots();

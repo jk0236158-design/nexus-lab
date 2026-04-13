@@ -33,6 +33,7 @@ export interface PipelineLead {
   whyNowScore: number;
   whyNowSummary: string;
   createdAt: string;
+  sendPacketStatus?: string;
 }
 
 // セッションメトリクス

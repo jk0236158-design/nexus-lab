@@ -12,8 +12,9 @@ const COLUMNS: Column[] = [
   { key: 'new', label: 'New', statuses: ['new'] },
   { key: 'signal', label: 'Signal', statuses: ['signal_detected'] },
   { key: 'draft', label: 'Draft', statuses: ['ready_for_draft', 'draft_in_progress'] },
-  { key: 'sent', label: 'Sent', statuses: ['sent', 'ready_for_human_send'] },
+  { key: 'ready', label: 'Ready to Send', statuses: [] },
   { key: 'hold', label: 'Hold', statuses: ['hold'], accent: 'red' },
+  { key: 'sent', label: 'Sent', statuses: ['sent'] },
   { key: 'reply', label: 'Reply', statuses: ['reply_received'] },
 ];
 
@@ -23,9 +24,16 @@ function groupLeads(leads: PipelineLead[]): Map<string, PipelineLead[]> {
     map.set(col.key, []);
   }
   for (const lead of leads) {
-    const col = COLUMNS.find((c) => c.statuses.includes(lead.status));
-    const key = col ? col.key : 'new';
-    map.get(key)!.push(lead);
+    // send_packets.jsonのステータスでオーバーライド
+    if (lead.sendPacketStatus === 'ready_for_human_send') {
+      map.get('ready')!.push(lead);
+    } else if (lead.sendPacketStatus === 'sent') {
+      map.get('sent')!.push(lead);
+    } else {
+      const col = COLUMNS.find((c) => c.statuses.includes(lead.status));
+      const key = col ? col.key : 'new';
+      map.get(key)!.push(lead);
+    }
   }
   return map;
 }

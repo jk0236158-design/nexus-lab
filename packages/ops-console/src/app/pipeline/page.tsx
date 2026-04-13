@@ -1,6 +1,8 @@
 import { getKaiLeads } from '@/lib/data/kai-reader';
 import { KanbanBoard } from '@/components/pipeline/kanban-board';
 
+export const dynamic = 'force-dynamic';
+
 export default function PipelinePage() {
   const leads = getKaiLeads();
 

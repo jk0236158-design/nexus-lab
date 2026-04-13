@@ -26,6 +26,8 @@ export function getKaiLeads(): PipelineLead[] {
 
     if (!Array.isArray(data)) return [];
 
+    const packetStatuses = getSendPacketStatuses();
+
     return data.map((item) => ({
       id: item.id,
       company: item.company ?? '',
@@ -37,9 +39,29 @@ export function getKaiLeads(): PipelineLead[] {
       whyNowScore: item.why_now_score ?? 0,
       whyNowSummary: item.why_now_summary ?? '',
       createdAt: item.created_at ?? '',
+      sendPacketStatus: packetStatuses.get(item.id),
     }));
   } catch {
     return [];
+  }
+}
+
+function getSendPacketStatuses(): Map<string, string> {
+  const filePath = join(CODEX_STATE_PATH, 'send_packets.json');
+  if (!existsSync(filePath)) return new Map();
+
+  try {
+    const raw = readFileSync(filePath, 'utf-8');
+    const packets = JSON.parse(raw) as Array<{ lead_id: string; status: string }>;
+    if (!Array.isArray(packets)) return new Map();
+
+    const map = new Map<string, string>();
+    for (const p of packets) {
+      map.set(p.lead_id, p.status);
+    }
+    return map;
+  } catch {
+    return new Map();
   }
 }
 
@@ -64,6 +86,8 @@ export function getKaiKnots(): UnifiedKnot[] {
 
     if (!Array.isArray(data)) return [];
 
+    const eventCounts = getKnotEventCounts();
+
     return data.map((item) => ({
       id: item.id,
       agent: 'kai' as const,
@@ -73,12 +97,31 @@ export function getKaiKnots(): UnifiedKnot[] {
       effect: { raw: item.effect ?? '' },
       compensation: item.compensation ? { raw: item.compensation } : null,
       hardness: normalizeHardness(item.hardness),
-      observedCount: activationToCount(item.activation),
+      observedCount: eventCounts.get(item.id) ?? 0,
       firstObserved: item.created_at ?? null,
       lastObserved: item.updated_at ?? null,
     }));
   } catch {
     return [];
+  }
+}
+
+function getKnotEventCounts(): Map<string, number> {
+  const filePath = join(CODEX_STATE_PATH, 'knot_events.json');
+  if (!existsSync(filePath)) return new Map();
+
+  try {
+    const raw = readFileSync(filePath, 'utf-8');
+    const events = JSON.parse(raw) as Array<{ knot_id: string }>;
+    if (!Array.isArray(events)) return new Map();
+
+    const counts = new Map<string, number>();
+    for (const event of events) {
+      counts.set(event.knot_id, (counts.get(event.knot_id) ?? 0) + 1);
+    }
+    return counts;
+  } catch {
+    return new Map();
   }
 }
 
@@ -89,15 +132,3 @@ function normalizeHardness(
   return valid.includes(h) ? (h as 'L0' | 'L1' | 'L2' | 'L3' | 'LC') : 'L0';
 }
 
-function activationToCount(activation: string): number {
-  switch (activation) {
-    case 'high':
-      return 10;
-    case 'medium':
-      return 5;
-    case 'low':
-      return 1;
-    default:
-      return 0;
-  }
-}

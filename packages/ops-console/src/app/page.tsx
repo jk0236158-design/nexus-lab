@@ -5,6 +5,8 @@ import { BoardMessages } from '@/components/dashboard/board-messages';
 import { OwnerDecisions } from '@/components/dashboard/owner-decisions';
 import { SessionQuality } from '@/components/dashboard/session-quality';
 
+export const dynamic = 'force-dynamic';
+
 export default async function HomePage() {
   const agentStatuses = getAgentStatuses();
   const boardMessages = getBoardMessages();
