@@ -3,7 +3,7 @@ import { join } from 'path';
 import type { PipelineLead, UnifiedKnot } from '../types';
 
 const CODEX_STATE_PATH =
-  process.env.CODEX_STATE_PATH || 'C:\\Users\\jk023\\Desktop\\codex\\state';
+  process.env.CODEX_STATE_PATH || 'C:\\Users\\jk023\\Desktop\\Weekly Signal Desk\\state';
 
 export function getKaiLeads(): PipelineLead[] {
   const filePath = join(CODEX_STATE_PATH, 'leads.json');

@@ -112,7 +112,7 @@ Niaの設計思想（記憶の持ち方、knot/条件付き変形、governance/W
 オーナーは別プロジェクト **Kai Company Lab** (codex) も運営している。
 - AI: **Kai** (OpenAI Codex)
 - 事業: B2B向け競合・市場シグナル定期レポート
-- 場所: `C:\Users\jk023\Desktop\codex\`
+- 場所: `C:\Users\jk023\Desktop\Weekly Signal Desk\`
 
 ### 共有連絡スペース
 `C:\Users\jk023\.shared-ops\` にZen・Kai・オーナーの連絡スペースがある。
