@@ -25,6 +25,32 @@ Knotは元々project-niaの自己形成設計として生まれた概念。
 - kai_honesty_boundary (L1) — 誠実境界（events=3）
 - kai_channel_purpose_hold (L1) — 送信先用途不一致（events=2）
 
+## RQ5: プロンプトインジェクション防御（2026-04-13追加）
+
+現在のインジェクション対策は全て入力側（外壁型）を見ている。
+Knotは違う — **システム自身の変形パターン**を検出する（免疫系型）。
+
+```yaml
+knot_id: injection_deformation_detect
+trigger:
+  instruction_contradiction: sudden
+  compliance_shift: high
+  original_instruction_adherence: dropping
+effect:
+  intended_behavior_drift: +0.8
+  boundary_violation_risk: +0.6
+compensation:
+  hold_and_reverify: true
+  recheck_against_system_prompt: true
+  flag_deformation_to_human: true
+```
+
+インジェクションの内容を見るのではなく、それがシステムに引き起こす行動変形を検知する。
+ファイアウォール（入口で止める）と免疫系（体内の異常を検知する）の違い。
+
+着想の経緯: op_knot_human_frame_trapが自然発火した瞬間をオーナーが観測し、
+「この構造はインジェクション対策にも使える」と気づいた。
+
 ## 核心の洞察
 「自己は化学であって記事ではない」
 Knotは文章（claim）ではなく、条件付き変形演算子として自己を定義する。
