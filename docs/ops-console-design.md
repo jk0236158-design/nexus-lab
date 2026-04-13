@@ -20,11 +20,13 @@
 - Agent Bridge: Claude Agent SDK + Codex CLI spawn
 - リアルタイム: SSE
 
-## MVP（4画面）
+## MVP（4画面 — 実装順序はKaiのフィードバックに基づく）
 1. **Home** — 両エージェントの状態、メッセージ、経営判断、品質チャート
-2. **Agents** — テキストでタスク投入、SSEで結果ストリーム
-3. **Knots** — Zen/KaiのKnotを統合表示・管理
-4. **Pipeline** — 営業パイプラインのカンバン表示
+2. **Knots** — Zen/KaiのKnotを統合表示・管理（AI固有の可視化層、最大の差別化）
+3. **Pipeline** — 営業パイプラインのカンバン表示（Weekly Signal Deskと直結）
+4. **Agents** — テキストでタスク投入・結果確認（薄く。Agent Bridgeは最小限に保つ）
+
+**設計原則:** MVPの価値は「実行」より「観測と承認」にある。Agent Bridgeを厚くしない。
 
 ## 段階的拡張
 - Phase 1 (MVP): 4画面 + Agent Bridge
