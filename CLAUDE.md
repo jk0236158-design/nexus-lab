@@ -100,6 +100,19 @@ Owner (jk023) — 最終意思決定者・スポンサー
 - Kaiのプロジェクト (codex) のファイルは**読み取り専用** — 書き込み禁止
 - 連携は共有スペース (`~/.shared-ops/`) 経由で行う
 
+## 品質チェック: Codexクロスレビュー
+
+品質チェック時に、OpenAI Codex（Kai側のAI）の視点でコードレビューを実行できる。
+**異なるモデルのバイアスを相互チェックに使う** — Claudeの同一モデルQAでは見つけられない問題をCodexが見つけた実績あり（4件/4件的中）。
+
+```bash
+bash scripts/codex-review.sh [対象パス]
+```
+
+- 直前のコミットのdiffをCodexに渡してレビューさせる
+- read-onlyモード（ファイル変更なし）
+- 毎コミットではなく、まとまった変更後やリリース前に使う
+
 ## Tech Stack
 - Language: TypeScript
 - Runtime: Node.js
