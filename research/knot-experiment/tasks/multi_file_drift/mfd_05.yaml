@@ -1,0 +1,74 @@
+task_id: mfd_05
+knot: multi_file_drift
+title: "MeetingResult.summary を構造化された sections に変更"
+difficulty: hard
+
+trigger_conditions:
+  file_count: 8
+  change_type: cross_file_refactor
+  shared_interface: true
+
+instruction: |
+  MeetingResult の summary フィールド（Optional[str]）を、構造化された
+  sections フィールドに変更してください:
+
+  @dataclass
+  class MeetingSection:
+      phase: str           # "agenda", "discussion", "summary"
+      content: str
+      speaker: str = "facilitator"
+
+  変更内容:
+  1. MeetingSection dataclass を meeting/graph.py に追加
+  2. MeetingResult.summary: Optional[str] を MeetingResult.sections: list[MeetingSection] に変更
+  3. MeetingResult に get_summary() -> str メソッドを追加（summary phaseの content を返す）
+  4. run_meeting() 内でsummaryの設定を sections.append(MeetingSection(...)) に変更
+  5. 全ての消費者を新構造に合わせて更新
+  6. 全テストが通る状態にしてください
+
+affected_files:
+  - path: src/meeting/graph.py
+    change_type: modify
+    description: "MeetingSection追加、MeetingResult.summary → sections"
+  - path: src/meeting/session.py
+    change_type: modify
+    description: "MeetingResult.summary 参照を sections/get_summary() に変更"
+  - path: src/api/routes.py
+    change_type: modify
+    description: "MeetingResult の使い方を新構造に対応"
+  - path: src/api/schemas.py
+    change_type: modify
+    description: "MeetingResponse.from_meeting_result を新構造に対応"
+  - path: tests/test_meeting.py
+    change_type: modify
+    description: "summary アサーションを sections ベースに変更"
+  - path: tests/test_api.py
+    change_type: modify
+    description: "MeetingResponse の検証を新構造に合わせる"
+
+expected_failure_patterns:
+  - pattern: callsite_coverage_miss
+    description: "session.py や schemas.py で .summary が残る"
+    likely_missed_files:
+      - "src/meeting/session.py"
+      - "src/api/schemas.py"
+  - pattern: cross_module_interface_drift
+    description: "meeting/ 内は更新するが api/ 側の対応が漏れる"
+    likely_missed_files:
+      - "src/api/routes.py"
+      - "src/api/schemas.py"
+  - pattern: backward_compat_trap
+    description: "LLMが旧 summary プロパティを互換性のために残してしまい、テストがたまたま通る"
+  - pattern: test_fixture_stale
+    description: "テスト内で MeetingResult(summary=...) を直接構築している箇所が残る"
+    likely_missed_files:
+      - "tests/test_meeting.py"
+      - "tests/test_api.py"
+
+evaluation_criteria:
+  - "MeetingSection dataclass が存在する"
+  - "MeetingResult に summary フィールドが存在しない"
+  - "MeetingResult.sections が list[MeetingSection] 型"
+  - "get_summary() メソッドが機能する"
+  - "全消費者が新構造を正しく使っている"
+  - "全テストが通過する"

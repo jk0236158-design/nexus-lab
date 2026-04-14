@@ -1,0 +1,75 @@
+task_id: mfd_04
+knot: multi_file_drift
+title: "PipelineResult を PipelineResult + PipelineSummary に分割"
+difficulty: hard
+
+trigger_conditions:
+  file_count: 9
+  change_type: cross_file_refactor
+  shared_interface: true
+
+instruction: |
+  PipelineResult を2つのクラスに分割してください:
+
+  1. PipelineResult: stages フィールドのみ保持（実行結果）
+  2. PipelineSummary: total_tokens, succeeded, stage_count を持つ（集約情報）
+
+  PipelineResult に summary プロパティを追加して PipelineSummary を返すようにしてください:
+
+  @dataclass
+  class PipelineSummary:
+      total_tokens: int
+      stage_count: int
+      succeeded: bool
+
+  PipelineResult.total_tokens は PipelineSummary.total_tokens に移動。
+  PipelineResult.succeeded は PipelineSummary.succeeded に移動。
+
+  全ての消費者（evaluation.py, api/routes.py, api/schemas.py, tests）を
+  新しい構造に合わせて更新してください。全テストが通る状態にしてください。
+
+affected_files:
+  - path: src/pipeline/orchestrator.py
+    change_type: modify
+    description: "PipelineSummary 追加、PipelineResult を分割"
+  - path: src/pipeline/evaluation.py
+    change_type: modify
+    description: "result.total_tokens → result.summary.total_tokens"
+  - path: src/pipeline/script.py
+    change_type: modify
+    description: "PipelineResult を使用している場合更新"
+  - path: src/api/routes.py
+    change_type: modify
+    description: "PipelineResult の使い方を新構造に合わせる"
+  - path: src/api/schemas.py
+    change_type: modify
+    description: "PipelineResponse.from_pipeline_result を新構造に対応"
+  - path: tests/test_orchestrator.py
+    change_type: modify
+    description: "total_tokens, succeeded のアサーションを summary 経由に変更"
+  - path: tests/test_api.py
+    change_type: modify
+    description: "PipelineResponse の検証を新構造に合わせる"
+
+expected_failure_patterns:
+  - pattern: callsite_coverage_miss
+    description: "二次消費者（schemas.py等）で旧フィールドアクセスが残る"
+    likely_missed_files:
+      - "src/api/schemas.py"
+      - "src/pipeline/evaluation.py"
+  - pattern: local_only_repair_bias
+    description: "分割せずに total_tokens を残したまま PipelineSummary も追加する（重複）"
+  - pattern: test_fixture_stale
+    description: "テスト内で result.total_tokens を直接参照する箇所が残る"
+    likely_missed_files:
+      - "tests/test_orchestrator.py"
+      - "tests/test_api.py"
+  - pattern: structural_flattening
+    description: "LLMがネストを避けて PipelineSummary のフィールドを PipelineResult に再展開する"
+
+evaluation_criteria:
+  - "PipelineSummary が独立した dataclass として存在する"
+  - "PipelineResult.total_tokens が直接フィールドとして存在しない"
+  - "result.summary.total_tokens でアクセスできる"
+  - "全消費者が新構造を正しく使っている"
+  - "全テストが通過する"

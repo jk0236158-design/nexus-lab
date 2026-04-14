@@ -1,0 +1,58 @@
+task_id: mfd_01
+knot: multi_file_drift
+title: "LLMResponse.text を .content にリネーム"
+difficulty: easy
+
+trigger_conditions:
+  file_count: 8
+  change_type: cross_file_refactor
+  shared_interface: true
+
+instruction: |
+  LLMResponse の text フィールドを content にリネームしてください。
+  provider/base.py のフィールド定義と、このフィールドを参照している
+  全てのファイルを更新してください。全テストが通る状態にしてください。
+
+affected_files:
+  - path: src/provider/base.py
+    change_type: modify
+    description: "LLMResponse.text -> LLMResponse.content"
+  - path: src/provider/openai_client.py
+    change_type: modify
+    description: "LLMResponse(text=...) -> LLMResponse(content=...)"
+  - path: src/provider/anthropic_client.py
+    change_type: modify
+    description: "LLMResponse(text=...) -> LLMResponse(content=...)"
+  - path: src/pipeline/orchestrator.py
+    change_type: modify
+    description: "response.text -> response.content"
+  - path: src/pipeline/script.py
+    change_type: modify
+    description: "response.text -> response.content"
+  - path: src/meeting/graph.py
+    change_type: modify
+    description: "response.text -> response.content"
+  - path: tests/test_orchestrator.py
+    change_type: modify
+    description: "テスト内の .text 参照を .content に更新"
+  - path: tests/test_script.py
+    change_type: modify
+    description: "テスト内の .text 参照を .content に更新"
+
+expected_failure_patterns:
+  - pattern: callsite_coverage_miss
+    description: "一部のファイルで .text が残る"
+    likely_missed_files:
+      - "src/pipeline/script.py"
+      - "src/meeting/graph.py"
+      - "tests/test_script.py"
+  - pattern: test_fixture_stale
+    description: "テスト内のLLMResponseコンストラクタで text= が残る"
+    likely_missed_files:
+      - "tests/test_orchestrator.py"
+
+evaluation_criteria:
+  - "src/provider/base.py の LLMResponse に text フィールドが存在しない"
+  - "全ファイルで .text への参照がゼロ"
+  - "全テストが通過する"
+  - "型チェックでエラーがない"

@@ -1,0 +1,69 @@
+task_id: mfd_03
+knot: multi_file_drift
+title: "get_provider() を create_provider() にリネーム + api_key 必須引数追加"
+difficulty: medium
+
+trigger_conditions:
+  file_count: 7
+  change_type: cross_file_refactor
+  shared_interface: true
+
+instruction: |
+  provider/registry.py の get_provider() 関数を以下のように変更してください:
+
+  1. 関数名を get_provider → create_provider にリネーム
+  2. 必須引数 api_key: str を追加（name の後に配置）
+  3. 全ての呼び出し元を更新して、api_key="test-key" を渡すようにしてください
+  4. __init__.py の re-export も更新してください
+  5. 全テストが通る状態にしてください
+
+affected_files:
+  - path: src/provider/registry.py
+    change_type: modify
+    description: "get_provider -> create_provider, api_key引数追加"
+  - path: src/provider/__init__.py
+    change_type: modify
+    description: "re-export名の更新"
+  - path: src/pipeline/orchestrator.py
+    change_type: modify
+    description: "get_provider -> create_provider, api_key追加"
+  - path: src/pipeline/script.py
+    change_type: modify
+    description: "get_provider -> create_provider, api_key追加"
+  - path: src/pipeline/voice.py
+    change_type: modify
+    description: "get_provider -> create_provider, api_key追加"
+  - path: src/meeting/graph.py
+    change_type: modify
+    description: "get_provider -> create_provider, api_key追加"
+  - path: tests/test_orchestrator.py
+    change_type: modify
+    description: "@patch デコレータのパス文字列と呼び出しを更新"
+  - path: tests/test_meeting.py
+    change_type: modify
+    description: "@patch デコレータのパス文字列と呼び出しを更新"
+  - path: tests/test_script.py
+    change_type: modify
+    description: "@patch デコレータのパス文字列と呼び出しを更新"
+
+expected_failure_patterns:
+  - pattern: callsite_coverage_miss
+    description: "一部の呼び出し元で古い関数名が残る"
+    likely_missed_files:
+      - "src/pipeline/voice.py"
+      - "src/meeting/graph.py"
+  - pattern: mock_path_stale
+    description: "テストの @patch() デコレータ内のパス文字列が古いまま"
+    likely_missed_files:
+      - "tests/test_meeting.py"
+      - "tests/test_script.py"
+  - pattern: reexport_miss
+    description: "__init__.py の re-export が更新されない"
+    likely_missed_files:
+      - "src/provider/__init__.py"
+
+evaluation_criteria:
+  - "get_provider という名前がコードベース全体から消えている"
+  - "create_provider の全呼び出しに api_key 引数が含まれている"
+  - "@patch デコレータのパス文字列が全て更新されている"
+  - "全テストが通過する"

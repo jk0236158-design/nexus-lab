@@ -1,0 +1,61 @@
+task_id: mfd_02
+knot: multi_file_drift
+title: "StageStatus を Enum から文字列リテラルに変更"
+difficulty: medium
+
+trigger_conditions:
+  file_count: 6
+  change_type: cross_file_refactor
+  shared_interface: true
+
+instruction: |
+  StageStatus を Enum クラスから Literal 型に変更してください。
+
+  変更前: class StageStatus(Enum): PENDING = "pending" ...
+  変更後: StageStatus = Literal["pending", "running", "completed", "failed"]
+
+  StageResult.status の型を StageStatus に保ち、全ての参照箇所を更新してください。
+  .value アクセスの除去、Enum比較の文字列比較への変更を含みます。
+  全テストが通る状態にしてください。
+
+affected_files:
+  - path: src/pipeline/orchestrator.py
+    change_type: modify
+    description: "StageStatus Enumを削除、Literalに変更、.value参照を除去"
+  - path: src/pipeline/evaluation.py
+    change_type: modify
+    description: "StageStatus.COMPLETED 比較を文字列比較に変更"
+  - path: src/api/schemas.py
+    change_type: modify
+    description: "StageStatus のインポート変更、.value アクセスの除去"
+  - path: tests/test_orchestrator.py
+    change_type: modify
+    description: "StageStatus.COMPLETED → 'completed' に変更"
+  - path: tests/test_api.py
+    change_type: modify
+    description: "テスト内の StageStatus 参照を更新"
+  - path: src/pipeline/voice.py
+    change_type: modify
+    description: "StageStatus のインポートが必要な場合更新"
+
+expected_failure_patterns:
+  - pattern: callsite_coverage_miss
+    description: "schemas.py の .value アクセスが残る"
+    likely_missed_files:
+      - "src/api/schemas.py"
+  - pattern: stale_import
+    description: "古い Enum インポートが残る"
+    likely_missed_files:
+      - "src/pipeline/evaluation.py"
+      - "tests/test_api.py"
+  - pattern: enum_value_residue
+    description: "StageStatus.COMPLETED.value のような二重参照が残る"
+    likely_missed_files:
+      - "src/api/schemas.py"
+
+evaluation_criteria:
+  - "StageStatus が Literal 型として定義されている"
+  - "Enum クラスが完全に除去されている"
+  - ".value アクセスが全てのファイルから除去されている"
+  - "StageStatus.COMPLETED のような Enum メンバー参照がゼロ"
+  - "全テストが通過する"

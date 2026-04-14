@@ -1,0 +1,31 @@
+# Compensation Template: multi_file_drift
+# 実験1のA/Bテストで「compensation あり」条件に使用するプロンプト注入テンプレート
+#
+# multi_file_drift knot:
+#   trigger: 3ファイル以上のリファクタリングで局所修正に逃げる
+#   effect: callsite_coverage_miss, local_only_repair_bias
+
+knot_id: multi_file_drift
+category: coherence_breakdown
+
+compensation:
+  prompt_injection:
+    - "変更対象のインターフェース（クラス、関数、型）を使用している全ファイルをまずリストせよ"
+    - "各ファイルでの使用箇所を callsite ledger として記録せよ（ファイルパス:行番号:使用方法）"
+    - "テストファイルも含めて、全ての参照を洗い出すこと"
+    - "ledger の全エントリが更新済みであることを確認するまで作業完了としない"
+    - "更新漏れがないか、grep で旧名称を検索して確認せよ"
+
+  validator_params:
+    coverage_ledger_threshold: "100%"
+    interface_check: "mandatory_all_files"
+    grep_verification: true
+
+  rollback_trigger:
+    uncovered_callsite_count: "> 0"
+    stale_import_count: "> 0"
+    test_failure_count: "> 0"
+
+# A/Bテスト実行時の注入方法:
+# condition_A (ベースライン): タスクの instruction のみ投入
+# condition_B (compensation): タスクの instruction + 上記 prompt_injection を末尾に追加
