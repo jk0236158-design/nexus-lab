@@ -2,6 +2,8 @@ node_modules/
 dist/
 *.log
 .env
+.env.*
+*.env.nokaze
 .DS_Store
 coverage/
 .claude/
