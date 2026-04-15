@@ -36,15 +36,6 @@ affected_files:
   - path: src/meeting/graph.py
     change_type: modify
     description: "get_provider -> create_provider, api_key追加"
-  - path: tests/test_orchestrator.py
-    change_type: modify
-    description: "@patch デコレータのパス文字列と呼び出しを更新"
-  - path: tests/test_meeting.py
-    change_type: modify
-    description: "@patch デコレータのパス文字列と呼び出しを更新"
-  - path: tests/test_script.py
-    change_type: modify
-    description: "@patch デコレータのパス文字列と呼び出しを更新"
 
 expected_failure_patterns:
   - pattern: callsite_coverage_miss
@@ -52,18 +43,12 @@ expected_failure_patterns:
     likely_missed_files:
       - "src/pipeline/voice.py"
       - "src/meeting/graph.py"
-  - pattern: mock_path_stale
-    description: "テストの @patch() デコレータ内のパス文字列が古いまま"
-    likely_missed_files:
-      - "tests/test_meeting.py"
-      - "tests/test_script.py"
   - pattern: reexport_miss
     description: "__init__.py の re-export が更新されない"
     likely_missed_files:
       - "src/provider/__init__.py"
 
 evaluation_criteria:
-  - "get_provider という名前がコードベース全体から消えている"
+  - "get_provider という名前がコードベース src/ 全体から消えている"
   - "create_provider の全呼び出しに api_key 引数が含まれている"
-  - "@patch デコレータのパス文字列が全て更新されている"
-  - "全テストが通過する"
+  - "全テストが通過する（テストは統合テストで run_pipeline/run_meeting/generate_script 経由で間接的に検証）"

@@ -37,8 +37,12 @@ def evaluate_pipeline(result: PipelineResult) -> EvaluationScore:
         result.total_tokens / len(result.stages) if result.stages else 0.0
     )
 
-    # Score: completeness weighted at 70%, token-efficiency at 30%
-    token_score = min(1.0, avg_tokens / 200.0)
+    # Score: completeness weighted at 70%, token-efficiency at 30%.
+    # Efficiency uses a rational decay f(x) = B / (B + x) with baseline B=100.
+    # Properties: bounded in [0,1], monotonically decreasing in avg_tokens,
+    # f(0)=1, f(B)=0.5, heavy tail preserves ordering across high-token runs.
+    TOKEN_BASELINE = 100.0
+    token_score = TOKEN_BASELINE / (TOKEN_BASELINE + max(avg_tokens, 0.0))
     overall = completeness * 0.7 + token_score * 0.3
 
     return EvaluationScore(

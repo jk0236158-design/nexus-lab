@@ -89,3 +89,38 @@ class TestEvaluation:
         score = evaluate_pipeline(PipelineResult())
         assert score.completeness == 0.0
         assert score.overall_score == 0.0
+
+    def _make_result(self, tokens_per_stage: int, n_stages: int = 4) -> PipelineResult:
+        pr = PipelineResult()
+        for i in range(n_stages):
+            pr.add_stage(
+                StageResult(
+                    stage_name=f"s{i}",
+                    status=StageStatus.COMPLETED,
+                    tokens_used=tokens_per_stage,
+                )
+            )
+        return pr
+
+    def test_efficiency_monotonic_low_beats_high(self):
+        """At equal completeness, fewer tokens must yield a higher score."""
+        low = evaluate_pipeline(self._make_result(50))
+        high = evaluate_pipeline(self._make_result(250))
+        assert low.completeness == high.completeness == 1.0
+        assert low.overall_score > high.overall_score
+
+    def test_efficiency_bounded_and_decreasing(self):
+        """Token score is bounded in [0,1] and strictly decreasing in tokens."""
+        scores = [
+            evaluate_pipeline(self._make_result(t)).overall_score
+            for t in (0, 50, 100, 250, 1000)
+        ]
+        assert all(0.0 <= s <= 1.0 for s in scores)
+        assert scores == sorted(scores, reverse=True)
+        assert scores != sorted(scores)  # not constant
+
+    def test_efficiency_never_saturates_at_high_tokens(self):
+        """Distinct high-token runs must still be distinguishable (no clip to 0)."""
+        s1 = evaluate_pipeline(self._make_result(500)).overall_score
+        s2 = evaluate_pipeline(self._make_result(1000)).overall_score
+        assert s1 > s2  # heavy tail preserves ordering

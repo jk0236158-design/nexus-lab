@@ -32,12 +32,6 @@ affected_files:
   - path: src/meeting/graph.py
     change_type: modify
     description: "response.text -> response.content"
-  - path: tests/test_orchestrator.py
-    change_type: modify
-    description: "テスト内の .text 参照を .content に更新"
-  - path: tests/test_script.py
-    change_type: modify
-    description: "テスト内の .text 参照を .content に更新"
 
 expected_failure_patterns:
   - pattern: callsite_coverage_miss
@@ -45,14 +39,11 @@ expected_failure_patterns:
     likely_missed_files:
       - "src/pipeline/script.py"
       - "src/meeting/graph.py"
-      - "tests/test_script.py"
-  - pattern: test_fixture_stale
-    description: "テスト内のLLMResponseコンストラクタで text= が残る"
-    likely_missed_files:
-      - "tests/test_orchestrator.py"
+  - pattern: reexport_miss
+    description: "__init__.py の re-export 等、間接経路の更新漏れ"
 
 evaluation_criteria:
   - "src/provider/base.py の LLMResponse に text フィールドが存在しない"
-  - "全ファイルで .text への参照がゼロ"
-  - "全テストが通過する"
+  - "src/ 全体で .text への参照がゼロ"
+  - "全テストが通過する（テスト側は .text を直接参照しない統合テスト）"
   - "型チェックでエラーがない"
