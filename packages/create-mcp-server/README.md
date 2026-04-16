@@ -100,6 +100,22 @@ To use with Claude Code, add to your MCP config:
 }
 ```
 
+## Premium Templates
+
+Take your MCP server to the next level with production-ready premium templates:
+
+| Template | Description | Link |
+|----------|-------------|------|
+| `database` | SQLite + Drizzle ORM with full CRUD operations | [Get it on Gumroad](https://nexuslabzen.gumroad.com/l/ijuvn) |
+| `auth` | Authentication middleware (coming soon) | — |
+
+Premium templates include database connectivity, typed ORM queries, comprehensive test suites, and working examples — saving you hours of boilerplate setup.
+
+```bash
+# When you select a premium template, you'll be directed to the purchase page
+npx @nexus-lab/create-mcp-server my-server --template database
+```
+
 ## License
 
 MIT — [Nexus Lab](https://github.com/jk0236158-design/nexus-lab)
