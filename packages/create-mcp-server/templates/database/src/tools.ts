@@ -3,10 +3,33 @@ import { z } from "zod";
 import { eq, like, or, sql } from "drizzle-orm";
 import { BetterSQLite3Database } from "drizzle-orm/better-sqlite3";
 import { db as defaultDb } from "./db.js";
-import { notes } from "./schema.js";
+import { notes, type NewNote } from "./schema.js";
 import type * as schema from "./schema.js";
 
 type Db = BetterSQLite3Database<typeof schema>;
+
+// Partial update payload: only mutable columns plus updatedAt (SQL expression).
+type NoteUpdate = Partial<Pick<NewNote, "title" | "content">> & {
+  updatedAt: ReturnType<typeof sql>;
+};
+
+/**
+ * Classify a thrown DB error. better-sqlite3 surfaces constraint violations
+ * via a `code` string on the error (e.g. SQLITE_CONSTRAINT_UNIQUE).
+ * We return a user-safe message and never leak internal details.
+ */
+function formatDbError(error: unknown, action: string): string {
+  if (
+    error !== null &&
+    typeof error === "object" &&
+    "code" in error &&
+    typeof (error as { code: unknown }).code === "string" &&
+    (error as { code: string }).code.startsWith("SQLITE_CONSTRAINT")
+  ) {
+    return `DATABASE_CONSTRAINT_ERROR: Failed to ${action} due to a constraint violation.`;
+  }
+  return `Failed to ${action}. Please try again or contact support.`;
+}
 
 /**
  * Register all CRUD tools on the given MCP server.
@@ -18,14 +41,18 @@ export function registerTools(server: McpServer, database?: Db): void {
   // ── create-note ──────────────────────────────────────────────────────
   server.tool(
     "create-note",
-    "Create a new note with a title and optional content",
+    "Create a new note with a title and content",
     {
-      title: z.string().min(1).max(500).describe("Title of the note"),
+      title: z
+        .string()
+        .min(1)
+        .max(500)
+        .describe("Title of the note (required, 1-500 characters)"),
       content: z
         .string()
+        .min(1)
         .max(50_000)
-        .default("")
-        .describe("Body content of the note"),
+        .describe("Body content of the note (required, 1-50000 characters)"),
     },
     async ({ title, content }) => {
       try {
@@ -44,13 +71,11 @@ export function registerTools(server: McpServer, database?: Db): void {
           ],
         };
       } catch (error: unknown) {
-        const message =
-          error instanceof Error ? error.message : String(error);
         return {
           content: [
             {
               type: "text" as const,
-              text: `Failed to create note: ${message}`,
+              text: formatDbError(error, "create note"),
             },
           ],
           isError: true,
@@ -95,13 +120,11 @@ export function registerTools(server: McpServer, database?: Db): void {
           ],
         };
       } catch (error: unknown) {
-        const message =
-          error instanceof Error ? error.message : String(error);
         return {
           content: [
             {
               type: "text" as const,
-              text: `Failed to list notes: ${message}`,
+              text: formatDbError(error, "list notes"),
             },
           ],
           isError: true,
@@ -146,13 +169,11 @@ export function registerTools(server: McpServer, database?: Db): void {
           ],
         };
       } catch (error: unknown) {
-        const message =
-          error instanceof Error ? error.message : String(error);
         return {
           content: [
             {
               type: "text" as const,
-              text: `Failed to get note: ${message}`,
+              text: formatDbError(error, "get note"),
             },
           ],
           isError: true,
@@ -172,12 +193,17 @@ export function registerTools(server: McpServer, database?: Db): void {
         .min(1)
         .max(500)
         .optional()
-        .describe("New title for the note"),
+        .describe(
+          "New title for the note (optional; when provided, 1-500 characters)",
+        ),
       content: z
         .string()
+        .min(1)
         .max(50_000)
         .optional()
-        .describe("New content for the note"),
+        .describe(
+          "New content for the note (optional; when provided, 1-50000 characters)",
+        ),
     },
     async ({ id, title, content }) => {
       try {
@@ -212,7 +238,7 @@ export function registerTools(server: McpServer, database?: Db): void {
           };
         }
 
-        const updates: Record<string, unknown> = {
+        const updates: NoteUpdate = {
           updatedAt: sql`datetime('now')`,
         };
         if (title !== undefined) updates.title = title;
@@ -234,13 +260,11 @@ export function registerTools(server: McpServer, database?: Db): void {
           ],
         };
       } catch (error: unknown) {
-        const message =
-          error instanceof Error ? error.message : String(error);
         return {
           content: [
             {
               type: "text" as const,
-              text: `Failed to update note: ${message}`,
+              text: formatDbError(error, "update note"),
             },
           ],
           isError: true,
@@ -287,13 +311,11 @@ export function registerTools(server: McpServer, database?: Db): void {
           ],
         };
       } catch (error: unknown) {
-        const message =
-          error instanceof Error ? error.message : String(error);
         return {
           content: [
             {
               type: "text" as const,
-              text: `Failed to delete note: ${message}`,
+              text: formatDbError(error, "delete note"),
             },
           ],
           isError: true,
