@@ -1,5 +1,6 @@
+# SUPERSEDED — 2026-04-17 に .github/workflows/docs-deploy.yml へ昇格済み。
+# このファイルは設計履歴としてのみ残す。実稼働する workflow は .github/workflows/docs-deploy.yml。
 # DRAFT — Cloudflare Pages deploy workflow
-# 置き場: このファイルはドラフト。本採用時に .github/workflows/docs-deploy.yml へ移す。
 #
 # 前提 (ジュン側の物理アクション待ち):
 #   - Cloudflare Registrar でドメイン取得済み

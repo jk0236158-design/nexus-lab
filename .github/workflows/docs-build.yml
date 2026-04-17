@@ -1,12 +1,10 @@
 name: docs-build
 
+# Build 検証専用 (PR で走る)。
+# master への push 時の build + deploy は docs-deploy.yml に一本化済み。
+# ここで build するのは PR レビュー時に artifact を確認するため。
+
 on:
-  push:
-    branches: [master]
-    paths:
-      - "packages/docs/**"
-      - "packages/create-mcp-server/templates/**/README.md"
-      - ".github/workflows/docs-build.yml"
   pull_request:
     paths:
       - "packages/docs/**"

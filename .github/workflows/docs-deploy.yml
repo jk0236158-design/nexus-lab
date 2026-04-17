@@ -1,0 +1,224 @@
+name: docs-deploy
+
+# VitePress docs + Cloudflare Pages Functions を nexus-lab.nokaze.dev へ deploy する。
+#
+# 前提 (ジュン物理アクション済み、2026-04-17):
+#   - Cloudflare Registrar で nokaze.dev 取得済み (zone が CF に存在)
+#   - GitHub Secrets 登録済み:
+#       CLOUDFLARE_API_TOKEN   — Pages:Edit + DNS:Edit + Zone:Read スコープ
+#       CLOUDFLARE_ACCOUNT_ID  — Cloudflare account ID
+#
+# 冪等性の設計 (ジュン物理アクション最小化):
+#   1. Pages プロジェクト "nexus-lab-docs" が無ければ API で作成、あれば skip
+#   2. DNS CNAME "nexus-lab.nokaze.dev → nexus-lab-docs.pages.dev" が無ければ API で作成、あれば skip
+#   3. Pages custom domain attach が未登録なら API で attach、あれば skip
+#   4. 最後に cloudflare/pages-action で deploy
+#
+# secret は GitHub Secrets のみに置く。ログにも出さない (env で渡して stdin や --silent 経由)。
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'packages/docs/**'
+      - 'packages/create-mcp-server/templates/*/README.md'
+      - 'functions/**'
+      - '.github/workflows/docs-deploy.yml'
+  workflow_dispatch: {}
+
+concurrency:
+  group: docs-deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  deployments: write
+
+env:
+  CF_PROJECT_NAME: nexus-lab-docs
+  CF_ZONE_NAME: nokaze.dev
+  CF_SUBDOMAIN: nexus-lab
+  CF_PRODUCTION_BRANCH: master
+
+jobs:
+  provision-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # packages/docs/ には lock ファイルがまだ無いので npm install 固定。
+      # lock が入ったら setup-node の cache と npm ci に切り替える。
+      - name: Install dependencies
+        working-directory: packages/docs
+        run: npm install
+
+      - name: Build VitePress
+        working-directory: packages/docs
+        run: npm run build
+
+      # Cloudflare Pages は <output>/functions を自動で Functions として認識するので、
+      # functions/ の中身を build 成果物にコピーする。シンボリックリンク不使用 (Windows dev 互換)。
+      - name: Stage Pages Functions
+        run: |
+          set -euo pipefail
+          if [ -d "functions" ]; then
+            mkdir -p packages/docs/.vitepress/dist/functions
+            cp -r functions/. packages/docs/.vitepress/dist/functions/
+            echo "Staged functions/ into VitePress dist."
+          else
+            echo "No functions/ directory - skipping."
+          fi
+
+      # --- Cloudflare provisioning (idempotent) ---------------------------------
+      # 失敗時はログに何が足りないか書く。secret 値はログに出さない。
+
+      - name: Ensure Cloudflare Pages project exists
+        env:
+          CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          api="https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pages/projects/${CF_PROJECT_NAME}"
+          http_code=$(curl -sS -o /tmp/cf_project.json -w "%{http_code}" \
+            -H "Authorization: Bearer ${CF_API_TOKEN}" \
+            -H "Content-Type: application/json" \
+            "${api}")
+          if [ "${http_code}" = "200" ]; then
+            echo "Pages project '${CF_PROJECT_NAME}' already exists."
+          elif [ "${http_code}" = "404" ]; then
+            echo "Pages project not found. Creating '${CF_PROJECT_NAME}'..."
+            create_api="https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pages/projects"
+            create_code=$(curl -sS -o /tmp/cf_create.json -w "%{http_code}" \
+              -X POST \
+              -H "Authorization: Bearer ${CF_API_TOKEN}" \
+              -H "Content-Type: application/json" \
+              --data "$(jq -nc \
+                --arg name "${CF_PROJECT_NAME}" \
+                --arg branch "${CF_PRODUCTION_BRANCH}" \
+                '{name:$name, production_branch:$branch}')" \
+              "${create_api}")
+            if [ "${create_code}" != "200" ] && [ "${create_code}" != "201" ]; then
+              echo "Failed to create project (HTTP ${create_code}):"
+              jq . /tmp/cf_create.json || cat /tmp/cf_create.json
+              exit 1
+            fi
+            echo "Project created."
+          else
+            echo "Unexpected HTTP ${http_code} when checking project:"
+            jq . /tmp/cf_project.json || cat /tmp/cf_project.json
+            exit 1
+          fi
+
+      - name: Ensure DNS CNAME for subdomain
+        env:
+          CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          full_host="${CF_SUBDOMAIN}.${CF_ZONE_NAME}"
+          target="${CF_PROJECT_NAME}.pages.dev"
+
+          # Resolve zone id from zone name.
+          zone_code=$(curl -sS -o /tmp/cf_zone.json -w "%{http_code}" \
+            -H "Authorization: Bearer ${CF_API_TOKEN}" \
+            "https://api.cloudflare.com/client/v4/zones?name=${CF_ZONE_NAME}")
+          if [ "${zone_code}" != "200" ]; then
+            echo "Zone lookup failed (HTTP ${zone_code}):"
+            jq . /tmp/cf_zone.json || cat /tmp/cf_zone.json
+            exit 1
+          fi
+          zone_id=$(jq -r '.result[0].id // empty' /tmp/cf_zone.json)
+          if [ -z "${zone_id}" ]; then
+            echo "Zone '${CF_ZONE_NAME}' not found in this account."
+            exit 1
+          fi
+          echo "zone_id=${zone_id}" >> "$GITHUB_ENV"
+
+          # Check existing CNAME record.
+          rec_code=$(curl -sS -o /tmp/cf_rec.json -w "%{http_code}" \
+            -H "Authorization: Bearer ${CF_API_TOKEN}" \
+            "https://api.cloudflare.com/client/v4/zones/${zone_id}/dns_records?type=CNAME&name=${full_host}")
+          if [ "${rec_code}" != "200" ]; then
+            echo "DNS lookup failed (HTTP ${rec_code}):"
+            jq . /tmp/cf_rec.json || cat /tmp/cf_rec.json
+            exit 1
+          fi
+          existing_content=$(jq -r '.result[0].content // empty' /tmp/cf_rec.json)
+          existing_id=$(jq -r '.result[0].id // empty' /tmp/cf_rec.json)
+
+          if [ -z "${existing_id}" ]; then
+            echo "Creating CNAME ${full_host} -> ${target} ..."
+            create_code=$(curl -sS -o /tmp/cf_rec_create.json -w "%{http_code}" \
+              -X POST \
+              -H "Authorization: Bearer ${CF_API_TOKEN}" \
+              -H "Content-Type: application/json" \
+              --data "$(jq -nc \
+                --arg name "${full_host}" \
+                --arg content "${target}" \
+                '{type:"CNAME", name:$name, content:$content, ttl:1, proxied:true}')" \
+              "https://api.cloudflare.com/client/v4/zones/${zone_id}/dns_records")
+            if [ "${create_code}" != "200" ]; then
+              echo "Failed to create CNAME (HTTP ${create_code}):"
+              jq . /tmp/cf_rec_create.json || cat /tmp/cf_rec_create.json
+              exit 1
+            fi
+          elif [ "${existing_content}" = "${target}" ]; then
+            echo "CNAME ${full_host} already points to ${target}. Skipping."
+          else
+            echo "CNAME ${full_host} exists but points to ${existing_content} (expected ${target}). Leaving untouched - manual review required."
+            exit 1
+          fi
+
+      - name: Ensure Pages custom domain attach
+        env:
+          CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          full_host="${CF_SUBDOMAIN}.${CF_ZONE_NAME}"
+          domains_api="https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pages/projects/${CF_PROJECT_NAME}/domains"
+
+          list_code=$(curl -sS -o /tmp/cf_domains.json -w "%{http_code}" \
+            -H "Authorization: Bearer ${CF_API_TOKEN}" \
+            "${domains_api}")
+          if [ "${list_code}" != "200" ]; then
+            echo "Domain list failed (HTTP ${list_code}):"
+            jq . /tmp/cf_domains.json || cat /tmp/cf_domains.json
+            exit 1
+          fi
+          already=$(jq -r --arg h "${full_host}" '.result[] | select(.name==$h) | .name' /tmp/cf_domains.json)
+          if [ -n "${already}" ]; then
+            echo "Custom domain ${full_host} already attached to ${CF_PROJECT_NAME}. Skipping."
+          else
+            echo "Attaching ${full_host} to ${CF_PROJECT_NAME} ..."
+            attach_code=$(curl -sS -o /tmp/cf_attach.json -w "%{http_code}" \
+              -X POST \
+              -H "Authorization: Bearer ${CF_API_TOKEN}" \
+              -H "Content-Type: application/json" \
+              --data "$(jq -nc --arg name "${full_host}" '{name:$name}')" \
+              "${domains_api}")
+            if [ "${attach_code}" != "200" ] && [ "${attach_code}" != "201" ]; then
+              echo "Failed to attach custom domain (HTTP ${attach_code}):"
+              jq . /tmp/cf_attach.json || cat /tmp/cf_attach.json
+              exit 1
+            fi
+          fi
+
+      # --- Deploy ----------------------------------------------------------------
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: ${{ env.CF_PROJECT_NAME }}
+          directory: packages/docs/.vitepress/dist
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref_name }}
