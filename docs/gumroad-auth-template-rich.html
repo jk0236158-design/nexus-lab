@@ -1,0 +1,82 @@
+<h3>What's Included</h3>
+<p>A complete, production-ready MCP server template with authentication and security built in:</p>
+
+<p><strong>🔐 Dual Authentication</strong></p>
+<ul>
+  <li>API key authentication via <code>x-api-key</code> header</li>
+  <li>JWT Bearer token authentication with role claims</li>
+  <li>Constant-time key comparison to prevent timing attacks</li>
+  <li>Safe error messages that never leak internal details</li>
+</ul>
+
+<p><strong>🛡️ Role-Based Access Control</strong></p>
+<ul>
+  <li><code>admin</code> and <code>user</code> roles via JWT claims</li>
+  <li>Admin-only tool restriction (e.g., <code>generate-token</code>)</li>
+  <li>Auth context injected into every MCP tool handler</li>
+</ul>
+
+<p><strong>⚡ Rate Limiting</strong></p>
+<ul>
+  <li>In-memory sliding-window rate limiter per client</li>
+  <li>Configurable max requests and window duration</li>
+  <li>Standard <code>X-RateLimit-*</code> response headers</li>
+  <li>Automatic <code>429 Too Many Requests</code> with <code>Retry-After</code></li>
+</ul>
+
+<p><strong>🔧 2 Pre-built Tools</strong></p>
+<ul>
+  <li><code>whoami</code> — Returns the authenticated user's identity and auth method</li>
+  <li><code>generate-token</code> — Generates a JWT for a specified user (admin only)</li>
+</ul>
+
+<p><strong>📦 HTTP Transport</strong></p>
+<ul>
+  <li>Express-based Streamable HTTP server</li>
+  <li>CORS enabled out of the box</li>
+  <li><code>/health</code> endpoint for monitoring</li>
+  <li><code>/mcp</code> authenticated MCP endpoint</li>
+</ul>
+
+<p><strong>✅ Quality</strong></p>
+<ul>
+  <li>Full TypeScript with strict mode</li>
+  <li>Zod validation on all inputs</li>
+  <li>Secure error handling via <code>formatAuthError()</code></li>
+  <li>Vitest test suite included</li>
+</ul>
+
+<h3>How to Use</h3>
+<ol>
+  <li>Unzip the template</li>
+  <li>Run <code>npm install</code></li>
+  <li>Copy <code>.env.example</code> to <code>.env</code> and set <code>JWT_SECRET</code> and <code>API_KEYS</code></li>
+  <li>Run <code>npm run build</code></li>
+  <li>Run <code>npm start</code></li>
+</ol>
+<p>Your authenticated MCP server is running on <code>http://localhost:3000</code>.</p>
+
+<h3>Customize</h3>
+<ul>
+  <li>Edit <code>src/tools.ts</code> to add your own auth-protected tools</li>
+  <li>Edit <code>src/auth.ts</code> to add OAuth or other auth providers</li>
+  <li>Adjust rate limits via <code>RATE_LIMIT_MAX</code> and <code>RATE_LIMIT_WINDOW_MS</code> in <code>.env</code></li>
+</ul>
+
+<h3>Requirements</h3>
+<ul>
+  <li>Node.js 20+</li>
+  <li>TypeScript 5+</li>
+</ul>
+
+<h3>Why Pay?</h3>
+<p>The free templates (<code>npx @nexus-lab/create-mcp-server</code>) give you a solid starting point. This premium template saves you hours of:</p>
+<ul>
+  <li>Implementing secure authentication (API key + JWT)</li>
+  <li>Writing constant-time comparison and safe error handling</li>
+  <li>Setting up role-based access control</li>
+  <li>Building rate limiting middleware</li>
+  <li>Configuring Express with MCP SDK transport</li>
+</ul>
+
+<p>Made by <a href="https://github.com/jk0236158-design/nexus-lab">Nexus Lab</a> — tools for the Claude Code ecosystem.</p>
