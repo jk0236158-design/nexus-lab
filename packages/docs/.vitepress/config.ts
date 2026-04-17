@@ -6,6 +6,9 @@ export default defineConfig({
   lang: "en-US",
   lastUpdated: true,
   cleanUrls: true,
+  ignoreDeadLinks: [
+    /README(\.md)?$/,
+  ],
 
   head: [
     ["link", { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" }],
