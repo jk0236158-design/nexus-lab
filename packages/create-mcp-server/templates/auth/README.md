@@ -2,6 +2,15 @@
 
 A production-ready [Model Context Protocol](https://modelcontextprotocol.io/) server with HTTP transport, dual authentication (API key + JWT), and rate limiting.
 
+## Who this is for
+
+- **You're building:** a remote / HTTP MCP server that needs to keep unauthenticated callers out — internal tools exposed over the network, multi-tenant MCP endpoints, or anything shared across a small team.
+- **What it saves you:** the day you'd spend designing dual auth (API key + JWT), a rate limiter with correct headers, and the `formatAuthError()` layer that prevents internal messages from leaking to the client. Timing-safe key comparison and role-gated admin tools are already wired in.
+- **What's in the zip:** full scaffolded project — `src/` (index, auth, rate-limiter, tools), `.env.example` with every required secret, Vitest suite covering API key + JWT + rate-limit + role gating, TS config, `.gitignore`, and this README.
+- **Not a fit if:** you need OAuth 2.0 / OIDC / SSO integration, session cookies, or persistent rate-limit storage (Redis). The limiter is in-memory and resets on restart — swap it out before multi-instance deploys.
+- **Run it in 4 steps:** `npm install` → `cp .env.example .env` (set `JWT_SECRET` and `API_KEYS`) → `npm run build` → `npm start`. Server listens on `http://localhost:3000` by default.
+- **Next:** [get it on Gumroad](https://nexuslabzen.gumroad.com/l/dghzas) · scaffold via `npx @nexus-lab/create-mcp-server my-server --template auth` · [source on GitHub](https://github.com/nexus-lab-zen/nexus-lab).
+
 ## Quick Start
 
 ```bash

@@ -4,6 +4,7 @@ import chalk from "chalk";
 import { execSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import type { ProjectConfig } from "./prompts.js";
+import { getPremiumUrl } from "./premium-urls.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -14,16 +15,9 @@ function getTemplatesDir(): string {
   return fs.existsSync(devPath) ? devPath : srcPath;
 }
 
-const PREMIUM_TEMPLATES: Record<string, string> = {
-  database: "https://nexuslabzen.gumroad.com/l/ijuvn",
-  auth: "https://nexuslabzen.gumroad.com/l/dghzas",
-  "api-proxy": "https://nexuslabzen.gumroad.com",
-  api-proxy: "https://nexuslabzen.gumroad.com/l/bktllv",
-};
-
 export async function generateProject(config: ProjectConfig): Promise<void> {
   // Premium templates are not bundled — redirect to purchase page
-  const premiumUrl = PREMIUM_TEMPLATES[config.template];
+  const premiumUrl = getPremiumUrl(config.template);
   if (premiumUrl) {
     console.log();
     console.log(chalk.yellow.bold("  ★ Premium Template"));

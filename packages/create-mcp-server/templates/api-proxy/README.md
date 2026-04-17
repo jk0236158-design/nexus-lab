@@ -10,6 +10,15 @@ opinionated wrapper you own, with the agent-facing surface kept deliberately
 narrow so a confused or adversarial agent cannot pivot the proxy to arbitrary
 hosts or leak credentials.
 
+## Who this is for
+
+- **You're building:** an MCP server that lets an agent call a REST API you don't fully trust the agent to reason about — internal microservice, third-party SaaS, or any upstream where an agent sending the wrong URL would be expensive.
+- **What it saves you:** the iteration where your agent pivots `path` to `https://evil.example.com` and leaks your bearer token, the one where an upstream error leaks `ECONNREFUSED 10.0.0.5:443` into the agent's context, and the runaway retry loop that DOS'es your upstream. All three are closed at the edges before you ship.
+- **What's in the zip:** full scaffolded project — `src/` (index, proxy client with timeout / retry / rate limit, tools, error formatter, response sanitizer), `tests/` covering path pivot + secret redaction + rate-limit exhaustion + end-to-end MCP calls, `.env.example`, TS config, and this README.
+- **Not a fit if:** you want auto-generated tools from an OpenAPI spec (use `@orval/mcp`), you need streaming responses, or you're proxying binary / non-JSON payloads. Also not a fit as-is for multi-process deploys — the rate limiter is in-memory.
+- **Run it in 4 steps:** `npm install` → `cp .env.example .env` (set `UPSTREAM_BASE_URL`) → `npm run build` → register in your MCP client (`.mcp.json` or Claude Desktop config). Runs over stdio — no port exposed.
+- **Next:** [get it on Gumroad](https://nexuslabzen.gumroad.com/l/bktllv) · scaffold via `npx @nexus-lab/create-mcp-server my-server --template api-proxy` · [source on GitHub](https://github.com/nexus-lab-zen/nexus-lab).
+
 ## Quick Start
 
 ```bash

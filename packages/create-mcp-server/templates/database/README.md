@@ -2,6 +2,15 @@
 
 A production-ready [Model Context Protocol](https://modelcontextprotocol.io/) server with built-in SQLite database connectivity, powered by [Drizzle ORM](https://orm.drizzle.team/).
 
+## Who this is for
+
+- **You're building:** a Claude Code / Claude Desktop MCP server that needs to persist structured data, for your team or a small production use case.
+- **What it saves you:** the half-day of wiring Drizzle + SQLite + Zod + Vitest yourself, plus the mistakes you'd make on input caps, WAL mode, foreign keys, and isolated test setups. Parameterized queries are the default — you can't accidentally ship SQL built from string concatenation.
+- **What's in the zip:** full scaffolded project — `src/` (index, db, schema, tools, resources), `tests/tools.test.ts` with an in-memory DB helper, `drizzle.config.ts`, `vitest.config.ts`, `.env.example`, `.gitignore`, TS config, and this README.
+- **Not a fit if:** you need Postgres / MySQL from day one (SQLite only here), multi-writer / distributed workloads, or a visual admin UI beyond `drizzle-studio`.
+- **Run it in 4 steps:** `npm install` → `cp .env.example .env` → `npm run build` → `npm start`. The `notes` table is auto-created on first launch.
+- **Next:** [get it on Gumroad](https://nexuslabzen.gumroad.com/l/ijuvn) · scaffold via `npx @nexus-lab/create-mcp-server my-server --template database` · [source on GitHub](https://github.com/nexus-lab-zen/nexus-lab).
+
 ## Features
 
 - Type-safe CRUD with Drizzle ORM (full TypeScript inference on rows and inserts)

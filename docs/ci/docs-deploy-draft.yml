@@ -1,0 +1,83 @@
+# DRAFT — Cloudflare Pages deploy workflow
+# 置き場: このファイルはドラフト。本採用時に .github/workflows/docs-deploy.yml へ移す。
+#
+# 前提 (ジュン側の物理アクション待ち):
+#   - Cloudflare Registrar でドメイン取得済み
+#   - Cloudflare Pages プロジェクト作成済み (project name: 下の CF_PROJECT_NAME と一致させる)
+#   - GitHub Secrets に以下が登録済み:
+#       CLOUDFLARE_API_TOKEN   — Pages:Edit 権限のみのスコープ付きトークン
+#       CLOUDFLARE_ACCOUNT_ID  — Cloudflare account ID
+#   - GitHub Variables (Secrets ではない) に以下:
+#       CF_PROJECT_NAME        — Cloudflare Pages の project 名 (例: nexus-lab-docs)
+#
+# 境界の原則:
+#   - secret はコードに一切書かない。全て ${{ secrets.* }} / ${{ vars.* }} 経由
+#   - YouTube / broadcast-os 関連の secret はここに置かない (別 workflow 切り分け)
+#   - Gumroad は公開 URL のみ、secret 扱いしない
+
+name: docs-deploy (DRAFT)
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'packages/docs/**'
+      - 'packages/create-mcp-server/templates/*/README.md'
+      - 'docs/ci/docs-deploy-draft.yml' # 本採用後にパス差し替え
+      - 'functions/**'
+  workflow_dispatch: {}
+
+concurrency:
+  group: docs-deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  deployments: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+          cache-dependency-path: packages/docs/package-lock.json
+
+      - name: Install dependencies
+        working-directory: packages/docs
+        run: npm ci
+
+      - name: Build VitePress
+        working-directory: packages/docs
+        run: npm run build
+        # VitePress の出力先はデフォルトで .vitepress/dist
+
+      # Pages Functions (functions/) を build 成果物と同じディレクトリ配下に配置する。
+      # Cloudflare Pages は <output>/functions を自動で Functions として認識する。
+      - name: Stage Pages Functions
+        run: |
+          set -euo pipefail
+          if [ -d "functions" ]; then
+            mkdir -p packages/docs/.vitepress/dist/functions
+            cp -r functions/. packages/docs/.vitepress/dist/functions/
+          else
+            echo "No functions/ directory — skipping."
+          fi
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: ${{ vars.CF_PROJECT_NAME }}
+          directory: packages/docs/.vitepress/dist
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref_name }}
