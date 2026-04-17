@@ -32,6 +32,10 @@ def build_zip() -> int:
                     continue
                 full_path = Path(root) / f
                 arcname = full_path.relative_to(TEMPLATE_DIR).as_posix()
+                # CLI renames _gitignore → .gitignore, but Gumroad zip
+                # bypasses the CLI so we must rename here.
+                if arcname.endswith("_gitignore"):
+                    arcname = arcname.replace("_gitignore", ".gitignore")
                 zf.write(full_path, arcname)
                 files_added.append(arcname)
 
