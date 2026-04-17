@@ -1,0 +1,101 @@
+<h3>What's Included</h3>
+<p>A production-ready MCP server template that wraps a REST API with <strong>agent-specific safety</strong> baked in:</p>
+
+<p><strong>🛡️ Path Pivot Prevention</strong></p>
+<ul>
+  <li><code>path</code> inputs are validated by Zod — absolute URLs (<code>https://...</code>) and protocol-relative URLs (<code>//...</code>) are rejected</li>
+  <li>A confused or adversarial agent cannot redirect the proxy to an arbitrary host</li>
+  <li>Upstream credentials stay bound to the configured <code>UPSTREAM_BASE_URL</code></li>
+</ul>
+
+<p><strong>🔐 Recursive Secret Redaction</strong></p>
+<ul>
+  <li>Auth headers are attached by the proxy and never echoed in tool responses</li>
+  <li><code>sanitizeResponseBody</code> walks JSON responses recursively and replaces any occurrence of a configured secret with <code>[REDACTED]</code></li>
+  <li>Last-line-of-defence against upstream misconfiguration that echoes credentials</li>
+</ul>
+
+<p><strong>⚡ Rate Limiting &amp; Retries</strong></p>
+<ul>
+  <li>Per-process token-bucket rate limiter (<code>PROXY_RATE_LIMIT_MAX</code> / <code>PROXY_RATE_LIMIT_WINDOW_MS</code>)</li>
+  <li>Configurable timeout (<code>PROXY_TIMEOUT_MS</code>) and retry count (<code>PROXY_MAX_RETRIES</code>)</li>
+  <li>Retries on 5xx / 429 / abort; deterministic 4xx surfaced immediately</li>
+  <li>Stable <code>PROXY_RATE_LIMITED</code> / <code>PROXY_TIMEOUT</code> error codes</li>
+</ul>
+
+<p><strong>🔧 4 Pre-built Tools</strong></p>
+<ul>
+  <li><code>proxy-get</code> — GET against the configured upstream</li>
+  <li><code>proxy-post</code> — POST with optional JSON body</li>
+  <li><code>proxy-put</code> — PUT with optional JSON body</li>
+  <li><code>proxy-delete</code> — DELETE against the configured upstream</li>
+</ul>
+
+<p><strong>🛑 <code>formatProxyError()</code> — Internal Info Never Leaks</strong></p>
+<ul>
+  <li>Raw errors like <code>ECONNREFUSED 10.0.0.5:443</code> are classified and replaced with user-safe messages</li>
+  <li>No URLs, no tokens, no stack traces in agent-visible text</li>
+  <li>Same pattern as the <code>database</code> and <code>auth</code> templates — consistent across the Nexus Lab stack</li>
+</ul>
+
+<p><strong>📦 Stdio Transport</strong></p>
+<ul>
+  <li>Designed to be launched by an MCP client (Claude Desktop, Claude Code, etc.)</li>
+  <li>Drop-in <code>.mcp.json</code> registration with a single env var</li>
+  <li>No open ports, no exposed HTTP surface</li>
+</ul>
+
+<p><strong>✅ Quality</strong></p>
+<ul>
+  <li>Full TypeScript with strict mode</li>
+  <li>Zod validation on every tool input</li>
+  <li>Vitest suite covering URL building, header attachment, timeout/retry, rate-limit exhaustion, recursive secret redaction, and end-to-end MCP tool calls via <code>InMemoryTransport</code></li>
+  <li>Dependency injection for easy test swapping</li>
+</ul>
+
+<h3>How to Use</h3>
+<ol>
+  <li>Unzip the template</li>
+  <li>Run <code>npm install</code></li>
+  <li>Copy <code>.env.example</code> to <code>.env</code> and set <code>UPSTREAM_BASE_URL</code> (plus any <code>UPSTREAM_BEARER_TOKEN</code> / <code>UPSTREAM_API_KEY</code> the upstream needs)</li>
+  <li>Run <code>npm run build</code></li>
+  <li>Register the server in your MCP client's config (e.g., <code>.mcp.json</code> for Claude Code)</li>
+</ol>
+<p>Your agent-safe MCP proxy is live. Point Claude Code or any MCP-capable agent at it.</p>
+
+<h3>Customize</h3>
+<ul>
+  <li>Edit <code>src/tools.ts</code> to swap the 4 generic verbs for endpoint-scoped tools (recommended for production)</li>
+  <li>Adjust rate limits, timeout, and retries via env vars — no code changes</li>
+  <li><code>getSecretValues()</code> in <code>config.ts</code> is the hook for adding project-specific secrets to the redaction list</li>
+</ul>
+
+<h3>Why This Exists (Not Just Another OpenAPI Wrapper)</h3>
+<p>Automatic OpenAPI-to-MCP generators (like <code>@orval/mcp</code>) convert every endpoint into a tool. That is useful — and very different from what this template does.</p>
+<p>This template is for when you want to wrap <strong>only the endpoints an agent should see</strong>, with <strong>agent-specific safety</strong> baked in:</p>
+<ul>
+  <li>Upstream tokens must never reach the agent's context (recursive redaction)</li>
+  <li>The agent must not be able to redirect the proxy to another host (path pivot prevention)</li>
+  <li>The agent must not be able to trigger unbounded upstream load (rate limit)</li>
+  <li>Errors must be explainable without leaking internals (<code>formatProxyError()</code>)</li>
+</ul>
+<p>These are <em>agent-specific</em> concerns, and they are not solved by generic OpenAPI wrappers.</p>
+
+<h3>Requirements</h3>
+<ul>
+  <li>Node.js 20+</li>
+  <li>TypeScript 5+</li>
+</ul>
+
+<h3>Why Pay?</h3>
+<p>The free templates (<code>npx @nexus-lab/create-mcp-server</code>) give you a solid starting point. This premium template saves you hours — and prevents the kind of mistakes that are easy to ship and expensive to find later:</p>
+<ul>
+  <li>Designing path validation that actually stops pivot attacks</li>
+  <li>Writing recursive secret redaction that survives nested JSON</li>
+  <li>Building rate limiting and retry behavior tuned for agent workloads</li>
+  <li>Writing tests that exercise the safety properties, not just the happy path</li>
+  <li>Configuring <code>.env</code> for a secrets-first workflow</li>
+</ul>
+<p>You are paying for <strong>decisions</strong>, not code. Every design choice is documented in the README so you can audit and extend it.</p>
+
+<p>Made by <a href="https://github.com/jk0236158-design/nexus-lab">Nexus Lab</a> — tools for the Claude Code ecosystem.</p>

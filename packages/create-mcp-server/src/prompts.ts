@@ -4,7 +4,7 @@ import chalk from "chalk";
 export interface ProjectConfig {
   projectName: string;
   description: string;
-  template: "minimal" | "full" | "http" | "database" | "auth";
+  template: "minimal" | "full" | "http" | "database" | "auth" | "api-proxy";
   install: boolean;
   git: boolean;
 }
@@ -29,6 +29,10 @@ const TEMPLATES = [
   {
     title: `${chalk.bold.yellow("auth")} ${chalk.dim("— API Key + JWT auth + rate limiting")} ${chalk.yellow("★ Premium")}`,
     value: "auth",
+  },
+  {
+    title: `${chalk.bold.yellow("api-proxy")} ${chalk.dim("— Agent-safe REST API proxy + rate limiting")} ${chalk.yellow("★ Premium")}`,
+    value: "api-proxy",
   },
 ] as const;
 

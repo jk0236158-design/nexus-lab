@@ -17,6 +17,8 @@ function getTemplatesDir(): string {
 const PREMIUM_TEMPLATES: Record<string, string> = {
   database: "https://nexuslabzen.gumroad.com/l/ijuvn",
   auth: "https://nexuslabzen.gumroad.com/l/dghzas",
+  "api-proxy": "https://nexuslabzen.gumroad.com",
+  api-proxy: "https://nexuslabzen.gumroad.com/l/bktllv",
 };
 
 export async function generateProject(config: ProjectConfig): Promise<void> {
