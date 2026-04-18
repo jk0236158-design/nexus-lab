@@ -3,6 +3,7 @@ import {
   ProxyClient,
   RateLimiter,
   sanitizeResponseBody,
+  buildUrl,
   type FetchLike,
 } from "../src/proxy.js";
 import type { ProxyConfig } from "../src/config.js";
@@ -196,15 +197,32 @@ describe("ProxyClient.request", () => {
     ).rejects.toMatchObject({ code: "PROXY_RATE_LIMITED" });
   });
 
-  it("returns ok=false and surfaces the upstream status on a 4xx", async () => {
+  it("returns ok=false and a safe error payload on a 4xx, not the upstream body", async () => {
+    // v1.1.0: the upstream error body (which may carry stack traces,
+    // internal hosts, SQL errors, echoed credentials) must NOT be forwarded
+    // to the MCP client. Only a stable error code/message is returned.
     const client = new ProxyClient(baseConfig(), {
-      fetchImpl: makeFetch(mockJsonResponse({ error: "not found" }, 404)),
+      fetchImpl: makeFetch(
+        mockJsonResponse(
+          {
+            error: "not found",
+            stack: "at /srv/app/handlers/users.js:42\n  at db:10.0.0.5",
+            sql: "SELECT * FROM internal_users WHERE id=?",
+          },
+          404,
+        ),
+      ),
+      logUpstreamErrors: false,
     });
 
     const response = await client.request({ method: "GET", path: "/x" });
     expect(response.status).toBe(404);
     expect(response.ok).toBe(false);
-    expect(response.body).toEqual({ error: "not found" });
+    const body = response.body as Record<string, unknown>;
+    expect(body.error).toBe("UPSTREAM_NOT_FOUND");
+    expect(JSON.stringify(body)).not.toContain("stack");
+    expect(JSON.stringify(body)).not.toContain("10.0.0.5");
+    expect(JSON.stringify(body)).not.toContain("SELECT");
   });
 
   it("retries once on a 5xx when maxRetries=1 and returns the second response", async () => {

@@ -107,15 +107,65 @@ corresponds to a real agent failure mode observed in the wild.
 
 ### Path pivot prevention
 
-The agent cannot supply an absolute URL. The `path` input is validated by Zod
-and any value matching `scheme://...` or starting with `//` is rejected:
+The agent cannot escape the configured upstream. Before composition, the
+`path` input is validated along three axes:
 
-```
-path must be relative (no scheme/host); got an absolute URL
-```
+1. **Zod schema rejects** any value matching `scheme://...` or starting with
+   `//` (protocol-relative).
+2. **`assertSafeRelativePath`** decodes the path and rejects `.`, `..`, and
+   percent-encoded dot segments (`%2e%2e`, `%2E%2E`), null bytes, and
+   backslash traversal (`\..\admin`).
+3. **Post-composition origin + prefix check** — after resolving
+   `UPSTREAM_BASE_URL + path` through `URL`, the proxy asserts the composed
+   URL's origin matches the base origin AND its pathname starts with the
+   base path prefix. Any path that normalizes above the base (e.g. `/../x`
+   against `https://api.example.com/v1`) is refused.
 
 This means a compromised agent cannot convince the proxy to forward credentials
-to `evil.example.com`.
+to `evil.example.com`, nor pivot above the configured path prefix (a common
+way to reach admin endpoints on APIs that share a host with their public API).
+
+### Upstream error body is never forwarded verbatim
+
+On a non-2xx response, the proxy **does not** return the raw upstream body —
+it would risk leaking stack traces, internal hostnames, SQL errors, or echoed
+credentials into the agent's context. Instead:
+
+1. The raw body is logged server-side only (stderr), redacted if needed.
+2. The agent receives a stable, safe shape with a `UPSTREAM_*` error code:
+
+```json
+{ "status": 404, "ok": false, "body": { "error": "UPSTREAM_NOT_FOUND", "message": "Upstream resource was not found." } }
+```
+
+| Code | Meaning |
+|------|---------|
+| `UPSTREAM_BAD_REQUEST` | 400 |
+| `UPSTREAM_UNAUTHORIZED` | 401 |
+| `UPSTREAM_FORBIDDEN` | 403 |
+| `UPSTREAM_NOT_FOUND` | 404 |
+| `UPSTREAM_CONFLICT` | 409 |
+| `UPSTREAM_UNPROCESSABLE` | 422 |
+| `UPSTREAM_RATE_LIMITED` | 429 |
+| `UPSTREAM_SERVER_ERROR` | 5xx |
+| `UPSTREAM_REDIRECT_BLOCKED` | 3xx (refused — see below) |
+| `UPSTREAM_ERROR` | other non-ok |
+
+If you need specific upstream error shapes visible to the agent (and you've
+audited that upstream for leak risk), wrap a specific tool that transforms
+the response yourself — don't relax the generic proxy.
+
+### Redirects are refused, never followed
+
+`fetch` is called with `redirect: "manual"`. A 3xx response from the
+upstream — or any response with `type: "opaqueredirect"` — is mapped to
+`UPSTREAM_REDIRECT_BLOCKED` and the `Location` header is logged
+server-side only, never echoed to the agent. This exists because a default
+`redirect: "follow"` would drag `Authorization` / `x-api-key` headers to
+whatever host the upstream redirected to, **including an attacker-controlled
+one**. If your upstream legitimately returns redirects (e.g. a CDN with
+signed URLs), configure `UPSTREAM_BASE_URL` to the redirect target directly
+rather than relying on the proxy to chase redirects.
 
 ### Secret redaction
 
@@ -126,11 +176,14 @@ walks the JSON recursively and replaces any occurrence of a configured secret
 reaches the agent's context. This is a last-line-of-defence against upstream
 misconfiguration.
 
-### Rate limiting
+### Rate limiting (per attempt, not per request)
 
-An in-memory token bucket limits outbound requests per process. When the
-budget is exhausted, the tool returns a `PROXY_RATE_LIMITED` error with a
-retry hint. This protects upstream APIs from runaway agent loops.
+An in-memory token bucket limits **outbound fetch attempts** per process —
+not logical requests. That distinction matters: a retry-eligible 5xx
+response consumes a second token before the retry goes out, so
+`PROXY_MAX_RETRIES` cannot multiply the effective outbound budget. When
+the bucket is exhausted, the tool returns a `PROXY_RATE_LIMITED` error
+with a retry hint. This protects upstream APIs from runaway agent loops.
 
 ```
 PROXY_RATE_LIMITED: Too many requests while trying to fetch resource. Please wait and retry.
@@ -171,6 +224,30 @@ other than 429 are considered deterministic and surfaced immediately.
 | `PROXY_MAX_RETRIES` | No | `1` | Retries on 5xx / 429 / abort |
 | `PROXY_RATE_LIMIT_MAX` | No | `60` | Max requests per window |
 | `PROXY_RATE_LIMIT_WINDOW_MS` | No | `60000` | Window duration in ms |
+| `PROXY_DEBUG` | No | — | Set to `1` to include stack traces in startup errors (off by default to avoid secret leakage through error text) |
+
+### `UPSTREAM_BASE_URL` must not embed userinfo (breaking vs. v1.0.0)
+
+The server refuses to start if `UPSTREAM_BASE_URL` contains `user:pass@` —
+for example `https://alice:s3cret@api.example.com/v1`. Reason: that URL
+ends up in startup logs, config objects, and error chains; embedded
+credentials are a recurring real-world leak vector. Move the credentials
+to `UPSTREAM_BEARER_TOKEN` or `UPSTREAM_API_KEY` and keep
+`UPSTREAM_BASE_URL` limited to `scheme://host[:port]/path`.
+
+### Upstream redirects are refused (not followed)
+
+`fetch` is invoked with `redirect: "manual"`. Any 3xx response
+(301/302/303/307/308) — or any response with `type: "opaqueredirect"` —
+is mapped to `UPSTREAM_REDIRECT_BLOCKED` and the `Location` header is
+logged server-side only, never echoed to the agent. This is a hard
+requirement for the "secret-leak protection" property advertised above:
+a default `redirect: "follow"` would silently drag `Authorization` and
+`x-api-key` headers to whatever host the upstream redirected to,
+including an attacker-controlled one. If your upstream legitimately
+relies on redirects (e.g. a CDN returning signed URLs), point
+`UPSTREAM_BASE_URL` directly at the redirect target rather than asking
+the proxy to chase the 3xx.
 
 ## Testing
 
@@ -194,6 +271,29 @@ The suite covers:
 
 Set `UPSTREAM_BASE_URL` in `.env`. The server refuses to start without it —
 there is no useful default.
+
+### `Fatal error starting server: …` with no detail
+
+Startup errors (invalid URL, missing env) print a fixed, sanitized
+message by default to avoid leaking the offending value into logs. To
+see the full error including stack traces, set `PROXY_DEBUG=1` in the
+environment. Only do this in a trusted local shell — stack traces can
+contain internal hostnames, and a mistyped `UPSTREAM_BASE_URL` with an
+embedded token would appear verbatim.
+
+### `UPSTREAM_BASE_URL must not contain embedded userinfo`
+
+Upgrading from v1.0.0? `https://user:pass@host/v1` is no longer accepted
+(v1.1.0 breaking change). Move the credentials to `UPSTREAM_BEARER_TOKEN`
+or `UPSTREAM_API_KEY` and point `UPSTREAM_BASE_URL` at the plain
+`scheme://host[:port]/path`.
+
+### `UPSTREAM_REDIRECT_BLOCKED: Upstream attempted a redirect`
+
+The upstream returned a 3xx status. The proxy refuses to follow
+redirects on purpose (see "Upstream redirects are refused" above). If
+the upstream is supposed to return a signed URL or a different region,
+configure `UPSTREAM_BASE_URL` to the final destination directly.
 
 ### `path must be relative (no scheme/host)`
 

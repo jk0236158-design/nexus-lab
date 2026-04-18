@@ -1,6 +1,6 @@
 {
   "name": "my-mcp-server",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "description": "MCP server with HTTP transport, authentication, and rate limiting",
   "main": "dist/index.js",

@@ -3,10 +3,6 @@ import { z } from "zod";
 import type { StringValue } from "ms";
 import { generateToken, type AuthUser } from "./auth.js";
 
-/**
- * Classify a thrown auth/token error. Returns a user-safe message
- * and never leaks internal details (secret paths, stack traces, etc.).
- */
 function formatAuthError(error: unknown, action: string): string {
   if (
     error !== null &&
@@ -26,52 +22,22 @@ function formatAuthError(error: unknown, action: string): string {
 }
 
 /**
- * Thread-local storage for the current request's authenticated user.
- * Set by the transport handler before each MCP request is processed.
+ * Registers all MCP tools on the given server instance, scoped to a single
+ * authenticated user. The user is captured in closures, so concurrent
+ * requests each get their own server/tool pair and never observe each
+ * other's identity or role.
  */
-let currentUser: AuthUser | undefined;
-
-/**
- * Sets the authenticated user context for the current request.
- * Must be called before the MCP server processes the request.
- */
-export function setCurrentUser(user: AuthUser | undefined): void {
-  currentUser = user;
-}
-
-/**
- * Registers all MCP tools on the given server instance.
- */
-export function registerTools(server: McpServer): void {
-  /**
-   * whoami — Returns information about the currently authenticated user.
-   * Available to any authenticated user.
-   */
+export function registerTools(server: McpServer, user: AuthUser): void {
   server.tool("whoami", "Returns the authenticated user information", {}, () => {
-    if (!currentUser) {
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(
-              { error: "No authenticated user in context" },
-              null,
-              2,
-            ),
-          },
-        ],
-      };
-    }
-
     return {
       content: [
         {
           type: "text",
           text: JSON.stringify(
             {
-              id: currentUser.id,
-              role: currentUser.role,
-              authMethod: currentUser.authMethod,
+              id: user.id,
+              role: user.role,
+              authMethod: user.authMethod,
             },
             null,
             2,
@@ -81,10 +47,6 @@ export function registerTools(server: McpServer): void {
     };
   });
 
-  /**
-   * generate-token — Generates a JWT for a specified user.
-   * Restricted to admin users only.
-   */
   server.tool(
     "generate-token",
     "Generates a JWT token for a given user (admin only)",
@@ -102,8 +64,7 @@ export function registerTools(server: McpServer): void {
         ),
     },
     ({ userId, role, expiresIn }) => {
-      // Authorization check: only admins can generate tokens
-      if (!currentUser || currentUser.role !== "admin") {
+      if (user.role !== "admin") {
         return {
           content: [
             {
@@ -134,7 +95,7 @@ export function registerTools(server: McpServer): void {
                   userId,
                   role,
                   expiresIn,
-                  generatedBy: currentUser.id,
+                  generatedBy: user.id,
                 },
                 null,
                 2,

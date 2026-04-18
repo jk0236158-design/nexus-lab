@@ -1,6 +1,6 @@
 {
   "name": "my-mcp-server",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "description": "Agent-safe MCP proxy for a REST API, with rate limiting and secret-leak protection",
   "main": "dist/index.js",

@@ -75,14 +75,25 @@ import { generateToken } from "./auth.js";
 const token = generateToken("user-id", "admin", "24h");
 ```
 
-## Rate Limiting
+## Rate Limiting (two layers)
 
-In-memory rate limiting is applied per authenticated client. Configure via environment:
+Rate limiting is applied in **two layers** so unauthenticated floods cannot
+brute-force the auth layer at full throttle:
+
+1. **Pre-auth**, keyed by client IP, enforced **before** `authMiddleware`.
+   Invalid API keys, bad JWTs, and missing credentials all consume this
+   bucket. Default: 30 requests / minute.
+2. **Post-auth**, keyed by authenticated user / API-key prefix, enforced
+   **after** `authMiddleware`. Default: 100 requests / minute per user.
+
+Configure via environment:
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `RATE_LIMIT_MAX` | `100` | Max requests per window |
-| `RATE_LIMIT_WINDOW_MS` | `60000` | Window duration in ms |
+| `PREAUTH_RATE_LIMIT_MAX` | `30` | Max unauthenticated attempts per IP per window |
+| `PREAUTH_RATE_LIMIT_WINDOW_MS` | `60000` | Pre-auth window in ms |
+| `RATE_LIMIT_MAX` | `100` | Max authenticated requests per user per window |
+| `RATE_LIMIT_WINDOW_MS` | `60000` | Post-auth window in ms |
 
 Response headers on every request:
 
@@ -91,6 +102,26 @@ Response headers on every request:
 - `X-RateLimit-Reset` — Seconds until window resets
 
 When exceeded, returns `429 Too Many Requests` with a `Retry-After` header.
+
+## CORS (opt-in, allowlist-only)
+
+The server authenticates via `Authorization` / `x-api-key` headers. A
+permissive `Access-Control-Allow-Origin: *` would let any origin's browser
+replay those credentials on behalf of a logged-in user — so the template
+**does not** enable CORS by default.
+
+To enable CORS, set `CORS_ORIGINS` to a comma-separated allowlist:
+
+```
+CORS_ORIGINS=https://app.example.com,https://admin.example.com
+```
+
+Only origins in the allowlist receive CORS headers; non-matching origins
+are silently denied. Credentials mode is enabled for allowed origins so
+cookies / Authorization headers can be forwarded.
+
+If the server is only ever called by non-browser MCP clients, leave
+`CORS_ORIGINS` empty — CORS will be disabled entirely.
 
 ## Available Tools
 
@@ -122,8 +153,12 @@ Generates a JWT for a specified user. **Admin only.**
 | `PORT` | No | `3000` | Server port |
 | `API_KEYS` | Yes* | — | Comma-separated valid API keys |
 | `JWT_SECRET` | Yes* | — | Secret for signing/verifying JWTs |
-| `RATE_LIMIT_MAX` | No | `100` | Rate limit max requests |
-| `RATE_LIMIT_WINDOW_MS` | No | `60000` | Rate limit window (ms) |
+| `PREAUTH_RATE_LIMIT_MAX` | No | `30` | Pre-auth (IP) max requests |
+| `PREAUTH_RATE_LIMIT_WINDOW_MS` | No | `60000` | Pre-auth window (ms) |
+| `RATE_LIMIT_MAX` | No | `100` | Post-auth (user) max requests |
+| `RATE_LIMIT_WINDOW_MS` | No | `60000` | Post-auth window (ms) |
+| `CORS_ORIGINS` | No | — | Comma-separated allowlist; empty = CORS disabled |
+| `BODY_LIMIT` | No | `1mb` | Max accepted JSON body size (e.g. `1mb`, `512kb`) |
 
 *At least one auth method must be configured.
 

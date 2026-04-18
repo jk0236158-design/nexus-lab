@@ -153,7 +153,12 @@ describe("registerTools (MCP end-to-end)", () => {
     const parsed = JSON.parse(textOf(result));
     expect(parsed.status).toBe(404);
     expect(parsed.ok).toBe(false);
-    expect(parsed.body).toEqual({ error: "not found" });
+    // v1.1.0: upstream body is replaced with a safe error shape. The
+    // original body's `error: "not found"` is dropped; only the stable
+    // UPSTREAM_NOT_FOUND code remains.
+    expect(parsed.body.error).toBe("UPSTREAM_NOT_FOUND");
+    expect(parsed.body).not.toHaveProperty("stack");
+    expect(parsed.body).not.toHaveProperty("sql");
   });
 
   it("returns PROXY_RATE_LIMITED once the bucket is exhausted", async () => {

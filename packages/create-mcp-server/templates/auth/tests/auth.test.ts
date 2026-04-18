@@ -169,3 +169,84 @@ describe("generateToken", () => {
     expect(decoded.role).toBe("user");
   });
 });
+
+describe("JWT algorithm pinning (alg-confusion defence)", () => {
+  it("rejects tokens with alg:none", () => {
+    // Forge an unsigned token the way a naive verifier would accept.
+    const header = Buffer.from(
+      JSON.stringify({ alg: "none", typ: "JWT" }),
+    ).toString("base64url");
+    const payload = Buffer.from(
+      JSON.stringify({ sub: "attacker", role: "admin" }),
+    ).toString("base64url");
+    const noneToken = `${header}.${payload}.`;
+
+    const req = createMockReq({ authorization: `Bearer ${noneToken}` });
+    const res = createMockRes();
+    const next = vi.fn();
+
+    authMiddleware(req, res, next);
+
+    expect(next).not.toHaveBeenCalled();
+    expect(res.statusCode).toBe(401);
+    expect(req.user).toBeUndefined();
+  });
+
+  it("rejects tokens signed with a non-HS256 algorithm even if the signature is valid", () => {
+    // RS256 etc. must be rejected because our server is HMAC-only. A JWT
+    // signed with HS512 using the same secret should also be refused —
+    // the algorithms allowlist pins the exact alg, not just "HMAC".
+    const hs512 = jwt.sign(
+      { sub: "attacker", role: "admin" },
+      TEST_JWT_SECRET,
+      { algorithm: "HS512" },
+    );
+
+    const req = createMockReq({ authorization: `Bearer ${hs512}` });
+    const res = createMockRes();
+    const next = vi.fn();
+
+    authMiddleware(req, res, next);
+
+    expect(next).not.toHaveBeenCalled();
+    expect(res.statusCode).toBe(401);
+    expect(res.body.error).toBe("Invalid token");
+  });
+
+  it("accepts tokens issued by generateToken (HS256 roundtrip)", () => {
+    // Sanity: our own issuer must produce a token the verifier accepts.
+    const token = generateToken("user-42", "user", "1h");
+    const req = createMockReq({ authorization: `Bearer ${token}` });
+    const res = createMockRes();
+    const next = vi.fn();
+
+    authMiddleware(req, res, next);
+
+    expect(next).toHaveBeenCalledOnce();
+    expect(req.user.id).toBe("user-42");
+  });
+});
+
+describe("API key validation does not short-circuit on length", () => {
+  it("rejects a short invalid key (length != any valid key) without leaking length", () => {
+    const req = createMockReq({ "x-api-key": "a" });
+    const res = createMockRes();
+    const next = vi.fn();
+
+    authMiddleware(req, res, next);
+
+    expect(next).not.toHaveBeenCalled();
+    expect(res.statusCode).toBe(401);
+  });
+
+  it("rejects a long invalid key without throwing", () => {
+    const req = createMockReq({ "x-api-key": "x".repeat(256) });
+    const res = createMockRes();
+    const next = vi.fn();
+
+    authMiddleware(req, res, next);
+
+    expect(next).not.toHaveBeenCalled();
+    expect(res.statusCode).toBe(401);
+  });
+});

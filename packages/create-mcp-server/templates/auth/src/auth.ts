@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import type { StringValue } from "ms";
-import { timingSafeEqual } from "node:crypto";
+import { createHash, timingSafeEqual } from "node:crypto";
 
 /**
  * Authenticated user context attached to the request.
@@ -49,31 +49,43 @@ function getValidApiKeys(): Set<string> {
 
 /**
  * Validates an API key against the configured key list.
- * Uses constant-time comparison to mitigate timing attacks.
+ *
+ * Timing-safe by construction: we SHA-256 both the input and every valid
+ * key before comparison, so every `timingSafeEqual` call runs on equal
+ * 32-byte buffers. This removes the length side-channel that a naive
+ * `inputBuf.length === validBuf.length` early-return leaks, and the
+ * accumulator avoids a short-circuit on the first match (each candidate
+ * costs the same wall time regardless of where the match lives).
  */
 function validateApiKey(key: string): boolean {
   const validKeys = getValidApiKeys();
   if (validKeys.size === 0) return false;
 
-  const inputBuf = Buffer.from(key);
+  const inputDigest = createHash("sha256").update(key).digest();
+  let matched = false;
   for (const validKey of validKeys) {
-    const validBuf = Buffer.from(validKey);
-    if (
-      inputBuf.length === validBuf.length &&
-      timingSafeEqual(inputBuf, validBuf)
-    ) {
-      return true;
+    const validDigest = createHash("sha256").update(validKey).digest();
+    if (timingSafeEqual(inputDigest, validDigest)) {
+      matched = true;
     }
   }
-  return false;
+  return matched;
 }
 
 /**
  * Verifies a JWT token and returns the decoded payload.
+ *
+ * `algorithms: ["HS256"]` is pinned explicitly to defuse the alg-confusion
+ * family of attacks: without it, a token with `alg: "none"` (unsigned) or
+ * `alg: "RS256"` (where an attacker could get the server to treat the HMAC
+ * secret as an RSA public key) could pass verification. We sign with HS256
+ * in `generateToken`; we accept only HS256 here.
  */
 function verifyJwt(token: string): AuthUser {
   const secret = getJwtSecret();
-  const decoded = jwt.verify(token, secret) as jwt.JwtPayload;
+  const decoded = jwt.verify(token, secret, {
+    algorithms: ["HS256"],
+  }) as jwt.JwtPayload;
 
   return {
     id: decoded.sub ?? "unknown",
@@ -159,5 +171,10 @@ export function generateToken(
   expiresIn: StringValue | number = "24h",
 ): string {
   const secret = getJwtSecret();
-  return jwt.sign({ sub: userId, role }, secret, { expiresIn });
+  // Pin HS256 on signing too, so issued tokens match exactly what
+  // `verifyJwt` will accept.
+  return jwt.sign({ sub: userId, role }, secret, {
+    expiresIn,
+    algorithm: "HS256",
+  });
 }
