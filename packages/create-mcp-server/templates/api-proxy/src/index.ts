@@ -10,7 +10,9 @@ const client = new ProxyClient(config);
 
 const server = new McpServer({
   name: "my-mcp-server",
-  version: "1.0.0",
+  // Must track `package.json` version. Hardcoded rather than read from
+  // package.json to keep the template free of filesystem JSON imports.
+  version: "1.1.1",
 });
 
 registerTools(server, client);

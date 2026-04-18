@@ -4,6 +4,7 @@ import {
   RateLimiter,
   buildUrl,
   sanitizePathForLog,
+  sanitizeBodySnippetForLog,
   type FetchLike,
 } from "../src/proxy.js";
 import {
@@ -294,6 +295,43 @@ describe("Config startup-log masking", () => {
       expect(message).not.toContain(secretLookingUrl);
     }
   });
+
+  // Codex 9th-pass P1: UPSTREAM_BASE_URL with query / hash opened a secret
+  // leak path (string-concat with agent path would sandwich the secret
+  // between base and path, and the secret would not be enrolled in
+  // getSecretValues() so redactString would fail closed on it). Reject at
+  // startup — align with the documented `scheme://host[:port]/path` shape.
+  it("loadConfig rejects UPSTREAM_BASE_URL with a query string (Codex 9th-pass P1)", () => {
+    expect(() =>
+      loadConfig({
+        UPSTREAM_BASE_URL: "https://api.example.com/v1?api_key=SECRET",
+      } as NodeJS.ProcessEnv),
+    ).toThrow(/query string or fragment/i);
+  });
+
+  it("loadConfig rejects UPSTREAM_BASE_URL with a fragment (Codex 9th-pass P1)", () => {
+    expect(() =>
+      loadConfig({
+        UPSTREAM_BASE_URL: "https://api.example.com/v1#token=SECRET",
+      } as NodeJS.ProcessEnv),
+    ).toThrow(/query string or fragment/i);
+  });
+
+  it("loadConfig rejects UPSTREAM_BASE_URL with both query and fragment (Codex 9th-pass P1)", () => {
+    expect(() =>
+      loadConfig({
+        UPSTREAM_BASE_URL: "https://api.example.com/v1?k=1#frag",
+      } as NodeJS.ProcessEnv),
+    ).toThrow(/query string or fragment/i);
+  });
+
+  it("loadConfig accepts clean UPSTREAM_BASE_URL without query/fragment (no regression)", () => {
+    expect(() =>
+      loadConfig({
+        UPSTREAM_BASE_URL: "https://api.example.com/v1",
+      } as NodeJS.ProcessEnv),
+    ).not.toThrow();
+  });
 });
 
 describe("Redirect handling (never follow — credential-leak defence)", () => {
@@ -312,7 +350,13 @@ describe("Redirect handling (never follow — credential-leak defence)", () => {
     await client.request({ method: "GET", path: "/x" });
 
     expect(capturedInit).not.toBeNull();
-    expect((capturedInit as RequestInit).redirect).toBe("manual");
+    // Narrow for strict TS: the `not.toBeNull` above guarantees this at
+    // runtime, but the compiler still sees `RequestInit | null`. Use a
+    // runtime guard so `tsc --noEmit` on tests is clean (Codex 8th-pass
+    // P3).
+    if (capturedInit === null) throw new Error("capturedInit is null");
+    const init: RequestInit = capturedInit;
+    expect(init.redirect).toBe("manual");
   });
 
   it("refuses a 302 and returns UPSTREAM_REDIRECT_BLOCKED instead of following", async () => {
@@ -1030,7 +1074,10 @@ describe("scrubError: deep chains and stack redaction (P1 #3)", () => {
       let walked = 0;
       while (node instanceof Error && walked < 20) {
         expect(node.message, `level ${walked}`).not.toContain(secret);
-        const next = (node as Error & { cause?: unknown }).cause;
+        // Explicit `unknown` annotation so strict TS does not try to
+        // infer `next`'s type from its own initializer (Codex 8th-pass
+        // P3 — TS7022 with strict + noImplicitAny on tests).
+        const next: unknown = (node as Error & { cause?: unknown }).cause;
         node = next instanceof Error ? next : undefined;
         walked++;
       }
@@ -1169,5 +1216,344 @@ describe("scrubError: deep chains and stack redaction (P1 #3)", () => {
       );
       expect(e.message).not.toContain(secret);
     }
+  });
+});
+
+describe("Body snippet sanitization — URL-encoded variants (v1.1.1 Codex 7th-pass)", () => {
+  // v1.1.0 fixed pathname-level URL-encoded secret leaks. v1.1.1 closes
+  // the symmetric hole on the body-snippet log path: `readBodySnippetForLog`
+  // previously ran `redactString(text, secrets)`, which is literal match.
+  // An upstream that echoes a configured secret into an error body in
+  // URL-encoded form (`tok%2Fabc` for `tok/abc`) or percent-encoded byte
+  // sequence (`%74%6F%6B%2D%78%79%7A`) slipped through to console.error.
+
+  it("redacts URL-encoded configured secret from the logged body snippet", async () => {
+    // Configured secret contains `/`, so literal-match catches the raw
+    // form but not the `%2F` variant. sanitizeBodySnippetForLog must
+    // catch both.
+    const secret = "tok/abc-v1-1-1";
+    const errorBody = `{"debug":"token=tok%2Fabc-v1-1-1 echoed by upstream"}`;
+    const response = new Response(errorBody, {
+      status: 500,
+      headers: { "content-type": "application/json" },
+    });
+
+    const logged: string[] = [];
+    const originalError = console.error;
+    console.error = (...args: unknown[]) => {
+      logged.push(args.map((a) => String(a)).join(" "));
+    };
+
+    try {
+      const client = new ProxyClient(baseConfig({ bearerToken: secret }), {
+        fetchImpl: (async () => response) as FetchLike,
+        logUpstreamErrors: true,
+      });
+      const result = await client.request({ method: "GET", path: "/x" });
+      expect(result.ok).toBe(false);
+
+      const joined = logged.join("\n");
+      // Neither raw nor URL-encoded form of the secret may appear.
+      expect(joined).not.toContain(secret);
+      expect(joined).not.toContain("tok%2Fabc-v1-1-1");
+      // Coarse drop marker present.
+      expect(joined).toContain("[REDACTED-BODY encoded-secret]");
+    } finally {
+      console.error = originalError;
+    }
+  });
+
+  it("redacts byte-by-byte percent-encoded secret from the logged body snippet", async () => {
+    // An adversarial upstream that echoes `%74%6F%6B...` byte-encoded
+    // would also bypass literal match. The decode-then-check path
+    // catches this class.
+    const secret = "tok-byte-enc";
+    // Percent-encode every byte of the secret to force the literal
+    // match to miss.
+    const encoded = Array.from(secret)
+      .map((ch) => `%${ch.charCodeAt(0).toString(16).toUpperCase()}`)
+      .join("");
+    const errorBody = `{"debug":"${encoded}"}`;
+    const response = new Response(errorBody, {
+      status: 500,
+      headers: { "content-type": "application/json" },
+    });
+
+    const logged: string[] = [];
+    const originalError = console.error;
+    console.error = (...args: unknown[]) => {
+      logged.push(args.map((a) => String(a)).join(" "));
+    };
+
+    try {
+      const client = new ProxyClient(baseConfig({ bearerToken: secret }), {
+        fetchImpl: (async () => response) as FetchLike,
+        logUpstreamErrors: true,
+      });
+      await client.request({ method: "GET", path: "/x" });
+
+      const joined = logged.join("\n");
+      expect(joined).not.toContain(secret);
+      expect(joined).not.toContain(encoded);
+      expect(joined).toContain("[REDACTED-BODY encoded-secret]");
+    } finally {
+      console.error = originalError;
+    }
+  });
+
+  it("does not throw on malformed percent-encoding in the body (binary-ish payload)", () => {
+    // Error bodies routinely contain bytes that aren't valid URL-encoding
+    // (orphan `%`, `%GG`, non-UTF-8 fragments). The helper must return
+    // the literal-redacted form rather than propagate the decode
+    // exception — symmetric to the path-side malformed handler, but
+    // tuned for body bytes where malformed is *expected*, not hostile.
+    const secret = "tok-bin";
+    const malformed = `raw bytes: \x80\xFF %GG %%%% and a literal ${secret} somewhere`;
+
+    // Must not throw.
+    const out = sanitizeBodySnippetForLog(malformed, [secret]);
+
+    // Literal occurrence still redacted.
+    expect(out).not.toContain(secret);
+    expect(out).toContain("[REDACTED]");
+    // Malformed input should NOT coarse-drop the body (unlike the path
+    // helper, which returns [REDACTED-MALFORMED-PATH] on %GG). Body
+    // debugging info is preserved so long as no encoded secret was
+    // actually detectable.
+    expect(out).not.toBe("[REDACTED-BODY encoded-secret]");
+  });
+
+  it("does not coarse-drop ordinary JSON error bodies with no encoded secret", () => {
+    // False-positive guard: a body with `%` characters but no configured
+    // secret (and no encoding of one) must pass through literal-redaction
+    // only — debuggability is preserved.
+    const secret = "tok-unrelated";
+    const body = `{"error":"100% failure rate","code":"E_STUFF","retry":42}`;
+
+    const out = sanitizeBodySnippetForLog(body, [secret]);
+    // Normal body content unchanged.
+    expect(out).toContain("100% failure rate");
+    expect(out).toContain("E_STUFF");
+    expect(out).not.toContain("[REDACTED-BODY encoded-secret]");
+  });
+
+  it("does not false-positive when decoded body contains a substring that only coincidentally matches part of a secret", () => {
+    // Guardrail: the decoded-check uses `.includes(secret)`. If the body
+    // literally contains a non-secret string that, when decoded, equals
+    // a configured secret, we'd coarse-drop. Verify the ordinary case
+    // (configured secret absent in both raw and decoded forms) stays
+    // untouched.
+    const secret = "never-appears-token-zzz";
+    const body = `{"items":[{"id":1,"path":"/a%2Fb/c"}]}`;
+
+    const out = sanitizeBodySnippetForLog(body, [secret]);
+    expect(out).toBe(body);
+  });
+
+  it("handles an empty secret list as a no-op", () => {
+    const body = `{"error":"x","debug":"tok%2Fabc"}`;
+    const out = sanitizeBodySnippetForLog(body, []);
+    expect(out).toBe(body);
+  });
+
+  it("still catches literal secrets via the existing first pass (regression)", () => {
+    // Make sure introducing the decoded-check didn't regress the
+    // literal-match path.
+    const secret = "tok-literal-still-works";
+    const body = `{"debug":"Bearer ${secret}"}`;
+
+    const out = sanitizeBodySnippetForLog(body, [secret]);
+    expect(out).not.toContain(secret);
+    expect(out).toContain("[REDACTED]");
+  });
+
+  it("end-to-end: percent-encoded secret in non-ok body never reaches console.error raw", async () => {
+    // Full request path (not just the helper): configured secret echoed
+    // into a 500 response body in URL-encoded form. Verifies the
+    // ProxyClient now composes sanitizeBodySnippetForLog, not plain
+    // redactString, before calling console.error.
+    const secret = "tok-e2e-enc";
+    const encoded = encodeURIComponent(secret); // standard percent-encoding
+    const errorBody = `<html><body>token=${encoded}</body></html>`;
+    const response = new Response(errorBody, {
+      status: 500,
+      headers: { "content-type": "text/html" },
+    });
+
+    const logged: string[] = [];
+    const originalError = console.error;
+    console.error = (...args: unknown[]) => {
+      logged.push(args.map((a) => String(a)).join(" "));
+    };
+
+    try {
+      const client = new ProxyClient(baseConfig({ bearerToken: secret }), {
+        fetchImpl: (async () => response) as FetchLike,
+        logUpstreamErrors: true,
+      });
+      await client.request({ method: "GET", path: "/x" });
+
+      const joined = logged.join("\n");
+      expect(joined).not.toContain(secret);
+      expect(joined).not.toContain(encoded);
+    } finally {
+      console.error = originalError;
+    }
+  });
+});
+
+describe("Body snippet sanitization — malformed % + encoded secret coexistence (v1.1.1 Codex 8th-pass)", () => {
+  // Codex 8th-pass broke the v1.1.1 initial design: its `sanitizeBody-
+  // SnippetForLog` ran `decodeURIComponent` on the whole literal-
+  // redacted body and silently fell back to the literal form on throw.
+  // A malformed `%` anywhere in the body (attacker-controlled — the
+  // upstream emits this) threw the decode and disabled the encoded-
+  // secret check. The redesigned helper (Approach B + lenient decode)
+  // must catch the encoded secret regardless of malformed `%` noise.
+
+  it("basic: malformed %GG elsewhere does NOT prevent encoded-secret detection", () => {
+    // The exact Codex attack reproduction.
+    const secret = "tok/abc";
+    const body = "%GG token=tok%2Fabc";
+
+    const out = sanitizeBodySnippetForLog(body, [secret]);
+
+    // Must coarse-drop — the encoded secret was present alongside
+    // malformed %, and v1.1.1 initial design would have leaked here.
+    expect(out).toBe("[REDACTED-BODY encoded-secret]");
+    // Belt-and-braces: neither raw nor encoded form in output.
+    expect(out).not.toContain("tok/abc");
+    expect(out).not.toContain("tok%2Fabc");
+    expect(out).not.toContain("tok%2fabc");
+  });
+
+  it("prefix-malformed: malformed % at the start of the body does not gate the encoded-secret check", () => {
+    // Put the malformed % *before* the encoded secret so that any
+    // streaming / left-to-right decoder would abort before reaching
+    // the secret. The Codex-recommended approach B (literal variant
+    // search) does not care about position.
+    const secret = "bearer-xyz-123";
+    const encoded = encodeURIComponent(secret); // no special chars -> same as secret
+    // Make a more interesting case: secret contains `/`.
+    const secretWithSlash = "bearer/xyz/123";
+    const encodedWithSlash = encodeURIComponent(secretWithSlash); // bearer%2Fxyz%2F123
+    const body = `%%%%%%malformed trailer% %G0 %ZZ header=${encodedWithSlash} rest`;
+
+    const out = sanitizeBodySnippetForLog(body, [secretWithSlash]);
+
+    expect(out).toBe("[REDACTED-BODY encoded-secret]");
+    expect(out).not.toContain(secretWithSlash);
+    expect(out).not.toContain(encodedWithSlash);
+    expect(out).not.toContain(encodedWithSlash.toLowerCase());
+    // Unused-var guard so Node does not complain about the unused
+    // alternative secret form declared above.
+    expect(secret).not.toBe("");
+    expect(encoded).not.toBe("");
+  });
+
+  it("interleaved: malformed % adjacent to a byte-by-byte encoded secret still triggers coarse-drop", () => {
+    // Byte-by-byte encoded secret with malformed % noise interleaved.
+    // Adversarial shape: each malformed `%` would independently throw
+    // decodeURIComponent, but the variant-literal search is immune.
+    const secret = "tok-byte-mal";
+    // byte-by-byte uppercase: %74%6F%6B%2D%62%79%74%65%2D%6D%61%6C
+    const byteEncoded = Array.from(secret)
+      .map((ch) => `%${ch.charCodeAt(0).toString(16).toUpperCase()}`)
+      .join("");
+    // Stuff malformed % before, after, AND in-between the body chunks.
+    // Note: we do NOT split the byte-encoded run itself (that would
+    // change its shape). We surround it.
+    const body = `%G1 debug=%HHbefore ${byteEncoded} %9Zafter %%`;
+
+    const out = sanitizeBodySnippetForLog(body, [secret]);
+
+    expect(out).toBe("[REDACTED-BODY encoded-secret]");
+    expect(out).not.toContain(secret);
+    expect(out).not.toContain(byteEncoded);
+    expect(out).not.toContain(byteEncoded.toLowerCase());
+  });
+
+  it("lowercase-hex variant: %2f is caught case-insensitively even with malformed context", () => {
+    // Adversary emits lowercase hex AND puts a malformed % near it.
+    // v1.1.1 initial design: literal search would miss %2f (only %2F
+    // was precomputable), decode throws on %G1 → leak. Redesign: case-
+    // insensitive literal search catches %2f, and even if it didn't,
+    // the lenient decoder (which is case-insensitive and doesn't throw)
+    // would still catch it.
+    const secret = "tok/case";
+    const body = "%G1 debug=tok%2fcase trailer";
+
+    const out = sanitizeBodySnippetForLog(body, [secret]);
+
+    expect(out).toBe("[REDACTED-BODY encoded-secret]");
+    expect(out).not.toContain(secret);
+    expect(out).not.toContain("tok%2fcase");
+  });
+
+  it("mixed encoding: tok%2F%61bc decodes to tok/abc — lenient-decode fallback catches it", () => {
+    // Half-literal, half-encoded form: `%61` is `a`. encodeURIComponent
+    // would emit `tok%2Fabc` (not this form), so the precomputed-variant
+    // search misses. The lenient decoder must catch it, and must not
+    // be gated by the malformed % next door.
+    const secret = "tok/abc";
+    const body = "%ZZ junk=tok%2F%61bc remainder";
+
+    const out = sanitizeBodySnippetForLog(body, [secret]);
+
+    expect(out).toBe("[REDACTED-BODY encoded-secret]");
+    expect(out).not.toContain("tok%2F%61bc");
+    expect(out).not.toContain(secret);
+  });
+
+  it("end-to-end: malformed % + encoded secret in a 500 body never reaches console.error raw", async () => {
+    // Full request path: configured secret echoed in encoded form next
+    // to a malformed %. Before the Codex 8th-pass fix, the helper
+    // returned the literal-redacted body (encoded secret still
+    // present) and console.error logged it verbatim.
+    const secret = "tok/e2e-mal";
+    const encoded = encodeURIComponent(secret);
+    const errorBody = `%GG leading malformed then debug=${encoded} trailing`;
+    const response = new Response(errorBody, {
+      status: 500,
+      headers: { "content-type": "text/plain" },
+    });
+
+    const logged: string[] = [];
+    const originalError = console.error;
+    console.error = (...args: unknown[]) => {
+      logged.push(args.map((a) => String(a)).join(" "));
+    };
+
+    try {
+      const client = new ProxyClient(baseConfig({ bearerToken: secret }), {
+        fetchImpl: (async () => response) as FetchLike,
+        logUpstreamErrors: true,
+      });
+      await client.request({ method: "GET", path: "/x" });
+
+      const joined = logged.join("\n");
+      expect(joined).not.toContain(secret);
+      expect(joined).not.toContain(encoded);
+      expect(joined).not.toContain(encoded.toLowerCase());
+      // Coarse-drop marker should be present in the logged body
+      // snippet region.
+      expect(joined).toContain("[REDACTED-BODY encoded-secret]");
+    } finally {
+      console.error = originalError;
+    }
+  });
+
+  it("benign malformed %: body with a stray % but NO encoded secret still passes through", () => {
+    // False-positive guard for the redesign: a body with malformed
+    // `%` but no configured secret (raw or encoded) must NOT coarse-
+    // drop. Debuggability is preserved for the common real-world case
+    // of binary-ish 500 pages.
+    const secret = "tok-never-appears";
+    const body = `{"error":"100% failure","raw":"%GG %ZZ %%","code":"E_X"}`;
+
+    const out = sanitizeBodySnippetForLog(body, [secret]);
+
+    expect(out).toBe(body);
+    expect(out).not.toContain("[REDACTED-BODY encoded-secret]");
   });
 });

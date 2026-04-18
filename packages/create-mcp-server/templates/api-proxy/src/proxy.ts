@@ -209,8 +209,18 @@ export function buildUrl(
 
 /**
  * Recursively walk a JSON-shaped value and redact any string that contains
- * a known secret. This is a last-line-of-defence: the upstream should never
+ * a known secret. This is a defence-in-depth layer: the upstream should never
  * echo credentials, but agents mis-wiring a proxy is a known failure mode.
+ *
+ * Coverage scope (v1.1.1): literal secret occurrences only. URL-encoded
+ * variants (`tok%2Fabc` for configured `tok/abc`), byte-by-byte percent
+ * encoding, and multi-pass encoding are NOT detected on this agent-facing
+ * path. See `sanitizeBodySnippetForLog` for the log-path equivalent that
+ * closes that class.
+ *
+ * Tracked for v1.1.2: symmetric encode-hardening here (Kagami 6th round
+ * P2-1 + Codex 10th-pass). Until then, operators should treat this as
+ * best-effort and avoid upstreams that echo encoded credentials.
  */
 export function sanitizeResponseBody(
   body: unknown,
@@ -384,6 +394,220 @@ export function sanitizePathForLog(rawPath: string, secrets: string[]): string {
 }
 
 /**
+ * Lenient percent-decoder: decode every well-formed `%HH` triplet,
+ * leave malformed `%` sequences (orphan `%`, `%GG`, truncated trailing
+ * `%` / `%H`) as-is. Never throws.
+ *
+ * Unlike `decodeURIComponent`, this does not fail the whole string when
+ * a single byte is malformed, which is the exact property
+ * `sanitizeBodySnippetForLog` needs: error bodies routinely carry raw
+ * bytes (binary blobs, truncated multibyte sequences) next to a valid
+ * percent-encoded secret, and we must still be able to detect the
+ * secret in that mixed content.
+ *
+ * Decoding is done byte-by-byte: we accumulate a Uint8Array of raw
+ * bytes (literal code units for non-`%` chars, decoded bytes for
+ * well-formed `%HH`) and then run `TextDecoder("utf-8", { fatal: false })`
+ * on the result. `fatal: false` means any non-UTF-8 byte sequence
+ * becomes U+FFFD — this is what we want: the non-UTF-8 fragment
+ * cannot impersonate a secret, and the rest of the string is still
+ * scanned.
+ */
+function lenientPercentDecode(text: string): string {
+  // Fast path — no `%` means no decoding needed.
+  if (text.indexOf("%") < 0) return text;
+
+  const bytes: number[] = [];
+  const len = text.length;
+  let i = 0;
+
+  const hexValue = (ch: number): number => {
+    // '0'..'9'
+    if (ch >= 0x30 && ch <= 0x39) return ch - 0x30;
+    // 'A'..'F'
+    if (ch >= 0x41 && ch <= 0x46) return ch - 0x41 + 10;
+    // 'a'..'f'
+    if (ch >= 0x61 && ch <= 0x66) return ch - 0x61 + 10;
+    return -1;
+  };
+
+  while (i < len) {
+    const ch = text.charCodeAt(i);
+    if (ch === 0x25 /* '%' */ && i + 2 < len) {
+      const h1 = hexValue(text.charCodeAt(i + 1));
+      const h2 = hexValue(text.charCodeAt(i + 2));
+      if (h1 >= 0 && h2 >= 0) {
+        bytes.push((h1 << 4) | h2);
+        i += 3;
+        continue;
+      }
+    }
+    // Non-`%` char, or malformed `%` — emit as UTF-8 bytes. For ASCII
+    // (charCode < 0x80) this is a single byte; for higher code units
+    // we emit their UTF-8 encoding so the decoder sees a consistent
+    // byte stream.
+    if (ch < 0x80) {
+      bytes.push(ch);
+    } else if (ch < 0x800) {
+      bytes.push(0xc0 | (ch >> 6), 0x80 | (ch & 0x3f));
+    } else if (ch < 0xd800 || ch >= 0xe000) {
+      bytes.push(
+        0xe0 | (ch >> 12),
+        0x80 | ((ch >> 6) & 0x3f),
+        0x80 | (ch & 0x3f),
+      );
+    } else {
+      // Surrogate pair.
+      const hi = ch;
+      const lo = i + 1 < len ? text.charCodeAt(i + 1) : 0;
+      if (hi >= 0xd800 && hi <= 0xdbff && lo >= 0xdc00 && lo <= 0xdfff) {
+        const cp = 0x10000 + ((hi - 0xd800) << 10) + (lo - 0xdc00);
+        bytes.push(
+          0xf0 | (cp >> 18),
+          0x80 | ((cp >> 12) & 0x3f),
+          0x80 | ((cp >> 6) & 0x3f),
+          0x80 | (cp & 0x3f),
+        );
+        i += 2;
+        continue;
+      }
+      // Lone surrogate — emit replacement.
+      bytes.push(0xef, 0xbf, 0xbd);
+    }
+    i++;
+  }
+
+  try {
+    return new TextDecoder("utf-8", { fatal: false }).decode(
+      Uint8Array.from(bytes),
+    );
+  } catch {
+    // Defensive: TextDecoder with fatal:false should never throw, but
+    // if it somehow does, fall back to the original text.
+    return text;
+  }
+}
+
+/**
+ * Compute the byte-by-byte percent-encoded form of `s` using uppercase
+ * hex digits (e.g. `tok/abc` → `%74%6F%6B%2F%61%62%63`). This is the
+ * shape an adversarial upstream would emit to bypass a literal
+ * `.includes(secret)` check. Used by `sanitizeBodySnippetForLog` to
+ * search for the encoded variant directly without relying on decoding.
+ */
+function percentEncodeEveryByte(s: string): string {
+  // Encode via UTF-8 bytes so multi-byte characters produce the
+  // byte-level encoded form (`%E4%B8%96` etc.), matching what
+  // percent-encoding conventions emit.
+  const bytes = new TextEncoder().encode(s);
+  let out = "";
+  for (let i = 0; i < bytes.length; i++) {
+    const b = bytes[i];
+    out += "%" + (b < 0x10 ? "0" : "") + b.toString(16).toUpperCase();
+  }
+  return out;
+}
+
+/**
+ * Prepare a non-ok body snippet for safe inclusion in a log line.
+ *
+ * `redactString` alone is insufficient for the same reason it was
+ * insufficient for `sanitizePathForLog` (Codex 6th / 7th-pass): it's a
+ * literal `.includes` match, so a configured secret echoed into the
+ * error body in URL-encoded form (`tok%2Fabc` for configured `tok/abc`)
+ * or percent-encoded byte-by-byte (`%74%6F%6B...`) sneaks past
+ * unredacted and ends up in `console.error`.
+ *
+ * Strategy (v1.1.1 design, revised after Codex 8th-pass P1):
+ *
+ *   The v1.1.1 initial design used `decodeURIComponent` on the whole
+ *   body and, on throw (malformed `%`), silently fell back to the
+ *   literal-redacted form. Codex 8th-pass broke this: an adversarial
+ *   upstream that embeds one malformed `%` next to an encoded secret
+ *   (`"%GG token=tok%2Fabc"`) throws decode, skips the encoded-variant
+ *   check, and leaks. That made the whole "encoded secret" promise
+ *   conditional on malformed-% absence, which is attacker-controlled.
+ *
+ *   Approach B (chosen): detection does not rely on decoding the
+ *   whole body. Instead we precompute, per secret, a set of known
+ *   encoded *variants* and search for them literally (case-insensitive
+ *   for the hex digits). Combined with a lenient decoder pass that
+ *   never throws, we cover:
+ *
+ *     1. Literal form — `redactString` (existing pass).
+ *     2. `encodeURIComponent(secret)` — standard URL encoding.
+ *     3. Byte-by-byte `%HH` — every byte percent-encoded (uppercase
+ *        hex). Matched case-insensitively so `%2f` vs `%2F` is caught.
+ *     4. Lenient-decode fallback — decode every well-formed `%HH` but
+ *        leave malformed `%` sequences untouched, then search for the
+ *        literal secret in the decoded form. This catches mixed
+ *        encodings (e.g. `tok%2F%61bc`) that neither (2) nor (3)
+ *        precomputed, AND cannot be sabotaged by a malformed `%`
+ *        elsewhere in the body.
+ *
+ *   Any hit in (2), (3), or (4) coarse-drops the whole snippet to
+ *   `[REDACTED-BODY encoded-secret]`. We do NOT round-trip
+ *   (decode → redact → re-encode): that's the double-encode footgun
+ *   we rejected for pathnames.
+ *
+ * Debuggability trade-off documented in CHANGELOG: when an encoded
+ * secret is detected, the operator loses visibility into the body but
+ * keeps the status code (UPSTREAM_* in the logged prefix). The
+ * alternative — leaking a credential in literal, percent-encoded, or
+ * percent-encoded-byte-by-byte form, OR letting a single malformed
+ * `%` gate whether leakage happens — is strictly worse.
+ */
+export function sanitizeBodySnippetForLog(
+  text: string,
+  secrets: string[],
+): string {
+  if (secrets.length === 0) return text;
+
+  // Pass 1 — literal redaction. Handles the common case (upstream
+  // echoes `Bearer tok-xyz` verbatim into an error page).
+  const literalRedacted = redactString(text, secrets);
+
+  // Pass 2 — encoded-variant literal search. Does NOT depend on
+  // decoding the body, so a malformed `%` anywhere in `text` cannot
+  // bypass this check (Codex 8th-pass P1 fix).
+  //
+  // Lowercase once for case-insensitive hex comparison. ASCII-only
+  // secrets (bearer tokens, API keys) are the expected shape; this
+  // case fold is safe for them and for the `%HH` hex digits.
+  const haystack = literalRedacted.toLowerCase();
+  for (const secret of secrets) {
+    if (!secret) continue;
+    const encStandard = encodeURIComponent(secret).toLowerCase();
+    const encByByte = percentEncodeEveryByte(secret).toLowerCase();
+    // `encStandard` may equal `secret` when the secret has no special
+    // characters; that case is already caught by Pass 1, but checking
+    // again here is idempotent and cheap.
+    if (
+      haystack.includes(encStandard) ||
+      haystack.includes(encByByte)
+    ) {
+      return "[REDACTED-BODY encoded-secret]";
+    }
+  }
+
+  // Pass 3 — lenient-decode fallback. Catches mixed / exotic encodings
+  // (e.g. `tok%2F%61bc` decoding to `tok/abc`) that neither precomputed
+  // variant covers. Crucially, `lenientPercentDecode` never throws —
+  // malformed `%` sequences are preserved as-is, so a single `%GG`
+  // cannot gate whether the rest of the string is scanned.
+  const leniently = lenientPercentDecode(literalRedacted);
+  if (leniently !== literalRedacted) {
+    for (const secret of secrets) {
+      if (secret && leniently.includes(secret)) {
+        return "[REDACTED-BODY encoded-secret]";
+      }
+    }
+  }
+
+  return literalRedacted;
+}
+
+/**
  * Cap on how many bytes of a non-ok upstream body we will read into
  * memory for server-side logging. Anything past this is discarded via
  * `reader.cancel()` so a huge error page cannot DoS the proxy.
@@ -426,7 +650,7 @@ async function readBodySnippetForLog(
       // engine cannot force a full buffer.
       const text = await response.text().catch(() => "");
       const truncated = text.slice(0, maxBytes);
-      return redactString(truncated, secrets);
+      return sanitizeBodySnippetForLog(truncated, secrets);
     }
 
     const buffer = new Uint8Array(maxBytes);
@@ -467,7 +691,7 @@ async function readBodySnippetForLog(
     const text = new TextDecoder("utf-8", { fatal: false }).decode(
       buffer.subarray(0, kept),
     );
-    const redacted = redactString(text, secrets);
+    const redacted = sanitizeBodySnippetForLog(text, secrets);
     const suffix = timedOut
       ? "…[read-timeout]"
       : truncated

@@ -5,6 +5,273 @@ All notable changes to the `api-proxy` premium template are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this template adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2026-04-18
+
+### Security (v1.1.0 carryover — 1 P1, symmetric to the 6th-pass pathname fix)
+- **Body-snippet URL-encoded secrets now caught**: the non-ok branch
+  logs a bounded snippet of the upstream body server-side via
+  `readBodySnippetForLog`, which until now ran the text through
+  `redactString` — a literal `.includes` match. A configured secret
+  echoed into the error body in URL-encoded form (`tok%2Fabc` for
+  configured `tok/abc`) or byte-by-byte percent-encoded
+  (`%74%6F%6B…`) slipped past unredacted and reached `console.error`.
+  This is the same leak class v1.1.0 closed on the pathname side, and
+  was explicitly tracked as a v1.1.1 residual after the Codex 6th /
+  7th-pass re-review. The snippet now flows through a new
+  `sanitizeBodySnippetForLog(text, secrets)` helper — see the design
+  history note below for the exact detection strategy, which was
+  revised after Codex 8th-pass P1.
+
+### Security (Codex 8th-pass re-review, same cycle — 1 P1)
+- **`sanitizeBodySnippetForLog` no longer gated by malformed `%`**:
+  the initial v1.1.1 design ran `redactString` first, then
+  `decodeURIComponent(literalRedacted)` and, on throw, silently fell
+  back to the literal-redacted form. Codex 8th-pass broke this with
+  `sanitizeBodySnippetForLog("%GG token=tok%2Fabc", ["tok/abc"])`:
+  the single malformed `%GG` threw decode, the encoded-secret branch
+  never ran, and `tok%2Fabc` was logged verbatim. Because the
+  malformed `%` is upstream-controlled (an adversarial server, or
+  simply a binary-ish error body next to an echoed credential), the
+  "URL-encoded secrets now caught" guarantee was effectively
+  conditional on malformed-% absence.
+- **Redesign — Approach B (literal variant search) + lenient decode
+  fallback**: detection no longer depends on `decodeURIComponent`
+  ever succeeding on the whole body. For each configured secret the
+  helper now searches the literal-redacted text for
+    1. the literal secret (already handled by `redactString`);
+    2. `encodeURIComponent(secret)` — standard URL encoding;
+    3. the byte-by-byte percent-encoded form
+       (`%74%6F%6B%2F%61%62%63` for `tok/abc`),
+  all case-insensitive on the hex digits so `%2f` vs `%2F` cannot
+  evade. Any hit coarse-drops the whole snippet to
+  `[REDACTED-BODY encoded-secret]`.
+- **Lenient percent-decoder as defence-in-depth**: a new
+  `lenientPercentDecode(text)` helper decodes every well-formed
+  `%HH` triplet and leaves malformed `%` sequences untouched. It
+  never throws (malformed sequences pass through; non-UTF-8 byte
+  sequences become U+FFFD via `TextDecoder("utf-8", { fatal: false })`).
+  If the leniently-decoded form contains any configured secret,
+  the snippet also coarse-drops. This catches mixed-encoding shapes
+  (e.g. `tok%2F%61bc` decoding to `tok/abc`) that neither precomputed
+  variant covers, without giving attacker-controlled malformed `%`
+  the power to gate the check.
+- **Design trade-off**: ASCII-only case folding for the hex-digit
+  comparison is safe for the expected secret shape (bearer tokens,
+  API keys). Non-ASCII secrets remain covered by passes 1, 3
+  (byte-by-byte uppercase), and the lenient decoder. The helper
+  stays debuggability-preserving on benign bodies with `%` noise
+  (verified by the "benign malformed `%` with no encoded secret"
+  regression test — such bodies pass through literal-redaction
+  only, no coarse-drop).
+
+### Design note — body helper tuned differently from path helper
+- **No round-trip (decode → redact → encode)**: same reasoning as
+  v1.1.0. Rewriting an encoded location precisely invites
+  double-decode and shape regressions.
+- **Malformed percent-encoding is NOT hostile in bodies — but must
+  not gate secret detection either**: the pathname helper returns
+  `[REDACTED-MALFORMED-PATH]` on `%GG` because real REST paths
+  never contain raw `%` characters. Error bodies routinely do
+  (binary-ish payloads, orphan `%`, non-UTF-8 fragments from a
+  truncated upstream), so coarse-dropping on malformed `%` alone
+  would wipe legitimate debug info on most binary 500 pages. The
+  revised v1.1.1 body helper therefore still tolerates malformed
+  `%` (no coarse-drop on its mere presence), but — and this is the
+  Codex 8th-pass correction — malformed `%` no longer prevents
+  the encoded-secret variants from being detected.
+- **Debuggability trade-off**: when the encoded-secret branch
+  fires, the operator loses the body snippet but keeps the status
+  code and method/path prefix in the same log line. The alternative
+  — leaking a credential in literal, URL-encoded, or byte-encoded
+  form — is strictly worse. Operators who need raw upstream bodies
+  for debugging can set `logUpstreamErrors: false` and instrument
+  their own sink with explicit secret handling.
+
+### Added (v1.1.1)
+- `sanitizeBodySnippetForLog(text, secrets)` helper exported from
+  `src/proxy.ts` for direct unit testing. Symmetric with
+  `sanitizePathForLog` in the public surface.
+- Internal-only helpers `lenientPercentDecode(text)` and
+  `percentEncodeEveryByte(s)` supporting the revised detection
+  strategy (not exported; both are implementation details of
+  `sanitizeBodySnippetForLog`).
+- Regression tests in `tests/security.test.ts`:
+  - URL-encoded configured secret in a 500 body → logged snippet
+    contains `[REDACTED-BODY encoded-secret]`, no raw or encoded
+    secret appears in `console.error`.
+  - Byte-by-byte percent-encoded secret (`%74%6F…`) → same coarse
+    drop fires.
+  - Malformed / binary-ish body (orphan `%`, `%GG`, non-UTF-8 bytes)
+    does not throw, does not coarse-drop, and still removes literal
+    secret occurrences.
+  - Ordinary JSON body with `%` characters but no configured secret
+    → passes through unchanged (false-positive guard).
+  - Decoded body whose contents coincidentally resemble encoded
+    forms but do NOT contain a configured secret → passes through
+    unchanged.
+  - Empty-secrets input is a no-op.
+  - End-to-end: `ProxyClient.request` with `logUpstreamErrors: true`
+    and a URL-encoded secret in the upstream body does not leak
+    either form to `console.error`.
+- Additional Codex 8th-pass regression tests in
+  `tests/security.test.ts` (new
+  `"Body snippet sanitization — malformed % + encoded secret coexistence"`
+  describe block):
+  - Basic: `"%GG token=tok%2Fabc"` with configured secret `tok/abc`
+    → coarse-drops (exact Codex attack reproduction).
+  - Prefix-malformed: malformed `%` run at the start of the body
+    followed by `encodeURIComponent(secret)` → coarse-drops.
+  - Interleaved: byte-by-byte encoded secret surrounded by
+    malformed `%` noise (`%G1`, `%HH`, `%9Z`, `%%`) → coarse-drops.
+  - Lowercase-hex variant: `%2f` next to a malformed `%` is caught
+    case-insensitively.
+  - Mixed encoding: `tok%2F%61bc` (half literal / half encoded,
+    decodes to `tok/abc`) with adjacent malformed `%` → caught by
+    the lenient-decode fallback.
+  - End-to-end: malformed `%` + encoded secret in a 500 body path
+    never reaches `console.error` in raw OR encoded form, and the
+    coarse-drop marker is present.
+  - Benign malformed-only body (no encoded secret) → passes through
+    unchanged (false-positive guard for the redesign).
+
+### Fixed (v1.1.1, Codex 8th-pass P3)
+- Two strict-TypeScript errors in new security tests:
+  - `security.test.ts` `RequestInit | null` cast replaced with a
+    runtime null guard so `tsc --noEmit` on tests is clean (TS2352).
+  - `security.test.ts` `const next = …` in the deep cause-chain
+    walker given an explicit `unknown` annotation to avoid TS7022
+    (self-referential inference) under strict mode.
+
+### Security (Codex 9th-pass re-review, same cycle — 1 P1)
+- **`UPSTREAM_BASE_URL` query-string / fragment now rejected at
+  startup**: `loadConfig` previously only rejected embedded userinfo
+  (`user:pass@…`); a base URL like
+  `https://api.example.com/v1?api_key=SECRET` parsed cleanly. Later,
+  `proxy.ts` composes the outbound URL via string-concatenation
+  (`baseUrl + prefixed`), which produced
+  `https://api.example.com/v1?api_key=SECRET/users` — the agent's
+  path never reached the server, and the secret was **not enrolled in
+  `getSecretValues()`** (that helper only walks bearer token and API
+  key envs), so `redactString`, `sanitizePathForLog`, and
+  `sanitizeBodySnippetForLog` all failed closed on it. A fetch
+  exception or cause-chain throw would carry the raw URL (including
+  the base-URL secret) through any log site that wasn't already
+  redacted for THAT specific string. `loadConfig` now throws on
+  `parsed.search` or `parsed.hash` at startup, aligning the runtime
+  with the README-documented shape `scheme://host[:port]/path`.
+- **Why closure rather than retrofit**: same reasoning as the v1.1.0
+  userinfo rejection and v1.1.0 query-blanking for logged paths —
+  leak-class closure at the edge is simpler and auditable, versus
+  threading yet-another secret source through every redaction site.
+
+### Fixed (v1.1.1, Codex 9th-pass P3)
+- **MCP server advertised version bumped to 1.1.1**: `src/index.ts`
+  hardcoded `version: "1.0.0"` on the `McpServer` constructor while
+  `package.json` already shipped `1.1.1`, so MCP clients saw a stale
+  1.0.0 in the initialize handshake. Hardcoded rather than read from
+  `package.json` to keep the template free of filesystem JSON
+  imports; comment added on the field to flag the coupling.
+
+### Added (v1.1.1, Codex 9th-pass)
+- Regression tests in `tests/security.test.ts`
+  (`Config startup-log masking` describe block, after the existing
+  userinfo-rejection test):
+  - Query string only (`?api_key=SECRET`) → `loadConfig` throws.
+  - Fragment only (`#token=SECRET`) → throws.
+  - Both query and fragment → throws.
+  - Clean URL with path only → does not throw (no regression of
+    the already-accepted shape).
+
+### Status
+- **Codex 8th-pass: received and addressed**. One P1 (body-helper
+  malformed-% + encoded-secret coexistence), one P3 (type errors in
+  tests).
+- **Codex 9th-pass: received and addressed in-release**. One new P1
+  (`UPSTREAM_BASE_URL` query/hash leak path) closed by startup
+  rejection. One P3 (stale MCP advertised version) bumped to 1.1.1.
+  Three P2 findings deferred to v1.1.2 (see queue below). `npm test`
+  green (94 tests: 90 existing + 4 new), strict `tsc --noEmit` clean
+  on both `src/` and `tests/` under `strict: true`.
+- **Kagami independent QA 6th round: GO**. Accepted the v1.1.1
+  surgical change; the Codex 8th/9th-pass P1s were design-level
+  findings orthogonal to Kagami's GO and were addressed on top.
+- **Kagami independent QA 7th round (scope-closure audit): GO**.
+  Confirmed the five-point closure frame (anchor declaration,
+  anchor achievement, out-of-scope P1 class separation, docstring
+  honesty, test coverage) holds independently. No blocker; commit
+  and Gumroad swap authorized. 7th-round surfaced three new
+  observations for the v1.1.2 queue (below).
+- Zen will hold commit + Gumroad upload until both reviews clear.
+
+### v1.1.2 queue (tracked separately, NOT in v1.1.1)
+Recorded here for hand-off; none of these are shipped in 1.1.1.
+
+- **(Codex 9th-pass P2 #1) Top-level `loadConfig` / `ProxyClient` /
+  `McpServer` construction bypasses `main().catch`**: the module
+  top-level in `src/index.ts` calls `loadConfig()` etc. before
+  `main()`. Any throw there bypasses the stable redaction message
+  and may leak via the default Node uncaught-exception printer.
+  v1.1.2 will move these inside `main()` so `main().catch` is the
+  single error boundary.
+- **(Codex 9th-pass P2 #2) `assertSafeRelativePath` treats the full
+  `path` as one string, rejecting legitimate queries**: traversal
+  checks currently scan the entire agent-supplied `path` including
+  its query/hash, so shapes like `/users?filter=a/../b` false-reject
+  despite the `..` being inside a value. v1.1.2 will split on `?` /
+  `#` and run traversal detection only against the pathname
+  component.
+- **(Codex 9th-pass P2 #3) Blanket `@` rejection breaks real APIs**:
+  the v1.1.0 `@` / `%40` reject (N5 patch) was introduced against
+  `/@evil.com` authority-smuggling but also rejects legitimate
+  `/@scope/pkg` (npm) and `user@example.com` path fragments. v1.1.2
+  will narrow the rule to authority-position `@` only (i.e. `@`
+  between host start and first `/`), letting path-segment `@` pass.
+- **(Kagami 6th-round P2-1 + Codex 10th-pass P1) `sanitizeResponseBody`
+  still uses literal `.includes(secret)`** on the agent-facing response
+  path in `src/proxy.ts` (~215-245). The URL-encoded bypass class
+  closed for the log path via the v1.1.1 body helper remains open on
+  the response path. Codex 10th-pass escalated this to P1 on the
+  grounds that the docstring promised "last-line-of-defence" coverage
+  that the implementation does not deliver. v1.1.1 addresses the
+  docstring honesty (now states literal-only coverage, with explicit
+  v1.1.2 hand-off). The implementation fix is queued for **v1.1.2
+  symmetric encode-hardening** reusing `sanitizeBodySnippetForLog`'s
+  detection strategy.
+- **(Codex 10th-pass P2) `sanitizeBodySnippetForLog` misses
+  double-encoded secrets**: `tok%252Fabc` decodes once to `tok%2Fabc`
+  but the pass-2 literal-check compares against `tok/abc`, so the
+  secret is not detected. Real upstreams rarely emit this, but a
+  hostile upstream could use it as a credential exfiltration form.
+  v1.1.2 will bound-iterate lenient-decode until the result is a
+  fixed point or an iteration cap (e.g. 3) is hit.
+- **(Kagami 7th-round 7th-a) `lenientPercentDecode` fixed-point
+  iteration (structural fix for Codex 10th-pass P2)**: lift the
+  bound-iterate loop into `lenientPercentDecode` itself (cap N=3)
+  so every caller — current `sanitizeBodySnippetForLog` Pass 3 and
+  the future `sanitizeResponseBody` encode-hardening — inherits
+  double-encode handling without per-site loop code. Call sites
+  then stay a single lenient-decode invocation.
+- **(Kagami 7th-round 7th-b) Asymmetric mixed-encoding regression
+  tests**: current 8th-pass suite covers `tok%2F%61bc` (separator
+  encoded + trailing chars encoded) but does not directly assert
+  `tok%61%2Fbc` (leading chars encoded + separator encoded) or
+  `%74ok/abc` (single leading char encoded). Add a parametrized
+  variant sweep (4-6 shapes) so future refactors of
+  `lenientPercentDecode` or Approach B cannot silently regress on
+  asymmetric placements.
+- **(Kagami 7th-round 7th-c) `sanitizeStringForAgent` shape
+  design constraint for response-path encode-hardening**: when
+  v1.1.2 adds encode-hardening to `sanitizeResponseBody`, the
+  log-path `coarse-drop to [REDACTED-BODY encoded-secret]`
+  semantics cannot transfer as-is — an agent-facing JSON response
+  must preserve field positions. The required shape is
+  `sanitizeStringForAgent(text, secrets) → string` that replaces
+  only the offending substring with a marker (e.g.
+  `[REDACTED-encoded-secret]`) and leaves surrounding JSON
+  structure intact. v1.1.2 should extract this helper and have
+  both log-path and response-path implementations compose it,
+  rather than duplicating detection logic.
+
 ## [1.1.0] - 2026-04-17
 
 ### Security (Codex 6th-pass re-review, same cycle — 1 P1)

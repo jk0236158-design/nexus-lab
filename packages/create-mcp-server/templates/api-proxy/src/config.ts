@@ -51,6 +51,34 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): ProxyConfig {
     );
   }
 
+  // Reject query string / fragment (Codex 9th-pass P1 closure).
+  //
+  // `proxy.ts` composes the outbound URL by string-concatenating
+  // `baseUrl + prefixed` once the agent-supplied path is validated. If the
+  // configured base already carries `?api_key=SECRET` or `#token=SECRET`,
+  // three failure modes stack on top of each other:
+  //   1. The agent's path gets appended to the query / fragment (e.g.
+  //      `https://api.example.com/v1?api_key=SECRET/users`), so upstream
+  //      never sees the intended resource.
+  //   2. The secret in the query / fragment is NOT enrolled in
+  //      `getSecretValues()`, which only covers bearer/api-key envs — so
+  //      `redactString`, `sanitizePathForLog`, and `sanitizeBodySnippetForLog`
+  //      all fail closed for it.
+  //   3. Any `fetch` error / cause-chain throw would embed that raw URL in
+  //      stack strings that are only redacted against the registered
+  //      secrets, leaking the base-URL-embedded secret verbatim.
+  //
+  // We align the runtime with the README's documented shape
+  // (`scheme://host[:port]/path`) and close the leak class pre-emptively,
+  // rather than trying to retrofit redaction into every log site.
+  if (parsed.search || parsed.hash) {
+    throw new Error(
+      "UPSTREAM_BASE_URL must not contain a query string or fragment. " +
+        "Expected shape: scheme://host[:port]/path. Move any secrets into " +
+        "UPSTREAM_BEARER_TOKEN or UPSTREAM_API_KEY.",
+    );
+  }
+
   const bearerToken = env.UPSTREAM_BEARER_TOKEN?.trim() || undefined;
   const apiKey = env.UPSTREAM_API_KEY?.trim() || undefined;
   const apiKeyHeader =
