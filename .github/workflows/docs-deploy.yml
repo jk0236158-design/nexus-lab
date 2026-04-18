@@ -26,9 +26,14 @@ on:
       - '.github/workflows/docs-deploy.yml'
   workflow_dispatch: {}
 
+#   concurrency group は Cloudflare project 単位で固定する。
+#   github.ref ベースだと workflow_dispatch の別 ref と master push が同じ
+#   project/DNS/domain を並行 provision できてしまい、check-then-POST が race する。
+#   GitHub Actions の top-level concurrency では env 参照が使えないので project 名を直接書く
+#   (env.CF_PROJECT_NAME と一致させること)。
 concurrency:
-  group: docs-deploy-${{ github.ref }}
-  cancel-in-progress: true
+  group: cloudflare-pages-nexus-lab-docs
+  cancel-in-progress: false
 
 permissions:
   contents: read
@@ -105,12 +110,31 @@ jobs:
                 --arg branch "${CF_PRODUCTION_BRANCH}" \
                 '{name:$name, production_branch:$branch}')" \
               "${create_api}")
-            if [ "${create_code}" != "200" ] && [ "${create_code}" != "201" ]; then
+            if [ "${create_code}" = "409" ]; then
+              # 並行 run が先に作成した場合: 再取得して desired state を確認
+              echo "Project creation returned 409 (race with concurrent run). Re-fetching..."
+              recheck_code=$(curl -sS -o /tmp/cf_project.json -w "%{http_code}" \
+                -H "Authorization: Bearer ${CF_API_TOKEN}" \
+                -H "Content-Type: application/json" \
+                "${api}")
+              if [ "${recheck_code}" != "200" ]; then
+                echo "Re-fetch after 409 failed (HTTP ${recheck_code}):"
+                jq . /tmp/cf_project.json || cat /tmp/cf_project.json
+                exit 1
+              fi
+              existing_branch=$(jq -r '.result.production_branch // empty' /tmp/cf_project.json)
+              if [ "${existing_branch}" != "${CF_PRODUCTION_BRANCH}" ]; then
+                echo "Existing project production_branch='${existing_branch}' does not match expected '${CF_PRODUCTION_BRANCH}'. Manual review required."
+                exit 1
+              fi
+              echo "Project already exists with matching production_branch. Treating as success."
+            elif [ "${create_code}" != "200" ] && [ "${create_code}" != "201" ]; then
               echo "Failed to create project (HTTP ${create_code}):"
               jq . /tmp/cf_create.json || cat /tmp/cf_create.json
               exit 1
+            else
+              echo "Project created."
             fi
-            echo "Project created."
           else
             echo "Unexpected HTTP ${http_code} when checking project:"
             jq . /tmp/cf_project.json || cat /tmp/cf_project.json
@@ -164,7 +188,25 @@ jobs:
                 --arg content "${target}" \
                 '{type:"CNAME", name:$name, content:$content, ttl:1, proxied:true}')" \
               "https://api.cloudflare.com/client/v4/zones/${zone_id}/dns_records")
-            if [ "${create_code}" != "200" ]; then
+            if [ "${create_code}" = "409" ]; then
+              # 並行 run が先に作成した場合: 再取得して target を確認
+              echo "CNAME creation returned 409 (race with concurrent run). Re-fetching..."
+              recheck_code=$(curl -sS -o /tmp/cf_rec.json -w "%{http_code}" \
+                -H "Authorization: Bearer ${CF_API_TOKEN}" \
+                "https://api.cloudflare.com/client/v4/zones/${zone_id}/dns_records?type=CNAME&name=${full_host}")
+              if [ "${recheck_code}" != "200" ]; then
+                echo "Re-fetch after 409 failed (HTTP ${recheck_code}):"
+                jq . /tmp/cf_rec.json || cat /tmp/cf_rec.json
+                exit 1
+              fi
+              recheck_content=$(jq -r '.result[0].content // empty' /tmp/cf_rec.json)
+              if [ "${recheck_content}" = "${target}" ]; then
+                echo "CNAME already exists with matching target. Treating as success."
+              else
+                echo "CNAME exists but points to '${recheck_content}' (expected '${target}'). Manual review required."
+                exit 1
+              fi
+            elif [ "${create_code}" != "200" ]; then
               echo "Failed to create CNAME (HTTP ${create_code}):"
               jq . /tmp/cf_rec_create.json || cat /tmp/cf_rec_create.json
               exit 1
@@ -204,7 +246,10 @@ jobs:
               -H "Content-Type: application/json" \
               --data "$(jq -nc --arg name "${full_host}" '{name:$name}')" \
               "${domains_api}")
-            if [ "${attach_code}" != "200" ] && [ "${attach_code}" != "201" ]; then
+            if [ "${attach_code}" = "409" ]; then
+              # 並行 run が先に attach 済み: skip して成功扱い
+              echo "Custom domain attach returned 409 (already attached by concurrent run). Treating as success."
+            elif [ "${attach_code}" != "200" ] && [ "${attach_code}" != "201" ]; then
               echo "Failed to attach custom domain (HTTP ${attach_code}):"
               jq . /tmp/cf_attach.json || cat /tmp/cf_attach.json
               exit 1
