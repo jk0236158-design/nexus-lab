@@ -1,6 +1,6 @@
 import { readFileSync, readdirSync, existsSync } from 'fs';
 import { join, basename } from 'path';
-import type { BoardMessage, OwnerDecision, AgentStatus } from '../types';
+import type { BoardMessage, OwnerDecision, AgentStatus, ChatSentMessage } from '../types';
 
 const SHARED_OPS_PATH =
   process.env.SHARED_OPS_PATH || 'C:\\Users\\jk023\\.shared-ops';
@@ -69,6 +69,59 @@ export function getAgentStatuses(): AgentStatus[] {
   return results;
 }
 
+export function getChatMessages(): ChatSentMessage[] {
+  const boardDir = join(SHARED_OPS_PATH, 'board');
+  if (!existsSync(boardDir)) return [];
+
+  try {
+    const files = readdirSync(boardDir).filter((f) => f.endsWith('.md'));
+    const results: ChatSentMessage[] = [];
+
+    for (const filename of files) {
+      const name = basename(filename, '.md');
+      const parts = name.split('_');
+
+      // owner_* または *_owner_ を含むファイルを対象とする
+      const isOwnerSent = parts[1] === 'owner'; // owner が from
+      const isReply =
+        filename.includes('_response_') ||
+        (parts.length >= 3 && parts[2] === 'owner'); // owner が to
+
+      if (!isOwnerSent && !isReply) continue;
+
+      const filePath = join(boardDir, filename);
+      const content = safeReadFile(filePath);
+      const frontmatter = parseFrontmatter(content);
+
+      const dateMatch = name.match(/^(\d{4}-\d{2}-\d{2})/);
+      const date = dateMatch ? dateMatch[1] : '';
+
+      // source が ops-console-chat のものだけ Chat 画面に表示
+      // ただし v0 は全 owner_* を表示（reply 含む）
+      results.push({
+        filename,
+        date,
+        to: frontmatter.to ?? parts[2] ?? '',
+        requestedAgent: frontmatter.requested_agent ?? null,
+        kind: frontmatter.kind ?? '',
+        subject: frontmatter.topic ?? parts.slice(3).join(' '),
+        isReply,
+        fromOwner: isOwnerSent,
+      });
+    }
+
+    // 日付降順
+    return results.sort((a, b) => b.date.localeCompare(a.date));
+  } catch {
+    return [];
+  }
+}
+
+export function checkOwnerHaltFlag(): boolean {
+  const flagPath = join(SHARED_OPS_PATH, 'owner_halt.flag');
+  return existsSync(flagPath);
+}
+
 // --- ヘルパー ---
 
 function parseBoardFilename(
@@ -134,4 +187,19 @@ function safeReadFile(filePath: string): string {
   } catch {
     return '';
   }
+}
+
+function parseFrontmatter(content: string): Record<string, string> {
+  const result: Record<string, string> = {};
+  const match = content.match(/^---\n([\s\S]*?)\n---/);
+  if (!match) return result;
+
+  for (const line of match[1].split('\n')) {
+    const colonIdx = line.indexOf(':');
+    if (colonIdx === -1) continue;
+    const key = line.slice(0, colonIdx).trim();
+    const value = line.slice(colonIdx + 1).trim();
+    if (key) result[key] = value;
+  }
+  return result;
 }

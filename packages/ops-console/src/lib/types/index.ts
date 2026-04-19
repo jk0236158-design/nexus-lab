@@ -57,6 +57,52 @@ export interface BoardMessage {
   content: string;
 }
 
+// Chat 宛先
+export type ChatRecipient =
+  | 'Kai'
+  | 'Zen'
+  | 'Iwa'
+  | 'Oto'
+  | 'Akari'
+  | 'Kagami'
+  | 'Hoshi'
+  | 'Kura';
+
+// Chat 種別
+export type ChatKind = '相談' | '指示' | '雑談' | '報告';
+
+// Chat 送信リクエスト
+export interface ChatSendRequest {
+  to: ChatRecipient;
+  kind: ChatKind;
+  subject: string;
+  body: string;
+}
+
+// Chat 送信レスポンス (success)
+export interface ChatSendResponse {
+  ok: true;
+  filename: string;
+}
+
+// Chat 送信レスポンス (error)
+export interface ChatSendErrorResponse {
+  ok: false;
+  error: string;
+}
+
+// Chat 送信済みメッセージ (UI 表示用)
+export interface ChatSentMessage {
+  filename: string;
+  date: string;
+  to: string;
+  requestedAgent: string | null;
+  kind: string;
+  subject: string;
+  isReply: boolean;
+  fromOwner: boolean;
+}
+
 // オーナー判断
 export interface OwnerDecision {
   filename: string;

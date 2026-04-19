@@ -8,6 +8,7 @@ const navItems = [
   { href: "/knots", label: "Knots" },
   { href: "/pipeline", label: "Pipeline" },
   { href: "/agents", label: "Agents" },
+  { href: "/chat", label: "Chat" },
 ];
 
 export function Sidebar() {
