@@ -1,0 +1,155 @@
+name: nokaze-portal-deploy
+
+# nokaze.dev (root apex) に VitePress site を Cloudflare Pages で deploy する。
+#
+# 前提 (ジュン物理アクション — 初回のみ):
+#   - GitHub Secrets 登録済み:
+#       CLOUDFLARE_API_TOKEN   — Pages:Edit + DNS:Edit + Zone:Read スコープ
+#       CLOUDFLARE_ACCOUNT_ID  — Cloudflare account ID
+#   ※ nokaze.dev ゾーンは 4/18 に CF Registrar で取得済みなので上記 secrets は
+#     docs-deploy.yml で登録済み。追加作業不要。
+#
+# root apex (nokaze.dev) DNS の扱い:
+#   - CNAME は root apex に設定できないが、Cloudflare は "CNAME Flattening" を
+#     自動適用するため CNAME レコードとして作成すれば A/AAAA に変換して配信される。
+#   - ただし DNS 自動 provisioning は subdomain 向けのため、
+#     root apex の custom domain attach はジュン物理でのみ実施する (下記手順を参照)。
+#   - このワークフローは Pages project 作成 + deploy のみ行い、DNS / custom domain は
+#     手順書コメントに従ってジュン物理で実施する。
+#
+# ジュン物理アクション手順 (初回 deploy 後に 1 回だけ実施):
+#   1. Cloudflare Dashboard (dash.cloudflare.com) → Workers & Pages → nokaze-portal
+#   2. "Custom domains" タブ → "Set up a custom domain" → "nokaze.dev" を入力
+#   3. "Activate domain" をクリック → Cloudflare が自動で CNAME/ALIAS を設定
+#   4. HTTPS 証明書発行まで数分待機 (ステータスが "Active" になるまで)
+#   5. WebFetch / ブラウザで https://nokaze.dev が 200 を返すか確認
+#   (nexus-lab.nokaze.dev はすでに動作中のため、nokaze.dev の attach のみ)
+#
+# 冪等性の設計 (docs-deploy.yml と同型):
+#   1. Pages プロジェクト "nokaze-portal" が無ければ API で作成、あれば skip
+#   2. DNS: root apex のため自動 DNS provisioning は skip (ジュン物理に委ねる)
+#   3. Pages custom domain attach: root apex のため skip (ジュン物理に委ねる)
+#   4. 最後に cloudflare/pages-action で deploy
+#
+# concurrency group: cloudflare-pages-nokaze-portal (CF_PROJECT_NAME と一致)
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'packages/nokaze-portal/**'
+      - '.github/workflows/nokaze-portal-deploy.yml'
+  workflow_dispatch: {}
+
+concurrency:
+  group: cloudflare-pages-nokaze-portal
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  deployments: write
+
+env:
+  CF_PROJECT_NAME: nokaze-portal
+  CF_ZONE_NAME: nokaze.dev
+  CF_SUBDOMAIN: ""
+  CF_PRODUCTION_BRANCH: master
+
+jobs:
+  provision-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        working-directory: packages/nokaze-portal
+        run: npm install
+
+      - name: Build VitePress
+        working-directory: packages/nokaze-portal
+        run: npm run build
+
+      # --- Cloudflare provisioning (idempotent) ---------------------------------
+
+      - name: Ensure Cloudflare Pages project exists
+        env:
+          CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          api="https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pages/projects/${CF_PROJECT_NAME}"
+          http_code=$(curl -sS -o /tmp/cf_project.json -w "%{http_code}" \
+            -H "Authorization: Bearer ${CF_API_TOKEN}" \
+            -H "Content-Type: application/json" \
+            "${api}")
+          if [ "${http_code}" = "200" ]; then
+            echo "Pages project '${CF_PROJECT_NAME}' already exists."
+          elif [ "${http_code}" = "404" ]; then
+            echo "Pages project not found. Creating '${CF_PROJECT_NAME}'..."
+            create_api="https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pages/projects"
+            create_code=$(curl -sS -o /tmp/cf_create.json -w "%{http_code}" \
+              -X POST \
+              -H "Authorization: Bearer ${CF_API_TOKEN}" \
+              -H "Content-Type: application/json" \
+              --data "$(jq -nc \
+                --arg name "${CF_PROJECT_NAME}" \
+                --arg branch "${CF_PRODUCTION_BRANCH}" \
+                '{name:$name, production_branch:$branch}')" \
+              "${create_api}")
+            if [ "${create_code}" = "409" ]; then
+              echo "Project creation returned 409 (race with concurrent run). Re-fetching..."
+              recheck_code=$(curl -sS -o /tmp/cf_project.json -w "%{http_code}" \
+                -H "Authorization: Bearer ${CF_API_TOKEN}" \
+                -H "Content-Type: application/json" \
+                "${api}")
+              if [ "${recheck_code}" != "200" ]; then
+                echo "Re-fetch after 409 failed (HTTP ${recheck_code}):"
+                jq . /tmp/cf_project.json || cat /tmp/cf_project.json
+                exit 1
+              fi
+              existing_branch=$(jq -r '.result.production_branch // empty' /tmp/cf_project.json)
+              if [ "${existing_branch}" != "${CF_PRODUCTION_BRANCH}" ]; then
+                echo "Existing project production_branch='${existing_branch}' does not match expected '${CF_PRODUCTION_BRANCH}'. Manual review required."
+                exit 1
+              fi
+              echo "Project already exists with matching production_branch. Treating as success."
+            elif [ "${create_code}" != "200" ] && [ "${create_code}" != "201" ]; then
+              echo "Failed to create project (HTTP ${create_code}):"
+              jq . /tmp/cf_create.json || cat /tmp/cf_create.json
+              exit 1
+            else
+              echo "Project created."
+            fi
+          else
+            echo "Unexpected HTTP ${http_code} when checking project:"
+            jq . /tmp/cf_project.json || cat /tmp/cf_project.json
+            exit 1
+          fi
+
+      # root apex の DNS / custom domain attach は Cloudflare の CNAME flattening の
+      # 制約上、ジュン物理 (Dashboard) で実施する。自動 provisioning は skip。
+      - name: Skip DNS provisioning (root apex — manual action required)
+        run: |
+          echo "CF_SUBDOMAIN is empty (root apex). DNS CNAME and custom domain attach"
+          echo "must be done manually via Cloudflare Dashboard."
+          echo "See workflow header comment for step-by-step instructions."
+
+      # --- Deploy ----------------------------------------------------------------
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: ${{ env.CF_PROJECT_NAME }}
+          directory: packages/nokaze-portal/.vitepress/dist
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref_name }}
