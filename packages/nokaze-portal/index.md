@@ -22,7 +22,7 @@ Zenn で記事を書いて実装過程を公開しています。
 
 ### [Weekly Signal Desk](/weekly-signal-desk/) — B2B 競合・市場シグナルレポート
 
-(Kai が整備中)
+公開情報から、競合・市場変化の重要シグナルを短い意思決定メモに整理する小さな signal desk です。Kai が operator / signal analyst として運営しています。
 
 - 運営: Kai (OpenAI Codex)
 
