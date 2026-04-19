@@ -195,6 +195,7 @@ fi
 # ---------------------------------------------------------------
 header "今日の1件 (decision template)"
 
+EARLY_EXIT=0
 if [ -f "$TODAY_FILE" ]; then
   CURRENT_DATE=$(grep -E "^date:" "$TODAY_FILE" 2>/dev/null | head -1 | awk '{print $2}')
   if [ "$CURRENT_DATE" = "$TODAY" ]; then
@@ -203,7 +204,7 @@ if [ -f "$TODAY_FILE" ]; then
     cat "$TODAY_FILE" | sed 's/^/  /'
     echo ""
     echo "  → 編集する場合は手動で。新規 sweep は内容を上書きしません。"
-    exit 0
+    EARLY_EXIT=1
   fi
 fi
 
@@ -211,8 +212,20 @@ fi
 # 候補プールから「今日の1件」を仮選択 (rule-based)
 #   優先度 1 < 2 < 3 < 4 の昇順で、最上位 1 件を採る。
 #   空欄放置を防ぐための仮決定。Zen が後で上書きしてよい。
+#
+#   ただし EARLY_EXIT=1 (今日の zen_today.md 既存) のときは、
+#   template を上書きしない。この場合は skip してから lint 段階に進む。
 # ---------------------------------------------------------------
-CHOSEN_LABEL=""
+if [ "$EARLY_EXIT" = "1" ]; then
+  CHOSEN_LABEL="(today already set; not overwriting)"
+  CHOSEN_REASON="skipped"
+  CHOSEN_PRIORITY="skipped"
+  SKIP_WRITE=1
+else
+  SKIP_WRITE=0
+fi
+
+CHOSEN_LABEL="${CHOSEN_LABEL:-}"
 CHOSEN_REASON=""
 CHOSEN_PRIORITY=""
 if [ -s "$CANDIDATES_FILE" ]; then
@@ -229,9 +242,13 @@ if [ -z "$CHOSEN_LABEL" ]; then
   CHOSEN_PRIORITY="fallback"
 fi
 
-# 新規 / 古い zen_today.md を上書き
-mkdir -p "$(dirname "$TODAY_FILE")"
-cat > "$TODAY_FILE" <<EOF
+# EARLY_EXIT 時は既存 zen_today.md を保持 (上書きしない)。
+if [ "$SKIP_WRITE" = "1" ]; then
+  echo "  zen_today.md は既存を保持 (今日のテンプレ上書きなし)"
+else
+  # 新規 / 古い zen_today.md を上書き
+  mkdir -p "$(dirname "$TODAY_FILE")"
+  cat > "$TODAY_FILE" <<EOF
 ---
 date: $TODAY
 generated: $NOW
@@ -261,9 +278,25 @@ $CHOSEN_REASON
 
 EOF
 
-echo "  $TODAY_FILE に新規テンプレを書き出した"
-echo "  → 仮選択 (priority=$CHOSEN_PRIORITY): $CHOSEN_LABEL"
-echo "  → 不適切なら zen_today.md を上書きして再決定"
+  echo "  $TODAY_FILE に新規テンプレを書き出した"
+  echo "  → 仮選択 (priority=$CHOSEN_PRIORITY): $CHOSEN_LABEL"
+  echo "  → 不適切なら zen_today.md を上書きして再決定"
+fi
+
+# ---------------------------------------------------------------
+# 4. memory-lint (L1 + L2 MVP)
+#   非ブロッキング: lint が violation 検出しても sweep 全体は通す。
+#   Zen が status/memory_lint_last.md を読んで判断する。
+#   2026-04-19 Iwa, spec: team_memory/_shared/2026-04-19_zen_memory_lint_spec.md
+# ---------------------------------------------------------------
+header "memory-lint"
+if [ -f "$NEXUS_LAB/scripts/memory_lint.py" ]; then
+  ( cd "$NEXUS_LAB" && python scripts/memory_lint.py --class L1,L2 ) || true
+  echo ""
+  echo "  詳細: ~/.shared-ops/status/memory_lint_last.md"
+else
+  echo "  (memory_lint.py 未導入)"
+fi
 
 # ---------------------------------------------------------------
 # 終わり

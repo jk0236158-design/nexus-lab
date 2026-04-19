@@ -1,0 +1,75 @@
+# memory-lint L1 assertions
+#
+# Each assertion declares a "fact" that must be consistent across multiple
+# files. The lint script extracts the first match of `regex` (capture group
+# "value") from each `file`, then reports a violation if not all files agree
+# on the same value.
+#
+# The `hint` field is surfaced in the report so the maintainer knows which
+# file is the source of truth.
+#
+# Paths are expanded with `~` (HOME) and are relative to HOME when they
+# start with `.shared-ops/`, `.claude/`, or `nexus-lab/`.
+#
+# Iwa, 2026-04-19 — memory-lint MVP (spec §3 L1).
+
+assertions:
+
+  - key: zenn_article_count
+    description: "Number of Zenn articles marked as published"
+    source_of_truth: "external (zenn.dev/nexus_lab_zen profile) — manual sync"
+    files:
+      - path: "nexus-lab/README.md"
+        # "公開済み 8 本" or "Zenn 記事: 8 本" or "Zenn 記事 8 本公開"
+        regex: 'Zenn\s*記事[^0-9]{0,6}(?P<value>\d+)\s*本(?!\s*追加)'
+      - path: ".shared-ops/status/zen_status.md"
+        regex: 'プロフィール記事数[:：]\s*\*{0,2}(?P<value>\d+)\s*本'
+    hint: "README と zen_status.md は Zenn プロフィール実数と一致させる。drift は 2026-04-18 事故の再発サイン。"
+
+  - key: api_proxy_version
+    description: "Premium api-proxy template version"
+    source_of_truth: "packages/create-mcp-server/templates/api-proxy/package.json"
+    files:
+      - path: "nexus-lab/packages/create-mcp-server/templates/api-proxy/package.json"
+        regex: '"version"\s*:\s*"(?P<value>[0-9]+\.[0-9]+\.[0-9]+)"'
+      - path: "nexus-lab/packages/create-mcp-server/templates/api-proxy/CHANGELOG.md"
+        # Match the FIRST "## [x.y.z]" heading only (latest release).
+        regex: '##\s*\[?(?P<value>[0-9]+\.[0-9]+\.[0-9]+)\]?'
+    hint: "CHANGELOG top entry と package.json version は常に一致させる。Gumroad zip 名も同期必要。"
+
+  - key: create_mcp_server_version
+    description: "Public create-mcp-server CLI version"
+    source_of_truth: "packages/create-mcp-server/package.json (npm 公開版)"
+    files:
+      - path: "nexus-lab/packages/create-mcp-server/package.json"
+        regex: '"version"\s*:\s*"(?P<value>[0-9]+\.[0-9]+\.[0-9]+)"'
+      - path: "nexus-lab/README.md"
+        # "create-mcp-server — v0.5.0" 形式
+        regex: 'create-mcp-server\][^\n]*?—\s*v(?P<value>[0-9]+\.[0-9]+\.[0-9]+)'
+    hint: "npm publish 後は README のバージョン表記も同セッション内で更新する。"
+
+
+# ------------------------------------------------------------------
+# L2 inbox -> identity/memory 未反映チェック
+#
+# Each rule declares: an inbox file that is considered "adopted" (Zen 決定済み),
+# a keyword that must appear in the follow-up target file, and the target.
+# If the keyword is missing in target_path, a warning fires.
+# ------------------------------------------------------------------
+inbox_followups:
+
+  - inbox: ".shared-ops/inbox/2026-04-18_zen_identity_monitor_origin_positive_motive.md"
+    # Kagami 7th-round QA (2026-04-19): "採用" 単独は判断オプション行
+    # `- **A (採用)**:` にも hit するため除去。複合形のみを採用とみなす。
+    adopted_markers: ["A採用", "A 採用", "採用: A", "default=A"]
+    target_path: ".claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/identity.md"
+    # The identity file must reference the newly-adopted monitoring category.
+    target_keywords: ["Origin 正動機", "正動機の負読み替え", "監視対象8"]
+    hint: "inbox A採用後は identity.md の監視対象リストに追記すること。"
+
+  - inbox: ".shared-ops/inbox/2026-04-18_zen_identity_monitor_7_strengthen.md"
+    # Kagami 7th-round QA (2026-04-19): "採用" 単独除去、複合形のみ
+    adopted_markers: ["A採用", "A 採用", "採用: A", "default=A"]
+    target_path: ".claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/identity.md"
+    target_keywords: ["監視対象7", "強化"]
+    hint: "inbox 監視対象7 強化採用時は identity.md の該当節を更新すること。"
