@@ -1,6 +1,6 @@
 {
   "name": "@nexus-lab/create-mcp-server",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Scaffold a new MCP server project with TypeScript, testing, and secure defaults",
   "type": "module",
   "bin": {
@@ -29,6 +29,11 @@
   ],
   "author": "Nexus Lab",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nexus-lab-zen/nexus-lab.git",
+    "directory": "packages/create-mcp-server"
+  },
   "dependencies": {
     "commander": "^13.0.0",
     "prompts": "^2.4.2",
