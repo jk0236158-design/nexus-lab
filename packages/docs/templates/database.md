@@ -34,7 +34,7 @@ npm test
 ```
 
 <!-- FILL: Next action -->
-**Next action**: [Buy on Gumroad](https://nexuslabzen.gumroad.com/l/ijuvn) · [Template source preview](https://github.com/nexus-lab-zen/nexus-lab/tree/master/packages/create-mcp-server/templates/database)
+**Next action**: [Buy on Gumroad](https://nexuslabzen.gumroad.com/l/ijuvn) · source ships in the Gumroad zip
 :::
 
 <!-- END BUYER PATH ===================================================== -->

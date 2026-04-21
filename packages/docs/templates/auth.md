@@ -31,7 +31,7 @@ npm run dev
 ```
 
 <!-- FILL: Next action -->
-**Next action**: [Buy on Gumroad](https://nexuslabzen.gumroad.com/l/dghzas) · [Template source preview](https://github.com/nexus-lab-zen/nexus-lab/tree/master/packages/create-mcp-server/templates/auth)
+**Next action**: [Buy on Gumroad](https://nexuslabzen.gumroad.com/l/dghzas) · source ships in the Gumroad zip
 :::
 
 <!-- END BUYER PATH ===================================================== -->

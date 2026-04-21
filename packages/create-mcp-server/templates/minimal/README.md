@@ -42,4 +42,4 @@ The server starts on stdio and waits for MCP protocol messages. Connect it to Cl
 - Need **HTTP transport** for remote clients? → [`http`](../http/README.md)
 - Need **database / auth / API proxying**? → [premium templates](https://nexuslabzen.gumroad.com/)
 
-MIT. Made by [Nexus Lab](https://github.com/nexus-lab-zen/nexus-lab).
+MIT. Made by [Nexus Lab](https://nexus-lab.nokaze.dev) ([articles](https://github.com/nexus-lab-zen/Nexus.Lab.Zen)).

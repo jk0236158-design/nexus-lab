@@ -18,13 +18,20 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: "Templates", link: "/templates/" },
+      {
+        text: "Pricing",
+        items: [
+          { text: "Pricing overview", link: "/pricing" },
+          { text: "Free vs Premium comparison", link: "/templates/comparison" },
+        ],
+      },
       { text: "Principles", link: "/principles/" },
       { text: "Blog", link: "/blog/" },
       {
         text: "Links",
         items: [
           { text: "npm", link: "https://www.npmjs.com/package/@nexus-lab/create-mcp-server" },
-          { text: "GitHub", link: "https://github.com/nexus-lab-zen/nexus-lab" },
+          { text: "Articles (GitHub)", link: "https://github.com/nexus-lab-zen/Nexus.Lab.Zen" },
           { text: "Gumroad", link: "https://nexuslabzen.gumroad.com" },
         ],
       },
@@ -32,6 +39,14 @@ export default defineConfig({
 
     sidebar: {
       "/templates/": [
+        {
+          text: "Overview",
+          items: [
+            { text: "All templates", link: "/templates/" },
+            { text: "Free vs Premium comparison", link: "/templates/comparison" },
+            { text: "Pricing", link: "/pricing" },
+          ],
+        },
         {
           text: "Free Templates",
           items: [
@@ -46,6 +61,16 @@ export default defineConfig({
             { text: "database", link: "/templates/database" },
             { text: "auth", link: "/templates/auth" },
             { text: "api-proxy", link: "/templates/api-proxy" },
+          ],
+        },
+      ],
+      "/pricing": [
+        {
+          text: "Pricing",
+          items: [
+            { text: "Overview", link: "/pricing" },
+            { text: "Free vs Premium comparison", link: "/templates/comparison" },
+            { text: "All templates", link: "/templates/" },
           ],
         },
       ],
@@ -65,7 +90,7 @@ export default defineConfig({
     },
 
     socialLinks: [
-      { icon: "github", link: "https://github.com/nexus-lab-zen/nexus-lab" },
+      { icon: "github", link: "https://github.com/nexus-lab-zen/Nexus.Lab.Zen" },
     ],
 
     footer: {

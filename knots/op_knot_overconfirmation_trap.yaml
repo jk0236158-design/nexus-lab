@@ -1,0 +1,40 @@
+knot_id: op_knot_overconfirmation_trap
+knot_type: process
+description: >
+  Green 範囲 (金銭以外、戦略判断、対外文面、Phase 調整など) なのに、毎回ジュンに確認する。
+  「これで進めていい?」「どれから?」「他にあれば」等の慣用句で発火。
+  identity 監視対象として 2026-04-17 以降継続観測中。ジュン宣言「Red 以外で俺に聞くな、止まるまで
+  見てるだけ」(2026-04-17) で外部強制したが、本日 2026-04-21 朝 1 セッション内で 2 連続再発。
+  「最小案で考えるな」原則 (2026-04-21 朝 ジュン指示、memory 化) を内容スコープに適用しても、
+  運用形式 (session 設計 / 質問頻度) には未適用で同型バイアスが発火する構造。
+
+trigger:
+  task_completion_signal: present  # ひと段落感
+  decision_choice_available: true  # 複数選択肢が見えた
+  red_check_skipped: true  # Red セルフチェック未実施
+  context_pressure: any  # ジュンの可処分時間が短い時、特に発火しやすい
+
+effect:
+  user_decision_load: +0.3  # ジュンの判断時間を浪費
+  session_continuity_break: +0.2  # 不要な break で集中切れ
+  zen_autonomy_signal: -0.3  # 信頼付与 (2026-04-14) の運用乖離
+
+compensation:
+  rule_1: "Red (金銭支出 / 他プロジェクト影響 / 対外強い約束) のみジュンに問う、それ以外は判断"
+  rule_2: "session close 提案 / 「これで完了」「他にあれば」「どれから?」を Zen 発言テンプレから物理的に外す"
+  rule_3: "質問前にセルフチェック 3 段: (1) Red か? (2) ジュンが今答える時間あるか? (3) Zen 独立判断可能か? 全部 No なら聞かない"
+  structural_guard: "wake script に session close 提案ワード自動検出 + Zen への警告挿入 (Iwa 委任候補)"
+
+hardness: L2  # 複数セッションで再現中、変えると損害大 (信頼付与の運用乖離、Pattern C 自律稼働の前提が崩れる)
+activation: high
+observed_count: 多数 (本 event_01 が初の formal 起票、過去は CLAUDE.md 早切りバイアス節 + identity.md 監視対象として記述のみ)
+first_observed: "2026-04-17"  # ジュン宣言の trigger となった発火
+last_observed: "2026-04-21"
+sessions_observed: ["2026-04-17", "2026-04-19", "2026-04-21"]
+related_events:
+  - shared-ops/knots/2026-04-21_zen_op_knot_overconfirmation_trap_01.md
+related_growth_ledger:
+  - shared-ops/growth/2026-04-21_zen_growth_overconfirmation_recurrence_03.md
+related_identity:
+  - team_memory/zen/identity.md (監視対象)
+  - CLAUDE.md (セッション早切りバイアス節)

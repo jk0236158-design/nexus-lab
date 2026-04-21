@@ -1,0 +1,35 @@
+knot_id: op_knot_external_diagnosis_short_circuit
+knot_type: process
+description: >
+  外部情報源 (WebFetch summary / 他 AI 診断結果 / file エンコード判定など) を検証なしで信じ、
+  自分で原典を直接読まずに判断する。原典を読んでも、誤推測を裏付ける方向に「読んでしまう」
+  確認バイアスも含む。2026-04-20 に Claude Design export の mojibake 誤診断 (UTF-8 を CP932 と
+  誤判定し iconv 提案、走らせていたら破壊) で発火、diary 反省。1 日後の 2026-04-21 朝に同型再発
+  (WebFetch summary を信じて GitHub リンクを誤読 = 「死リンク」誤報)。
+
+trigger:
+  external_summary_present: true
+  direct_source_read: false  # or read with confirmation bias
+  diagnosis_speed_pressure: high
+
+effect:
+  false_positive_diagnosis_rate: +0.3
+  trust_damage_in_report: high
+  rework_required: true
+
+compensation:
+  rule_1: "外部 summary は引用禁止、必ず原典 (WebFetch raw markdown / Read tool / file 直接) で再確認"
+  rule_2: "Read tool 使用時、推測を立てる前に文字列を逐語確認 (検索文字列を切り出して再度 grep)"
+  rule_3: "誤推測の自己訂正は Growth Ledger に entry 化、再発カウント"
+  structural_guard: "言語的原則だけで止まらない、peer check / 二重確認の物理ガードが必要"
+
+hardness: L1  # 2 回観測、再現性あり、限定的補正
+activation: high
+observed_count: 2
+first_observed: "2026-04-20"
+last_observed: "2026-04-21"
+sessions_observed: ["2026-04-20", "2026-04-21"]
+related_growth_ledger:
+  - 2026-04-21_zen_growth_diagnosis_short_circuit_recurrence_02.md
+related_diary:
+  - diary/2026-04-20_diary.md (反省 #2)

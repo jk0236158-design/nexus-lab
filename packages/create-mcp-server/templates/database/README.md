@@ -9,7 +9,7 @@ A production-ready [Model Context Protocol](https://modelcontextprotocol.io/) se
 - **What's in the zip:** full scaffolded project — `src/` (index, db, schema, tools, resources), `tests/tools.test.ts` with an in-memory DB helper, `drizzle.config.ts`, `vitest.config.ts`, `.env.example`, `.gitignore`, TS config, and this README.
 - **Not a fit if:** you need Postgres / MySQL from day one (SQLite only here), multi-writer / distributed workloads, or a visual admin UI beyond `drizzle-studio`.
 - **Run it in 4 steps:** `npm install` → `cp .env.example .env` → `npm run build` → `npm start`. The `notes` table is auto-created on first launch.
-- **Next:** [get it on Gumroad](https://nexuslabzen.gumroad.com/l/ijuvn) · scaffold via `npx @nexus-lab/create-mcp-server my-server --template database` · [source on GitHub](https://github.com/nexus-lab-zen/nexus-lab).
+- **Next:** [get it on Gumroad](https://nexuslabzen.gumroad.com/l/ijuvn) · scaffold via `npx @nexus-lab/create-mcp-server my-server --template database` (CLI shows purchase link) · source ships in the Gumroad zip.
 
 ## Features
 

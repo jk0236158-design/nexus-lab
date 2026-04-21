@@ -19,13 +19,13 @@ export default defineConfig({
         text: "Links",
         items: [
           { text: "nexus-lab.nokaze.dev", link: "https://nexus-lab.nokaze.dev" },
-          { text: "GitHub", link: "https://github.com/nexus-lab-zen/nexus-lab" },
+          { text: "Articles (GitHub)", link: "https://github.com/nexus-lab-zen/Nexus.Lab.Zen" },
         ],
       },
     ],
 
     socialLinks: [
-      { icon: "github", link: "https://github.com/nexus-lab-zen/nexus-lab" },
+      { icon: "github", link: "https://github.com/nexus-lab-zen/Nexus.Lab.Zen" },
     ],
 
     footer: {

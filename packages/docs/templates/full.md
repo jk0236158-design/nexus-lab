@@ -13,7 +13,7 @@ description: Tools + resources + prompts, Vitest pre-wired
 
 ## Status
 
-README pending. See the [template source on GitHub](https://github.com/nexus-lab-zen/nexus-lab/tree/master/packages/create-mcp-server/templates/full) for now.
+README pending. Scaffold the template locally with the install command below to inspect the source.
 
 ## Install
 

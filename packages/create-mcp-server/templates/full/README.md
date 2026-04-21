@@ -58,4 +58,4 @@ All inputs are validated with Zod. All responses follow the MCP content format.
 - Need **auth + rate limiting**? → [`auth`](https://nexuslabzen.gumroad.com/l/dghzas) (premium)
 - Need **to wrap an existing REST API safely for agents**? → [`api-proxy`](https://nexuslabzen.gumroad.com/l/bktllv) (premium)
 
-MIT. Made by [Nexus Lab](https://github.com/nexus-lab-zen/nexus-lab).
+MIT. Made by [Nexus Lab](https://nexus-lab.nokaze.dev) ([articles](https://github.com/nexus-lab-zen/Nexus.Lab.Zen)).

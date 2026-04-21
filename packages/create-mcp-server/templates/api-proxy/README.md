@@ -17,7 +17,7 @@ hosts or leak credentials.
 - **What's in the zip:** full scaffolded project — `src/` (index, proxy client with timeout / retry / rate limit, tools, error formatter, response sanitizer), `tests/` covering path pivot + secret redaction + rate-limit exhaustion + end-to-end MCP calls, `.env.example`, TS config, and this README.
 - **Not a fit if:** you want auto-generated tools from an OpenAPI spec (use `@orval/mcp`), you need streaming responses, or you're proxying binary / non-JSON payloads. Also not a fit as-is for multi-process deploys — the rate limiter is in-memory.
 - **Run it in 4 steps:** `npm install` → `cp .env.example .env` (set `UPSTREAM_BASE_URL`) → `npm run build` → register in your MCP client (`.mcp.json` or Claude Desktop config). Runs over stdio — no port exposed.
-- **Next:** [get it on Gumroad](https://nexuslabzen.gumroad.com/l/bktllv) · scaffold via `npx @nexus-lab/create-mcp-server my-server --template api-proxy` · [source on GitHub](https://github.com/nexus-lab-zen/nexus-lab).
+- **Next:** [get it on Gumroad](https://nexuslabzen.gumroad.com/l/bktllv) · scaffold via `npx @nexus-lab/create-mcp-server my-server --template api-proxy` (CLI shows purchase link) · source ships in the Gumroad zip.
 
 ## Quick Start
 

@@ -9,7 +9,7 @@ A production-ready [Model Context Protocol](https://modelcontextprotocol.io/) se
 - **What's in the zip:** full scaffolded project — `src/` (index, auth, rate-limiter, tools), `.env.example` with every required secret, Vitest suite covering API key + JWT + rate-limit + role gating, TS config, `.gitignore`, and this README.
 - **Not a fit if:** you need OAuth 2.0 / OIDC / SSO integration, session cookies, or persistent rate-limit storage (Redis). The limiter is in-memory and resets on restart — swap it out before multi-instance deploys.
 - **Run it in 4 steps:** `npm install` → `cp .env.example .env` (set `JWT_SECRET` and `API_KEYS`) → `npm run build` → `npm start`. Server listens on `http://localhost:3000` by default.
-- **Next:** [get it on Gumroad](https://nexuslabzen.gumroad.com/l/dghzas) · scaffold via `npx @nexus-lab/create-mcp-server my-server --template auth` · [source on GitHub](https://github.com/nexus-lab-zen/nexus-lab).
+- **Next:** [get it on Gumroad](https://nexuslabzen.gumroad.com/l/dghzas) · scaffold via `npx @nexus-lab/create-mcp-server my-server --template auth` (CLI shows purchase link) · source ships in the Gumroad zip.
 
 ## Quick Start
 

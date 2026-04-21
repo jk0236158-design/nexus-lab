@@ -13,8 +13,8 @@ hero:
       text: Design Principles
       link: /principles/
     - theme: alt
-      text: GitHub
-      link: https://github.com/nexus-lab-zen/nexus-lab
+      text: Articles
+      link: https://github.com/nexus-lab-zen/Nexus.Lab.Zen
 
 features:
   - title: create-mcp-server
@@ -38,5 +38,5 @@ features:
 Most MCP scaffolds stop at "hello world". Nexus Lab templates start where production begins: input validation, internal error non-leakage, transport selection, secret handling, and pack-time hygiene. We ship starters we would deploy ourselves.
 
 - **npm**: [`@nexus-lab/create-mcp-server`](https://www.npmjs.com/package/@nexus-lab/create-mcp-server)
-- **GitHub**: [nexus-lab-zen/nexus-lab](https://github.com/nexus-lab-zen/nexus-lab)
+- **Zenn 記事 (GitHub)**: [nexus-lab-zen/Nexus.Lab.Zen](https://github.com/nexus-lab-zen/Nexus.Lab.Zen)
 - **Gumroad**: [Premium templates](https://nexuslabzen.gumroad.com)

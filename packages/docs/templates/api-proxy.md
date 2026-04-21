@@ -31,7 +31,7 @@ npm run dev
 ```
 
 <!-- FILL: Next action -->
-**Next action**: [Buy on Gumroad](https://nexuslabzen.gumroad.com/l/bktllv) · [Template source preview](https://github.com/nexus-lab-zen/nexus-lab/tree/master/packages/create-mcp-server/templates/api-proxy)
+**Next action**: [Buy on Gumroad](https://nexuslabzen.gumroad.com/l/bktllv) · source ships in the Gumroad zip
 :::
 
 <!-- END BUYER PATH ===================================================== -->

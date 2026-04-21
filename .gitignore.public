@@ -1,0 +1,91 @@
+# =============================================================================
+# .gitignore.public — used ONLY when publishing to nexus-lab-zen/nexus-lab.
+#
+# Workflow (see team_memory/iwa/note_2026-04-21_github_public_publish_steps.md):
+#   1. Create an orphan branch `public/main`
+#   2. Copy this file over `.gitignore`
+#   3. `git rm -r --cached` everything that newly matches
+#   4. Commit, push to the public remote
+#   5. The private monorepo at jk0236158-design/nexus-lab keeps its existing
+#      `.gitignore` and is unaffected.
+#
+# Anything that names a premium template, an internal operations file, or a
+# personal-machine path MUST be excluded here.
+# =============================================================================
+
+# --- Standard hygiene (mirror of the private .gitignore) ---------------------
+node_modules/
+dist/
+*.log
+.env
+.env.*
+*.env.nokaze
+.DS_Store
+coverage/
+.claude/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# --- Premium template source (sold via Gumroad — never publish) --------------
+packages/create-mcp-server/templates/database/
+packages/create-mcp-server/templates/auth/
+packages/create-mcp-server/templates/api-proxy/
+
+# --- Premium build artifacts -------------------------------------------------
+dist/premium/
+packages/create-mcp-server/dist/premium/
+
+# --- Internal operations manual & shared-ops integration ---------------------
+# CLAUDE.md is the operating manual for the AI team. It references shared-ops
+# absolute paths and an internal command vocabulary. Not for public consumption.
+CLAUDE.md
+**/CLAUDE.md
+AGENTS.md
+**/AGENTS.md
+.mcp.json
+
+# Per-package internal Claude / Agents files inside packages/* (e.g. ops-console)
+packages/*/CLAUDE.md
+packages/*/AGENTS.md
+
+# --- Internal session logs ---------------------------------------------------
+diary/
+reports/
+knots/
+
+# --- Internal scripts (assume shared-ops layout) -----------------------------
+scripts/zen_startup_sweep.sh
+scripts/codex-review.sh
+scripts/build-premium-zip.py
+scripts/publish-premium.py
+scripts/memory_lint.py
+scripts/memory_lint_assertions.yaml
+scripts/test_memory_lint.py
+scripts/__pycache__/
+
+# --- Sales/marketing draft material (Gumroad listings, internal checklists) --
+docs/gumroad-*.html
+docs/gumroad-*.md
+docs/gumroad-upload-checklist.md
+docs/premium-templates-plan.md
+docs/zen-routines.md
+docs/ops-console-design.md
+docs/ci/
+
+# --- Historical scaffolds at the repo root (empty, predates monorepo) --------
+src/
+tests/
+
+# --- team_memory / shared-ops state (lives outside repo, but be paranoid) ----
+team_memory/
+.shared-ops/
+
+# --- Lockfile policy ---------------------------------------------------------
+# Keep root package-lock.json (reproducible install for contributors).
+# Keep packages/*/package-lock.json where present.
+# Premium templates' lockfiles get auto-excluded by their parent dir rules.
+
+# --- Anything else explicitly redacted ---------------------------------------
+# Add new entries above with a one-line "why" comment so future maintainers
+# know what surface this protects.

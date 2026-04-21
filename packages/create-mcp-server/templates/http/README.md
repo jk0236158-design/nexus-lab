@@ -50,4 +50,4 @@ This template enables CORS and exposes MCP without auth — **that is intentiona
 3. Restrict CORS origins to known clients
 4. Add rate limiting (the `auth` template includes a sliding-window limiter)
 
-MIT. Made by [Nexus Lab](https://github.com/nexus-lab-zen/nexus-lab).
+MIT. Made by [Nexus Lab](https://nexus-lab.nokaze.dev) ([articles](https://github.com/nexus-lab-zen/Nexus.Lab.Zen)).
