@@ -1,0 +1,24 @@
+{
+  "name": "@nexus-lab/aira",
+  "version": "0.1.0",
+  "description": "Aira Phase 0 mini — read-only digest synthesis layer (internal only, not for public distribution)",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "digest": "node --loader ts-node/esm src/digest.ts",
+    "digest:dry": "DRY_RUN=true node --loader ts-node/esm src/digest.ts"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5",
+    "vitest": "^2.0.0"
+  }
+}
