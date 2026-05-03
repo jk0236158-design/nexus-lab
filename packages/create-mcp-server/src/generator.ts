@@ -48,7 +48,25 @@ export async function generateProject(config: ProjectConfig): Promise<void> {
     throw new Error(`Template "${config.template}" not found at ${templateDir}`);
   }
 
-  await fs.copy(templateDir, targetDir);
+  // Skip node_modules / dist / package-lock.json / .vitest cache when copying:
+  // they're build artefacts of in-monorepo dev work, not part of the shipped
+  // template, and on Windows a symlinked workspace package inside node_modules
+  // raises EPERM during fs.copy.
+  await fs.copy(templateDir, targetDir, {
+    filter: (src) => {
+      const base = path.basename(src);
+      if (
+        base === "node_modules" ||
+        base === "dist" ||
+        base === "package-lock.json" ||
+        base === ".turbo" ||
+        base === ".vitest"
+      ) {
+        return false;
+      }
+      return true;
+    },
+  });
 
   // Update package.json with user config
   const pkgPath = path.join(targetDir, "package.json");

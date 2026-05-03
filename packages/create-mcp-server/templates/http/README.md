@@ -38,8 +38,8 @@ The MCP TypeScript server docs now recommend **Streamable HTTP** for remote serv
 ## When to graduate
 
 - Need **stdio only**? → [`minimal`](../minimal/README.md) or [`full`](../full/README.md)
-- Need **JWT / API key auth + rate limiting** on top of HTTP? → [`auth`](https://nexuslabzen.gumroad.com/l/dghzas) (premium, ¥800)
-- Need to **wrap an existing REST API** behind MCP with agent-safe defaults? → [`api-proxy`](https://nexuslabzen.gumroad.com/l/bktllv) (premium, ¥1,000)
+- Need **JWT / API key auth + rate limiting** on top of HTTP? → [`auth`](https://nexuslabzen.gumroad.com/l/dghzas) (premium, $15 / ¥2,250)
+- Need to **wrap an existing REST API** behind MCP with agent-safe defaults? → [`api-proxy`](https://nexuslabzen.gumroad.com/l/bktllv) (premium, $20 / ¥3,000)
 
 ## Security defaults
 

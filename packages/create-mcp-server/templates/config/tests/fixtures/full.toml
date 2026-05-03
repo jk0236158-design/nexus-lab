@@ -1,0 +1,6 @@
+[server]
+name = "toml-server"
+port = 8080
+
+[features]
+verbose_logging = true

@@ -1,4 +1,5 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { textResponse, errorResponse } from "@nexus-lab/mcp-toolkit/response";
 import { z } from "zod";
 
 // Greeting logic — exported for direct testing
@@ -88,9 +89,7 @@ export function registerTools(server: McpServer): void {
     "greet",
     "Generate a greeting for the given name",
     { name: z.string().describe("The name to greet") },
-    async ({ name }) => ({
-      content: [{ type: "text", text: greet(name) }],
-    })
+    async ({ name }) => textResponse(greet(name)),
   );
 
   server.tool(
@@ -103,13 +102,12 @@ export function registerTools(server: McpServer): void {
     },
     async ({ expression }) => {
       try {
-        const result = calculate(expression);
-        return { content: [{ type: "text", text: result }] };
+        return textResponse(calculate(expression));
       } catch (error) {
         const message =
           error instanceof Error ? error.message : "Unknown error";
-        return { content: [{ type: "text", text: `Error: ${message}` }], isError: true };
+        return errorResponse(`Error: ${message}`);
       }
-    }
+    },
   );
 }

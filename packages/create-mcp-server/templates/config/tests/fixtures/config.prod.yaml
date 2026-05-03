@@ -1,0 +1,5 @@
+server:
+  name: prod-tier
+  port: 80
+features:
+  verbose_logging: false

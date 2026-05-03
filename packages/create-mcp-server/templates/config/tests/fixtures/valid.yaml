@@ -1,0 +1,6 @@
+server:
+  name: fixture-server
+  port: 4242
+features:
+  verbose_logging: true
+api_key: yaml-secret-token

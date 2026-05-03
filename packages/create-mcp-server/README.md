@@ -1,6 +1,6 @@
 # @nexus-lab/create-mcp-server
 
-Scaffold a new [Model Context Protocol](https://modelcontextprotocol.io/) server in seconds.
+Scaffold a new [Model Context Protocol](https://modelcontextprotocol.io/) server in seconds. Free templates to start, premium templates ¥500 (US$3.50) each — production-ready, security decisions already made, 3-10 hour setup avoided.
 
 ```bash
 npx @nexus-lab/create-mcp-server my-server
@@ -102,14 +102,16 @@ To use with Claude Code, add to your MCP config:
 
 ## Premium Templates
 
-Take your MCP server to the next level with production-ready premium templates:
+All MCP templates are one-coin reference builds — production-grade design decisions bundled at ¥500 (US$3.50). Available on [Gumroad](https://nexuslabzen.gumroad.com) and [BOOTH](https://nexus-lab.booth.pm):
 
-| Template | Description | Link |
-|----------|-------------|------|
-| `database` | SQLite + Drizzle ORM with full CRUD operations | [Get it on Gumroad](https://nexuslabzen.gumroad.com/l/ijuvn) |
-| `auth` | Authentication middleware (coming soon) | — |
+| Template | Description | Price | Link |
+|----------|-------------|-------|------|
+| `config` | Schema-validated config from env + file + profile, secret redaction | ¥500 / $3.50 | [Gumroad](https://nexuslabzen.gumroad.com) / [BOOTH](https://nexus-lab.booth.pm/items/8246792) |
+| `database` | SQLite + Drizzle ORM, safe error formatting, migrations | ¥500 / $3.50 | [Gumroad](https://nexuslabzen.gumroad.com/l/ijuvn) |
+| `auth` | API key + JWT, timing-safe comparison, two-layer rate limiting | ¥500 / $3.50 | [Gumroad](https://nexuslabzen.gumroad.com/l/dghzas) |
+| `api-proxy` | Agent-safe REST proxy, path-pivot protection, secret redaction | ¥500 / $3.50 | [Gumroad](https://nexuslabzen.gumroad.com/l/bktllv) |
 
-Premium templates include database connectivity, typed ORM queries, comprehensive test suites, and working examples — saving you hours of boilerplate setup.
+Each premium zip includes full source, Vitest suite, design-decisions brief, and CHANGELOG — one-time purchase, MIT license, no subscription.
 
 ```bash
 # When you select a premium template, you'll be directed to the purchase page

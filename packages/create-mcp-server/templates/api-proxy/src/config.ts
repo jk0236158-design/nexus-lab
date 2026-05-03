@@ -1,3 +1,5 @@
+import { parseIntEnv } from "@nexus-lab/mcp-toolkit/env";
+
 export interface ProxyConfig {
   baseUrl: string;
   bearerToken?: string;
@@ -7,12 +9,6 @@ export interface ProxyConfig {
   maxRetries: number;
   rateLimitMax: number;
   rateLimitWindowMs: number;
-}
-
-function parseIntEnv(value: string | undefined, fallback: number): number {
-  if (value === undefined || value === "") return fallback;
-  const n = parseInt(value, 10);
-  return Number.isFinite(n) && n >= 0 ? n : fallback;
 }
 
 /**

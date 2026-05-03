@@ -1,0 +1,15 @@
+# Same shape as config.example.yaml, but in TOML. Pick whichever format
+# fits your team's habits — the loader handles all three (yaml / toml /
+# json) interchangeably. Snake_case keys for env-binding round-trip.
+
+[server]
+name = "my-mcp-server"
+version = "0.1.0"
+port = 3000
+
+[features]
+verbose_logging = false
+
+# Secrets belong in env or a gitignored profile-specific file. The schema
+# marks `api_key` as `@secret`, so any echo replaces it with `[REDACTED]`.
+# api_key = "replace-with-a-real-key"

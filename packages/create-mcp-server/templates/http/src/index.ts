@@ -3,6 +3,12 @@ import cors from "cors";
 import { randomUUID } from "node:crypto";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
+import {
+  InMemorySessionStore,
+  type HttpTransportLike,
+} from "@nexus-lab/mcp-toolkit/bootstrap";
+import { parseIntEnv } from "@nexus-lab/mcp-toolkit/env";
+import { textResponse } from "@nexus-lab/mcp-toolkit/response";
 import { z } from "zod";
 
 const app = express();
@@ -10,8 +16,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Store active transports keyed by session ID
-const transports = new Map<string, StreamableHTTPServerTransport>();
+// Per-session transport store (toolkit helper — keeps the surface uniform with
+// other HTTP-transport templates and substitutable for a Redis-backed store
+// in clustered deployments).
+const transports = new InMemorySessionStore<
+  StreamableHTTPServerTransport & HttpTransportLike
+>();
 
 /** Create a new MCP server instance and register tools */
 function createServer(): McpServer {
@@ -25,9 +35,7 @@ function createServer(): McpServer {
     "hello",
     "Returns a greeting for the given name",
     { name: z.string().describe("Name to greet") },
-    async ({ name }) => ({
-      content: [{ type: "text", text: `Hello, ${name}!` }],
-    }),
+    async ({ name }) => textResponse(`Hello, ${name}!`),
   );
 
   return server;
@@ -100,7 +108,7 @@ app.delete("/mcp", async (req, res) => {
   await transport.handleRequest(req, res);
 });
 
-const PORT = parseInt(process.env.PORT || "3000", 10);
+const PORT = parseIntEnv(process.env.PORT, 3000);
 
 app.listen(PORT, () => {
   console.log(`MCP server listening on http://localhost:${PORT}/mcp`);

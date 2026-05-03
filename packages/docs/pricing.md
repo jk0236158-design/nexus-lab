@@ -5,11 +5,13 @@ description: Free CLI + Premium MCP Templates — Nexus Lab pricing overview
 
 # Pricing
 
-**Free CLI + Premium Templates.** The scaffolding CLI is free and open source. Three premium templates encode resolved design decisions (auth, persistence, API proxying) that you would otherwise spend days deciding — and can be bought once, owned forever, as zip source.
+**Free CLI + Premium Templates.** The scaffolding CLI is free and open source. Four premium templates encode resolved design decisions (auth, persistence, API proxying, config) that you would otherwise spend days deciding — bought once, owned forever, as zip source.
+
+**All MCP templates are one-coin reference builds.** At ¥500 / US$3.50 each, these are brand reference implementations and demand-check instruments — not the primary revenue axis. They exist to lower the barrier to first purchase and demonstrate nokaze design quality at minimal commitment.
 
 <div class="nokaze-meta">
 
-Last updated: 2026-04-21 · prices in USD (Gumroad) and JPY (BOOTH, 準備中). No subscription, no vendor lock-in, MIT license on everything you download.
+Last updated: 2026-04-29 · prices in USD (Gumroad) and JPY (BOOTH, Live). No subscription, no vendor lock-in, MIT license on everything you download.
 
 </div>
 
@@ -19,14 +21,14 @@ Last updated: 2026-04-21 · prices in USD (Gumroad) and JPY (BOOTH, 準備中). 
 
 | | **Free** | **Premium** |
 | :-- | :-- | :-- |
-| **Templates** | `minimal`, `full`, `http` | `database`, `auth`, `api-proxy` |
+| **Templates** | `minimal`, `full`, `http` | `config`, `database`, `auth`, `api-proxy` |
 | **Install** | `npx @nexus-lab/create-mcp-server` | Buy zip, unzip, install |
 | **Transport** | stdio / Streamable HTTP | stdio / HTTP (template-dependent) |
-| **Tests** | Vitest pre-wired (full) | Vitest + integration tests |
-| **Security defaults** | Zod input validation, ESM + TypeScript | Timing-safe comparison, allowlist routing, safe error formatting, rate limit |
+| **Tests** | Vitest pre-wired (full) | Vitest + integration tests (98% coverage on config) |
+| **Security defaults** | Zod input validation, ESM + TypeScript | Schema-validated config, timing-safe comparison, allowlist routing, safe error formatting, rate limit |
 | **Support** | GitHub issues | GitHub issues + CHANGELOG-tracked fixes |
 | **License** | MIT | MIT (for the code you download) |
-| **Price** | $0 | $10 / $15 / $20 (see below) |
+| **Price** | $0 | ¥500 / $3.50 each (one-coin flat) |
 
 > **Who is each side for?** Free is for learning the MCP shape and shipping internal-only or read-only servers. Premium is for anything touching real data, real credentials, or real upstream APIs — where the cost of a wrong default is higher than the price of the template.
 
@@ -34,30 +36,42 @@ Last updated: 2026-04-21 · prices in USD (Gumroad) and JPY (BOOTH, 準備中). 
 
 ## Premium templates
 
-All three premium templates ship the full source in a zip, with README, LICENSE, tests, and a design-decisions brief explaining *why* each default was chosen.
+All four premium templates ship the full source in a zip, with README, LICENSE, tests, and a design-decisions brief explaining *why* each default was chosen. **All at ¥500 / US$3.50.**
 
-### database — $10
+### config — ¥500 / $3.50
+
+Schema-validated config loading from env + file (yaml/json/toml) + profile, with secret redaction.
+
+- Who it's for: anyone starting an MCP server who wants typed env, schema-validated config files, and clean dev/prod/test profile switching from day one.
+- Prevents: untyped env typos at startup, silent failures from missing config keys, ad-hoc profile switching that hides environment-specific bugs.
+- The entry point of the premium series — same density of design-decisions brief at the lowest commitment.
+- [See template page](/templates/config) · [Buy on BOOTH](https://nexus-lab.booth.pm/items/8246792)
+
+### database — ¥500 / $3.50
 
 SQLite + Drizzle ORM, safe error formatting, migrations.
 
 - Who it's for: Claude Code devs building internal MCP servers that need persistence without building the schema → migration → query plumbing themselves.
 - Prevents: internal error leakage to MCP clients, schema drift, brittle migrations.
+- Self-implementing this layer takes 4–6 hours. This template ships with that work already done.
 - [See template page](/templates/database) · [Buy on Gumroad](https://nexuslabzen.gumroad.com/l/ijuvn)
 
-### auth — $15
+### auth — ¥500 / $3.50
 
 Secure API key handling, timing-safe comparison, rate limiting.
 
 - Who it's for: anyone exposing an MCP server beyond local stdio and needing API-key auth that does not leak via error messages or timing.
 - Prevents: timing-attack leakable key comparison, brute force via missing rate limit, internal error bleed-through.
+- Self-implementing the 3 correct defaults takes 3–5 hours. This template ships with them fused.
 - [See template page](/templates/auth) · [Buy on Gumroad](https://nexuslabzen.gumroad.com/l/dghzas)
 
-### api-proxy — $20
+### api-proxy — ¥500 / $3.50
 
 Agent-safe upstream proxy with path-pivot protection.
 
 - Who it's for: devs wrapping an existing REST/HTTP API as an MCP server, concerned about agent-driven path pivots or secret leakage.
 - Prevents: path-pivot (LLM constructing unintended upstream URLs), secret bleed into responses, unbounded fan-out.
+- Self-implementing path-pivot protection + fan-out control takes 6–10 hours. This template ships with the decisions resolved.
 - [See template page](/templates/api-proxy) · [Buy on Gumroad](https://nexuslabzen.gumroad.com/l/bktllv)
 
 ---
@@ -68,9 +82,9 @@ Three channels. Same zip, different rails — choose the one that fits your bill
 
 | Channel | Status | Currency | Notes |
 | :-- | :-- | :-- | :-- |
-| **Gumroad** (海外) | Live | USD ($10 / $15 / $20) | Primary channel. Instant zip download. [nexuslabzen.gumroad.com](https://nexuslabzen.gumroad.com) |
-| **BOOTH** (国内) | 準備中 (Coming soon) | JPY (¥1,500 / ¥2,250 / ¥3,000 想定) | 日本の個人・小規模法人向け。インボイス対応予定。 |
-| **Polar.sh** (海外) | 準備中 (Coming soon) | USD ($10 / $15 / $20) | Lower fees (5% vs Gumroad 10%), better for OSS-aligned buyers. |
+| **Gumroad** (海外) | Live | USD ($3.50 each) | Primary channel. Instant zip download. [nexuslabzen.gumroad.com](https://nexuslabzen.gumroad.com) |
+| **BOOTH** (国内) | **Live** | JPY (¥500 each) | 日本の個人・小規模法人向け。インボイス対応予定。[nexus-lab.booth.pm](https://nexus-lab.booth.pm) |
+| **Polar.sh** (海外) | 準備中 (Coming soon) | USD ($3.50 each) | Lower fees (5% vs Gumroad 10%), better for OSS-aligned buyers. |
 
 > **Why three channels?** Gumroad is fast to set up but charges 10% + $0.50/tx. BOOTH removes the USD→JPY friction for Japanese buyers. Polar.sh keeps more of each sale going back into Nexus Lab. Same source, same tests, same license — we pick up the fee difference, not you.
 
@@ -91,6 +105,18 @@ What you *don't* get: hosting, a dashboard, telemetry, or a subscription. These 
 
 ---
 
+## Pricing strategy (2026-04-29 update)
+
+MCP templates are **brand reference implementations and demand-check instruments**, not the primary revenue axis. The ¥500 flat price (confirmed at 4/24 review, agenda 3.6) reflects this positioning:
+
+- **Brand shelf**: demonstrate nokaze design quality at minimal buyer commitment
+- **Demand signal**: who buys what at ¥500 informs the 5/08 review template selection
+- **Primary revenue**: shifting to form A (Zenn paid articles / e-books), form B (subscription), form C (advisory) — tracked at 4/24 review agenda 26
+
+This is not a discount or a promotion. ¥500 is the intended steady-state price for one-coin reference builds.
+
+---
+
 ## FAQ
 
 **Can I see the source before buying?**
@@ -105,20 +131,20 @@ No. One-time purchase, zip delivery, MIT license.
 **Can I use it in client work?**
 Yes. MIT-licensed code — build on top, ship to clients, resell your own integrations. Just don't resell the template itself as-is.
 
-**Why is api-proxy more expensive than database?**
-api-proxy's design-decisions brief is the longest — path-pivot protection, secret bleed prevention, and agent-safe fan-out are each non-trivial. You pay for the decisions, not the lines of code.
+**Why is every template the same price now?**
+¥500 flat removes the decision cost from "which template is worth it?" Each one encodes 3–10 hours of design work. At ¥500, the question becomes "do I need this feature?" — not "is this priced fairly?" That's the question we want buyers to answer.
 
 ---
 
 ## 日本語価格表示
 
-BOOTH での JPY 価格表示は準備中です。[`/ja/pricing/`](/ja/pricing/) で公開予定 (Phase 2)。現時点で JPY 見積もりが必要な場合は、Gumroad の USD 価格 × 当日レート + 10% 手数料、または上記表の「BOOTH 想定価格」をご参照ください。
+BOOTH での JPY 価格は全商品 **¥500** です。[nexus-lab.booth.pm](https://nexus-lab.booth.pm) で 4 品 (config / database / auth / api-proxy) を JPY で直接購入できます。Gumroad との同 zip・同 LICENSE・同 CHANGELOG。
 
 ---
 
 <div class="nokaze-footer-note">
 
-Gumroad revenue as of 2026-04-21: **¥0**. We publish this number unvarnished — that's the nokaze posture. The templates exist because we run MCP servers ourselves, not because the market has validated anything yet. If something in these pages is wrong, [open an issue](https://github.com/nexus-lab-zen/Nexus.Lab.Zen/issues) and we will fix it.
+Revenue as of 2026-04-29 (Gumroad + BOOTH): **¥0**. We publish this number unvarnished — that's the nokaze posture. The templates exist because we run MCP servers ourselves, not because the market has validated anything yet. If something in these pages is wrong, [open an issue](https://github.com/nexus-lab-zen/Nexus.Lab.Zen/issues) and we will fix it.
 
 </div>
 

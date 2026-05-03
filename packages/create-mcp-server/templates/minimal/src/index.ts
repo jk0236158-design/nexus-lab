@@ -1,5 +1,6 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
+import { runStdio } from "@nexus-lab/mcp-toolkit/bootstrap";
+import { textResponse } from "@nexus-lab/mcp-toolkit/response";
 import { z } from "zod";
 
 // Create the MCP server
@@ -13,15 +14,9 @@ server.tool(
   "hello",
   "Greet someone by name",
   { name: z.string().describe("Name of the person to greet") },
-  async ({ name }) => ({
-    content: [{ type: "text", text: `Hello, ${name}!` }],
-  })
+  async ({ name }) => textResponse(`Hello, ${name}!`),
 );
 
-// Start the server with stdio transport
-async function main() {
-  const transport = new StdioServerTransport();
-  await server.connect(transport);
-}
-
-main().catch(console.error);
+// Start the server with stdio transport (toolkit handles transport setup +
+// fatal-error logging).
+await runStdio(server);

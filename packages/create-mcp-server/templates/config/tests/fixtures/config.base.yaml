@@ -1,0 +1,5 @@
+server:
+  name: base-server
+  port: 9999
+features:
+  verbose_logging: false
