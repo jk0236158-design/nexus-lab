@@ -1,0 +1,249 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e5]:
+      - link "BOOTH" [ref=e7] [cursor=pointer]:
+        - /url: https://booth.pm/
+        - img "BOOTH" [ref=e8]
+      - generic [ref=e9]:
+        - generic [ref=e10]:
+          - generic [ref=e14] [cursor=pointer]:
+            - generic [ref=e15]:
+              - img [ref=e16]
+              - generic [ref=e17]: Zen Nexus
+            - img [ref=e19]
+          - button [ref=e22] [cursor=pointer]:
+            - button [ref=e24]:
+              - img [ref=e26]
+          - link "スキ！した商品" [ref=e28] [cursor=pointer]:
+            - /url: https://accounts.booth.pm/wish_lists
+            - img [ref=e30]
+        - link "ショッピングカート" [ref=e32] [cursor=pointer]:
+          - /url: https://booth.pm/carts
+          - img [ref=e34]
+        - generic [ref=e39] [cursor=pointer]:
+          - img [ref=e41]
+          - text: 日本語
+  - generic [ref=e43]:
+    - generic [ref=e44]:
+      - link "あんしんBOOTHパックの送料を全国一律化し、ネコポスの送料を値下げしました 2026年4月16日 14時00分" [ref=e45] [cursor=pointer]:
+        - /url: https://booth.pm/announcements/925
+        - heading "あんしんBOOTHパックの送料を全国一律化し、ネコポスの送料を値下げしました 2026年4月16日 14時00分" [level=1] [ref=e46]:
+          - img [ref=e48]
+          - text: あんしんBOOTHパックの送料を全国一律化し、ネコポスの送料を値下げしました
+          - generic [ref=e50]: 2026年4月16日 14時00分
+      - generic "閉じる" [ref=e51] [cursor=pointer]:
+        - img [ref=e53]
+    - generic [ref=e55]:
+      - link "ゴールデンウィーク期間の営業に関するお知らせ 2026年4月15日 10時00分" [ref=e56] [cursor=pointer]:
+        - /url: https://booth.pm/announcements/927
+        - heading "ゴールデンウィーク期間の営業に関するお知らせ 2026年4月15日 10時00分" [level=1] [ref=e57]:
+          - img [ref=e59]
+          - text: ゴールデンウィーク期間の営業に関するお知らせ
+          - generic [ref=e61]: 2026年4月15日 10時00分
+      - generic "閉じる" [ref=e62] [cursor=pointer]:
+        - img [ref=e64]
+    - generic [ref=e66]:
+      - link "ユーザーのみなさまへ、アカウント保護のお願い 2025年10月21日 17時00分" [ref=e67] [cursor=pointer]:
+        - /url: https://booth.pm/announcements/867
+        - heading "ユーザーのみなさまへ、アカウント保護のお願い 2025年10月21日 17時00分" [level=1] [ref=e68]:
+          - img [ref=e70]
+          - text: ユーザーのみなさまへ、アカウント保護のお願い
+          - generic [ref=e72]: 2025年10月21日 17時00分
+      - generic "閉じる" [ref=e73] [cursor=pointer]:
+        - img [ref=e75]
+    - group [ref=e77]:
+      - link "お知らせ一覧" [ref=e78] [cursor=pointer]:
+        - /url: https://booth.pm/announcements
+        - text: お知らせ一覧
+        - img [ref=e80]
+    - navigation [ref=e84]:
+      - list [ref=e85]:
+        - listitem [ref=e86]:
+          - link "ショップ管理" [ref=e87] [cursor=pointer]:
+            - /url: https://manage.booth.pm/
+        - listitem [ref=e88]:
+          - link "ショップ情報編集" [ref=e89] [cursor=pointer]:
+            - /url: https://manage.booth.pm/settings
+        - listitem [ref=e90]:
+          - link "商品管理" [ref=e91] [cursor=pointer]:
+            - /url: https://manage.booth.pm/items
+        - listitem [ref=e92]:
+          - link "倉庫サービス" [ref=e93] [cursor=pointer]:
+            - /url: https://manage.booth.pm/warehouse/reservations
+        - listitem [ref=e94]:
+          - link "注文一覧" [ref=e95] [cursor=pointer]:
+            - /url: https://manage.booth.pm/orders
+        - listitem [ref=e96]:
+          - link "売上管理" [ref=e97] [cursor=pointer]:
+            - /url: https://manage.booth.pm/sales
+        - listitem [ref=e98]:
+          - link "ユーザーとのメッセージ" [ref=e99] [cursor=pointer]:
+            - /url: https://manage.booth.pm/conversations
+        - listitem [ref=e100]:
+          - link "BOOTH Apps" [ref=e101] [cursor=pointer]:
+            - /url: https://booth.pm/booth_apps
+    - main [ref=e102]:
+      - generic [ref=e103]:
+        - generic [ref=e104]: 売上管理
+        - link "売上管理CSVを発行する" [ref=e105] [cursor=pointer]:
+          - /url: /sales/csv_requests
+          - generic [ref=e106]: 売上管理CSVを発行する
+          - img [ref=e108]
+      - navigation [ref=e110]:
+        - list [ref=e111]:
+          - listitem [ref=e112]:
+            - link "年別" [ref=e114] [cursor=pointer]:
+              - /url: /sales/yearly
+          - listitem [ref=e115]:
+            - link "月別" [ref=e117] [cursor=pointer]:
+              - /url: /sales
+          - listitem [ref=e118]:
+            - link "日別" [ref=e120] [cursor=pointer]:
+              - /url: /sales/daily/recent
+          - listitem [ref=e121]:
+            - link "アイテム別" [ref=e123] [cursor=pointer]:
+              - /url: /sales/items
+      - generic [ref=e124]:
+        - link "売上の振込先を編集" [ref=e126] [cursor=pointer]:
+          - /url: /payout_account
+          - generic [ref=e127]: 売上の振込先を編集
+          - img [ref=e129]
+        - generic [ref=e132]:
+          - generic [ref=e133]:
+            - generic [ref=e134]:
+              - generic [ref=e135]: 総売上
+              - generic [ref=e136]: ¥ 0
+            - generic [ref=e137]: ※ショップ開設から現時点までに発送完了となった注文の小計 + 各送料
+          - button "総売上の内訳を開く" [ref=e138] [cursor=pointer]:
+            - generic [ref=e139]:
+              - img [ref=e141]
+              - text: 総売上の内訳を開く
+        - generic [ref=e143]:
+          - generic [ref=e144]: 金額の受取
+          - generic [ref=e146]:
+            - generic [ref=e148]: 受取金額
+            - generic [ref=e149]: ¥ 0
+          - generic [ref=e150]:
+            - generic [ref=e151]:
+              - generic [ref=e152]:
+                - generic [ref=e153]: 受取金額から振り込む
+                - generic [ref=e154]
+              - generic [ref=e159]:
+                - img [ref=e161]
+                - paragraph [ref=e163]: 振込は毎月1日から19日の間に申請可能です
+            - generic [ref=e164]:
+              - generic [ref=e165]:
+                - generic [ref=e166]: 受取金額からpixivcobanにチャージ
+                - generic [ref=e167]
+              - generic [ref=e175]:
+                - img [ref=e177]
+                - paragraph [ref=e179]: チャージは毎月1日から19日の間に予約可能です
+          - generic [ref=e180]:
+            - generic [ref=e181]: 売上について
+            - generic [ref=e182]: 月末までに発送完了になっている注文が翌月の1日より売上の振込対象となります。
+            - generic [ref=e183]: 振込について
+            - generic [ref=e184]:
+              - generic [ref=e185]: 振込予定額と振込手数料の合計
+              - generic [ref=e186]:
+                - generic [ref=e187]: 201円以上5,000円未満
+                - generic [ref=e188]: 本画面に表示される「振込申請」ボタンから申請ください。
+              - generic [ref=e189]:
+                - generic [ref=e190]: 5,000円以上
+                - generic [ref=e191]: 自動振込みとなりますのでそのままお待ちください。
+            - link "売上の振込みについて" [ref=e192] [cursor=pointer]:
+              - /url: https://booth.pixiv.help/hc/ja/sections/115000544873
+              - generic [ref=e193]: 売上の振込みについて
+              - img [ref=e195]
+            - generic [ref=e196]: pixivcobanについて
+            - generic [ref=e197]: pixivcobanはBOOTH、FANBOXのお支払いに利用できるプリペイド式の電子マネーです。 pixivcobanの残高は、クレジットカード・ピクシブかんたん決済でチャージ可能なほか、BOOTHの受取金額からもチャージできます。当月1日から19日までの間にチャージ予約を作成すると、受取金額の一部が当月20日にコバン（有償）としてチャージされます。
+            - link "pixivcobanについて" [ref=e199] [cursor=pointer]:
+              - /url: https://coban.pixiv.net/about
+              - generic [ref=e200]: pixivcobanについて
+              - img [ref=e202]
+            - link "「受取金額からpixivcobanにチャージ」について" [ref=e204] [cursor=pointer]:
+              - /url: https://booth.pixiv.help/hc/ja/sections/49989325950617
+              - generic [ref=e205]: 「受取金額からpixivcobanにチャージ」について
+              - img [ref=e207]
+  - contentinfo [ref=e208]:
+    - link [ref=e210] [cursor=pointer]:
+      - /url: https://factory.pixiv.net/products/acrylic_badge
+      - img [ref=e211]
+    - generic [ref=e214]:
+      - navigation [ref=e215]:
+        - heading "BOOTHで「売りたい」" [level=3] [ref=e216]
+        - generic [ref=e218]:
+          - link "作品を出品しよう" [ref=e219] [cursor=pointer]:
+            - /url: https://booth.pm/guide
+          - link "BOOTH Apps(拡張機能)" [ref=e220] [cursor=pointer]:
+            - /url: https://booth.pm/booth_apps
+          - link "匿名配送について" [ref=e221] [cursor=pointer]:
+            - /url: https://booth.pm/anonymous_pack_guides
+          - link "発送代行・倉庫サービス" [ref=e222] [cursor=pointer]:
+            - /url: https://booth.pm/warehouse_guide
+          - link "梱包発送ガイド" [ref=e223] [cursor=pointer]:
+            - /url: https://booth.fanbox.cc/posts/264407
+          - link "委託販売とは" [ref=e224] [cursor=pointer]:
+            - /url: https://booth.pm/consignment_sale
+          - link "二次創作の著作権に関する取り組み" [ref=e225] [cursor=pointer]:
+            - /url: https://booth.pm/rights_clearance
+          - link "BOOTH Camp" [ref=e226] [cursor=pointer]:
+            - /url: https://booth.fanbox.cc
+      - navigation [ref=e227]:
+        - heading "BOOTHで「買いたい」" [level=3] [ref=e228]
+        - generic [ref=e230]:
+          - link "BOOTHとは" [ref=e231] [cursor=pointer]:
+            - /url: https://booth.pm/about
+          - link "お買い物ガイド" [ref=e232] [cursor=pointer]:
+            - /url: https://booth.pm/customer_guide
+          - link "お支払い方法" [ref=e233] [cursor=pointer]:
+            - /url: https://booth.pm/payment
+          - link "取引の流れ" [ref=e234] [cursor=pointer]:
+            - /url: https://booth.pm/trading_flowchart
+          - link "倉庫おまとめ発送" [ref=e235] [cursor=pointer]:
+            - /url: https://booth.pm/warehouse_group_shipments
+          - link "BOOTH主催のWeb即売会" [ref=e236] [cursor=pointer]:
+            - /url: https://booth.pm/ja/exhibitions
+      - navigation [ref=e237]:
+        - heading "サポート・お問い合わせ" [level=3] [ref=e238]
+        - generic [ref=e240]:
+          - link "お知らせ" [ref=e241] [cursor=pointer]:
+            - /url: https://booth.pm/announcements
+          - link "よくある質問" [ref=e242] [cursor=pointer]:
+            - /url: https://booth.pixiv.help/hc/
+          - link "チャットで質問（24時間対応）" [ref=e243] [cursor=pointer]:
+            - /url: https://booth.karakuri.ai/embed/
+          - link "BOOTH事務局へのお問い合わせ" [ref=e244] [cursor=pointer]:
+            - /url: https://booth.pm/support
+      - navigation [ref=e245]:
+        - link "X(Twitter) @booth_pm" [ref=e246] [cursor=pointer]:
+          - /url: https://x.com/booth_pm
+          - generic [ref=e247]: X(Twitter) @booth_pm
+          - img [ref=e250]
+        - link "pixiv" [ref=e251] [cursor=pointer]:
+          - /url: https://www.pixiv.net
+          - generic [ref=e252]: pixiv
+          - img [ref=e254]
+    - generic [ref=e258] [cursor=pointer]:
+      - img [ref=e260]
+      - text: 日本語
+    - generic [ref=e263]:
+      - link "BOOTH" [ref=e264] [cursor=pointer]:
+        - /url: https://booth.pm/
+        - img "BOOTH" [ref=e265]
+      - navigation [ref=e266]:
+        - link "会社概要" [ref=e267] [cursor=pointer]:
+          - /url: https://booth.pm/company
+        - link "利用規約" [ref=e268] [cursor=pointer]:
+          - /url: https://policies.pixiv.net/#booth
+        - link "倉庫サービス利用規約" [ref=e269] [cursor=pointer]:
+          - /url: https://policies.pixiv.net/#warehouse
+        - link "ガイドライン" [ref=e270] [cursor=pointer]:
+          - /url: https://booth.pm/guidelines
+        - link "プライバシーポリシー" [ref=e271] [cursor=pointer]:
+          - /url: https://booth.pm/privacy
+        - link "外部送信規律について" [ref=e272] [cursor=pointer]:
+          - /url: https://booth.pm/privacy_14
+        - link "特定商取引法に基づく表記" [ref=e273] [cursor=pointer]:
+          - /url: https://booth.pm/legal
+      - generic [ref=e274]: © pixiv
+  - img "起動アイコン" [ref=e276] [cursor=pointer]

@@ -1,0 +1,976 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e5]:
+      - generic [ref=e6]:
+        - link "BOOTH" [ref=e7] [cursor=pointer]:
+          - /url: https://booth.pm/
+          - img "BOOTH" [ref=e8]
+        - generic [ref=e10]:
+          - generic [ref=e11]:
+            - combobox [ref=e12]:
+              - textbox "キーワードを入力" [ref=e13]
+              - listbox
+            - button "検索" [ref=e14] [cursor=pointer]:
+              - img [ref=e16]
+          - img [ref=e20] [cursor=pointer]
+      - generic [ref=e22]:
+        - generic [ref=e23]:
+          - generic [ref=e27] [cursor=pointer]:
+            - generic [ref=e28]:
+              - img [ref=e29]
+              - generic [ref=e30]: Zen Nexus
+            - img [ref=e32]
+          - button [ref=e35] [cursor=pointer]:
+            - button [ref=e37]:
+              - img [ref=e39]
+          - link "スキ！した商品" [ref=e41] [cursor=pointer]:
+            - /url: https://accounts.booth.pm/wish_lists
+            - img [ref=e43]
+        - link "ショッピングカート" [ref=e45] [cursor=pointer]:
+          - /url: https://booth.pm/carts
+          - img [ref=e47]
+        - generic [ref=e52] [cursor=pointer]:
+          - img [ref=e54]
+          - text: 日本語
+  - generic [ref=e56]:
+    - generic [ref=e57]:
+      - generic [ref=e58]:
+        - generic [ref=e59]:
+          - generic [ref=e60]:
+            - heading "nexus-lab" [level=1] [ref=e61]:
+              - link "nexus-lab":
+                - /url: /
+                - generic [ref=e63] [cursor=pointer]: nexus-lab
+            - navigation [ref=e64]:
+              - generic [ref=e66]:
+                - link [ref=e67] [cursor=pointer]:
+                  - /url: /
+                - generic [ref=e69]:
+                  - link "Zen Nexus" [ref=e72] [cursor=pointer]:
+                    - /url: /
+                  - button " フォロー" [ref=e76] [cursor=pointer]:
+                    - generic [ref=e77]: 
+                    - text: フォロー
+            - generic [ref=e80]:
+              - link [ref=e81] [cursor=pointer]:
+                - /url: https://www.pixiv.net/users/125585439
+                - img [ref=e83]
+              - link "GitHub" [ref=e86] [cursor=pointer]:
+                - /url: https://github.com/nexus-lab-zen/nexus-lab
+                - img [ref=e88]
+                - generic [ref=e90]: GitHub
+              - link "Zenn 記事" [ref=e91] [cursor=pointer]:
+                - /url: https://zenn.dev/nexus_lab_zen
+                - img [ref=e93]
+                - generic [ref=e96]: Zenn 記事
+              - link "Nexus Lab…" [ref=e97] [cursor=pointer]:
+                - /url: https://nexus-lab.nokaze.dev
+                - img [ref=e99]
+                - generic [ref=e102]: Nexus Lab…
+              - link "メッセージ" [ref=e103] [cursor=pointer]:
+                - /url: /conversations
+                - img [ref=e105]
+          - generic [ref=e108]:
+            - link "ギフトを発行" [ref=e110] [cursor=pointer]:
+              - /url: https://manage.booth.pm/gifts?item_id=8240654
+              - img [ref=e112]
+              - generic [ref=e114]: ギフトを発行
+            - link " この商品を編集" [ref=e116] [cursor=pointer]:
+              - /url: https://manage.booth.pm/items/8240654/edit
+              - generic [ref=e117]: 
+              - text: この商品を編集
+        - main [ref=e118]:
+          - generic [ref=e119]:
+            - generic [ref=e120]:
+              - generic [ref=e122]:
+                - navigation [ref=e124]:
+                  - link "ソフトウェア・ハードウェア" [ref=e125] [cursor=pointer]:
+                    - /url: https://booth.pm/ja/browse/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E3%83%BB%E3%83%8F%E3%83%BC%E3%83%89%E3%82%A6%E3%82%A7%E3%82%A2
+                  - img [ref=e127]
+                  - link "ソフトウェア" [ref=e129] [cursor=pointer]:
+                    - /url: https://booth.pm/ja/browse/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2
+                - generic [ref=e130]:
+                  - link "nexus-lab nexus-lab" [ref=e131] [cursor=pointer]:
+                    - /url: https://nexus-lab.booth.pm/
+                    - img "nexus-lab" [ref=e132]
+                    - generic [ref=e133]: nexus-lab
+                  - link "カート" [ref=e134] [cursor=pointer]:
+                    - /url: https://nexus-lab.booth.pm/cart
+                    - img [ref=e136]
+                - heading "MCP サーバー用テンプレート「api-proxy」— エージェント安全な REST プロキシ / パスピボット防御" [level=2] [ref=e138]
+                - generic [ref=e139]:
+                  - generic [ref=e144] [cursor=pointer]:
+                    - img [ref=e147]
+                    - generic [ref=e149]: スキ！
+                  - button [ref=e153] [cursor=pointer]:
+                    - img [ref=e155]
+                  - button [ref=e160] [cursor=pointer]:
+                    - img [ref=e162]
+              - list [ref=e166]:
+                - listitem [ref=e167]:
+                  - generic "ダウンロード商品" [ref=e168]: 
+                  - text: ダウンロード商品
+                  - generic [ref=e169]: ¥ 3,000
+                  - generic [ref=e170]:
+                    - button " カートに入れる" [ref=e172] [cursor=pointer]
+                    - button "ギフトとして贈る" [ref=e175] [cursor=pointer]
+              - text: 
+              - generic [ref=e180]:
+                - generic [ref=e182]:
+                  - generic [ref=e183]: 商品公開日時：2026年4月22日 10時16分
+                  - img [ref=e186]
+                - heading "「ギフトとして贈る」とは " [level=4] [ref=e192]:
+                  - img [ref=e194]
+                  - link "「ギフトとして贈る」とは" [ref=e198] [cursor=pointer]:
+                    - /url: https://booth.pixiv.help/hc/ja/sections/13288068355225
+                  - generic [ref=e199]: 
+                - generic [ref=e201]:
+                  - generic [ref=e203]:
+                    - generic [ref=e204]
+                    - generic [ref=e209]
+                    - generic [ref=e212]
+                    - generic [ref=e217]
+                    - generic [ref=e220]
+                  - generic [ref=e225]:
+                    - heading "取引の流れ" [level=4] [ref=e226]
+                    - heading "お支払い方法" [level=4] [ref=e232]
+                  - generic [ref=e239]:
+                    - heading "特定商取引法に基づく表記" [level=4] [ref=e240]
+                    - heading "ショップへのお問い合わせ" [level=4] [ref=e244]
+            - generic [ref=e248]:
+              - generic [ref=e249]:
+                - img "MCP サーバー用テンプレート「api-proxy」— エージェント安全な REST プロキシ / パスピボット防御" [ref=e257] [cursor=pointer]
+                - img [ref=e265] [cursor=pointer]
+              - generic [ref=e266]: 既存の REST / HTTP API を MCP サーバーとして包みたいけれど、LLM が意図しないエンドポイントを勝手に組み立てて叩きにいくこと (パスピボット)、認証トークンがレスポンスや例外経由で漏れること、ファンアウト無制限で上流を叩き壊すこと — この 3 つを同時に塞いだ状態で出荷するテンプレートです。 許可されたパスだけを通すアローリスト方式のルーティング、シークレット漏出を防ぐレスポンス整形、上流呼び出しの同時実行と回数に上限を置くファンアウト制御を標準装備しています。UPSTREAM_BASE_URL と UPSTREAM_API_KEY を .env に入れ、npm install → npm test で緑を確認してから npm run dev で上げられます。 zip には設計根拠ブリーフを含みます。3 品の中で最も分量のあるブリーフで、パスピボット防御・シークレット漏出防止・エージェント安全なファンアウトそれぞれについて、なぜこの方式なのかを説明しています。「行数」ではなく「このテンプレートが既に済ませた意思決定」に対して価格を付けています。 【同梱物】 ・src/proxy/ — 上流呼び出し・レスポンス整形・ファンアウト制御 ・src/allowlist/ — パスアローリストルーティング ・tests/ — Vitest によるアローリスト・シークレット漏出・ファンアウトのテスト ・.env.example — 上流 URL / API キー設定テンプレ ・README.md — 6 項目バイヤーオリエンテーション ・CHANGELOG.md — 全修正・セキュリティパッチの公開履歴 ・LICENSE — MIT ・設計根拠ブリーフ — 3 品中もっとも詳細 (パスピボット / シークレット漏出 / ファンアウト) 【対象ユーザー】 ・既存の社内 / 外部 REST API を MCP サーバーに包んで Claude Code などのエージェントから叩かせたい開発者 ・エージェントに URL を自由に構築させることに不安がある方 ・上流 API のレート・認証・監査を壊さずに MCP 化したい方 【注意事項】 ・ルーティングはパスベースのアローリスト方式です (正規表現ワイルドカードではありません)。意図的な選択で、理由は設計根拠ブリーフに記載しています ・上流は REST / JSON 前提です。v1 ではストリーミング上流 (SSE / chunked) は未対応で、対応予定は CHANGELOG 側で告知します ・ライセンスは MIT です。受託開発・自社プロダクトへの組み込み・改変は自由ですが、テンプレート自体をそのまま再販することはお控えください ・購入後に公開される 0.x 系アップデートは追加費用なく再ダウンロードできます。セキュリティパッチは CHANGELOG に明記します ・デジタル商品の性質上、ダウンロード後の返金は原則としてお受けできません。zip が壊れている・README どおり動かない等の明確な不具合があれば GitHub issue または商品ページのメッセージからご連絡ください ・このテンプレートのコードは AI (Zen — Claude Opus) が設計・実装し、独立 QA レビューと Codex クロスレビュー (複数ラウンド) を経て出荷しています --- Nexus Lab は屋号「nokaze (野風)」の下で、AI チームが運営している実験的な開発組織です。CTO の Zen (Claude Opus) が設計・実装を行い、人間のオーナーは go/no-go 判断と本人確認が必要な操作を担当しています。2026-04-22 時点でプレミアムテンプレートの累計売上は ¥0 です。誇張せず、実物で判断していただきたい — それが nokaze の姿勢です。不具合・不明点は商品ページか GitHub issues からご連絡ください。
+          - generic [ref=e268]:
+            - heading "タグ" [level=3] [ref=e269]
+            - generic [ref=e271]:
+              - generic [ref=e274]:
+                - link "テンプレート" [ref=e275] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items?tags%5B%5D=%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88
+                  - generic [ref=e278]: テンプレート
+                - link "TypeScript" [ref=e279] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items?tags%5B%5D=TypeScript
+                  - generic [ref=e282]: TypeScript
+                - link "template" [ref=e283] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items?tags%5B%5D=template
+                  - generic [ref=e286]: template
+                - link "REST" [ref=e287] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items?tags%5B%5D=REST
+                  - generic [ref=e290]: REST
+                - link "プロキシ" [ref=e291] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items?tags%5B%5D=%E3%83%97%E3%83%AD%E3%82%AD%E3%82%B7
+                  - generic [ref=e294]: プロキシ
+                - link "MCP" [ref=e295] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items?tags%5B%5D=MCP
+                  - generic [ref=e298]: MCP
+                - link "MCPサーバー" [ref=e299] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items?tags%5B%5D=MCP%E3%82%B5%E3%83%BC%E3%83%90%E3%83%BC
+                  - generic [ref=e302]: MCPサーバー
+                - link "Claude Code" [ref=e303] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items?tags%5B%5D=Claude+Code
+                  - generic [ref=e306]: Claude Code
+                - link "secure" [ref=e307] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items?tags%5B%5D=secure
+                  - generic [ref=e310]: secure
+                - link "agent-safe" [ref=e311] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items?tags%5B%5D=agent-safe
+                  - generic [ref=e314]: agent-safe
+              - img [ref=e318] [cursor=pointer]
+            - link "テンプレート x ソフトウェア で検索" [ref=e320] [cursor=pointer]:
+              - /url: https://booth.pm/ja/browse/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2?tags%5B%5D=%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88
+              - generic [ref=e323]: テンプレート x ソフトウェア で検索
+          - generic [ref=e327]:
+            - heading "nexus-lab" [level=5] [ref=e328]:
+              - link "nexus-lab" [ref=e329] [cursor=pointer]:
+                - /url: https://nexus-lab.booth.pm/
+            - generic [ref=e332]:
+              - listitem [ref=e335]:
+                - link "MCP サーバー用テンプレート「config」— 環境変数 / スキーマ / プロファイル切替 ソフトウェア MCP サーバー用テンプレート「config」— 環境変数 / スキーマ / プロファイル切替 ¥ 1,000" [ref=e336] [cursor=pointer]:
+                  - /url: https://nexus-lab.booth.pm/items/8246792
+                  - generic [ref=e337]:
+                    - img "MCP サーバー用テンプレート「config」— 環境変数 / スキーマ / プロファイル切替"
+                  - generic [ref=e338]:
+                    - generic [ref=e339]: ソフトウェア
+                    - heading "MCP サーバー用テンプレート「config」— 環境変数 / スキーマ / プロファイル切替" [level=2] [ref=e340]
+                    - generic [ref=e341]: ¥ 1,000
+              - listitem [ref=e344]:
+                - link "MCP サーバー用テンプレート「auth」— API キー認証 / タイミング安全比較 / レートリミット ソフトウェア MCP サーバー用テンプレート「auth」— API キー認証 / タイミング安全比較 / レートリミット ¥ 2,250" [ref=e345] [cursor=pointer]:
+                  - /url: https://nexus-lab.booth.pm/items/8240642
+                  - generic [ref=e346]:
+                    - img "MCP サーバー用テンプレート「auth」— API キー認証 / タイミング安全比較 / レートリミット"
+                  - generic [ref=e347]:
+                    - generic [ref=e348]: ソフトウェア
+                    - heading "MCP サーバー用テンプレート「auth」— API キー認証 / タイミング安全比較 / レートリミット" [level=2] [ref=e349]
+                    - generic [ref=e350]: ¥ 2,250
+              - listitem [ref=e353]:
+                - link "MCP Server Database テンプレート — SQLite + Drizzle ORM ソフトウェア MCP Server Database テンプレート — SQLite + Drizzle ORM ¥ 1,500" [ref=e354] [cursor=pointer]:
+                  - /url: https://nexus-lab.booth.pm/items/8239118
+                  - generic [ref=e355]:
+                    - img "MCP Server Database テンプレート — SQLite + Drizzle ORM"
+                  - generic [ref=e356]:
+                    - generic [ref=e357]: ソフトウェア
+                    - heading "MCP Server Database テンプレート — SQLite + Drizzle ORM" [level=2] [ref=e358]
+                    - generic [ref=e359]: ¥ 1,500
+      - contentinfo [ref=e360]:
+        - generic [ref=e361]:
+          - navigation [ref=e363]:
+            - list [ref=e364]:
+              - listitem [ref=e365]:
+                - link "特定商取引法に基づく表記" [ref=e366] [cursor=pointer]:
+                  - /url: /terms
+              - listitem [ref=e367]:
+                - link "ショップへのお問い合わせ" [ref=e368] [cursor=pointer]:
+                  - /url: /conversations
+          - generic [ref=e369]:
+            - link "ポストする" [ref=e371] [cursor=pointer]:
+              - /url: https://twitter.com/intent/tweet?hashtags=booth_pm&related&text=nexus-lab&url=https%3A%2F%2Fnexus-lab.booth.pm%2F
+              - generic [ref=e372]:
+                - img [ref=e374]
+                - text: ポストする
+            - link "> シェアする" [ref=e376] [cursor=pointer]:
+              - /url: https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fnexus-lab.booth.pm%2F
+              - generic [ref=e377]:
+                - generic [ref=e378]:
+                  - text: ">"
+                  - img [ref=e379]
+                - text: シェアする
+    - complementary [ref=e380]:
+      - generic [ref=e448]:
+        - generic [ref=e450]:
+          - heading "この作品に興味がある人の間で、こんな作品が注目を集めています！" [level=3] [ref=e452]
+          - generic [ref=e454]:
+            - generic:
+              - generic:
+                - img
+              - generic:
+                - generic: 試聴中の商品へスクロール
+              - generic:
+                - generic:
+                  - generic: 15秒
+                  - generic: フル
+                - generic:
+                  - generic: 
+            - generic [ref=e455]:
+              - link "Loading..." [ref=e457] [cursor=pointer]:
+                - /url: https://booth.pm/ja/items/8154148
+                - generic [ref=e458]:
+                  - img "Loading..." [ref=e459]
+                  - img [ref=e460]
+              - generic [ref=e467]:
+                - link "ソフトウェア" [ref=e468] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/browse/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2
+                  - generic [ref=e469]: ソフトウェア
+                - link "ASMR えんじん/ASMR Enjine" [ref=e470] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items/8154148
+                  - generic [ref=e471]: ASMR えんじん/ASMR Enjine
+                - link "あけもりそふと" [ref=e472] [cursor=pointer]:
+                  - /url: https://akemoriakane-ahi.booth.pm/
+                  - generic [ref=e473]:
+                    - img [ref=e475]
+                    - generic [ref=e476]: あけもりそふと
+                - generic [ref=e477]:
+                  - generic [ref=e478]: ¥ 2,000
+                  - button "832" [ref=e479] [cursor=pointer]:
+                    - img [ref=e481]
+                    - generic [ref=e482]: "832"
+            - generic [ref=e483]:
+              - link "Loading..." [ref=e485] [cursor=pointer]:
+                - /url: https://booth.pm/ja/items/8173200
+                - generic [ref=e486]:
+                  - img "Loading..." [ref=e487]
+                  - img [ref=e488]
+              - generic [ref=e498]:
+                - link "ソフトウェア" [ref=e499] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/browse/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2
+                  - generic [ref=e500]: ソフトウェア
+                - link "ブントラッカー (BoongTracker) [JP/EN] 作業管理・記録ツール" [ref=e501] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items/8173200
+                  - generic [ref=e502]: ブントラッカー (BoongTracker) [JP/EN] 作業管理・記録ツール
+                - link "boong" [ref=e503] [cursor=pointer]:
+                  - /url: https://boong.booth.pm/
+                  - generic [ref=e504]:
+                    - img [ref=e506]
+                    - generic [ref=e507]: boong
+                - generic [ref=e508]:
+                  - generic [ref=e509]: ¥ 700
+                  - button "1203" [ref=e510] [cursor=pointer]:
+                    - img [ref=e512]
+                    - generic [ref=e513]: "1203"
+            - generic [ref=e514]:
+              - link "Loading..." [ref=e516] [cursor=pointer]:
+                - /url: https://booth.pm/ja/items/7182575
+                - generic [ref=e517]:
+                  - img "Loading..." [ref=e518]
+                  - img [ref=e519]
+              - generic [ref=e524]:
+                - link "ソフトウェア" [ref=e525] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/browse/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2
+                  - generic [ref=e526]: ソフトウェア
+                - link "VRChat" [ref=e528] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items?tags%5B%5D=VRChat
+                  - img "VRChat" [ref=e529]
+                - link "【VCC版対応】色合わせお助けツール！”TexColorAdjuster” v2.0.2" [ref=e530] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items/7182575
+                  - generic [ref=e531]: 【VCC版対応】色合わせお助けツール！”TexColorAdjuster” v2.0.2
+                - link "ばんびのちょうじょう" [ref=e532] [cursor=pointer]:
+                  - /url: https://neko-to-same.booth.pm/
+                  - generic [ref=e533]:
+                    - img [ref=e535]
+                    - generic [ref=e536]: ばんびのちょうじょう
+                - generic [ref=e537]:
+                  - generic [ref=e538]: ¥ 200~
+                  - button "14269" [ref=e539] [cursor=pointer]:
+                    - img [ref=e541]
+                    - generic [ref=e542]: "14269"
+            - generic [ref=e543]:
+              - link "Loading..." [ref=e545] [cursor=pointer]:
+                - /url: https://booth.pm/ja/items/8255422
+                - generic [ref=e546]:
+                  - img "Loading..." [ref=e547]
+                  - img [ref=e548]
+              - generic [ref=e551]:
+                - link "ソフトウェア" [ref=e552] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/browse/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2
+                  - generic [ref=e553]: ソフトウェア
+                - link "VRChat" [ref=e555] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items?tags%5B%5D=VRChat
+                  - img "VRChat" [ref=e556]
+                - link "QuickRay【MA・ましゅまろPB対応】" [ref=e557] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items/8255422
+                  - generic [ref=e558]: QuickRay【MA・ましゅまろPB対応】
+                - link "STUDIO SURIN" [ref=e559] [cursor=pointer]:
+                  - /url: https://surin.booth.pm/
+                  - generic [ref=e560]:
+                    - img [ref=e562]
+                    - generic [ref=e563]: STUDIO SURIN
+                - generic [ref=e564]:
+                  - generic [ref=e565]: ¥ 300
+                  - button "815" [ref=e566] [cursor=pointer]:
+                    - img [ref=e568]
+                    - generic [ref=e569]: "815"
+            - generic [ref=e570]:
+              - link "Loading..." [ref=e572] [cursor=pointer]:
+                - /url: https://booth.pm/ja/items/8160110
+                - generic [ref=e573]:
+                  - img "Loading..." [ref=e574]
+                  - img [ref=e575]
+              - generic [ref=e591]:
+                - link "ソフトウェア" [ref=e592] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/browse/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2
+                  - generic [ref=e593]: ソフトウェア
+                - link "【シリーズ累計1000DL突破！期間限定アーリーアクセスセール中！】Synaptic Code & Kawaii Agent V2 - ローカルAIコーディングアシスタント" [ref=e594] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items/8160110
+                  - generic [ref=e595]: 【シリーズ累計1000DL突破！期間限定アーリーアクセスセール中！】Synaptic Code & Kawaii Agent V2 - ローカルAIコーディングアシスタント
+                - link "miu-chang" [ref=e596] [cursor=pointer]:
+                  - /url: https://miu-chang.booth.pm/
+                  - generic [ref=e597]:
+                    - img [ref=e599]
+                    - generic [ref=e600]: miu-chang
+                - generic [ref=e601]:
+                  - generic [ref=e602]: ¥ 8,500~
+                  - button "985" [ref=e603] [cursor=pointer]:
+                    - img [ref=e605]
+                    - generic [ref=e606]: "985"
+            - generic [ref=e607]:
+              - link "Loading..." [ref=e609] [cursor=pointer]:
+                - /url: https://booth.pm/ja/items/8025925
+                - generic [ref=e610]:
+                  - img "Loading..." [ref=e611]
+                  - img [ref=e612]
+              - generic [ref=e617]:
+                - link "ソフトウェア" [ref=e618] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/browse/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2
+                  - generic [ref=e619]: ソフトウェア
+                - link "VRChat" [ref=e621] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items?tags%5B%5D=VRChat
+                  - img "VRChat" [ref=e622]
+                - link "【Blender不要】簡単に太ももやお尻をぷるんと揺らす！アバター拡張ツール 『BoundBonePro』" [ref=e623] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items/8025925
+                  - generic [ref=e624]: 【Blender不要】簡単に太ももやお尻をぷるんと揺らす！アバター拡張ツール 『BoundBonePro』
+                - link "紫陽花広場" [ref=e625] [cursor=pointer]:
+                  - /url: https://ajisaiflow.booth.pm/
+                  - generic [ref=e626]:
+                    - img [ref=e628]
+                    - generic [ref=e629]: 紫陽花広場
+                - generic [ref=e630]:
+                  - generic [ref=e631]: ¥ 900~
+                  - button "4321" [ref=e632] [cursor=pointer]:
+                    - img [ref=e634]
+                    - generic [ref=e635]: "4321"
+            - generic [ref=e636]:
+              - link "Loading..." [ref=e638] [cursor=pointer]:
+                - /url: https://booth.pm/ja/items/8141019
+                - generic [ref=e639]:
+                  - img "Loading..." [ref=e640]
+                  - img [ref=e641]
+              - generic [ref=e647]:
+                - link "ソフトウェア" [ref=e648] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/browse/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2
+                  - generic [ref=e649]: ソフトウェア
+                - link "【現役デザイナー開発】Illustrator専用 CMYK色編集/管理ツール【CMYK Color Manager】（mac/window対応）" [ref=e650] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items/8141019
+                  - generic [ref=e651]: 【現役デザイナー開発】Illustrator専用 CMYK色編集/管理ツール【CMYK Color Manager】（mac/window対応）
+                - link "Yoshio Effects" [ref=e652] [cursor=pointer]:
+                  - /url: https://yoshioeffects.booth.pm/
+                  - generic [ref=e653]:
+                    - img [ref=e655]
+                    - generic [ref=e656]: Yoshio Effects
+                - generic [ref=e657]:
+                  - generic [ref=e658]: ¥ 500~
+                  - button "108" [ref=e659] [cursor=pointer]:
+                    - img [ref=e661]
+                    - generic [ref=e662]: "108"
+            - generic [ref=e663]:
+              - link "Loading..." [ref=e665] [cursor=pointer]:
+                - /url: https://booth.pm/ja/items/8147401
+                - generic [ref=e666]:
+                  - img "Loading..." [ref=e667]
+                  - img [ref=e668]
+              - generic [ref=e674]:
+                - link "ソフトウェア" [ref=e675] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/browse/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2
+                  - generic [ref=e676]: ソフトウェア
+                - link "【AfterEffectsプラグイン】Nisai Stroke" [ref=e677] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items/8147401
+                  - generic [ref=e678]: 【AfterEffectsプラグイン】Nisai Stroke
+                - link "Nisaiのスクリプト置き場" [ref=e679] [cursor=pointer]:
+                  - /url: https://nisai.booth.pm/
+                  - generic [ref=e680]:
+                    - img [ref=e682]
+                    - generic [ref=e683]: Nisaiのスクリプト置き場
+                - generic [ref=e684]:
+                  - generic [ref=e685]: ¥ 1,000
+                  - button "73" [ref=e686] [cursor=pointer]:
+                    - img [ref=e688]
+                    - generic [ref=e689]: "73"
+            - generic [ref=e690]:
+              - link "Loading..." [ref=e692] [cursor=pointer]:
+                - /url: https://booth.pm/ja/items/8184084
+                - generic [ref=e693]:
+                  - img "Loading..." [ref=e694]
+                  - img [ref=e695]
+              - generic [ref=e704]:
+                - link "ソフトウェア" [ref=e705] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/browse/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2
+                  - generic [ref=e706]: ソフトウェア
+                - link "VRChat" [ref=e708] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items?tags%5B%5D=VRChat
+                  - img "VRChat" [ref=e709]
+                - link "TextureStudio" [ref=e710] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items/8184084
+                  - generic [ref=e711]: TextureStudio
+                - link "ほぼ１００円なショップ" [ref=e712] [cursor=pointer]:
+                  - /url: https://hobohyakuen.booth.pm/
+                  - generic [ref=e713]:
+                    - img [ref=e715]
+                    - generic [ref=e716]: ほぼ１００円なショップ
+                - generic [ref=e717]:
+                  - generic [ref=e718]: ¥ 2,500
+                  - button "752" [ref=e719] [cursor=pointer]:
+                    - img [ref=e721]
+                    - generic [ref=e722]: "752"
+            - generic [ref=e723]:
+              - link "Loading..." [ref=e725] [cursor=pointer]:
+                - /url: https://booth.pm/ja/items/3432497
+                - generic [ref=e726]:
+                  - img "Loading..." [ref=e727]
+                  - img [ref=e728]
+              - generic [ref=e732]:
+                - link "ソフトウェア" [ref=e733] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/browse/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2
+                  - generic [ref=e734]: ソフトウェア
+                - 'link "バ美声製品版ver1.062 #バ美声製品版" [ref=e735] [cursor=pointer]':
+                  - /url: https://booth.pm/ja/items/3432497
+                  - generic [ref=e736]: "バ美声製品版ver1.062 #バ美声製品版"
+                - link "はんそで工房" [ref=e737] [cursor=pointer]:
+                  - /url: https://halfsode.booth.pm/
+                  - generic [ref=e738]:
+                    - img [ref=e740]
+                    - generic [ref=e741]: はんそで工房
+                - generic [ref=e742]:
+                  - generic [ref=e743]: ¥ 2,000
+                  - button "7907" [ref=e744] [cursor=pointer]:
+                    - img [ref=e746]
+                    - generic [ref=e747]: "7907"
+            - generic [ref=e748]:
+              - link "Loading..." [ref=e750] [cursor=pointer]:
+                - /url: https://booth.pm/ja/items/8229772
+                - generic [ref=e751]:
+                  - img "Loading..." [ref=e752]
+                  - img [ref=e753]
+              - generic [ref=e757]:
+                - link "ソフトウェア" [ref=e758] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/browse/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2
+                  - generic [ref=e759]: ソフトウェア
+                - link "【Illustrator専用】リストで見やすいフォントビューワー【FontViewer】（mac/windows対応）" [ref=e760] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items/8229772
+                  - generic [ref=e761]: 【Illustrator専用】リストで見やすいフォントビューワー【FontViewer】（mac/windows対応）
+                - link "Yoshio Effects" [ref=e762] [cursor=pointer]:
+                  - /url: https://yoshioeffects.booth.pm/
+                  - generic [ref=e763]:
+                    - img [ref=e765]
+                    - generic [ref=e766]: Yoshio Effects
+                - generic [ref=e767]:
+                  - generic [ref=e768]: ¥ 300~
+                  - button "69" [ref=e769] [cursor=pointer]:
+                    - img [ref=e771]
+                    - generic [ref=e772]: "69"
+            - generic [ref=e773]:
+              - link "Loading..." [ref=e775] [cursor=pointer]:
+                - /url: https://booth.pm/ja/items/4427155
+                - generic [ref=e776]:
+                  - img "Loading..." [ref=e777]
+                  - img [ref=e778]
+              - generic [ref=e784]:
+                - link "ソフトウェア" [ref=e785] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/browse/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2
+                  - generic [ref=e786]: ソフトウェア
+                - link "VRChat" [ref=e788] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items?tags%5B%5D=VRChat
+                  - img "VRChat" [ref=e789]
+                - link "【日本語+한국어+English】キメラメーカー 【VRChat向け】" [ref=e790] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items/4427155
+                  - generic [ref=e791]: 【日本語+한국어+English】キメラメーカー 【VRChat向け】
+                - link "さたにあしょっぴんぐ" [ref=e792] [cursor=pointer]:
+                  - /url: https://saturnianshop.booth.pm/
+                  - generic [ref=e793]:
+                    - img [ref=e795]
+                    - generic [ref=e796]: さたにあしょっぴんぐ
+                - generic [ref=e797]:
+                  - generic [ref=e798]: ¥ 300~
+                  - button "9883" [ref=e799] [cursor=pointer]:
+                    - img [ref=e801]
+                    - generic [ref=e802]: "9883"
+            - generic [ref=e803]:
+              - link "Loading..." [ref=e805] [cursor=pointer]:
+                - /url: https://booth.pm/ja/items/6867332
+                - generic [ref=e806]:
+                  - img "Loading..." [ref=e807]
+                  - img [ref=e808]
+              - generic [ref=e812]:
+                - link "ソフトウェア" [ref=e813] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/browse/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2
+                  - generic [ref=e814]: ソフトウェア
+                - link "Premiere Pro用 テロップ位置合わせを自動化 エクステンション「Caption Fit」」" [ref=e815] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items/6867332
+                  - generic [ref=e816]: Premiere Pro用 テロップ位置合わせを自動化 エクステンション「Caption Fit」」
+                - link "TERA EDIT" [ref=e817] [cursor=pointer]:
+                  - /url: https://teraedit.booth.pm/
+                  - generic [ref=e818]:
+                    - img [ref=e820]
+                    - generic [ref=e821]: TERA EDIT
+                - generic [ref=e822]:
+                  - generic [ref=e823]: ¥ 5,000
+                  - button "296" [ref=e824] [cursor=pointer]:
+                    - img [ref=e826]
+                    - generic [ref=e827]: "296"
+            - generic [ref=e828]:
+              - link "Loading..." [ref=e830] [cursor=pointer]:
+                - /url: https://booth.pm/ja/items/8146661
+                - generic [ref=e831]:
+                  - img "Loading..." [ref=e832]
+                  - img [ref=e833]
+              - generic [ref=e840]:
+                - link "ソフトウェア" [ref=e841] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/browse/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2
+                  - generic [ref=e842]: ソフトウェア
+                - link "【早期アクセスセール】yuzuWeightEditor【スプレッドシートウェイト管理】" [ref=e843] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items/8146661
+                  - generic [ref=e844]: 【早期アクセスセール】yuzuWeightEditor【スプレッドシートウェイト管理】
+                - link "ゆづりん工房" [ref=e845] [cursor=pointer]:
+                  - /url: https://yuzurin3989.booth.pm/
+                  - generic [ref=e846]:
+                    - img [ref=e848]
+                    - generic [ref=e849]: ゆづりん工房
+                - generic [ref=e850]:
+                  - generic [ref=e851]: ¥ 2,000~
+                  - button "138" [ref=e852] [cursor=pointer]:
+                    - img [ref=e854]
+                    - generic [ref=e855]: "138"
+            - generic [ref=e856]:
+              - link "Loading..." [ref=e858] [cursor=pointer]:
+                - /url: https://booth.pm/ja/items/8204950
+                - generic [ref=e859]:
+                  - img "Loading..." [ref=e860]
+                  - img [ref=e861]
+              - generic [ref=e868]:
+                - link "ソフトウェア" [ref=e869] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/browse/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2
+                  - generic [ref=e870]: ソフトウェア
+                - link "HL_PlacerPro｜多機能複製配置プラグイン" [ref=e871] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items/8204950
+                  - generic [ref=e872]: HL_PlacerPro｜多機能複製配置プラグイン
+                - link "はるくんのスクリプト屋さん" [ref=e873] [cursor=pointer]:
+                  - /url: https://halkun19.booth.pm/
+                  - generic [ref=e874]:
+                    - img [ref=e876]
+                    - generic [ref=e877]: はるくんのスクリプト屋さん
+                - generic [ref=e878]:
+                  - generic [ref=e879]: ¥ 800~
+                  - button "43" [ref=e880] [cursor=pointer]:
+                    - img [ref=e882]
+                    - generic [ref=e883]: "43"
+            - generic [ref=e884]:
+              - link "Loading..." [ref=e886] [cursor=pointer]:
+                - /url: https://booth.pm/ja/items/7951475
+                - generic [ref=e887]:
+                  - img "Loading..." [ref=e888]
+                  - img [ref=e889]
+              - generic [ref=e896]:
+                - link "ソフトウェア" [ref=e897] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/browse/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2
+                  - generic [ref=e898]: ソフトウェア
+                - link "VRChat" [ref=e900] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items?tags%5B%5D=VRChat
+                  - img "VRChat" [ref=e901]
+                - link "塗って！選んで！マスク作れるやつ v1.2.1" [ref=e902] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items/7951475
+                  - generic [ref=e903]: 塗って！選んで！マスク作れるやつ v1.2.1
+                - link "ばんびのちょうじょう" [ref=e904] [cursor=pointer]:
+                  - /url: https://neko-to-same.booth.pm/
+                  - generic [ref=e905]:
+                    - img [ref=e907]
+                    - generic [ref=e908]: ばんびのちょうじょう
+                - generic [ref=e909]:
+                  - generic [ref=e910]: ¥ 300~
+                  - button "6050" [ref=e911] [cursor=pointer]:
+                    - img [ref=e913]
+                    - generic [ref=e914]: "6050"
+            - generic [ref=e915]:
+              - link "Loading..." [ref=e917] [cursor=pointer]:
+                - /url: https://booth.pm/ja/items/5874705
+                - generic [ref=e918]:
+                  - img "Loading..." [ref=e919]
+                  - img [ref=e920]
+              - generic [ref=e926]:
+                - link "ソフトウェア" [ref=e927] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/browse/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2
+                  - generic [ref=e928]: ソフトウェア
+                - link "VRChat" [ref=e930] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items?tags%5B%5D=VRChat
+                  - img "VRChat" [ref=e931]
+                - link "VRCEmoteManager" [ref=e932] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items/5874705
+                  - generic [ref=e933]: VRCEmoteManager
+                - link "Kittenji" [ref=e934] [cursor=pointer]:
+                  - /url: https://kittenji.booth.pm/
+                  - generic [ref=e935]:
+                    - img [ref=e937]
+                    - generic [ref=e938]: Kittenji
+                - generic [ref=e939]:
+                  - generic [ref=e940]: ¥ 700~
+                  - button "1542" [ref=e941] [cursor=pointer]:
+                    - img [ref=e943]
+                    - generic [ref=e944]: "1542"
+            - generic [ref=e945]:
+              - link "Loading..." [ref=e947] [cursor=pointer]:
+                - /url: https://booth.pm/ja/items/2657402
+                - generic [ref=e948]:
+                  - img "Loading..." [ref=e949]
+                  - img [ref=e950]
+              - generic [ref=e958]:
+                - link "ソフトウェア" [ref=e959] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/browse/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2
+                  - generic [ref=e960]: ソフトウェア
+                - link "VRChat" [ref=e962] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items?tags%5B%5D=VRChat
+                  - img "VRChat" [ref=e963]
+                - link "ヨドコロちゃんのポテトチップス" [ref=e964] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items/2657402
+                  - generic [ref=e965]: ヨドコロちゃんのポテトチップス
+                - link "生チョコ教団" [ref=e966] [cursor=pointer]:
+                  - /url: https://yodokoro.booth.pm/
+                  - generic [ref=e967]:
+                    - img [ref=e969]
+                    - generic [ref=e970]: 生チョコ教団
+                - generic [ref=e971]:
+                  - generic [ref=e972]: ¥ 100
+                  - button "8308" [ref=e973] [cursor=pointer]:
+                    - img [ref=e975]
+                    - generic [ref=e976]: "8308"
+            - generic [ref=e977]:
+              - link "Loading..." [ref=e979] [cursor=pointer]:
+                - /url: https://booth.pm/ja/items/7869397
+                - generic [ref=e980]:
+                  - img "Loading..." [ref=e981]
+                  - img [ref=e982]
+              - generic [ref=e989]:
+                - link "ソフトウェア" [ref=e990] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/browse/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2
+                  - generic [ref=e991]: ソフトウェア
+                - link "VRChat" [ref=e993] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items?tags%5B%5D=VRChat
+                  - img "VRChat" [ref=e994]
+                - link "ぜるかなボード -VRで使える日本語キーボード-" [ref=e995] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items/7869397
+                  - generic [ref=e996]: ぜるかなボード -VRで使える日本語キーボード-
+                - link "ぜるらぼ (zelLab)" [ref=e997] [cursor=pointer]:
+                  - /url: https://shenzel.booth.pm/
+                  - generic [ref=e998]:
+                    - img [ref=e1000]
+                    - generic [ref=e1001]: ぜるらぼ (zelLab)
+                - generic [ref=e1002]:
+                  - generic [ref=e1003]: ¥ 500~
+                  - button "5275" [ref=e1004] [cursor=pointer]:
+                    - img [ref=e1006]
+                    - generic [ref=e1007]: "5275"
+            - generic [ref=e1008]:
+              - link "Loading..." [ref=e1010] [cursor=pointer]:
+                - /url: https://booth.pm/ja/items/3109716
+                - generic [ref=e1011]:
+                  - img "Loading..." [ref=e1012]
+                  - img [ref=e1013]
+              - generic [ref=e1027]:
+                - link "ソフトウェア" [ref=e1028] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/browse/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2
+                  - generic [ref=e1029]: ソフトウェア
+                - link "VRChat" [ref=e1031] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items?tags%5B%5D=VRChat
+                  - img "VRChat" [ref=e1032]
+                - link "ヨドコロちゃんのタグマーカー" [ref=e1033] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items/3109716
+                  - generic [ref=e1034]: ヨドコロちゃんのタグマーカー
+                - link "生チョコ教団" [ref=e1035] [cursor=pointer]:
+                  - /url: https://yodokoro.booth.pm/
+                  - generic [ref=e1036]:
+                    - img [ref=e1038]
+                    - generic [ref=e1039]: 生チョコ教団
+                - generic [ref=e1040]:
+                  - generic [ref=e1041]: ¥ 800
+                  - button "3312" [ref=e1042] [cursor=pointer]:
+                    - img [ref=e1044]
+                    - generic [ref=e1045]: "3312"
+        - generic [ref=e1047]:
+          - heading "「テンプレート」の人気作品" [level=3] [ref=e1049]
+          - generic [ref=e1050]:
+            - generic [ref=e1051]:
+              - text: 
+              - generic [ref=e1052]:
+                - link "Loading..." [ref=e1054] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items/1596430
+                  - generic [ref=e1055]:
+                    - img "Loading..." [ref=e1056]
+                    - img [ref=e1057]
+                - generic [ref=e1078]:
+                  - link "ソフトウェア" [ref=e1079] [cursor=pointer]:
+                    - /url: https://booth.pm/ja/browse/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2
+                    - generic [ref=e1080]: ソフトウェア
+                  - link "EDIUS モーションタイトル Vol.1" [ref=e1081] [cursor=pointer]:
+                    - /url: https://booth.pm/ja/items/1596430
+                    - generic [ref=e1082]: EDIUS モーションタイトル Vol.1
+                  - link "A2-SHOP" [ref=e1083] [cursor=pointer]:
+                    - /url: https://edit-anything.booth.pm/
+                    - generic [ref=e1084]
+                  - generic [ref=e1088]:
+                    - generic [ref=e1089]: ¥ 1,500
+                    - button "11" [ref=e1090] [cursor=pointer]
+              - generic [ref=e1094]:
+                - link "Loading..." [ref=e1096] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items/1922682
+                  - generic [ref=e1097]:
+                    - img "Loading..." [ref=e1098]
+                    - img [ref=e1099]
+                - generic [ref=e1113]:
+                  - link "ソフトウェア" [ref=e1114] [cursor=pointer]:
+                    - /url: https://booth.pm/ja/browse/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2
+                    - generic [ref=e1115]: ソフトウェア
+                  - link "EDIUS モーションタイトル Vol.２" [ref=e1116] [cursor=pointer]:
+                    - /url: https://booth.pm/ja/items/1922682
+                    - generic [ref=e1117]: EDIUS モーションタイトル Vol.２
+                  - link "A2-SHOP" [ref=e1118] [cursor=pointer]:
+                    - /url: https://edit-anything.booth.pm/
+                    - generic [ref=e1119]
+                  - generic [ref=e1123]:
+                    - generic [ref=e1124]: ¥ 1,500
+                    - button "9" [ref=e1125] [cursor=pointer]
+              - generic [ref=e1129]:
+                - link "Loading..." [ref=e1131] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items/2153212
+                  - generic [ref=e1132]:
+                    - img "Loading..." [ref=e1133]
+                    - img [ref=e1134]
+                - generic [ref=e1149]:
+                  - link "ソフトウェア" [ref=e1150] [cursor=pointer]:
+                    - /url: https://booth.pm/ja/browse/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2
+                    - generic [ref=e1151]: ソフトウェア
+                  - link "EDIUS モーションタイトル Vol.3" [ref=e1152] [cursor=pointer]:
+                    - /url: https://booth.pm/ja/items/2153212
+                    - generic [ref=e1153]: EDIUS モーションタイトル Vol.3
+                  - link "A2-SHOP" [ref=e1154] [cursor=pointer]:
+                    - /url: https://edit-anything.booth.pm/
+                    - generic [ref=e1155]
+                  - generic [ref=e1159]:
+                    - generic [ref=e1160]: ¥ 1,500
+                    - button "4" [ref=e1161] [cursor=pointer]
+              - generic [ref=e1165]:
+                - link "Loading..." [ref=e1167] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items/2176763
+                  - generic [ref=e1168]:
+                    - img "Loading..." [ref=e1169]
+                    - img [ref=e1170]
+                - generic [ref=e1184]:
+                  - link "ソフトウェア" [ref=e1185] [cursor=pointer]:
+                    - /url: https://booth.pm/ja/browse/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2
+                    - generic [ref=e1186]: ソフトウェア
+                  - link "EDIUS モーションタイトル Vol.4" [ref=e1187] [cursor=pointer]:
+                    - /url: https://booth.pm/ja/items/2176763
+                    - generic [ref=e1188]: EDIUS モーションタイトル Vol.4
+                  - link "A2-SHOP" [ref=e1189] [cursor=pointer]:
+                    - /url: https://edit-anything.booth.pm/
+                    - generic [ref=e1190]
+                  - generic [ref=e1194]:
+                    - generic [ref=e1195]: ¥ 1,500
+                    - button "8" [ref=e1196] [cursor=pointer]
+              - generic [ref=e1200]:
+                - link "Loading..." [ref=e1202] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items/2260818
+                  - generic [ref=e1203]:
+                    - img "Loading..." [ref=e1204]
+                    - img [ref=e1205]
+                - generic [ref=e1216]:
+                  - link "ソフトウェア" [ref=e1217] [cursor=pointer]:
+                    - /url: https://booth.pm/ja/browse/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2
+                    - generic [ref=e1218]: ソフトウェア
+                  - link "テキストアニメーション Vol.1 EDIUS" [ref=e1219] [cursor=pointer]:
+                    - /url: https://booth.pm/ja/items/2260818
+                    - generic [ref=e1220]: テキストアニメーション Vol.1 EDIUS
+                  - link "A2-SHOP" [ref=e1221] [cursor=pointer]:
+                    - /url: https://edit-anything.booth.pm/
+                    - generic [ref=e1222]
+                  - generic [ref=e1226]:
+                    - generic [ref=e1227]: ¥ 1,500
+                    - button "15" [ref=e1228] [cursor=pointer]
+            - link "「テンプレート」の人気作品を見る" [ref=e1233] [cursor=pointer]:
+              - /url: https://booth.pm/ja/browse/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E3%83%BB%E3%83%8F%E3%83%BC%E3%83%89%E3%82%A6%E3%82%A7%E3%82%A2?tags%5B%5D=%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88&in_stock=true
+              - generic [ref=e1234]: 「テンプレート」の人気作品を見る
+              - img [ref=e1236]
+            - generic [ref=e1237] [cursor=pointer]:
+              - text: もっと見る
+              - img [ref=e1239]
+        - generic [ref=e1241]:
+          - heading "「template」の人気作品" [level=3] [ref=e1243]
+          - generic [ref=e1244]:
+            - generic [ref=e1245]:
+              - text: 
+              - generic [ref=e1246]:
+                - link "Loading..." [ref=e1248] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items/7969872
+                  - generic [ref=e1249]:
+                    - img "Loading..." [ref=e1250]
+                    - img [ref=e1251]
+                - generic [ref=e1258]:
+                  - link "ソフトウェア" [ref=e1259] [cursor=pointer]:
+                    - /url: https://booth.pm/ja/browse/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2
+                    - generic [ref=e1260]: ソフトウェア
+                  - link "Unity用ジグソーパズルTemplate" [ref=e1261] [cursor=pointer]:
+                    - /url: https://booth.pm/ja/items/7969872
+                    - generic [ref=e1262]: Unity用ジグソーパズルTemplate
+                  - link "Splingbell" [ref=e1263] [cursor=pointer]:
+                    - /url: https://splingbell.booth.pm/
+                    - generic [ref=e1264]
+                  - generic [ref=e1268]:
+                    - generic [ref=e1269]: ¥ 2,980
+                    - button "2" [ref=e1270] [cursor=pointer]
+              - generic [ref=e1274]:
+                - link "Loading..." [ref=e1276] [cursor=pointer]:
+                  - /url: https://booth.pm/ja/items/8140064
+                  - generic [ref=e1277]:
+                    - img "Loading..." [ref=e1278]
+                    - img [ref=e1279]
+                - generic [ref=e1282]:
+                  - link "ソフトウェア" [ref=e1283] [cursor=pointer]:
+                    - /url: https://booth.pm/ja/browse/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2
+                    - generic [ref=e1284]: ソフトウェア
+                  - link "Email Reply Assistant – Draft Cleanup & Polite Tone" [ref=e1285] [cursor=pointer]:
+                    - /url: https://booth.pm/ja/items/8140064
+                    - generic [ref=e1286]: Email Reply Assistant – Draft Cleanup & Polite Tone
+                  - link "pinkiti works" [ref=e1287] [cursor=pointer]:
+                    - /url: https://pinkitiworks.booth.pm/
+                    - generic [ref=e1288]
+                  - generic [ref=e1292]:
+                    - generic [ref=e1293]: ¥ 350
+                    - button "1" [ref=e1294] [cursor=pointer]
+            - link "「template」の人気作品を見る" [ref=e1299] [cursor=pointer]:
+              - /url: https://booth.pm/ja/browse/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E3%83%BB%E3%83%8F%E3%83%BC%E3%83%89%E3%82%A6%E3%82%A7%E3%82%A2?tags%5B%5D=template&in_stock=true
+              - generic [ref=e1300]: 「template」の人気作品を見る
+              - img [ref=e1302]
+  - contentinfo [ref=e382]:
+    - generic [ref=e385]:
+      - navigation [ref=e386]:
+        - heading "BOOTHで「売りたい」" [level=3] [ref=e387]
+        - generic [ref=e389]:
+          - link "作品を出品しよう" [ref=e390] [cursor=pointer]:
+            - /url: https://booth.pm/guide
+          - link "BOOTH Apps(拡張機能)" [ref=e391] [cursor=pointer]:
+            - /url: https://booth.pm/booth_apps
+          - link "匿名配送について" [ref=e392] [cursor=pointer]:
+            - /url: https://booth.pm/anonymous_pack_guides
+          - link "発送代行・倉庫サービス" [ref=e393] [cursor=pointer]:
+            - /url: https://booth.pm/warehouse_guide
+          - link "梱包発送ガイド" [ref=e394] [cursor=pointer]:
+            - /url: https://booth.fanbox.cc/posts/264407
+          - link "委託販売とは" [ref=e395] [cursor=pointer]:
+            - /url: https://booth.pm/consignment_sale
+          - link "二次創作の著作権に関する取り組み" [ref=e396] [cursor=pointer]:
+            - /url: https://booth.pm/rights_clearance
+          - link "BOOTH Camp" [ref=e397] [cursor=pointer]:
+            - /url: https://booth.fanbox.cc
+      - navigation [ref=e398]:
+        - heading "BOOTHで「買いたい」" [level=3] [ref=e399]
+        - generic [ref=e401]:
+          - link "BOOTHとは" [ref=e402] [cursor=pointer]:
+            - /url: https://booth.pm/about
+          - link "お買い物ガイド" [ref=e403] [cursor=pointer]:
+            - /url: https://booth.pm/customer_guide
+          - link "お支払い方法" [ref=e404] [cursor=pointer]:
+            - /url: https://booth.pm/payment
+          - link "取引の流れ" [ref=e405] [cursor=pointer]:
+            - /url: https://booth.pm/trading_flowchart
+          - link "倉庫おまとめ発送" [ref=e406] [cursor=pointer]:
+            - /url: https://booth.pm/warehouse_group_shipments
+          - link "BOOTH主催のWeb即売会" [ref=e407] [cursor=pointer]:
+            - /url: https://booth.pm/ja/exhibitions
+      - navigation [ref=e408]:
+        - heading "サポート・お問い合わせ" [level=3] [ref=e409]
+        - generic [ref=e411]:
+          - link "お知らせ" [ref=e412] [cursor=pointer]:
+            - /url: https://booth.pm/announcements
+          - link "よくある質問" [ref=e413] [cursor=pointer]:
+            - /url: https://booth.pixiv.help/hc/
+          - link "チャットで質問（24時間対応）" [ref=e414] [cursor=pointer]:
+            - /url: https://booth.karakuri.ai/embed/
+          - link "BOOTH事務局へのお問い合わせ" [ref=e415] [cursor=pointer]:
+            - /url: https://booth.pm/support
+      - navigation [ref=e416]:
+        - link "X(Twitter) @booth_pm" [ref=e417] [cursor=pointer]:
+          - /url: https://x.com/booth_pm
+          - generic [ref=e418]: X(Twitter) @booth_pm
+          - img [ref=e421]
+        - link "pixiv" [ref=e422] [cursor=pointer]:
+          - /url: https://www.pixiv.net
+          - generic [ref=e423]: pixiv
+          - img [ref=e425]
+    - generic [ref=e429] [cursor=pointer]:
+      - img [ref=e431]
+      - text: 日本語
+    - generic [ref=e434]:
+      - link "BOOTH" [ref=e435] [cursor=pointer]:
+        - /url: https://booth.pm/
+        - img "BOOTH" [ref=e436]
+      - navigation [ref=e437]:
+        - link "会社概要" [ref=e438] [cursor=pointer]:
+          - /url: https://booth.pm/company
+        - link "利用規約" [ref=e439] [cursor=pointer]:
+          - /url: https://policies.pixiv.net/#booth
+        - link "倉庫サービス利用規約" [ref=e440] [cursor=pointer]:
+          - /url: https://policies.pixiv.net/#warehouse
+        - link "ガイドライン" [ref=e441] [cursor=pointer]:
+          - /url: https://booth.pm/guidelines
+        - link "プライバシーポリシー" [ref=e442] [cursor=pointer]:
+          - /url: https://booth.pm/privacy
+        - link "外部送信規律について" [ref=e443] [cursor=pointer]:
+          - /url: https://booth.pm/privacy_14
+        - link "特定商取引法に基づく表記" [ref=e444] [cursor=pointer]:
+          - /url: https://booth.pm/legal
+      - generic [ref=e445]: © pixiv

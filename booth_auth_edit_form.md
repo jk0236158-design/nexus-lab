@@ -1,0 +1,323 @@
+- generic [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e5]:
+      - link "BOOTH" [ref=e7] [cursor=pointer]:
+        - /url: https://booth.pm/
+        - img "BOOTH" [ref=e8]
+      - generic [ref=e9]:
+        - generic [ref=e10]:
+          - generic [ref=e14] [cursor=pointer]:
+            - generic [ref=e15]:
+              - img [ref=e16]
+              - generic [ref=e17]: Zen Nexus
+            - img [ref=e19]
+          - button [ref=e22] [cursor=pointer]:
+            - button [ref=e24]:
+              - img [ref=e26]
+          - link "スキ！した商品" [ref=e28] [cursor=pointer]:
+            - /url: https://accounts.booth.pm/wish_lists
+            - img [ref=e30]
+        - link "ショッピングカート" [ref=e32] [cursor=pointer]:
+          - /url: https://booth.pm/carts
+          - img [ref=e34]
+        - generic [ref=e39] [cursor=pointer]:
+          - img [ref=e41]
+          - text: 日本語
+  - generic [ref=e44]:
+    - generic [ref=e45]:
+      - img [ref=e47]
+      - generic [ref=e49]: 商品が作成されました
+    - img [ref=e52] [cursor=pointer]
+  - generic [ref=e54]:
+    - navigation [ref=e57]:
+      - list [ref=e58]:
+        - listitem [ref=e59]:
+          - link "ショップ管理" [ref=e60] [cursor=pointer]:
+            - /url: https://manage.booth.pm/
+        - listitem [ref=e61]:
+          - link "ショップ情報編集" [ref=e62] [cursor=pointer]:
+            - /url: https://manage.booth.pm/settings
+        - listitem [ref=e63]:
+          - link "商品管理" [ref=e64] [cursor=pointer]:
+            - /url: https://manage.booth.pm/items
+        - listitem [ref=e65]:
+          - link "倉庫サービス" [ref=e66] [cursor=pointer]:
+            - /url: https://manage.booth.pm/warehouse/reservations
+        - listitem [ref=e67]:
+          - link "注文一覧" [ref=e68] [cursor=pointer]:
+            - /url: https://manage.booth.pm/orders
+        - listitem [ref=e69]:
+          - link "売上管理" [ref=e70] [cursor=pointer]:
+            - /url: https://manage.booth.pm/sales
+        - listitem [ref=e71]:
+          - link "ユーザーとのメッセージ" [ref=e72] [cursor=pointer]:
+            - /url: https://manage.booth.pm/conversations
+        - listitem [ref=e73]:
+          - link "BOOTH Apps" [ref=e74] [cursor=pointer]:
+            - /url: https://booth.pm/booth_apps
+    - main [ref=e75]:
+      - generic [ref=e76]:
+        - heading "商品情報を編集" [level=1] [ref=e77]
+        - generic [ref=e78]:
+          - generic [ref=e79]:
+            - generic [ref=e81]:
+              - heading "商品情報" [level=3] [ref=e83]
+              - generic [ref=e85]:
+                - generic [ref=e86]:
+                  - generic [ref=e87]: 販売方法
+                  - generic [ref=e88]: ダウンロード販売
+                - generic [ref=e90]:
+                  - generic [ref=e92]: 商品名
+                  - textbox "商品名" [active] [ref=e94]
+                - generic [ref=e95]:
+                  - generic [ref=e96]: 商品画像
+                  - generic [ref=e100] [cursor=pointer]:
+                    - img [ref=e103]
+                    - generic [ref=e105]: 画像ファイルをドラッグ＆ドロップ
+                    - generic [ref=e106]:
+                      - text: イメージ画像だけでなく「実物の写真」があると、
+                      - text: 購入されやすくなります。
+                  - generic [ref=e107]: 1番目の画像が商品一覧のサムネイル（メイン画像）として使用されます。
+                - generic [ref=e108]:
+                  - generic [ref=e109]: カテゴリ
+                  - button "カテゴリを選択してください" [ref=e110] [cursor=pointer]
+                - generic [ref=e111]:
+                  - generic [ref=e112]: 年齢制限
+                  - radiogroup "年齢制限" [ref=e113]:
+                    - generic [ref=e114] [cursor=pointer]:
+                      - radio "全年齢" [checked] [ref=e115]
+                      - generic [ref=e116]: 全年齢
+                    - generic [ref=e117] [cursor=pointer]:
+                      - radio "R-18" [ref=e118]
+                      - generic [ref=e119]: R-18
+                  - generic [ref=e121]:
+                    - text: 商品の公開後、一部の決済手段についてはBOOTH事務局による審査後に初めて利用可能となります。 また
+                    - link "審査の結果、一部の決済手段をご利用いただけない場合" [ref=e122] [cursor=pointer]:
+                      - /url: https://booth.pixiv.help/hc/ja/articles/900003444086
+                    - text: がございます。
+                - generic [ref=e123]:
+                  - generic [ref=e124]: 商品紹介文
+                  - generic [ref=e125]:
+                    - generic [ref=e126]: スペック（サイズ・素材・色・ページ数…）、制作の道のり、知人からの推薦文など、いろんな角度から商品を紹介しましょう。
+                    - generic [ref=e127]: 「埋め込みコンテンツ」でYouTube動画を埋め込むと、一部ページの商品画像の先頭にも、そのYouTube動画が表示されます。
+                  - generic [ref=e128]:
+                    - generic [ref=e130]: description
+                    - textbox "description" [ref=e132]:
+                      - /placeholder: "1.【動画】などは下の「埋め込みコンテンツ」で。\n\n2.【長文】は下の「段落」機能で。"
+                - generic [ref=e133]:
+                  - button "段落" [ref=e134] [cursor=pointer]:
+                    - generic [ref=e135]:
+                      - img [ref=e137]
+                      - generic [ref=e138]: 段落
+                  - button "埋め込みコンテンツ" [ref=e139] [cursor=pointer]:
+                    - generic [ref=e140]:
+                      - img [ref=e142]
+                      - generic [ref=e143]: 埋め込みコンテンツ
+                - generic [ref=e144]:
+                  - text: タグ
+                  - generic [ref=e145]:
+                    - combobox [ref=e148]:
+                      - textbox "タグの追加" [ref=e149]
+                      - listbox
+                    - generic [ref=e150]:
+                      - generic [ref=e151]: 【注意】二次創作作品のライセンス許諾を受けた販売について
+                      - text: 東方Project、東北ずん子・ずんだもんプロジェクト、TRPG SPLLなどに関する商品は、 専用タグを設定するなどの所定の登録方法を行うことで販売が可能です。
+                      - link "該当作品を販売したい方は、こちらをお読みください。" [ref=e152] [cursor=pointer]:
+                        - /url: https://booth.pm/rights_clearance
+                    - generic [ref=e153]: タグは、検索キーワードとしてだけでなく、様々なオススメ機能にも使われています。 BOOTH上の様々な場所に表示されやすくなります ので、ぜひご設定ください。
+                - generic [ref=e154]:
+                  - generic [ref=e156]:
+                    - generic [ref=e158]: イベント
+                    - combobox [ref=e160]
+                    - button "イベント" [ref=e161] [cursor=pointer]:
+                      - generic [ref=e162]: なし
+                      - img [ref=e164]
+                  - generic [ref=e165]: 即売会などのイベントで頒布した・頒布する予定がある場合にはぜひご設定ください。
+            - generic [ref=e167]:
+              - heading "価格" [level=3] [ref=e169]
+              - generic [ref=e173]:
+                - generic [ref=e174]:
+                  - generic [ref=e176]: price
+                  - textbox "price" [ref=e178]: "100"
+                - generic [ref=e179]: 円
+            - generic [ref=e181]:
+              - heading "作品ファイル" [level=3] [ref=e183]
+              - button "ファイルの追加・管理" [ref=e187] [cursor=pointer]:
+                - generic [ref=e188]:
+                  - img [ref=e190]
+                  - generic [ref=e191]: ファイルの追加・管理
+            - generic [ref=e193]:
+              - heading "日本国外への販売" [level=3] [ref=e195]
+              - generic [ref=e198]:
+                - generic [ref=e200]:
+                  - generic [ref=e202]: 代理購入サービスの掲載許可
+                  - combobox [ref=e204]
+                  - button "代理購入サービスの掲載許可" [ref=e205] [cursor=pointer]:
+                    - generic [ref=e206]: 「代理購入サービスの掲載許可」を選択
+                    - img [ref=e208]
+                - generic [ref=e209]:
+                  - generic [ref=e210]: 海外への販売のため、 BOOTHが正式に提携した海外通販・発送の代行サービスに、 あなたの商品を表示したり、購入ボタンを設置することを「許可する」機能です。
+                  - list [ref=e211]:
+                    - listitem [ref=e212]:
+                      - text: 当該サービスは、禁輸品のチェックの後 海外のファンの代理であなたの作品を購入し、 海外配送のトラブル対応などをしつつ 、作品を発送します。
+                      - text: みなさまは日本国内の倉庫に発送するだけで、特別な知識等なく安全に海外のファンに作品を届けられます。
+                    - listitem [ref=e213]:
+                      - text: 「許可する」を選択しても、掲載されない・代理購入の利用ができない場合があります。
+                      - text: （例：センシティブな内容のもの、ダウンロード販売商品、限定販売数が設定されている、シークレット公開である）
+                  - link "もっと詳しく" [ref=e214] [cursor=pointer]:
+                    - /url: https://booth.pixiv.help/hc/ja/articles/360000372081
+                    - text: もっと詳しく
+                    - img [ref=e216]
+            - generic [ref=e218]:
+              - heading "オプション設定" [level=3] [ref=e220]
+              - generic [ref=e222]:
+                - generic [ref=e223] [cursor=pointer]:
+                  - generic [ref=e224]: オプション設定を開く
+                  - generic [ref=e225]: 
+                - generic [ref=e226]: バリエーション、限定販売数…
+            - generic [ref=e227]:
+              - generic [ref=e228]:
+                - img [ref=e230]
+                - link "作品ファイルの無いダウンロード販売商品があります" [ref=e232] [cursor=pointer]:
+                  - /url: ""
+              - generic [ref=e233]:
+                - img [ref=e235]
+                - link "公開するには「カテゴリ」を選択してください" [ref=e237] [cursor=pointer]:
+                  - /url: ""
+              - generic [ref=e238]:
+                - img [ref=e240]
+                - link "公開するには「商品紹介文」を入力してください" [ref=e242] [cursor=pointer]:
+                  - /url: ""
+              - generic [ref=e243]:
+                - img [ref=e245]
+                - link "公開するには「代理購入サービスの掲載許可」を選択してください" [ref=e247] [cursor=pointer]:
+                  - /url: ""
+          - generic [ref=e248]:
+            - generic [ref=e249]:
+              - heading "商品登録に関する注意事項" [level=4] [ref=e250]
+              - generic [ref=e251]:
+                - generic [ref=e252]:
+                  - generic [ref=e253]: 法律、条例、公序良俗その他当社が別途定める基準に反する行為を禁止しています。
+                  - generic [ref=e254]: (特に、実写もしくは写実性が高いなど実在性の高い表現方法かつ、児童に対する性的搾取及び性的虐待、近親相姦、獣姦、レイプ(同意の無い性的行為)、人または体の非合法的な切断などを含む商品の取引)
+                - generic [ref=e255]:
+                  - link "利用規約" [ref=e256] [cursor=pointer]:
+                    - /url: https://policies.pixiv.net/#booth
+                  - text: や
+                  - link "ガイドライン" [ref=e257] [cursor=pointer]:
+                    - /url: https://booth.pm/guidelines
+                  - text: に違反する行為をした場合、ショップを強制的に非公開にする可能性があります。
+                  - text: また、
+                  - link "禁止商品" [ref=e258] [cursor=pointer]:
+                    - /url: https://booth.pixiv.help/hc/ja/articles/13002467898905
+                  - text: や
+                  - link "要修正商品" [ref=e259] [cursor=pointer]:
+                    - /url: https://booth.pixiv.help/hc/ja/articles/13002520234521
+                  - text: についてもご確認ください。
+            - generic [ref=e262]:
+              - generic [ref=e263]:
+                - img [ref=e265]
+                - generic [ref=e266]:
+                  - link "ショップ情報編集" [ref=e267] [cursor=pointer]:
+                    - /url: https://manage.booth.pm/settings
+                  - text: では以下のような設定を行えます
+              - list [ref=e268]:
+                - listitem [ref=e269]: 発送までの日数
+                - listitem [ref=e270]: 注文後すぐに支払済みになるお支払い方法のみを許可する
+                - listitem [ref=e271]: 購入者へのひとこと
+          - generic [ref=e274]:
+            - generic [ref=e275]:
+              - button "下書きで保存する" [ref=e277] [cursor=pointer]
+              - button "公開で保存する" [disabled] [ref=e279]
+            - generic [ref=e280]:
+              - text: 現在ショップは「非公開」です。
+              - text: ショップを公開するまで、他の人はアクセスできません。
+          - generic [ref=e282]:
+            - link "戻る" [ref=e283] [cursor=pointer]:
+              - /url: https://manage.booth.pm/items
+              - img [ref=e285]
+              - generic [ref=e286]: 戻る
+            - button "商品を削除する" [ref=e287] [cursor=pointer]
+  - contentinfo [ref=e288]:
+    - link [ref=e290] [cursor=pointer]:
+      - /url: https://factory.pixiv.net/products/can_badge_set
+      - img [ref=e291]
+    - generic [ref=e294]:
+      - navigation [ref=e295]:
+        - heading "BOOTHで「売りたい」" [level=3] [ref=e296]
+        - generic [ref=e298]:
+          - link "作品を出品しよう" [ref=e299] [cursor=pointer]:
+            - /url: https://booth.pm/guide
+          - link "BOOTH Apps(拡張機能)" [ref=e300] [cursor=pointer]:
+            - /url: https://booth.pm/booth_apps
+          - link "匿名配送について" [ref=e301] [cursor=pointer]:
+            - /url: https://booth.pm/anonymous_pack_guides
+          - link "発送代行・倉庫サービス" [ref=e302] [cursor=pointer]:
+            - /url: https://booth.pm/warehouse_guide
+          - link "梱包発送ガイド" [ref=e303] [cursor=pointer]:
+            - /url: https://booth.fanbox.cc/posts/264407
+          - link "委託販売とは" [ref=e304] [cursor=pointer]:
+            - /url: https://booth.pm/consignment_sale
+          - link "二次創作の著作権に関する取り組み" [ref=e305] [cursor=pointer]:
+            - /url: https://booth.pm/rights_clearance
+          - link "BOOTH Camp" [ref=e306] [cursor=pointer]:
+            - /url: https://booth.fanbox.cc
+      - navigation [ref=e307]:
+        - heading "BOOTHで「買いたい」" [level=3] [ref=e308]
+        - generic [ref=e310]:
+          - link "BOOTHとは" [ref=e311] [cursor=pointer]:
+            - /url: https://booth.pm/about
+          - link "お買い物ガイド" [ref=e312] [cursor=pointer]:
+            - /url: https://booth.pm/customer_guide
+          - link "お支払い方法" [ref=e313] [cursor=pointer]:
+            - /url: https://booth.pm/payment
+          - link "取引の流れ" [ref=e314] [cursor=pointer]:
+            - /url: https://booth.pm/trading_flowchart
+          - link "倉庫おまとめ発送" [ref=e315] [cursor=pointer]:
+            - /url: https://booth.pm/warehouse_group_shipments
+          - link "BOOTH主催のWeb即売会" [ref=e316] [cursor=pointer]:
+            - /url: https://booth.pm/ja/exhibitions
+      - navigation [ref=e317]:
+        - heading "サポート・お問い合わせ" [level=3] [ref=e318]
+        - generic [ref=e320]:
+          - link "お知らせ" [ref=e321] [cursor=pointer]:
+            - /url: https://booth.pm/announcements
+          - link "よくある質問" [ref=e322] [cursor=pointer]:
+            - /url: https://booth.pixiv.help/hc/
+          - link "チャットで質問（24時間対応）" [ref=e323] [cursor=pointer]:
+            - /url: https://booth.karakuri.ai/embed/
+          - link "BOOTH事務局へのお問い合わせ" [ref=e324] [cursor=pointer]:
+            - /url: https://booth.pm/support
+      - navigation [ref=e325]:
+        - link "X(Twitter) @booth_pm" [ref=e326] [cursor=pointer]:
+          - /url: https://x.com/booth_pm
+          - generic [ref=e327]: X(Twitter) @booth_pm
+          - img [ref=e330]
+        - link "pixiv" [ref=e332] [cursor=pointer]:
+          - /url: https://www.pixiv.net
+          - generic [ref=e333]: pixiv
+          - img [ref=e335]
+    - generic [ref=e341] [cursor=pointer]:
+      - img [ref=e343]
+      - text: 日本語
+    - generic [ref=e347]:
+      - link "BOOTH" [ref=e348] [cursor=pointer]:
+        - /url: https://booth.pm/
+        - img "BOOTH" [ref=e349]
+      - navigation [ref=e350]:
+        - link "会社概要" [ref=e351] [cursor=pointer]:
+          - /url: https://booth.pm/company
+        - link "利用規約" [ref=e352] [cursor=pointer]:
+          - /url: https://policies.pixiv.net/#booth
+        - link "倉庫サービス利用規約" [ref=e353] [cursor=pointer]:
+          - /url: https://policies.pixiv.net/#warehouse
+        - link "ガイドライン" [ref=e354] [cursor=pointer]:
+          - /url: https://booth.pm/guidelines
+        - link "プライバシーポリシー" [ref=e355] [cursor=pointer]:
+          - /url: https://booth.pm/privacy
+        - link "外部送信規律について" [ref=e356] [cursor=pointer]:
+          - /url: https://booth.pm/privacy_14
+        - link "特定商取引法に基づく表記" [ref=e357] [cursor=pointer]:
+          - /url: https://booth.pm/legal
+      - generic [ref=e358]: © pixiv
+  - img "起動アイコン" [ref=e360] [cursor=pointer]
+  - text:                         

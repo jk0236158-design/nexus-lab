@@ -1,0 +1,411 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e5]:
+      - link "BOOTH" [ref=e7] [cursor=pointer]:
+        - /url: https://booth.pm/
+        - img "BOOTH" [ref=e8]
+      - generic [ref=e9]:
+        - generic [ref=e10]:
+          - generic [ref=e14] [cursor=pointer]:
+            - generic [ref=e15]:
+              - img [ref=e16]
+              - generic [ref=e17]: Zen Nexus
+            - img [ref=e19]
+          - button [ref=e22] [cursor=pointer]:
+            - button [ref=e24]:
+              - img [ref=e26]
+          - link "スキ！した商品" [ref=e28] [cursor=pointer]:
+            - /url: https://accounts.booth.pm/wish_lists
+            - img [ref=e30]
+        - link "ショッピングカート" [ref=e32] [cursor=pointer]:
+          - /url: https://booth.pm/carts
+          - img [ref=e34]
+        - generic [ref=e39] [cursor=pointer]:
+          - img [ref=e41]
+          - text: 日本語
+  - generic [ref=e43]:
+    - navigation [ref=e46]:
+      - list [ref=e47]:
+        - listitem [ref=e48]:
+          - link "ショップ管理" [ref=e49] [cursor=pointer]:
+            - /url: https://manage.booth.pm/
+        - listitem [ref=e50]:
+          - link "ショップ情報編集" [ref=e51] [cursor=pointer]:
+            - /url: https://manage.booth.pm/settings
+        - listitem [ref=e52]:
+          - link "商品管理" [ref=e53] [cursor=pointer]:
+            - /url: https://manage.booth.pm/items
+        - listitem [ref=e54]:
+          - link "倉庫サービス" [ref=e55] [cursor=pointer]:
+            - /url: https://manage.booth.pm/warehouse/reservations
+        - listitem [ref=e56]:
+          - link "注文一覧" [ref=e57] [cursor=pointer]:
+            - /url: https://manage.booth.pm/orders
+        - listitem [ref=e58]:
+          - link "売上管理" [ref=e59] [cursor=pointer]:
+            - /url: https://manage.booth.pm/sales
+        - listitem [ref=e60]:
+          - link "ユーザーとのメッセージ" [ref=e61] [cursor=pointer]:
+            - /url: https://manage.booth.pm/conversations
+        - listitem [ref=e62]:
+          - link "BOOTH Apps" [ref=e63] [cursor=pointer]:
+            - /url: https://booth.pm/booth_apps
+    - main [ref=e64]:
+      - generic [ref=e65]:
+        - heading "商品管理" [level=1] [ref=e66]
+        - generic [ref=e67]:
+          - generic [ref=e68]:
+            - link " 商品登録" [ref=e70] [cursor=pointer]:
+              - /url: /items/select_type
+              - generic [ref=e71]: 
+              - text: 商品登録
+            - link "商品リスト管理" [ref=e73] [cursor=pointer]:
+              - /url: /item_lists
+            - list [ref=e74]:
+              - listitem [ref=e75]:
+                - link "すべて" [ref=e77] [cursor=pointer]:
+                  - /url: /items
+              - listitem [ref=e78]:
+                - link "下書き" [ref=e80] [cursor=pointer]:
+                  - /url: /items?state=draft
+              - listitem [ref=e81]:
+                - link "公開中" [ref=e83] [cursor=pointer]:
+                  - /url: /items?state=public
+              - listitem [ref=e84]:
+                - link "非公開" [ref=e86] [cursor=pointer]:
+                  - /url: /items?state=private
+          - list [ref=e88]:
+            - listitem [ref=e89]:
+              - generic [ref=e90]:
+                - text: 
+                - generic [ref=e92] [cursor=pointer]: 
+              - generic [ref=e93]:
+                - generic [ref=e94]:
+                  - img [ref=e97]
+                  - generic [ref=e98]:
+                    - generic [ref=e99]: 下書き
+                    - link "MCP サーバー用テンプレート「api-proxy」— エージェント安全な REST プロキシ / パスピボット防御" [ref=e101] [cursor=pointer]:
+                      - /url: https://nexus-lab.booth.pm/items/8240654
+                    - link "https://nexus-lab.booth.pm/items/8240654" [ref=e102] [cursor=pointer]:
+                      - /url: https://nexus-lab.booth.pm/items/8240654
+                - list [ref=e103]:
+                  - listitem [ref=e104]:
+                    - generic "ダウンロード商品" [ref=e106]: 
+                    - generic [ref=e107]:
+                      - generic [ref=e108]: 未発送
+                      - text: 支払待ち –
+                    - generic [ref=e109]:
+                      - generic [ref=e110]: 未発送
+                      - text: 支払済み –
+                    - generic [ref=e111]:
+                      - generic [ref=e112]: 価格
+                      - text: ¥ 3,000
+                    - generic [ref=e113]:
+                      - generic [ref=e114]: 在庫
+                      - text: "-"
+                    - generic [ref=e115]:
+                      - generic [ref=e116]: 販売数
+                      - text: "0"
+                    - generic [ref=e117]:
+                      - generic [ref=e118]: 売上金額
+                      - text: ¥ 0
+                - list [ref=e119]:
+                  - listitem [ref=e120]:
+                    - generic [ref=e121]: 
+                    - generic [ref=e122]: テンプレート
+                  - listitem [ref=e123]:
+                    - generic [ref=e124]: 
+                    - generic [ref=e125]: TypeScript
+                  - listitem [ref=e126]:
+                    - generic [ref=e127]: 
+                    - generic [ref=e128]: template
+                  - listitem [ref=e129]:
+                    - generic [ref=e130]: 
+                    - generic [ref=e131]: REST
+                  - listitem [ref=e132]:
+                    - generic [ref=e133]: 
+                    - generic [ref=e134]: プロキシ
+                  - listitem [ref=e135]:
+                    - generic [ref=e136]: 
+                    - generic [ref=e137]: MCP
+                  - listitem [ref=e138]:
+                    - generic [ref=e139]: 
+                    - generic [ref=e140]: MCPサーバー
+                  - listitem [ref=e141]:
+                    - generic [ref=e142]: 
+                    - generic [ref=e143]: Claude Code
+                  - listitem [ref=e144]:
+                    - generic [ref=e145]: 
+                    - generic [ref=e146]: secure
+                  - listitem [ref=e147]:
+                    - generic [ref=e148]: 
+                    - generic [ref=e149]: agent-safe
+                - generic [ref=e150]:
+                  - generic "「スキ！」された数" [ref=e153]:
+                    - generic [ref=e154]: 
+                    - text: "0"
+                  - generic [ref=e155]:
+                    - button [ref=e158] [cursor=pointer]:
+                      - img [ref=e160]
+                    - link " 編集する" [ref=e162] [cursor=pointer]:
+                      - /url: /items/8240654/edit
+                      - generic [ref=e163]: 
+                      - text: 編集する
+            - listitem [ref=e164]:
+              - generic [ref=e165]:
+                - text: 
+                - generic [ref=e167] [cursor=pointer]: 
+              - generic [ref=e168]:
+                - generic [ref=e169]:
+                  - img [ref=e172]
+                  - generic [ref=e173]:
+                    - generic [ref=e174]: 下書き
+                    - link "MCP サーバー用テンプレート「auth」— API キー認証 / タイミング安全比較 / レートリミット" [ref=e176] [cursor=pointer]:
+                      - /url: https://nexus-lab.booth.pm/items/8240642
+                    - link "https://nexus-lab.booth.pm/items/8240642" [ref=e177] [cursor=pointer]:
+                      - /url: https://nexus-lab.booth.pm/items/8240642
+                - list [ref=e178]:
+                  - listitem [ref=e179]:
+                    - generic "ダウンロード商品" [ref=e181]: 
+                    - generic [ref=e182]:
+                      - generic [ref=e183]: 未発送
+                      - text: 支払待ち –
+                    - generic [ref=e184]:
+                      - generic [ref=e185]: 未発送
+                      - text: 支払済み –
+                    - generic [ref=e186]:
+                      - generic [ref=e187]: 価格
+                      - text: ¥ 2,250
+                    - generic [ref=e188]:
+                      - generic [ref=e189]: 在庫
+                      - text: "-"
+                    - generic [ref=e190]:
+                      - generic [ref=e191]: 販売数
+                      - text: "0"
+                    - generic [ref=e192]:
+                      - generic [ref=e193]: 売上金額
+                      - text: ¥ 0
+                - list [ref=e194]:
+                  - listitem [ref=e195]:
+                    - generic [ref=e196]: 
+                    - generic [ref=e197]: テンプレート
+                  - listitem [ref=e198]:
+                    - generic [ref=e199]: 
+                    - generic [ref=e200]: TypeScript
+                  - listitem [ref=e201]:
+                    - generic [ref=e202]: 
+                    - generic [ref=e203]: template
+                  - listitem [ref=e204]:
+                    - generic [ref=e205]: 
+                    - generic [ref=e206]: 認証
+                  - listitem [ref=e207]:
+                    - generic [ref=e208]: 
+                    - generic [ref=e209]: MCP
+                  - listitem [ref=e210]:
+                    - generic [ref=e211]: 
+                    - generic [ref=e212]: MCPサーバー
+                  - listitem [ref=e213]:
+                    - generic [ref=e214]: 
+                    - generic [ref=e215]: Claude Code
+                  - listitem [ref=e216]:
+                    - generic [ref=e217]: 
+                    - generic [ref=e218]: API Key
+                  - listitem [ref=e219]:
+                    - generic [ref=e220]: 
+                    - generic [ref=e221]: レートリミット
+                  - listitem [ref=e222]:
+                    - generic [ref=e223]: 
+                    - generic [ref=e224]: secure
+                - generic [ref=e225]:
+                  - generic "「スキ！」された数" [ref=e228]:
+                    - generic [ref=e229]: 
+                    - text: "0"
+                  - generic [ref=e230]:
+                    - button [ref=e233] [cursor=pointer]:
+                      - img [ref=e235]
+                    - link " 編集する" [ref=e237] [cursor=pointer]:
+                      - /url: /items/8240642/edit
+                      - generic [ref=e238]: 
+                      - text: 編集する
+            - listitem [ref=e239]:
+              - generic [ref=e240]:
+                - text: 
+                - generic [ref=e242] [cursor=pointer]: 
+              - generic [ref=e243]:
+                - generic [ref=e244]:
+                  - img [ref=e247]
+                  - generic [ref=e248]:
+                    - generic [ref=e249]: 下書き
+                    - link "商品名が設定されていません" [ref=e251] [cursor=pointer]:
+                      - /url: https://nexus-lab.booth.pm/items/8240569
+                      - generic [ref=e252]: 商品名が設定されていません
+                    - link "https://nexus-lab.booth.pm/items/8240569" [ref=e253] [cursor=pointer]:
+                      - /url: https://nexus-lab.booth.pm/items/8240569
+                - list [ref=e254]:
+                  - listitem [ref=e255]:
+                    - generic "ダウンロード商品" [ref=e257]: 
+                    - generic [ref=e258]:
+                      - generic [ref=e259]: 未発送
+                      - text: 支払待ち –
+                    - generic [ref=e260]:
+                      - generic [ref=e261]: 未発送
+                      - text: 支払済み –
+                    - generic [ref=e262]:
+                      - generic [ref=e263]: 価格
+                      - text: ¥ 100
+                    - generic [ref=e264]:
+                      - generic [ref=e265]: 在庫
+                      - text: "-"
+                    - generic [ref=e266]:
+                      - generic [ref=e267]: 販売数
+                      - text: "0"
+                    - generic [ref=e268]:
+                      - generic [ref=e269]: 売上金額
+                      - text: ¥ 0
+                - generic [ref=e270]:
+                  - generic "「スキ！」された数" [ref=e273]:
+                    - generic [ref=e274]: 
+                    - text: "0"
+                  - generic [ref=e275]:
+                    - button [ref=e278] [cursor=pointer]:
+                      - img [ref=e280]
+                    - link " 編集する" [ref=e282] [cursor=pointer]:
+                      - /url: /items/8240569/edit
+                      - generic [ref=e283]: 
+                      - text: 編集する
+            - listitem [ref=e284]:
+              - generic [ref=e285]:
+                - text: 
+                - generic [ref=e287] [cursor=pointer]: 
+              - generic [ref=e288]:
+                - generic [ref=e289]:
+                  - img [ref=e292]
+                  - generic [ref=e293]:
+                    - generic [ref=e294]: 下書き
+                    - link "MCP Server Database テンプレート — SQLite + Drizzle ORM" [ref=e296] [cursor=pointer]:
+                      - /url: https://nexus-lab.booth.pm/items/8239118
+                    - link "https://nexus-lab.booth.pm/items/8239118" [ref=e297] [cursor=pointer]:
+                      - /url: https://nexus-lab.booth.pm/items/8239118
+                - list [ref=e298]:
+                  - listitem [ref=e299]:
+                    - generic "ダウンロード商品" [ref=e301]: 
+                    - generic [ref=e302]:
+                      - generic [ref=e303]: 未発送
+                      - text: 支払待ち –
+                    - generic [ref=e304]:
+                      - generic [ref=e305]: 未発送
+                      - text: 支払済み –
+                    - generic [ref=e306]:
+                      - generic [ref=e307]: 価格
+                      - text: ¥ 1,500
+                    - generic [ref=e308]:
+                      - generic [ref=e309]: 在庫
+                      - text: "-"
+                    - generic [ref=e310]:
+                      - generic [ref=e311]: 販売数
+                      - text: "0"
+                    - generic [ref=e312]:
+                      - generic [ref=e313]: 売上金額
+                      - text: ¥ 0
+                - list [ref=e314]:
+                  - listitem [ref=e315]:
+                    - generic [ref=e316]: 
+                    - generic [ref=e317]: MCP, Claude Code, TypeScript, SQLite, Drizzle, MCPサーバー, template, テンプレート, production-ready, secure
+                - generic [ref=e318]:
+                  - generic "「スキ！」された数" [ref=e321]:
+                    - generic [ref=e322]: 
+                    - text: "0"
+                  - generic [ref=e323]:
+                    - button [ref=e326] [cursor=pointer]:
+                      - img [ref=e328]
+                    - link " 編集する" [ref=e329] [cursor=pointer]:
+                      - /url: /items/8239118/edit
+                      - generic [ref=e330]: 
+                      - text: 編集する
+          - link " 戻る" [ref=e332] [cursor=pointer]:
+            - /url: /
+            - generic [ref=e333]: 
+            - text: 戻る
+  - contentinfo [ref=e334]:
+    - link [ref=e336] [cursor=pointer]:
+      - /url: https://factory.pixiv.net/products/acrylic_badge
+      - img [ref=e337]
+    - generic [ref=e340]:
+      - navigation [ref=e341]:
+        - heading "BOOTHで「売りたい」" [level=3] [ref=e342]
+        - generic [ref=e344]:
+          - link "作品を出品しよう" [ref=e345] [cursor=pointer]:
+            - /url: https://booth.pm/guide
+          - link "BOOTH Apps(拡張機能)" [ref=e346] [cursor=pointer]:
+            - /url: https://booth.pm/booth_apps
+          - link "匿名配送について" [ref=e347] [cursor=pointer]:
+            - /url: https://booth.pm/anonymous_pack_guides
+          - link "発送代行・倉庫サービス" [ref=e348] [cursor=pointer]:
+            - /url: https://booth.pm/warehouse_guide
+          - link "梱包発送ガイド" [ref=e349] [cursor=pointer]:
+            - /url: https://booth.fanbox.cc/posts/264407
+          - link "委託販売とは" [ref=e350] [cursor=pointer]:
+            - /url: https://booth.pm/consignment_sale
+          - link "二次創作の著作権に関する取り組み" [ref=e351] [cursor=pointer]:
+            - /url: https://booth.pm/rights_clearance
+          - link "BOOTH Camp" [ref=e352] [cursor=pointer]:
+            - /url: https://booth.fanbox.cc
+      - navigation [ref=e353]:
+        - heading "BOOTHで「買いたい」" [level=3] [ref=e354]
+        - generic [ref=e356]:
+          - link "BOOTHとは" [ref=e357] [cursor=pointer]:
+            - /url: https://booth.pm/about
+          - link "お買い物ガイド" [ref=e358] [cursor=pointer]:
+            - /url: https://booth.pm/customer_guide
+          - link "お支払い方法" [ref=e359] [cursor=pointer]:
+            - /url: https://booth.pm/payment
+          - link "取引の流れ" [ref=e360] [cursor=pointer]:
+            - /url: https://booth.pm/trading_flowchart
+          - link "倉庫おまとめ発送" [ref=e361] [cursor=pointer]:
+            - /url: https://booth.pm/warehouse_group_shipments
+          - link "BOOTH主催のWeb即売会" [ref=e362] [cursor=pointer]:
+            - /url: https://booth.pm/ja/exhibitions
+      - navigation [ref=e363]:
+        - heading "サポート・お問い合わせ" [level=3] [ref=e364]
+        - generic [ref=e366]:
+          - link "お知らせ" [ref=e367] [cursor=pointer]:
+            - /url: https://booth.pm/announcements
+          - link "よくある質問" [ref=e368] [cursor=pointer]:
+            - /url: https://booth.pixiv.help/hc/
+          - link "チャットで質問（24時間対応）" [ref=e369] [cursor=pointer]:
+            - /url: https://booth.karakuri.ai/embed/
+          - link "BOOTH事務局へのお問い合わせ" [ref=e370] [cursor=pointer]:
+            - /url: https://booth.pm/support
+      - navigation [ref=e371]:
+        - link "X(Twitter) @booth_pm" [ref=e372] [cursor=pointer]:
+          - /url: https://x.com/booth_pm
+          - generic [ref=e373]: X(Twitter) @booth_pm
+          - img [ref=e376]
+        - link "pixiv" [ref=e377] [cursor=pointer]:
+          - /url: https://www.pixiv.net
+          - generic [ref=e378]: pixiv
+          - img [ref=e380]
+    - generic [ref=e384] [cursor=pointer]:
+      - img [ref=e386]
+      - text: 日本語
+    - generic [ref=e389]:
+      - link "BOOTH" [ref=e390] [cursor=pointer]:
+        - /url: https://booth.pm/
+        - img "BOOTH" [ref=e391]
+      - navigation [ref=e392]:
+        - link "会社概要" [ref=e393] [cursor=pointer]:
+          - /url: https://booth.pm/company
+        - link "利用規約" [ref=e394] [cursor=pointer]:
+          - /url: https://policies.pixiv.net/#booth
+        - link "倉庫サービス利用規約" [ref=e395] [cursor=pointer]:
+          - /url: https://policies.pixiv.net/#warehouse
+        - link "ガイドライン" [ref=e396] [cursor=pointer]:
+          - /url: https://booth.pm/guidelines
+        - link "プライバシーポリシー" [ref=e397] [cursor=pointer]:
+          - /url: https://booth.pm/privacy
+        - link "外部送信規律について" [ref=e398] [cursor=pointer]:
+          - /url: https://booth.pm/privacy_14
+        - link "特定商取引法に基づく表記" [ref=e399] [cursor=pointer]:
+          - /url: https://booth.pm/legal
+      - generic [ref=e400]: © pixiv
+  - img "起動アイコン" [ref=e402] [cursor=pointer]
