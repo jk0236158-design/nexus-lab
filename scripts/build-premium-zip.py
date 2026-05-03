@@ -22,7 +22,14 @@ ROOT = Path(__file__).parent.parent
 TEMPLATES_BASE = ROOT / "packages" / "create-mcp-server" / "templates"
 OUTPUT_BASE = ROOT / "dist" / "premium"
 
-EXCLUDE_DIRS = {"node_modules", "dist", ".git", "__pycache__"}
+EXCLUDE_DIRS = {
+    "node_modules",
+    "dist",
+    ".git",
+    "__pycache__",
+    "coverage",
+    ".vitest",
+}
 EXCLUDE_FILES = {"package-lock.json", ".DS_Store"}
 
 

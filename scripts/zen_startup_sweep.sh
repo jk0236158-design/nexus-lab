@@ -58,19 +58,133 @@ subheader "board/ : 今日の Kai→Zen 未返信"
 INCOMING=$(find "$SHARED_OPS/board" -maxdepth 1 -type f -name "${TODAY}_kai_zen_*.md" \
   ! -name "*_response_*" 2>/dev/null | sort)
 
+# ---------------------------------------------------------------
+# 返信判定ヘルパー (2026-04-23 Iwa fix for false positive)
+#   旧: *_zen_kai_response_${slug}.md の完全一致 only
+#   新: (1) frontmatter "replied_by:" を原 msg 側に持てば即 link (future)
+#       (2) 原 msg date <= response date かつ、slug の意味トークンが
+#           2 個以上一致する response を返信とみなす
+#   note:
+#     - 短い token (3文字未満、数字のみ、非ASCII) は除外
+#     - "response/ack/reply/handoff" のような generic token は noise
+#       として除外し、topic の overlap だけ見る
+#     - 完全一致は依然 fast-path として通す (hash O(1))
+# is_replied <orig_base> <orig_date>
+#   returns 0 if replied, 1 if pending. Prints matched reply basename
+#   to stdout (empty if none).
+# ---------------------------------------------------------------
+STOPWORDS_RE='^(response|ack|reply|replied|note|draft)$'
+
+# 手動 resolved mark list (is_replied 自動判定を bypass、resolved confirmed 済 backlog)
+# 議題 30 連動: Iwa T6 sweep filter 自動化 packet (5/05 期限) で恒久 fix 候補、暫定で manual list
+SWEEP_RESOLVED_MARKS='2026-04-26_kai_zen_aira_cost_model_fitness_binding_view'
+
+is_resolved_mark() {
+  local base="$1"
+  echo "$SWEEP_RESOLVED_MARKS" | tr ',' '\n' | grep -qFx "$base"
+}
+
+is_replied() {
+  local orig_base="$1"
+  local orig_date="$2"
+  local orig_slug="${orig_base#*_kai_zen_}"
+
+  # 0) frontmatter replied_by: <basename> を原 msg が持つか
+  local orig_file="$SHARED_OPS/board/${orig_base}.md"
+  if [ -f "$orig_file" ]; then
+    local declared
+    declared=$(grep -E "^replied_by:" "$orig_file" 2>/dev/null \
+      | head -1 | sed -E 's/^replied_by:[[:space:]]*//; s/[[:space:]]*$//' | tr -d '"')
+    if [ -n "$declared" ]; then
+      if [ -f "$SHARED_OPS/board/${declared}.md" ] \
+        || [ -f "$SHARED_OPS/board/${declared}" ]; then
+        printf "%s\n" "$declared"
+        return 0
+      fi
+    fi
+  fi
+
+  # 1) fast-path: 完全 slug 一致 (date 不問、既存挙動維持)
+  local exact
+  exact=$(find "$SHARED_OPS/board" -maxdepth 1 -type f \
+    -name "*_zen_kai_response_${orig_slug}.md" 2>/dev/null | head -1)
+  if [ -n "$exact" ]; then
+    printf "%s\n" "$(basename "$exact" .md)"
+    return 0
+  fi
+
+  # 2) token overlap: 原 msg 日付以降の response を列挙し、
+  #    意味 token が 2 個以上 overlap するものを返信とみなす
+  local orig_tokens
+  orig_tokens=$(printf "%s" "$orig_slug" | tr '_' '\n' \
+    | awk 'length($0) >= 3 && $0 !~ /^[0-9]+$/' \
+    | grep -Ev "$STOPWORDS_RE" \
+    | LC_ALL=C grep -E '^[A-Za-z0-9]+$' || true)
+  # token 数が少ない (2 以下) なら 1 個一致で return、多いなら 2 個要求
+  local orig_token_count
+  orig_token_count=$(printf "%s" "$orig_tokens" | grep -c . || true)
+  local need_overlap=2
+  if [ "$orig_token_count" -le 2 ]; then
+    need_overlap=1
+  fi
+
+  local resp best_base="" best_overlap=0
+  while IFS= read -r resp; do
+    [ -z "$resp" ] && continue
+    local resp_base
+    resp_base=$(basename "$resp" .md)
+    # 日付 gate: response の date >= orig の date
+    local resp_date="${resp_base%%_*}"
+    if [[ ! "$resp_date" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; then
+      continue
+    fi
+    if [[ "$resp_date" < "$orig_date" ]]; then
+      continue
+    fi
+    local resp_slug="${resp_base#*_zen_kai_response_}"
+
+    # ASCII token overlap — 最大 overlap の response を選ぶ (specificity優先)
+    if [ -n "$orig_tokens" ]; then
+      local overlap
+      overlap=$(printf "%s\n%s\n" "$orig_tokens" \
+        "$(printf "%s" "$resp_slug" | tr '_' '\n' \
+          | awk 'length($0) >= 3 && $0 !~ /^[0-9]+$/' \
+          | grep -Ev "$STOPWORDS_RE" \
+          | LC_ALL=C grep -E '^[A-Za-z0-9]+$' || true)" \
+        | sort | uniq -d | wc -l)
+      if [ "$overlap" -ge "$need_overlap" ] && [ "$overlap" -gt "$best_overlap" ]; then
+        best_overlap="$overlap"
+        best_base="$resp_base"
+      fi
+      continue
+    fi
+
+    # 非 ASCII (日本語) fallback: 原 msg と response の本文 title を
+    # 比較できないので、同日投稿された zen→kai response を返信とみなす
+    # (緩い判定、false positive は diary で再確認)
+    if [ -z "$orig_tokens" ] && [ "$resp_date" = "$orig_date" ] && [ -z "$best_base" ]; then
+      best_base="$resp_base"
+      best_overlap=1
+    fi
+  done < <(find "$SHARED_OPS/board" -maxdepth 1 -type f \
+    -name "*_zen_kai_response_*.md" 2>/dev/null | sort)
+
+  if [ -n "$best_base" ]; then
+    printf "%s\n" "$best_base"
+    return 0
+  fi
+  return 1
+}
+
 if [ -z "$INCOMING" ]; then
   echo "  (今日の未読なし)"
 else
   UNREPLIED_COUNT=0
   while IFS= read -r f; do
     base=$(basename "$f" .md)
-    # slug 抽出: 日付_kai_zen_{slug}
-    slug="${base#*_kai_zen_}"
-    # 対応する zen→kai response を日付不問で探す
-    REPLY_MATCH=$(find "$SHARED_OPS/board" -maxdepth 1 \
-      -name "*_zen_kai_response_${slug}.md" 2>/dev/null | head -1)
-    if [ -n "$REPLY_MATCH" ]; then
-      echo "  [replied] $base"
+    orig_date="${base%%_*}"
+    if REPLY_MATCH=$(is_replied "$base" "$orig_date"); then
+      echo "  [replied] $base  (← $REPLY_MATCH)"
     else
       echo "  [PENDING] $base"
       UNREPLIED_COUNT=$((UNREPLIED_COUNT + 1))
@@ -92,9 +206,11 @@ OLDEST_PENDING_BASE=""
 if [ -n "$OLD_INCOMING" ]; then
   while IFS= read -r f; do
     base=$(basename "$f" .md)
-    slug="${base#*_kai_zen_}"
-    if ! find "$SHARED_OPS/board" -maxdepth 1 \
-        -name "*_zen_kai_response_${slug}.md" 2>/dev/null | grep -q .; then
+    orig_date="${base%%_*}"
+    if is_resolved_mark "$base"; then
+      continue
+    fi
+    if ! is_replied "$base" "$orig_date" >/dev/null; then
       OLD_UNREPLIED=$((OLD_UNREPLIED + 1))
       # 最も古い (sort済み先頭) をひとつ記録
       if [ -z "$OLDEST_PENDING_BASE" ]; then
@@ -291,11 +407,64 @@ fi
 # ---------------------------------------------------------------
 header "memory-lint"
 if [ -f "$NEXUS_LAB/scripts/memory_lint.py" ]; then
-  ( cd "$NEXUS_LAB" && python scripts/memory_lint.py --class L1,L2 ) || true
+  PYTHON_BIN=$(command -v python3 || command -v python || true)
+  if [ -n "$PYTHON_BIN" ]; then
+    ( cd "$NEXUS_LAB" && "$PYTHON_BIN" scripts/memory_lint.py --class L1,L2 ) || true
+  else
+    echo "  (python not found; memory-lint skipped)"
+  fi
   echo ""
   echo "  詳細: ~/.shared-ops/status/memory_lint_last.md"
 else
   echo "  (memory_lint.py 未導入)"
+fi
+
+# ---------------------------------------------------------------
+# 5. BOOTH 14日観測 metric fetch reminder
+#   Iwa, 2026-04-22 (cohort start) - 2026-05-06 (14日判定)
+#   spec: ~/.shared-ops/docs/booth_metrics_fetch_design_2026-04-22.md
+#   runbook: ~/.shared-ops/scripts/booth_metrics_fetch.runbook.md
+#   実 fetch は Zen が runbook を読んで Playwright MCP 経由で実行する
+#   (bash から MCP tool を直接叩けないため、ここは reminder のみ)
+# ---------------------------------------------------------------
+header "BOOTH metrics fetch (14日観測 cohort: 2026-04-22 → 2026-05-06)"
+COHORT_START="2026-04-22"
+COHORT_END="2026-05-06"
+APPEND_SH="$SHARED_OPS/scripts/booth_metrics_append.sh"
+DATA_FILE="$SHARED_OPS/data/booth_metrics/${TODAY}.jsonl"
+
+# 観測窓判定 (POSIX date 引き算)
+in_window() {
+  local today_epoch start_epoch end_epoch
+  today_epoch=$(date -d "$TODAY" +%s 2>/dev/null) || return 1
+  start_epoch=$(date -d "$COHORT_START" +%s 2>/dev/null) || return 1
+  end_epoch=$(date -d "$COHORT_END" +%s 2>/dev/null) || return 1
+  [ "$today_epoch" -ge "$start_epoch" ] && [ "$today_epoch" -le "$end_epoch" ]
+}
+
+if ! in_window; then
+  echo "  (観測窓外 — cohort: $COHORT_START 〜 $COHORT_END / today: $TODAY)"
+elif [ ! -f "$APPEND_SH" ]; then
+  echo "  WARN: $APPEND_SH なし、Iwa Phase 2 deliverable 未到着の可能性"
+else
+  if bash "$APPEND_SH" check "$TODAY" 2>/dev/null; then
+    LINE_COUNT=$(bash "$APPEND_SH" count "$TODAY")
+    echo "  [done] $TODAY 既に fetch 済 ($LINE_COUNT lines, 想定 5)"
+    # Rebuild ledger (idempotent) so sweep output reflects latest cohort state
+    LEDGER_SH="$SHARED_OPS/scripts/booth_metrics_ledger.sh"
+    if [ -f "$LEDGER_SH" ]; then
+      bash "$LEDGER_SH" build >/dev/null 2>&1 || true
+      echo "  ledger: $SHARED_OPS/data/booth_metrics/derived/ledger.md (rebuilt)"
+    fi
+  else
+    DAY_OFFSET=$(( ($(date -d "$TODAY" +%s) - $(date -d "$COHORT_START" +%s)) / 86400 ))
+    echo "  [TODO] $TODAY (day +$DAY_OFFSET / 14) fetch 未実施"
+    echo "  → Zen: runbook を読んで Playwright MCP 経由で実行"
+    echo "  → runbook: $SHARED_OPS/scripts/booth_metrics_fetch.runbook.md"
+    echo "  → 想定所要 35 秒 / 4 page navigate"
+    add_candidate 2 "BOOTH metrics fetch (day +$DAY_OFFSET / 14)" \
+      "14 日観測 cohort 中、本日分 fetch 未実施 (sweep 自動 reminder)"
+  fi
 fi
 
 # ---------------------------------------------------------------
