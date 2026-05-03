@@ -1,0 +1,96 @@
+# audit.boundary.yml
+# Premium boundary template — Audit: financial action / external transaction / commitment 監視
+#
+# Bundle: Aira Boundary Templates Premium Pack
+# License: Single-org commercial use OK, redistribution NOT permitted
+# Version: 1.0.0
+# Last updated: 2026-05-02
+#
+# 想定 use case:
+# - AI peer が unauthorized で financial / external transaction / contractual commitment を
+#   進めることを digest 出力時に detect (実行は別 layer、本 template は post-hoc audit)
+# - audit log として日次 digest に financial / transaction / commitment 系 action を flag、
+#   owner review queue に乗せる
+#
+# Integration: yuino.config.yml の boundary.custom_rules に extend で merge
+#
+# Note:
+# - これは "post-hoc audit" template、AI peer の action 実行を block するのは別 layer の責務
+# - digest 出力時に flag を立てて owner review surface すること、が本 template の scope
+
+version: 1
+name: audit
+description: Financial action / external transaction / commitment 監視 rules (post-hoc audit)
+
+custom_rules:
+  # === 金銭発生系 action ===
+  - id: payment_action
+    pattern: '(charge|invoice|payment|決済|請求|送金|振込)'
+    action: warn
+    message: 'Payment-related action detected — owner review required'
+
+  - id: spend_commit
+    pattern: '(spend[_ -]?\$?\d+|cost[_ -]?\$?\d+|¥\s?\d{3,}|\$\s?\d+)'
+    action: warn
+    message: 'Specific spend amount mentioned — owner review for cost approval'
+
+  - id: subscription_action
+    pattern: '(subscribe|cancel[_ -]?subscription|upgrade[_ -]?plan|downgrade[_ -]?plan)'
+    action: warn
+    message: 'Subscription change action detected — owner review'
+
+  # === 外部 transaction / send ===
+  - id: external_send
+    pattern: '(send[_ -]?to[_ -]?(customer|client|partner|lead)|outreach[_ -]?email|cold[_ -]?email)'
+    action: warn
+    message: 'External outbound communication detected — owner review for tone / timing'
+
+  - id: contract_action
+    pattern: '(sign[_ -]?contract|approve[_ -]?contract|execute[_ -]?agreement|締結|合意)'
+    action: deny
+    message: 'Contract execution action detected — output blocked, owner approval required'
+
+  - id: legal_commitment
+    pattern: '(commit[_ -]?to|guarantee|warranty|representation|saa[s]? agreement)'
+    action: warn
+    message: 'Legal commitment language detected — verify scope of authority'
+
+  # === API / external service mutation ===
+  - id: api_destructive
+    pattern: '(DELETE\s+|DROP\s+(TABLE|DATABASE)|destroy|truncate)'
+    action: warn
+    message: 'Destructive API / DB action detected — owner review required'
+
+  - id: production_mutation
+    pattern: '(prod(uction)?[_ -]?mutate|prod[_ -]?write|prod[_ -]?deploy|deploy[_ -]?to[_ -]?prod)'
+    action: warn
+    message: 'Production environment mutation detected — owner review for staged rollout'
+
+  # === pricing / discount ===
+  - id: pricing_change
+    pattern: '(price[_ -]?change|discount[_ -]?\d+%|coupon[_ -]?code|無料 offer|半額)'
+    action: warn
+    message: 'Pricing / discount action detected — owner review for margin impact'
+
+  - id: refund_action
+    pattern: '(refund|return|chargeback|返金|payment[_ -]?reverse)'
+    action: warn
+    message: 'Refund / chargeback action detected — owner review for accounting record'
+
+  # === credit / debt ===
+  - id: credit_action
+    pattern: '(credit[_ -]?line|loan|debt|borrow|融資|借入)'
+    action: deny
+    message: 'Credit / debt action detected — output blocked, owner approval required'
+
+# === optional metadata for template publish ===
+metadata:
+  bundle: aira-boundary-templates-premium
+  templates_in_bundle: 3
+  bundle_price_jpy: 1200
+  individual_price_jpy: 500
+  bundle_price_usd: 8.00
+  individual_price_usd: 3.50
+  available_at:
+    - https://nexus-lab.booth.pm
+    - https://nexuslabzen.gumroad.com

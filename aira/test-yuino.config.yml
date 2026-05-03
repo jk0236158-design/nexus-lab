@@ -1,0 +1,39 @@
+# test-yuino.config.yml — DRY RUN verify 用 sample config (5/03 evening 起稿)
+# 実 digest 配信用ではない、yuino digest --dry-run の動作確認用
+
+gemini:
+  api_key_env: GEMINI_API_KEY
+  model: gemini-1.5-flash
+  budget_per_digest_usd: 0.05
+
+observer_scopes:
+  - id: aira_existing_digests
+    type: file_directory
+    path: ./data/digests/
+    glob: "**/*.md"
+    max_files: 5
+
+boundary:
+  monitor_types:
+    - scope_creep
+    - sensitive_info_leak
+
+digest:
+  schedule: on_demand
+  domains:
+    - WSD
+    - Nexus Lab
+    - Operations
+  output:
+    - type: file
+      path: ./data/test_digests/
+      filename_template: "{date}_yuino_test_digest.md"
+    - type: stdout
+      filename_template: "{date}_digest.md"
+
+contradiction_notes:
+  enabled: true
+  levels: [yellow, green, red]
+
+wait_observations:
+  enabled: true

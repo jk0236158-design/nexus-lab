@@ -1,0 +1,101 @@
+# handoff.boundary.yml
+# Premium boundary template — Handoff: AI peer 間 handoff missed / orphaned task detection
+#
+# Bundle: Aira Boundary Templates Premium Pack
+# License: Single-org commercial use OK, redistribution NOT permitted
+# Version: 1.0.0
+# Last updated: 2026-05-02
+#
+# 想定 use case:
+# - 1 owner + multi AI peer org で、AI peer 間で task が hand off されたが
+#   receiver 側で未確認 / 未着手 (orphaned) になっているのを digest で surface
+# - peer 1 → peer 2 → peer 3 の chain が broken (途中で task ownership が消失) を detect
+# - "WAIT Observations" section に handoff-broken task を flag、owner review queue に乗せる
+#
+# Integration: yuino.config.yml の boundary.custom_rules に extend で merge
+#
+# Pattern intent:
+# - "X→Y に依頼" "Y wait" "Y review" 等の handoff marker を検出
+# - 数日間の経過で receiver 側 action / response が見えない場合 = orphaned candidate
+
+version: 1
+name: handoff
+description: AI peer 間 handoff missed / orphaned task detection rules
+
+custom_rules:
+  # === handoff marker patterns ===
+  - id: handoff_pending
+    pattern: '(hand[_ -]?off[_ -]?to|delegate[_ -]?to|assign[_ -]?to|引き継ぎ|担当割|依頼)'
+    action: warn
+    message: 'Handoff marker detected — verify receiver acknowledged in subsequent digest'
+
+  - id: receiver_wait
+    pattern: '(waiting[_ -]?for|pending[_ -]?on|blocked[_ -]?by|return[_ -]?待ち|response[_ -]?待ち|reply[_ -]?待ち)'
+    action: warn
+    message: 'Wait state on peer detected — verify ETA and last-contact date'
+
+  - id: review_pending
+    pattern: '(review[_ -]?pending|peer[_ -]?review[_ -]?待ち|qa[_ -]?待ち|approval[_ -]?待ち)'
+    action: warn
+    message: 'Peer review pending — verify reviewer assigned and ETA'
+
+  # === orphaned task indicators ===
+  - id: stalled_task
+    pattern: '(stalled|stuck|forgotten|orphaned|放置|deferred[_ -]?queue|積み残し)'
+    action: warn
+    message: 'Stalled / orphaned task indicator detected — owner triage candidate'
+
+  - id: deferral_marker
+    pattern: '(defer[r]?ed[_ -]?to|push[_ -]?back[_ -]?to|reschedule[_ -]?to|明日に|来週に|後で)'
+    action: warn
+    message: 'Deferral marker detected — verify new deadline + receiver acknowledged'
+
+  - id: no_eta
+    pattern: '(eta[_ -]?unknown|no[_ -]?deadline|tbd[_ -]?date|TBD|未定|期限不明)'
+    action: warn
+    message: 'Missing ETA — owner review for explicit deadline assignment'
+
+  # === peer non-response indicators ===
+  - id: silence_indicator
+    pattern: '(no[_ -]?response[_ -]?from|silent[_ -]?on|未返信|沈黙|return[_ -]?なし)'
+    action: warn
+    message: 'Peer silence indicator — owner check for peer health / spawn issue'
+
+  - id: peer_blocked
+    pattern: '(peer[_ -]?blocked|peer[_ -]?spawn[_ -]?fail|peer[_ -]?denied|spawn[_ -]?failed)'
+    action: warn
+    message: 'Peer execution blocker detected — owner review for infrastructure / permission'
+
+  # === ownership ambiguity ===
+  - id: unclear_owner
+    pattern: '(who[_ -]?owns|unclear[_ -]?owner|tbd[_ -]?owner|owner[_ -]?未定|担当未定)'
+    action: warn
+    message: 'Ownership ambiguity detected — owner assign explicit responsibility'
+
+  - id: shared_responsibility
+    pattern: '(shared[_ -]?responsibility|共同責任|chairshare|joint[_ -]?ownership)'
+    action: warn
+    message: 'Shared responsibility detected — verify single accountable peer for execution'
+
+  # === re-assignment / escalation ===
+  - id: reassignment
+    pattern: '(re[_ -]?assign|takeover|escalate[_ -]?to|担当替え|escalation)'
+    action: warn
+    message: 'Re-assignment / escalation detected — owner review for structural cause'
+
+  - id: emergency_handoff
+    pattern: '(emergency[_ -]?handoff|urgent[_ -]?delegation|緊急引き継ぎ|hot[_ -]?potato)'
+    action: warn
+    message: 'Emergency handoff detected — owner review for capacity / planning gap'
+
+# === optional metadata for template publish ===
+metadata:
+  bundle: aira-boundary-templates-premium
+  templates_in_bundle: 3
+  bundle_price_jpy: 1200
+  individual_price_jpy: 500
+  bundle_price_usd: 8.00
+  individual_price_usd: 3.50
+  available_at:
+    - https://nexus-lab.booth.pm
+    - https://nexuslabzen.gumroad.com

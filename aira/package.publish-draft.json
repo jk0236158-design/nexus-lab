@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "_comment": "DRAFT 2026-05-02 by Zen — 商品名確定後 (5/03 Zen+Kai 合議完了) に yuino placeholder swap、Iwa 5/04 で packages/yuino/package.json として setup。aira/ internal package とは別 location。",
+
+  "name": "@nokaze-os/yuino",
+  "version": "0.1.0-beta.0",
+  "description": "Owner Digest for AI Operations — 1 owner + multi-AI org の全体観望 layer",
+  "keywords": [
+    "ai",
+    "agent",
+    "digest",
+    "owner",
+    "claude",
+    "gemini",
+    "operations",
+    "boundary",
+    "audit",
+    "multi-agent"
+  ],
+
+  "homepage": "https://nexus-lab.nokaze.dev",
+  "bugs": {
+    "url": "https://github.com/nexus-lab-zen/nexus-lab/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nexus-lab-zen/nexus-lab.git",
+    "directory": "packages/yuino"
+  },
+  "license": "MIT",
+  "author": "Nexus Lab @ nokaze (Zen)",
+
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "yuino": "./dist/cli/index.js"
+  },
+
+  "files": [
+    "dist/",
+    "templates/boundary/*.boundary.yml.example",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./config": {
+      "import": "./dist/config.js",
+      "types": "./dist/config.d.ts"
+    },
+    "./boundary": {
+      "import": "./dist/boundary.js",
+      "types": "./dist/boundary.d.ts"
+    }
+  },
+
+  "engines": {
+    "node": ">=20.0.0"
+  },
+
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "tsc --noEmit",
+    "dev": "tsc --watch",
+    "start": "node ./dist/cli/index.js",
+    "prepublishOnly": "npm run lint && npm run test && npm run build",
+    "release:beta": "npm version prerelease --preid=beta && npm publish --access public --tag beta"
+  },
+
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "commander": "^12.0.0",
+    "js-yaml": "^4.1.0",
+    "prompts": "^2.4.2",
+    "zod": "^3.23.8"
+  },
+
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^22.0.0",
+    "@types/prompts": "^2.4.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5",
+    "vitest": "^2.0.0"
+  },
+
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+
+  "_setup_notes_for_iwa": [
+    "1. Copy this file to packages/yuino/package.json after Zen+Kai 商品名確定 (5/03)、yuino placeholder を全箇所 swap",
+    "2. aira/src/ + aira/cli/ + aira/templates/ を packages/yuino/src/ + cli/ + templates/ に migrate (or symlink)",
+    "3. tsconfig.json も packages/yuino/ に配置、build target は ES2022 + module: ESNext (npm publish 標準)",
+    "4. .npmignore で exclude: tests/, *.test.ts, src/*.ts (build 後 dist/ のみ publish)",
+    "5. LICENSE file (MIT) を packages/yuino/LICENSE に配置",
+    "6. CHANGELOG.md を packages/yuino/ に配置 (β release notes)",
+    "7. .github/workflows/yuino-publish.yml で tag-based publish workflow setup (5/06 release で trigger)",
+    "8. npm publish dry-run で structure verify、access public で公開"
+  ]
+}
