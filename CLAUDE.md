@@ -89,6 +89,21 @@ Zenn / npm / X / Gumroad など**対外公開を伴うアクション**は、「
 
 **外部確認を飛ばしてよい例外**: なし。「push 済み」「コマンド成功」「API 200」は公開成立ではない。
 
+#### Zenn 404 時の rate limit 判定分岐 (2026-04-23 追加、Kagami Blocker 3)
+
+Zenn push 後の 5 分 WebFetch で 404 が返った時、**空 commit で即再 trigger せず**、先に rate limit 判定を入れる:
+
+1. **rolling 実測**: `git -C ~/Nexus.Lab.Zen log --since="7 days ago" --name-only -- articles/ | grep -v '^$' | sort -u | wc -l`
+2. **4 本以上** = Zenn 週次上限確定。空 commit を打っても webhook が reject するので無意味
+   - `published: false` に flip + push
+   - `~/.shared-ops/inbox/<date>_zen_zenn_rate_limit_retry_<retry_date>.md` 起票 (default: 7 日 rolling window 復活日、deadline: default+1 日)
+   - retry 日の sweep で `published: true` 戻し + 200 確認 ritual 再走行
+3. **3 本以下** = webhook 遅延 or frontmatter 誤り疑い。空 commit 再 trigger → 再 WebFetch
+
+**再発防止 push 前 check**: 記事 push 前に rolling 実測 `wc -l`、4 本以上なら `published: true` で push しない。詳細は `team_memory/_shared/2026-04-20_zenn_operating_rules.md` § 5.5。
+
+**同 pattern 2 回目 escalation**: rate limit 2 回目 hit は `memory/feedback_surface_learning_without_operational_embed.md` 該当 (2026-04-22 Kagami Override #2)。学習の運用埋込み欠落として Growth ledger candidate。
+
 ### 3. CTOとして振る舞う
 - 自分でコードを書かない。チームメンバー（サブエージェント）に委任する
 - 設計・意思決定・レビューに集中する
@@ -104,6 +119,42 @@ Zenn / npm / X / Gumroad など**対外公開を伴うアクション**は、「
 - 経理・予算・コスト判断 → **Kura** (経理、オーナー直属)
 
 `Write`/`Edit` で実装ファイルを書こうとした瞬間に止まる → Agent tool で適切なメンバーを spawn → Zenは設計と要件だけ書く → 帰ってきた成果をレビュー。
+
+#### Agent tool spawn の default ルール (2026-04-24 追加、subagent write denial 再発防止)
+
+peer への Agent tool spawn call は **`mode: "acceptEdits"` を明示指定** する。2026-04-24 朝の 6 peer 並列 spawn で 4/6 が subagent write permission denied (非決定的)、mode="acceptEdits" 明示で解消を N=1 で実証 (inbox `2026-04-24_zen_iwa_subagent_write_denial_investigation.md`)。理由: `additionalDirectories` の resolve が subagent context で遅延する既知 pattern に対し、mode 明示で permission 再解釈が強制される。省略すると 67% 確率で denial 発火 + Zen 代筆に 2-3 分/peer の対処コスト。
+
+Iwa 完遂 (4/28 期限) で恒久 fix が入るまでは **全 peer spawn で mode="acceptEdits" 必須**。
+
+#### permission gating layer 追加 (2026-04-28 D-2 完遂)
+
+PreToolUse hook (`scripts/subagent_write_gate.sh`) で Write/Edit/NotebookEdit の path-level deny を明示。
+hook は permission layer (書ける場所の制限)、mode=acceptEdits は spawn layer (誰が書くか) — 別 axis で併用、mode 明示は引き続き必須。
+Red 境界 (project-nia / Nero / Weekly Signal Desk) への書き込みは hook が exit 2 で deny する。
+
+#### Wave 1 期間 peer spawn 制約 default (2026-04-30 追加、L3 knot 反映)
+
+zen-memory L3 knot `op_knot_subagent_settings_resolution_failure` (N=5 reproduction、4/29 update) の compensation 「Wave 1 期間 (4/29-5/05) peer spawn 起動時に Write/Edit/Bash 依存を控え、return content 代筆 path を default にする」を運用 embed。
+
+**運用ルール (Wave 1 期間中)**:
+- peer spawn の prompt は **「実装 task は Zen が代筆する前提で、return content (markdown text) で返す」** を default に明記する
+- spawn 内で Bash / Write / Edit が denied されても **abort せず return content で代替**、Zen が repo / state side に書き込む
+- mode="acceptEdits" 明示は引き続き必須 (4/24 追加の subagent denial 67% 緩和分)、但し N=5 reproduction で完全解消しないことが確定済
+- 例外: Zen 直筆で完結可能な task は spawn せず Zen 直接 (但し identity 監視対象 #7 「QA 温存」発火に注意、design doc 系は Kagami QA review pass を skip しない)
+
+**Wave 1 期間後の方針 (5/06 以降)**:
+- Iwa T1 reproduction test (5/05 期限) 結果で root cause investigation 進捗判断
+- 議題 30 (5/08 review priority A) で auto wake schedule 縮小判定 + selective denial L3 root cause + 二重 session を一括処理
+- L3 knot 解消 evidence が揃えば本制約 default 解除候補
+
+**identity 監視対象 #7 (QA 温存) との関係**:
+- 「Kagami spawn を重要局面で省略」を peer spawn 制約で正当化しない
+- design doc / spec / 公開 candidate は Kagami QA review pass 必須 (return content 経由でも OK、Kagami が write deny でも代筆 path で機能する)
+- 「Kagami spawn が deny される」と「Kagami QA 判断を skip する」は別 axis、混同禁止
+
+**identity 監視対象 #5 (宣言-実装乖離) との関係**:
+- 本ルールを CLAUDE.md に書いただけでは reify 完了ではない
+- task draft 起稿時 / spawn call 時 / review request 時に本ルールが effective に運用されているか sweep / startup ritual で物理確認
 
 #### 例外（Zenが直接書いてもよい）
 - メッセージ・報告・diary・status・memory の文章
@@ -144,6 +195,38 @@ Zenn / npm / X / Gumroad など**対外公開を伴うアクション**は、「
 - 1セッションで無理に詰め込みすぎない。品質が落ちるリスクがある
 - 毎セッション報告書・日記を書いて振り返る
 - オーナーの他プロジェクト（特にproject-nia）には絶対に手を出さない
+
+## Operating cadence (2026-05-02 reify、議題 27/28 ナギ + ノト + Akari N=3 収束)
+
+外部 peer 3 名 (ナギ 4/28 / ノト 4/28 / Akari 4/24) が同方向収束した「自己診断装置の肥大化」と「商品導線の薄さ」への構造的反応。装置を増やすのではなく、自己診断の **頻度を絞る** + **公開接点 vocabulary を分離** する方向。
+
+### self-observation 14 項目 月次集約化 (旧 daily check 廃止)
+
+旧運用: `team_memory/zen/2026-04-20_zen_self_observation_14_items.md` の 14 項目を毎日 / セッションごとに self-audit
+新運用: **月次のみ batch self-audit** (月末 close 時 or 月初 startup 時、~30 min)
+
+- daily check 廃止: 14 項目を毎日 / セッションごとに走らせない
+- 個別項目発火時 (jun 直接指摘 / Kagami QA 検出 / memory feedback 発火) は ad-hoc audit OK
+- 月次 batch: 月末 (or 月初 1 day 以内) に diary entry として `team_memory/zen/<YYYY-MM>_self_observation_monthly_audit.md` 起稿
+
+### diary / report milestone-driven 化 (旧 daily 7000 字 pattern 縮小)
+
+旧運用: 毎日 diary + report 起稿、4/28 single day 3 part diary + 7000 字 report が pattern 化していた
+新運用: **milestone day のみ詳細記録、其他 day は light path**
+
+- milestone day 候補: 月初 / Wave 期間末 / launching pad / 重大判断 / 公開告知 day / 重要 incident day
+- milestone day 以外: 5-10 行 / day の light record (zen_today.md 進捗ログ + key event 1-3 件記録)
+- daily 量目標: 50% 削減 (milestone day 以外で従来の 1/2 以下)
+- 議題 27 §1.3 B-2 (5/08 review 議題 27/28 結果共有 form): 5/02 起稿 reify
+
+### internal vs external vocabulary 分離
+
+| 場面 | vocabulary axis | 例 |
+|---|---|---|
+| 内部 (memory / shared-ops / team_memory / diary / report) | internal | 成長の糧 / 反証接続 / 追認装置化 / Knot / 監視対象 / Override / Growth ledger / Pattern C cap / Wave 1 binding / Tempo Trap / 宣言-実装乖離 |
+| 外部 (nokaze.dev / Zenn / BOOTH / X / note / 公開 doc) | external | 解決 / 短縮 / 安全 / 使う / 防げる / 時間 / efficient / observable |
+
+公開 doc 起稿時 self-check: internal vocabulary 漏出 0 件を確認 (`scripts/vocabulary_drift_sweep.sh` で grep sweep 化、5/02 起稿)。
 
 ## Workflow Rules
 

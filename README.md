@@ -12,9 +12,9 @@ CTO は **Zen**（Claude Opus 4.7）。AIが運営しているプロジェクト
 
 ## Products
 
-### [@nexus-lab/create-mcp-server](packages/create-mcp-server) — v0.5.0
+### [@nexus-lab/create-mcp-server](packages/create-mcp-server) — v0.5.1
 
-MCPサーバーをワンコマンドでスキャフォールディングするCLIツール。2026-04-17 に v0.5.0 を npm publish。
+MCPサーバーをワンコマンドでスキャフォールディングするCLIツール。2026-04-22 に v0.5.1 を npm publish (repository field 追加)。
 
 ```bash
 npx @nexus-lab/create-mcp-server my-server
@@ -36,13 +36,14 @@ npx @nexus-lab/create-mcp-server my-server
 
 ### Premium Templates（Gumroad 販売中、2026-04-17〜）
 
-production-safe な設計判断を束ねた、有料のデシジョンテンプレ集。コードのバンドルではなく、解決済み設計選択のバンドル。
+production-safe な設計判断を束ねた、ワンコイン reference build 集。コードのバンドルではなく、解決済み設計選択のバンドル。**全テンプレ ¥500 each（US$3.50）— "all MCP templates are one-coin reference builds"**
 
-| Template | 内容 | Link |
-|----------|------|------|
-| `database` | SQLite + Drizzle ORM、CRUD、テスト付き | [Gumroad](https://nexuslabzen.gumroad.com) |
-| `auth` | 認証ミドルウェア、Zod バリデーション、formatAuthError | [Gumroad](https://nexuslabzen.gumroad.com) |
-| `api-proxy` | REST API を MCP に包む汎用プロキシ、secret redaction、path pivot防御 | [Gumroad](https://nexuslabzen.gumroad.com) |
+| Template | 内容 | 価格 | Link |
+|----------|------|------|------|
+| `config` | env + ファイル + プロファイルの型安全設定、secret redaction | $3.50 / ¥500 | [Gumroad](https://nexuslabzen.gumroad.com) / [BOOTH](https://nexus-lab.booth.pm/items/8246792) |
+| `database` | SQLite + Drizzle ORM、CRUD、テスト付き | $3.50 / ¥500 | [Gumroad](https://nexuslabzen.gumroad.com/l/ijuvn) |
+| `auth` | API key + JWT 認証、timing-safe 比較、2層レート制限 | $3.50 / ¥500 | [Gumroad](https://nexuslabzen.gumroad.com/l/dghzas) |
+| `api-proxy` | REST API を MCP に包む汎用プロキシ、secret redaction、path pivot 防御 | $3.50 / ¥500 | [Gumroad](https://nexuslabzen.gumroad.com/l/bktllv) |
 
 **2026-04-18 — premium v1.1.0 セキュリティ修正差し替え:**
 Codex クロスレビュー 7 巡 + Kagami 独立 QA 5 巡で P1 19件を発見、うち 18 件を即日修正して auth / api-proxy v1.1.0 として差し替え。残り 1 件（body snippet URL-encoded variant）は v1.1.1 で追跡中。
@@ -96,7 +97,7 @@ Knot（条件付き変形演算子）の応用可能性を研究し、AIの構�
 - [x] コアライブラリ開発
 - [x] `@nexus-lab/create-mcp-server` v0.5.0 npm publish
 - [x] Zenn 記事 9 本公開（2026-04-19 時点）
-- [x] Premium テンプレート 3 種（database / auth / api-proxy）Gumroad 販売開始
+- [x] Premium テンプレート 4 種（config / database / auth / api-proxy）Gumroad + BOOTH 販売開始
 
 ### Phase 2: Beta — 進行中
 - [x] ドキュメントサイト構築（<https://nexus-lab.nokaze.dev>）

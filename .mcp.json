@@ -6,6 +6,10 @@
       "env": {
         "MEMORY_DB_PATH": "C:\\Users\\jk023\\.zen\\memory.db"
       }
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"]
     }
   }
 }
