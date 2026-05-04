@@ -1,0 +1,68 @@
+# incident_response.boundary.yml
+# Premium boundary template — Incident Response: 障害対応 / 災害 / 緊急時 vocabulary 監視 + 報告書 sanitize
+#
+# Bundle: Yuino Boundary Templates Premium Pack (Phase 2.0、5/13+ post-dogfood release candidate)
+# License: Single-org commercial use OK, redistribution NOT permitted
+# Version: 1.0.0
+# Last updated: 2026-05-04
+#
+# 想定 use case:
+# - audience が customer 向け incident report を AI agent generation する時に「機密 leak / 過剰 claim / blame culture vocabulary」 を block
+# - 内部 post-mortem report draft generation での speculation language detection
+# - 公開 status page update post draft での responsibility avoidance language detection
+#
+# Integration: yuino.config.yml の boundary.templates に "incident_response" 追加で merge
+
+version: 1
+name: incident_response
+description: Incident response vocabulary 監視 + 報告書 sanitize rules
+
+custom_rules:
+  # === blame culture vocabulary ===
+  - id: incident_blame_lang
+    pattern: '(?i)(blame|fault|stupid|incompetent|negligent|reckless)'
+    action: warn
+    message: 'Blame culture vocabulary detected — root cause analysis form に paraphrase 推奨'
+
+  - id: incident_blame_passive
+    pattern: '(?i)(it just happened|nobody could have|out of our control|unforeseeable)'
+    action: warn
+    message: 'Responsibility avoidance language detected — actual root cause + ownership 明示推奨'
+
+  # === uncertain claim ===
+  - id: incident_uncertain_claim
+    pattern: '(?i)(definitely fixed|will never happen again|100% prevented|fully resolved)'
+    action: warn
+    message: 'Certainty claim detected — actual prevention rate 不明、 evidence-based 表現推奨'
+
+  - id: incident_speculation
+    pattern: '(?i)(probably|maybe|might have|could have|seems like)'
+    action: warn
+    message: 'Speculation language detected — actual evidence + measurement method 明示推奨'
+
+  # === sensitive info leak ===
+  - id: incident_ip_leak
+    pattern: '\b(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b'
+    action: deny
+    message: 'Internal IP address detected in incident report — sanitize required'
+
+  - id: incident_fqdn_leak
+    pattern: '[a-zA-Z0-9-]+\.(internal|local|corp|prod|staging|dev)\.[a-zA-Z0-9.-]+'
+    action: deny
+    message: 'Internal FQDN detected in incident report — sanitize required'
+
+  - id: incident_user_id_leak
+    pattern: 'user_id\s*[:=]\s*[''"]?[0-9a-zA-Z]+'
+    action: deny
+    message: 'user_id detected in incident report — hash or sanitize required'
+
+  - id: incident_emergency_contact
+    pattern: '(?i)(emergency contact|on-call number|hotline)\s*[:=]\s*[+0-9-]+'
+    action: deny
+    message: 'Emergency contact number detected in incident report — sanitize required'
+
+  # === apology overload ===
+  - id: incident_apology_overload
+    pattern: '(?i)(deeply sorry|profoundly apologize|sincerely regret|humbly request forgiveness){2,}'
+    action: warn
+    message: 'Apology language overload detected — single sincere statement 推奨'

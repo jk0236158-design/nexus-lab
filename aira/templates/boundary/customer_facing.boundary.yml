@@ -1,0 +1,90 @@
+# customer_facing.boundary.yml
+# Premium boundary template — Customer Facing: 顧客対面 / 営業 / 公開 narrative 誇張防止
+#
+# Bundle: Yuino Boundary Templates Premium Pack (Phase 2.0、5/13+ post-dogfood release candidate)
+# License: Single-org commercial use OK, redistribution NOT permitted
+# Version: 1.0.0
+# Last updated: 2026-05-04
+#
+# 想定 use case:
+# - audience が商品 LP / docs / 営業 mail を AI agent generation する時に「誇張 / claim 化 / paraphrase 直接 quote」 を block
+# - note / Zenn / 公開 SNS post draft generation での over-claim detection
+# - 公開 narrative での AI 関与開示 missing detection (audience を欺かない form)
+#
+# Integration: yuino.config.yml の boundary.templates に "customer_facing" 追加で merge
+#
+# 連動 memory:
+# - feedback_honesty_violation_exaggeration.md (5/03 evening jun 指摘 連動)
+# - feedback_jun_4_months_translate_default.md (5/03 audience persona 4 ヶ月初心者 reform)
+
+version: 1
+name: customer_facing
+description: Customer facing vocabulary 監視 + 誇張防止 + AI 関与開示確認 rules
+
+custom_rules:
+  # === over-claim numerical ===
+  - id: customer_overclaim_speed
+    pattern: '(?i)(\d+)\s*x\s*(faster|speedup|efficiency|performance)'
+    action: warn
+    message: 'Speed claim detected — actual benchmark + 計測 method 明示推奨'
+
+  - id: customer_overclaim_savings
+    pattern: '(?i)save\s+(\d+)%\s+(time|cost|effort|money)'
+    action: warn
+    message: 'Savings claim detected — actual data + audience segment 明示推奨'
+
+  - id: customer_overclaim_audience
+    pattern: '(?i)(thousands|millions|hundreds of thousands)\s+of\s+(users?|customers?|developers?)'
+    action: warn
+    message: 'Audience volume claim detected — actual count + 計測 method 明示推奨'
+
+  - id: customer_overclaim_revenue
+    pattern: '(?i)(million|billion|\$\d+M|\$\d+B|¥\d+万|¥\d+億)\s+(in)?\s*(revenue|sales|ARR)'
+    action: warn
+    message: 'Revenue claim detected — actual data + 計測 period 明示推奨'
+
+  # === certainty / absolute claim ===
+  - id: customer_certainty_lang
+    pattern: '(?i)(guaranteed|always|never fails|100% reliable|zero downtime|perfect)'
+    action: warn
+    message: 'Certainty claim detected — actual track record 明示推奨'
+
+  - id: customer_competitor_overclaim
+    pattern: '(?i)(better than|outperform|superior to|crushing|destroying)\s+\w+'
+    action: warn
+    message: 'Competitor comparison claim detected — actual benchmark + comparison axis 明示推奨'
+
+  # === paraphrase as direct quote ===
+  - id: customer_paraphrase_quote
+    pattern: '[''"]([^''"]{15,})[''"]\s*(と|と言|said|stated)'
+    action: warn
+    message: 'Quote (15+ chars) と quote attribution detected — actual direct quote か paraphrase か確認'
+
+  # === AI / human attribution blur ===
+  - id: customer_ai_human_blur
+    pattern: '(?i)(written by|crafted by|created by|hand-written|carefully composed)\s+(me|us|our team)'
+    action: warn
+    message: 'Human authorship claim detected — AI 関与開示推奨 (audience 透明性)'
+
+  # === sub-agent over-claim ===
+  - id: customer_subagent_overclaim
+    pattern: '(?i)(\d+)\s*(AI|agent|sub-agent)\s*(部下|team member|employees?|staff|常時)'
+    action: warn
+    message: 'AI sub-agent narrative as "always-on staff" detected — actual spawn pattern + AI 関与開示推奨'
+
+  # === period over-claim ===
+  - id: customer_period_overclaim_running
+    pattern: '(?i)(half|6\s*months|1\s*year|several months)\s+(of (operation|usage|running))'
+    action: warn
+    message: 'Operation period claim detected — actual 期間 + 起点 date 明示推奨'
+
+  - id: customer_dogfood_overclaim
+    pattern: '(?i)(\d+)\s*(months?|years?)\s+of\s+(dogfood|testing|trial|using internally)'
+    action: warn
+    message: 'Dogfood period claim detected — actual day count + 計測 method 明示推奨'
+
+  # === buzzword density ===
+  - id: customer_buzzword_density
+    pattern: '(?i)(revolutionary|groundbreaking|cutting-edge|next-generation|game-changing|disruptive|state-of-the-art)'
+    action: warn
+    message: 'Buzzword detected — actual feature description 推奨'

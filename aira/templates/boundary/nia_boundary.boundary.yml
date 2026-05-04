@@ -1,0 +1,73 @@
+# nia_boundary.boundary.yml
+# Premium boundary template — Nia Boundary: 思想 source 別 project の境界 strict (公開素材 漏出防止)
+#
+# Bundle: Yuino Boundary Templates Premium Pack (Phase 2.0、5/13+ post-dogfood release candidate)
+# License: Single-org commercial use OK, redistribution NOT permitted
+# Version: 1.0.0
+# Last updated: 2026-05-04
+#
+# 想定 use case:
+# - 思想 source として参照している別 project の identity / 内部用語 が公開素材 に漏出するのを防ぐ
+# - broadcast layer 公開素材 (Phase 1 Shorts / weekly summary 動画 narration / subtitle / slide content) の Nia 境界 enforce
+# - Setup Memo / 商品 LP / docs / note / Zenn / X / 公開 docs publish 時の 境界 gate
+#
+# Integration: yuino.config.yml の boundary.templates に "nia_boundary" 追加で merge
+#
+# 注意:
+# - 本 template は "Nia" name placeholder で書かれている。 audience が自分の 思想 source project を持つ場合、
+#   audience の project 名に rename + 同 form の rules を適用 candidate
+# - 連動 memory: feedback_origin_keyword_drift.md (5/01 起票) + feedback_zen_core_layered_not_single.md
+# - 連動 entity: paraphrase_registry.md (5/04 朝起稿)
+
+version: 1
+name: nia_boundary
+description: 思想 source 別 project の境界 strict + paraphrase 必須 enforce rules
+
+custom_rules:
+  # === Nia identity direct mention ===
+  - id: nia_identity_mention
+    pattern: '(?i)\bNia\b|\bproject-nia\b'
+    action: deny
+    message: 'Nia identity direct mention — paraphrase 「思想 source の別 project」 経由必須'
+
+  # === Origin term ===
+  - id: nia_origin_term
+    pattern: '\bOrigin\b'
+    action: deny
+    message: 'Origin term detected — 「Owner / nokaze 屋号オーナー / Jun」 paraphrase 必須'
+
+  # === governance term ===
+  - id: nia_governance_term
+    pattern: '(?i)\bgovernance\b'
+    action: warn
+    message: 'governance term detected — 「運用判断 / 組織判断」 paraphrase 推奨'
+
+  # === WAIT concept (excluding Yuino tool output section name) ===
+  - id: nia_wait_concept
+    pattern: '\bWAIT\b(?!\s+Observation)'
+    action: deny
+    message: 'WAIT concept detected (Yuino tool output section "WAIT Observations" を除く) — 「待つ判断 / 保留」 paraphrase 必須'
+
+  # === knot_process source mention ===
+  - id: nia_knot_process
+    pattern: '(?i)knot_process\.md|knot[_\s]process'
+    action: deny
+    message: 'knot_process Nia source mention — paraphrase 経由のみ'
+
+  # === Knot direct term (excluding Knot research entity reference) ===
+  - id: nia_knot_term
+    pattern: '\bKnot\b(?!\s+研究|\s+framework|\s+Research)'
+    action: warn
+    message: 'Knot term direct usage — 「失敗を次の規則に固定する仕組み」 paraphrase 推奨'
+
+  # === conditional transformation operator ===
+  - id: nia_conditional_transformation
+    pattern: '(?i)条件付き変形演算子|conditional transformation operator'
+    action: warn
+    message: 'Conditional transformation operator (専門用語) — 「ある条件のもとで生成を補正する仕組み」 paraphrase 推奨'
+
+  # === Nia-derived hardness signals direct ===
+  - id: nia_hardness_signals
+    pattern: '(?i)(reproducibility|damage|temporal|redundancy)\s+(signal|axis|score)'
+    action: warn
+    message: 'Hardness 4 signals direct mention — 「規則の固定度合い 4 axis」 paraphrase 推奨 (Knot research paper 文脈は除く)'

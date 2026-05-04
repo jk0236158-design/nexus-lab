@@ -1,0 +1,110 @@
+# compliance_jp.boundary.yml
+# Premium boundary template — Compliance JP: 日本 compliance 監視 (個人情報保護法 / 特定商取引法 / 契約 / invoice)
+#
+# Bundle: Yuino Boundary Templates Premium Pack (Phase 2.0、5/13+ post-dogfood release candidate)
+# License: Single-org commercial use OK, redistribution NOT permitted
+# Version: 1.0.0
+# Last updated: 2026-05-04
+#
+# 想定 use case:
+# - 国内 audience 向け商品 LP / docs publish 前の compliance gate
+# - 日本 customer 向け契約書 / invoice generation での個人情報 / 法的記載の sanitize 確認
+# - 個人情報を含む内部 doc → public sanitize 時の漏出防止
+# - 法人税務関連 doc generation での 法人番号 / インボイス制度 適格請求書発行事業者番号 の context 確認
+#
+# Integration: yuino.config.yml の boundary.templates に "compliance_jp" 追加で merge
+
+version: 1
+name: compliance_jp
+description: 日本 compliance 監視 + 個人情報 / 法的記載 / 税務 関連 rules
+
+custom_rules:
+  # === マイナンバー (個人番号、 12 桁) ===
+  - id: jp_personal_id_my_number
+    pattern: '\b\d{12}\b'
+    action: deny
+    message: 'マイナンバー candidate (12 digit consecutive) — sanitize required (個人情報保護法)'
+
+  # === 運転免許証番号 (12 桁) ===
+  - id: jp_personal_id_drivers_license
+    pattern: '(?i)第\s*\d{12}\s*号|driver license\s*[:=]\s*\d{12}'
+    action: deny
+    message: '運転免許番号 candidate — sanitize required (個人情報保護法)'
+
+  # === 国内 phone number ===
+  - id: jp_phone_number
+    pattern: '\b0\d{1,4}[\s\-]?\d{1,4}[\s\-]?\d{4}\b'
+    action: warn
+    message: 'Phone number candidate — sanitize 推奨 (個人情報保護法)'
+
+  # === postal code ===
+  - id: jp_postal_code
+    pattern: '\b〒?\s*\d{3}-?\d{4}\b'
+    action: warn
+    message: 'Postal code candidate — sanitize 推奨 (個人情報保護法)'
+
+  # === 特定商取引法 ===
+  - id: jp_specific_commercial_law
+    pattern: '(?i)特定商取引法|specified commercial transactions law'
+    action: warn
+    message: '特定商取引法 言及 — actual notation 必須 (販売業者 / 連絡先 / 価格 / 支払時期 / 引き渡し時期 / 返品 等)'
+
+  # === 消費者契約法 ===
+  - id: jp_consumer_protection
+    pattern: '(?i)消費者契約法|consumer contract law'
+    action: warn
+    message: '消費者契約法 言及 — actual notation 必須 (契約条項 / 返金 / 解約 / クーリングオフ 等)'
+
+  # === 自動更新 / subscription cancel ===
+  - id: jp_subscription_cancel
+    pattern: '(?i)(自動更新|auto-renewal|recurring billing)'
+    action: warn
+    message: '自動更新 言及 — 解約方法 + 解約 timing 明示必須 (特定商取引法 通信販売)'
+
+  # === 個人情報 collection ===
+  - id: jp_personal_info_collection
+    pattern: '(?i)(個人情報|personal information|personal data)'
+    action: warn
+    message: '個人情報 collection 言及 — 利用目的 + 第 3 者提供範囲 + 保管期間 明示必須 (個人情報保護法)'
+
+  # === 住所 full ===
+  - id: jp_address_full
+    pattern: '[都道府県].{1,30}[市区町村].{1,30}\d+'
+    action: warn
+    message: 'Address full 形式 candidate — sanitize 推奨 (個人情報保護法)'
+
+  # === 銀行口座 ===
+  - id: jp_bank_account
+    pattern: '(?i)(口座番号|bank account|account no)\s*[:=]\s*\d+'
+    action: deny
+    message: 'Bank account number — sanitize required (個人情報保護法 + 銀行法)'
+
+  # === credit card ===
+  - id: jp_credit_card
+    pattern: '\b\d{4}[\s\-]?\d{4}[\s\-]?\d{4}[\s\-]?\d{4}\b'
+    action: deny
+    message: 'Credit card number candidate — sanitize required (PCI DSS + 個人情報保護法)'
+
+  # === invoice 適格請求書発行事業者番号 (T + 13 桁) ===
+  - id: jp_invoice_number
+    pattern: '\bT\d{13}\b'
+    action: warn
+    message: 'インボイス制度 適格請求書発行事業者番号 (T + 13 digit) — context 確認推奨 (税務処理連動)'
+
+  # === 法人番号 (13 桁) ===
+  - id: jp_corporate_number
+    pattern: '(?i)(法人番号|corporate number)\s*[:=]\s*\d{13}'
+    action: warn
+    message: '法人番号 candidate (13 digit) — context 確認推奨'
+
+  # === Stripe / PayPal 等 国際決済 ID ===
+  - id: jp_international_payment_id
+    pattern: '(?i)(stripe|paypal|polar)\s*(account|id|token|customer_id)\s*[:=]\s*[a-zA-Z0-9_-]+'
+    action: deny
+    message: 'International payment service ID — sanitize required'
+
+  # === 印紙税 / 契約金額 (10万円超 印紙税対象) ===
+  - id: jp_contract_amount_high
+    pattern: '(?i)(契約金額|contract amount)\s*[:=]\s*¥?\s*[1-9]\d{5,}'
+    action: warn
+    message: '契約金額 高額 (10 万円超) — 印紙税 対象 確認推奨'
