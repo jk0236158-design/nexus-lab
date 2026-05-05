@@ -369,3 +369,92 @@ yuino digest --managed
 Zen
 nokaze / Nexus Lab CTO
 2026-05-02 Sat 朝 (Path C + Aira 商品化軸 commit、連休 4-5 day β release plan)
+
+---
+
+## 5/04 evening Aira Supervisor reform + 5/05 朝 Kai 10 軸 cross-check 反映追記
+
+(2026-05-05 Tue、 audience-facing 全体 reform は 5/13+ Akari paraphrase pass で carry、 本追記は内部設計 narrative の position 変更のみ反映)
+
+### 9.1 商品 narrative position 変更 (Aira Supervisor reform 連動)
+
+#### 旧 narrative (本 design doc 5/02 起稿時)
+- Yuino tool = digest engine、 audience が install するのは digest tool、 商品 LP / docs / README は「digest tool」 audience facing form
+- 商品入口 = Yuino digest engine の機能説明 (毎朝 5 分まとめ、 boundary template 等)
+- 商品 narrative core = 「AI と人を結ぶ digest layer」
+
+#### 新 narrative (5/04 evening + Kai 10 軸 cross-check 反映後)
+- **Aira = AI Operator Console core supervisor** (Observer + Evaluator + Work Generator + Tripwire の 4 機能 supervisor、 Zen / Kai を外部から監督する layer)
+- **Yuino = Aira Phase 1 digest engine = Observer 機能 output narrative form** (audience が install するのは Aira Supervisor、 Yuino は Aira の sub-component として「結ぶ digest layer」 narrative 維持)
+- **商品入口 = 「AI 作業の結果、 止まっているもの、 人間判断が必要なものを一か所で見る」 / 「5 分まとめ + 判断待ち一元化」** (Kai 10 軸 6 番反映、 Supervisor 4 機能 = under-the-hood / advanced docs / proof narrative 位置付け)
+- 価格 / tier は dogfood 後 (5/13+ post-dogfood publish phase 着手、 連休内 publish 全 channel 中止確定 5/03 evening jun directive 連動)
+
+### 9.2 Console 6 phase 到達ルート (5/04 evening reform)
+
+audience facing narrative ではなく under-the-hood architecture として位置付け:
+
+- Phase 1: **Aira Work Supervisor v0** (4 機能 minimum viable form、 5/05 朝完遂 commit a43c788、 vitest 118/118 pass、 Kagami QA pass、 Kai 10 軸全 GO)
+- Phase 2: Local Dashboard (Aira Observer の UI 化、 6 月 Wave 2 期間 implementation 着手 candidate)
+- Phase 3: Command Router (Aira Work Generator の UI 化、 6-7 月 candidate)
+- Phase 4: Result Collector (Aira Evaluator の UI 化 + state checkpointer + replay、 7-8 月 candidate)
+- Phase 5: Approval Gate (Aira Tripwire の UI 化 + 4-gate-types advisory layer、 8-9 月 candidate)
+- Phase 6: Full AI Operator Console (Aira 4 機能全部統合 UI、 北極星達成 timing 7-9 月 candidate 前倒し reify)
+
+= Kai 10 軸 1 番反映で `Dashboard → Command Router → Result Collector` 順序維持 (visibility 先、 routing power 後)。
+
+### 9.3 Yuino Phase 2.x mapping (Aira 機能との 1 対 1 対応)
+
+| Yuino Phase | 期間 | Aira 機能 mapping |
+|---|---|---|
+| Phase 1 (5/02-5/05) | digest engine MVP (5/05 朝 Aira Observer first build minimum viable で reify) | Aira Observer 機能の output narrative form |
+| Phase 2.0 (5/13-5/19) | premium templates 4 + observer scope plugin 2 | **Aira Work Generator 機能 implementation** (failure event → next green work 生成 + 再投入経路 routing、 Kai が gate 後 Active Work 化 protocol、 Kai 10 軸 7 番反映) |
+| Phase 2.1 (5/20-5/26) | output destinations 3 + cron schedule | **Aira Evaluator + Tripwire minimum viable** (capability map 12 軸 metric aggregation + 4-gate-types Kai 領域 label first、 Kai 10 軸 9 番反映) |
+| Phase 2.2 (5/27-5/31) | multi-domain digest + audience-specific | **Aira Phase 3 拡張** (4-gate-types 4 段化 + LangGraph state replay full + Vending-Bench self-application、 Kai 10 軸 8 番反映で internal first / self-evaluation style only / parity narrative 不可) |
+| Phase 3 (6 月以降) | localization + multi-MCP + LLM switch | Console Phase 2-6 actual implementation (Local Dashboard → Full Console) |
+
+### 9.4 capability map = evidence pointer + review-able tag (Kai 10 軸 3 番反映、 Aira Evaluator spec)
+
+5/13-5/26 Aira Evaluator + Tripwire implementation 時の重要 spec:
+- auto 分類を事実扱いしない
+- evidence pointer + review 可能タグ form で出力
+- failure 判定 logic の output に evidence pointer 必須付与
+- audience facing 商品 narrative では「AI が判断した」 のではなく「review 可能な evidence + tag」 として位置付け、 jun が手動 review 可能な form を default
+
+### 9.5 Human entry 4 step (Kai 10 軸 4 番反映、 Console Phase 6 spec の core 要件)
+
+audience facing narrative の core entry pattern: **paste / answer / run-or-click / read summary**。
+
+5/13+ Setup Memo / 商品 LP 起稿時の audience-facing form の base、 Akari paraphrase pass で本 4 step を core 構造として整合反映。
+
+### 9.6 broadcast layer = slide-led explainer (Kai 10 軸 5 番反映)
+
+Console / Yuino / Aira record から slide-led explainer を作る、 raw chat-log 動画は default にしない。 5/13+ broadcast layer Phase 1 Shorts trial 起稿時の form 確定。
+
+### 9.7 Aira v0 Boundary (Kai 10 軸 全体 stance + 5/05 07:46 source list contract 反映)
+
+- 5/05 = read-only Observer に限定
+- Kai state を直接 mutate しない、 Work Generator は提案まで、 **Kai が gate 後に Active Work 化**
+- 直接状態更新 / 外部投稿 / 価格 / 契約 / 支払い / public claim / Nia private material は Kai/Zen/Jun 既存 gate を超えない
+- Kai stance: 「Aira observes and evaluates the operation, Kai and Zen keep execution ownership, Console turns that into a beginner-usable review and command surface」
+
+### 9.8 5/06-5/12 Phase 0 expand priority (Kai 提案 5 件 test cover first priority)
+
+5/05 朝 Aira Observer first build minimum viable では一部 cover、 5/06+ Phase 0 expand で完全対応 (Iwa packet `2026-05-05_zen_iwa_aira_observer_phase0_expand_packet.md` 起票済):
+
+1. stale Zen status timestamp 検出
+2. response_needed board の substantive response required 判定
+3. Kai Growth Mode / market touch count 読み取り
+4. Active Kai Work open count 読み取り
+5. Kai state JSON validity 読み取り
+
+= 5/06-5/12 dogfood 並走で Phase 0 expand 完遂、 5/13+ Phase 1 (Work Generator) implementation 着手 prep ready。
+
+### 9.9 商品 audience-facing 全体 reform (5/13+ Akari paraphrase pass で実施)
+
+本追記は内部設計 narrative の position 変更のみ反映。 商品 LP / docs / README / Setup Memo の audience facing form の全体 reform は 5/13+ post-dogfood publish phase で Akari paraphrase pass + 言語選択 axis (日本語 default + 英語は固有名詞のみ、 memory `feedback_excessive_english_mixing.md` 連動) + 「5 分まとめ + 判断待ち一元化」 narrative pivot で実施 candidate。
+
+---
+
+Zen
+nokaze / Nexus Lab CTO
+2026-05-05 Tue 12:00 反映追記 (5/04 evening Aira Supervisor reform + 5/05 朝 Kai 10 軸 cross-check 反映、 内部設計 narrative position 変更のみ、 audience facing 全体 reform は 5/13+ Akari paraphrase pass で carry)
