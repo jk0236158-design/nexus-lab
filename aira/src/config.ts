@@ -20,7 +20,16 @@ import { z } from 'zod';
 
 export const GeminiConfigSchema = z.object({
   api_key_env: z.string().default('GEMINI_API_KEY'),
-  model: z.enum(['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-2.0-flash-exp']).default('gemini-1.5-flash'),
+  model: z.enum([
+    'gemini-1.5-flash',
+    'gemini-1.5-pro',
+    'gemini-2.0-flash-exp',
+    'gemini-2.0-flash',
+    'gemini-2.5-flash',
+    'gemini-2.5-pro',
+    'gemini-flash-latest',
+    'gemini-pro-latest',
+  ]).default('gemini-2.5-flash'),
   budget_per_digest_usd: z.number().min(0).max(10).default(0.05),
   max_retries: z.number().int().min(0).max(5).default(2),
   timeout_seconds: z.number().int().min(5).max(300).default(60),
