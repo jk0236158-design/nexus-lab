@@ -1,7 +1,7 @@
 {
   "name": "@nexus-lab/aira",
   "version": "0.1.0",
-  "description": "Aira Phase 0 mini — read-only digest synthesis layer (internal only, not for public distribution). Yuino 商品化版 src は同 dir 内に共存 (post-連休 で packages/yuino/ に migration candidate)",
+  "description": "Yuino digest engine + Aira Supervisor 4 機能 (Observer + Work Generator + Evaluator + Tripwire) を共存 hosting する dir (起稿当時の origin name = 'Aira Phase 0 mini'、 5/06 用語固定で historical alias 化)。 5/07+ Iwa B packet で Yuino src を packages/yuino/ に物理移動予定、 aira/ には Supervisor 4 機能のみ remain target",
   "type": "module",
   "private": true,
   "scripts": {

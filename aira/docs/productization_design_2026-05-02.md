@@ -37,7 +37,7 @@ related: aira/docs/phase1_specs_draft_2026-05-01.md / Kai 4/29 21:00 mcp_market_
 
 ---
 
-## 1. Aira Phase 0 mini 現状要約 (5/02 朝時点)
+## 1. Yuino digest engine 現状要約 (起稿当時 = 「Aira Phase 0 mini」 narrative、 5/06 用語固定で historical alias 化、 5/02 朝時点)
 
 ### 構成
 

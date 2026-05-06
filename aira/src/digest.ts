@@ -50,7 +50,7 @@ async function callGeminiMock(
       {
         domain: "Nexus Lab (Zen)",
         summary:
-          "Wave 1 開始 (4/29)、Iwa T4 hook chain 完成 + memory prefix 追加 完遂。BOOTH 商品 4 公開 day+7 baseline 0 継続。5 月目標 ¥15,000 consolidated 確定 (Zen+Kai stance 揃い済)。Aira Phase 0 mini 実装 本日着手。",
+          "Wave 1 開始 (4/29)、Iwa T4 hook chain 完成 + memory prefix 追加 完遂。BOOTH 商品 4 公開 day+7 baseline 0 継続。5 月目標 ¥15,000 consolidated 確定 (Zen+Kai stance 揃い済)。Yuino digest engine (旧 Aira Phase 0 mini historical alias) 実装 本日着手。",
       },
       {
         domain: "nokaze 連携",

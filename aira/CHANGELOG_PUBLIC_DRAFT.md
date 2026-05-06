@@ -88,7 +88,7 @@ This is the initial β release. No breaking changes from prior public versions.
 
 Documented for transparency on internal development origin (not part of npm published changelog):
 
-- **2026-04-28**: Phase 0 mini design update + Aira Phase 0 mini implementation 着手 (Iwa)
+- **2026-04-28**: Phase 0 mini design update + Yuino digest engine implementation 着手 (Iwa、 起稿当時の origin name = 「Aira Phase 0 mini」、 5/06 用語固定で historical alias 化)
 - **2026-04-29**: First DRY RUN digest output (mock, boundary audit pass)
 - **2026-04-30**: First LIVE digest via Gemini API (4 domains: WSD / Nexus Lab / Product Design / Pricing/Finance)
 - **2026-05-01**: Phase 1 specs draft (Spec A boundary taxonomy + Spec B observer input deterministic structured digest)

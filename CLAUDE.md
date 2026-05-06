@@ -228,6 +228,18 @@ zen-memory L3 knot `op_knot_subagent_settings_resolution_failure` (N=5 reproduct
 
 公開 doc 起稿時 self-check: internal vocabulary 漏出 0 件を確認 (`scripts/vocabulary_drift_sweep.sh` で grep sweep 化、5/02 起稿)。
 
+## Naming Convention (2026-05-06 fixed、 dogfood 観測ログ汚染防止 axis)
+
+5/06 jun directive で用語を固定。 dogfood 期間 (5/07-5/12 + Phase 0 expand) 中の観測ログ / state file / inbox / board / diary / report 全 channel で固定運用。
+
+- **Yuino** = digest engine / owner digest / context compression / UI に出す運用まとめ (商品名)
+- **Aira** = Supervisor layer / Observer + Work Generator + Evaluator + Tripwire の 4 機能 (5/04 evening reform で立ち上げ、 5/06 PM 全 4 機能 minimum viable form 完遂)
+- **Aira Phase 0 mini** = **historical alias 扱い** (4/28 着手指示時の origin name、 5/02 朝 「Yuino」 命名で公開 narrative 確定、 5/04 evening Aira Supervisor reform で 「Aira」 が Supervisor 4 機能を指すように pivot)。 今後の現役用語として書き起こさない、 historical record の言及は 「historical alias」 と明示する場合のみ。
+
+`Aira v0` narrative は 「Aira Supervisor v0 = 4 機能 minimum viable」 を指す (= 「Aira Phase 0 mini = Yuino」 narrative drift 検出時 self-correct)。
+
+directory restructure (Iwa 独立 packet、 5/07 朝 spawn ready) で `nexus-lab/aira/` 内 Yuino src を `packages/yuino/` に物理移動し、 用語整理と物理整理を分離 reify する。 詳細は memory `feedback_aira_yuino_naming_fixed.md` 参照。
+
 ## Workflow Rules
 
 1. **全ての作業はissue駆動** — 作業開始前にissueを作成する
