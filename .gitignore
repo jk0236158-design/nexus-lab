@@ -13,3 +13,7 @@ __pycache__/
 .pytest_cache/
 .playwright-mcp/
 .tmp-*.json
+
+# Yuino dogfood (5/06+)
+aira/tmp/
+aira/data/digests/*_yuino_digest.md

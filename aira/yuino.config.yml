@@ -1,0 +1,80 @@
+# yuino.config.yml — 5/06 dogfood first day 用設定 (Zen 直筆 draft、 jun 一緒の actual run 前準備)
+# 既存の旧 「aira」 キー (= GEMINI_API_KEY in .env) を Yuino 用として流用
+# label 変更のみ (5/06 jun decide、 既存 3 キー再振り分け、 物理作業ほぼゼロ)
+#
+# 4 domain (WSD / Nexus Lab / Product Design / Pricing/Finance) は 4/30 first LIVE digest と同じ構成
+# 5/07+ B migration 完遂時に packages/yuino/yuino.config.yml に移動予定
+
+gemini:
+  api_key_env: GEMINI_API_KEY
+  model: gemini-1.5-flash
+  budget_per_digest_usd: 0.05
+  max_retries: 2
+  timeout_seconds: 60
+
+observer_scopes:
+  # 1. WSD (Kai 領域、 ~/.shared-ops/ 経由 readonly 参照)
+  - id: wsd_kai_status
+    type: file_directory
+    path: C:/Users/jk023/.shared-ops/status/
+    glob: "kai_*.md"
+    max_files: 15
+    exclude: []
+
+  # 2. Nexus Lab (Zen 領域)
+  - id: nexus_lab_zen_status
+    type: file_directory
+    path: C:/Users/jk023/.shared-ops/status/
+    glob: "zen_*.md"
+    max_files: 15
+    exclude: []
+
+  # 3. Product Design (Yuino + Aira + 商品設計)
+  - id: product_design_docs
+    type: file_directory
+    path: C:/Users/jk023/nexus-lab/aira/docs/
+    glob: "*.md"
+    max_files: 10
+    exclude: []
+
+  # 4. Pricing/Finance (Kura return form + jun 経理 inbox)
+  - id: pricing_finance_inbox
+    type: file_directory
+    path: C:/Users/jk023/.shared-ops/inbox/
+    glob: "*kura*.md"
+    max_files: 10
+    exclude: []
+
+boundary:
+  monitor_types:
+    - scope_creep
+    - sensitive_info_leak
+  templates:
+    - governance
+    - audit
+    - handoff
+  custom_rules: []
+
+digest:
+  schedule: on_demand
+  domains:
+    - WSD
+    - Nexus Lab
+    - Product Design
+    - Pricing/Finance
+  output:
+    - type: file
+      path: ./data/digests/
+      filename_template: "{date}_yuino_digest.md"
+    - type: stdout
+      filename_template: "{date}_yuino_digest.md"
+
+contradiction_notes:
+  enabled: true
+  levels:
+    - yellow
+    - green
+    - red
+
+wait_observations:
+  enabled: true
