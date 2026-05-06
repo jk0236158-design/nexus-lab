@@ -240,6 +240,26 @@ zen-memory L3 knot `op_knot_subagent_settings_resolution_failure` (N=5 reproduct
 
 directory restructure (Iwa 独立 packet、 5/07 朝 spawn ready) で `nexus-lab/aira/` 内 Yuino src を `packages/yuino/` に物理移動し、 用語整理と物理整理を分離 reify する。 詳細は memory `feedback_aira_yuino_naming_fixed.md` 参照。
 
+## Ownership (2026-05-06 evening、 段階移管 form)
+
+5/06 evening jun directive で implementation ownership 役割分担:
+
+- **Yuino = Zen 主導** (digest engine、 nexus-lab/aira/ → 5/07+ packages/yuino/ に B migration)
+- **Aira = Kai 主導** (Supervisor 4 機能、 移植先 = `C:\Users\jk023\Desktop\nokaze-aira\` 独立 repo 候補、 jun 直接 git init)
+
+段階移管 form (削除移動ではなくコピー移植 + 検証後に正本切替):
+1. **正本固定**: 現在の正本 = `C:\Users\jk023\nexus-lab\aira\` (Supervisor 4 機能、 commit a43c788 + 8974eeb + 94e4cc0 + 2cc2143)
+2. **コピー移植 (5/07-5/12)**: Kai が nokaze-aira repo にコピー、 Nexus 側削除しない、 Zen 側 readonly 参照
+3. **Kai 主導 implementation (5/13-5/26)**: Kai-side で test 通過 + goal 検証/修正 loop + Phase 0 expand 7 件 reify
+4. **正本切替 (5/26+)**: Kai 側 完遂 → Zen が board で 「以後 Aira 正本は Kai 側」 明記 → Nexus 側 deprecated 扱い (削除しない、 historical record)
+
+移管期間中の Zen 境界:
+- nokaze-aira repo は **readonly 参照のみ** (CLAUDE.md「他プロジェクトは参照のみ、書き込み厳禁」 ruled 適用)
+- Aira-related proposal は ~/.shared-ops/ board / inbox 経由で Kai に投げる (Pattern C 同形)
+- nexus-lab/aira/ の Supervisor 4 機能 source は移管期間中も Zen touch 可 (正本切替前)、 但し新規 enhancement は Kai-side principle
+
+詳細は memory `feedback_aira_ownership_shift_kai_lead.md` 参照。
+
 ## Workflow Rules
 
 1. **全ての作業はissue駆動** — 作業開始前にissueを作成する
