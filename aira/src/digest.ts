@@ -8,6 +8,7 @@
  *   or: `DRY_RUN=true node --loader ts-node/esm src/digest.ts`
  */
 
+import 'dotenv/config';
 import { writeFileSync, mkdirSync, existsSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";

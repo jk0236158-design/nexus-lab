@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import 'dotenv/config';
 /**
  * cli/index.ts — yuino CLI entry point (β scope)
  *

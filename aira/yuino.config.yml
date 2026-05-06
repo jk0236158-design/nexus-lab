@@ -37,11 +37,19 @@ observer_scopes:
     max_files: 10
     exclude: []
 
-  # 4. Pricing/Finance (Kura return form + jun 経理 inbox)
+  # 4a. Pricing/Finance (Kura return form + jun 経理 inbox)
   - id: pricing_finance_inbox
     type: file_directory
     path: C:/Users/jk023/.shared-ops/inbox/
     glob: "*kura*.md"
+    max_files: 10
+    exclude: []
+
+  # 4b. Pricing/Finance (Kura team_memory diary + cost forecasts)
+  - id: pricing_finance_team_memory
+    type: file_directory
+    path: C:/Users/jk023/.claude/projects/c--Users-jk023-nexus-lab/team_memory/kura/
+    glob: "*.md"
     max_files: 10
     exclude: []
 
