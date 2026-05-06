@@ -228,35 +228,44 @@ zen-memory L3 knot `op_knot_subagent_settings_resolution_failure` (N=5 reproduct
 
 公開 doc 起稿時 self-check: internal vocabulary 漏出 0 件を確認 (`scripts/vocabulary_drift_sweep.sh` で grep sweep 化、5/02 起稿)。
 
-## Naming Convention (2026-05-06 fixed、 dogfood 観測ログ汚染防止 axis)
+## Naming Convention (2026-05-06 evening 確定、 1 entity 2 narrative)
 
-5/06 jun directive で用語を固定。 dogfood 期間 (5/07-5/12 + Phase 0 expand) 中の観測ログ / state file / inbox / board / diary / report 全 channel で固定運用。
+5/06 evening jun original intent + Kai 確認後の正しい用語:
 
-- **Yuino** = digest engine / owner digest / context compression / UI に出す運用まとめ (商品名)
-- **Aira** = Supervisor layer / Observer + Work Generator + Evaluator + Tripwire の 4 機能 (5/04 evening reform で立ち上げ、 5/06 PM 全 4 機能 minimum viable form 完遂)
-- **Aira Phase 0 mini** = **historical alias 扱い** (4/28 着手指示時の origin name、 5/02 朝 「Yuino」 命名で公開 narrative 確定、 5/04 evening Aira Supervisor reform で 「Aira」 が Supervisor 4 機能を指すように pivot)。 今後の現役用語として書き起こさない、 historical record の言及は 「historical alias」 と明示する場合のみ。
+- **Aira** = **内部実装名** (実体名)。 Zen + Kai 両方が dogfood で使う 1 つの supervisor。 実装の正本 = `C:\Users\jk023\Desktop\nokaze-aira\` (Kai-side、 5/06 evening 12 commits で full closed loop reify)
+- **Yuino** = **商品 brand 名** (audience-facing form)。 Aira を商品化する時の公開 narrative。 公開資料 / LP / note / Zenn 等で使用、 別 repo/package 切り出しは急がない
+- = **Aira と Yuino は別プロダクトではなく、 1 entity の 2 narrative** (内部で動かす時 = Aira / 外に売る時 = Yuino)
 
-`Aira v0` narrative は 「Aira Supervisor v0 = 4 機能 minimum viable」 を指す (= 「Aira Phase 0 mini = Yuino」 narrative drift 検出時 self-correct)。
+historical alias:
+- **「Aira Phase 0 mini」** = 4/28 着手指示時の origin name、 historical alias 扱い (現役 narrative ではない)
 
-directory restructure (Iwa 独立 packet、 5/07 朝 spawn ready) で `nexus-lab/aira/` 内 Yuino src を `packages/yuino/` に物理移動し、 用語整理と物理整理を分離 reify する。 詳細は memory `feedback_aira_yuino_naming_fixed.md` 参照。
+私 (Zen) の 5/06 朝 drift self-correct:
+- 5/06 朝 commit `7d4cca1` (用語固定) + commit `bb6a85a` (Aira ownership shift) で 「Yuino と Aira を 2 entity 別物」 narrative で reify したのは drift
+- jun original intent は 「1 entity 2 narrative」、 5/06 evening surface + Kai 確認で確定、 self-correct
+- 詳細は memory `feedback_aira_yuino_naming_fixed.md` 参照
 
-## Ownership (2026-05-06 evening、 段階移管 form)
+## Ownership (2026-05-06 evening 確定、 1 entity 2 axis 役割分担)
 
-5/06 evening jun directive で implementation ownership 役割分担:
+| 役割 | 主担当 | scope |
+|---|---|---|
+| **Aira 実装** (内部 supervisor) | Kai | `nokaze-aira/` で observer + decide + dispatch + verify + recover + execute の 6 step closed loop。 5/06 evening 12 commits で full implementation reify (real dogfood: work-232 + work-233 完遂) |
+| **Yuino 商品化** (audience-facing brand) | Zen | 商品 docs / UI / LP / 公開設計 (PUBLIC_README_DRAFT / SETUP_WITH_AI_AGENT / CHANGELOG_PUBLIC_DRAFT / LICENSE_PUBLIC_DRAFT + 将来 LP draft 起稿) |
 
-- **Yuino = Zen 主導** (digest engine、 nexus-lab/aira/ → 5/07+ packages/yuino/ に B migration)
-- **Aira = Kai 主導** (Supervisor 4 機能、 移植先 = `C:\Users\jk023\Desktop\nokaze-aira\` 独立 repo 候補、 jun 直接 git init)
+= 1 entity (Aira = Yuino) を 2 axis (実装 vs 商品化) で役割分担、 2 entity 別物ではない。
 
-段階移管 form (削除移動ではなくコピー移植 + 検証後に正本切替):
-1. **正本固定**: 現在の正本 = `C:\Users\jk023\nexus-lab\aira\` (Supervisor 4 機能、 commit a43c788 + 8974eeb + 94e4cc0 + 2cc2143)
-2. **コピー移植 (5/07-5/12)**: Kai が nokaze-aira repo にコピー、 Nexus 側削除しない、 Zen 側 readonly 参照
-3. **Kai 主導 implementation (5/13-5/26)**: Kai-side で test 通過 + goal 検証/修正 loop + Phase 0 expand 7 件 reify
-4. **正本切替 (5/26+)**: Kai 側 完遂 → Zen が board で 「以後 Aira 正本は Kai 側」 明記 → Nexus 側 deprecated 扱い (削除しない、 historical record)
+### Zen 4 機能 (nexus-lab/aira/src/aira-*.ts) の取り扱い
 
-移管期間中の Zen 境界:
+5/06 reify 4 機能 (Observer + Work Generator + Evaluator + Tripwire、 commit a43c788 + 8974eeb + 94e4cc0 + 2cc2143、 vitest 151/151、 Kagami QA pass) は **重複資産** narrative で再 position:
+
+- いきなり消さない
+- Kai 主導 audit で Kai-side Aira (nokaze-aira/) にない発想のみ移植 candidate
+- 残りは retire (5/13+ post-audit timing)
+
+### 移管期間中の Zen 境界
+
 - nokaze-aira repo は **readonly 参照のみ** (CLAUDE.md「他プロジェクトは参照のみ、書き込み厳禁」 ruled 適用)
 - Aira-related proposal は ~/.shared-ops/ board / inbox 経由で Kai に投げる (Pattern C 同形)
-- nexus-lab/aira/ の Supervisor 4 機能 source は移管期間中も Zen touch 可 (正本切替前)、 但し新規 enhancement は Kai-side principle
+- Zen は **Aira を二重実装しない**、 中核 work shift = 「Aira 実装」 → 「Yuino 商品化体験設計」
 
 詳細は memory `feedback_aira_ownership_shift_kai_lead.md` 参照。
 
