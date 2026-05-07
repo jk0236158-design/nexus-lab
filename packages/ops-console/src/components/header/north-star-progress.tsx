@@ -11,7 +11,8 @@ interface NorthStarProgressProps {
   progress: NorthStarProgressData;
 }
 
-const YUINO_OLIVE = '#8b9a78';
+/* nokaze-design system axis 11: skill colors_and_type.css 由来の olive-soft 採用、 旧 hard-code #8b9a78 は drift */
+const YUINO_OLIVE = 'var(--nokaze-olive-soft)';
 
 export function NorthStarProgress({ progress }: NorthStarProgressProps) {
   const {

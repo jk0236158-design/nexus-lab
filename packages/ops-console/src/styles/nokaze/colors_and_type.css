@@ -1,0 +1,295 @@
+/* ==========================================================================
+   nokaze Design System — colors & type
+   野風 — 派手ではなく、静かに方向と温度を運ぶ
+   ========================================================================== */
+
+/* Fonts via Google Fonts CDN. If offline / self-host needed, replace @import
+   with local @font-face declarations pointing at ./fonts/. */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap");
+
+:root {
+  /* ------------------------------------------------------------------------
+     Color — base palette
+     ------------------------------------------------------------------------ */
+  --ivory:        #F5F3EE; /* 障子紙 / primary bg */
+  --ivory-2:      #EEEBE3; /* 1 段深いアイボリー / sidebar / card inner */
+  --ivory-3:      #E6E2D5; /* さらに深い / pressed, disabled bg */
+
+  --ink:          #1F1F1F; /* 墨色 / primary text, dark surfaces */
+  --ink-2:        #3D3D3D; /* secondary text */
+  --ink-3:        #6B6B6B; /* muted text, meta */
+  --ink-4:        #9A9A93; /* placeholder */
+
+  --olive:        #6B8E23; /* 野原の草 / accent, link, ok */
+  --olive-deep:   #556F1C; /* olive hover / focus */
+  --olive-soft:   #8AAF2E; /* dark surface olive */
+
+  --kare:         #C19A6B; /* 風化した木 / subtle, warm */
+  --kare-deep:    #A77F4F; /* emphasized kare */
+
+  --rule:         #D9D3C4; /* 紙の罫 */
+  --rule-strong:  #BCB4A0; /* 濃い罫 */
+
+  /* Dark surface (ops-console, nexus-lab docs dark variant) */
+  --sumi-bg:      #0F0F0F;
+  --sumi-surface: #18181A;
+  --sumi-border:  #27272A;
+
+  /* States — 意味色 (盛らない、強い赤は低頻度) */
+  --state-ok:     #6B8E23; /* = olive */
+  --state-warn:   #B38600; /* くすんだ黄、盛らない */
+  --state-stop:   #A8321A; /* 朱色、ほぼ墨に近い */
+  --state-info:   #1F1F1F; /* = ink, info は色で示さない */
+
+  /* ------------------------------------------------------------------------
+     Color — semantic (light = 障子紙面)
+     ------------------------------------------------------------------------ */
+  --bg:             var(--ivory);
+  --bg-sunk:        var(--ivory-2);
+  --bg-raised:      #FFFFFF; /* card on ivory */
+  --fg:             var(--ink);
+  --fg-2:           var(--ink-2);
+  --fg-muted:       var(--ink-3);
+  --fg-placeholder: var(--ink-4);
+  --link:           var(--ink);
+  --link-hover:     var(--olive-deep);
+  --border:         var(--rule);
+  --border-strong:  var(--rule-strong);
+  --accent:         var(--olive);
+
+  /* Focus ring — olive 25% */
+  --ring:           rgba(107, 142, 35, 0.28);
+
+  /* ------------------------------------------------------------------------
+     Typography — families
+     ------------------------------------------------------------------------ */
+  --font-serif:     "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", "Georgia", serif;
+  --font-sans:      "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-mono:      "JetBrains Mono", "JetBrains Mono NL", ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace;
+
+  /* ------------------------------------------------------------------------
+     Typography — scale (px / line-height / weight)
+     ------------------------------------------------------------------------ */
+  --display-1-size: 44px;  --display-1-lh: 52px;  --display-1-weight: 600;
+  --display-2-size: 32px;  --display-2-lh: 40px;  --display-2-weight: 600;
+  --h1-size:        24px;  --h1-lh:       32px;   --h1-weight:        500;
+  --h2-size:        20px;  --h2-lh:       28px;   --h2-weight:        500;
+  --h3-size:        17px;  --h3-lh:       26px;   --h3-weight:        700;
+  --body-size:      15px;  --body-lh:     24px;   --body-weight:      400;
+  --body-sm-size:   13px;  --body-sm-lh:  20px;   --body-sm-weight:   400;
+  --meta-size:      12px;  --meta-lh:     18px;   --meta-weight:      500;
+  --code-size:      14px;  --code-lh:     22px;   --code-weight:      400;
+
+  /* ------------------------------------------------------------------------
+     Spacing (8 の倍数ベース、小さな密度では 4 も)
+     ------------------------------------------------------------------------ */
+  --s-0:  0;
+  --s-1:  4px;
+  --s-2:  8px;
+  --s-3:  12px;
+  --s-4:  16px;
+  --s-5:  24px;
+  --s-6:  32px;
+  --s-7:  48px;
+  --s-8:  64px;
+  --s-9:  96px;
+
+  /* ------------------------------------------------------------------------
+     Radius
+     ------------------------------------------------------------------------ */
+  --radius-none: 0;
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-pill: 9999px;
+
+  /* ------------------------------------------------------------------------
+     Shadows / elevation — 紙面なので基本弱い
+     ------------------------------------------------------------------------ */
+  --shadow-paper: 0 1px 0 rgba(31, 31, 31, 0.04);
+  --shadow-rule:  inset 0 0 0 1px var(--rule);
+  --shadow-focus: 0 0 0 3px var(--ring);
+
+  /* ------------------------------------------------------------------------
+     Motion — ほぼ使わない、150〜200ms のみ
+     ------------------------------------------------------------------------ */
+  --ease:       cubic-bezier(0.2, 0, 0, 1);
+  --t-fast:     120ms;
+  --t-base:     180ms;
+
+  /* ------------------------------------------------------------------------
+     Layout maxes
+     ------------------------------------------------------------------------ */
+  --max-article: 680px;
+  --max-docs:    860px;
+  --max-lp:      1120px;
+  --max-app:     1280px;
+  --header-h:    56px;
+  --sidebar-w:   224px;
+}
+
+/* --------------------------------------------------------------------------
+   Dark surface scope (.nokaze-dark applied to sections, not :root)
+   -------------------------------------------------------------------------- */
+.nokaze-dark {
+  --bg:             var(--sumi-bg);
+  --bg-sunk:        #0A0A0A;
+  --bg-raised:      var(--sumi-surface);
+  --fg:             var(--ivory);
+  --fg-2:           #C9C5BA;
+  --fg-muted:       #8A867C;
+  --fg-placeholder: #5A5751;
+  --link:           var(--ivory);
+  --link-hover:     var(--olive-soft);
+  --border:         var(--sumi-border);
+  --border-strong:  #3A3A3F;
+  --accent:         var(--olive-soft);
+  --ring:           rgba(138, 175, 46, 0.30);
+  color-scheme:     dark;
+  background:       var(--bg);
+  color:            var(--fg);
+}
+
+/* --------------------------------------------------------------------------
+   Base
+   -------------------------------------------------------------------------- */
+html {
+  font-family: var(--font-sans);
+  color: var(--fg);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-size: var(--body-size);
+  line-height: var(--body-lh);
+  font-weight: var(--body-weight);
+}
+
+/* --------------------------------------------------------------------------
+   Semantic type — 使うときは class を当てる。
+   HTML タグへの直接 styling は最小限にする (ユーティリティ的 DS)。
+   -------------------------------------------------------------------------- */
+.display-1 {
+  font-family: var(--font-serif);
+  font-weight: var(--display-1-weight);
+  font-size: var(--display-1-size);
+  line-height: var(--display-1-lh);
+  letter-spacing: -0.01em;
+  color: var(--fg);
+}
+
+.display-2 {
+  font-family: var(--font-serif);
+  font-weight: var(--display-2-weight);
+  font-size: var(--display-2-size);
+  line-height: var(--display-2-lh);
+  letter-spacing: -0.005em;
+  color: var(--fg);
+}
+
+.h1, h1.nk {
+  font-family: var(--font-serif);
+  font-weight: var(--h1-weight);
+  font-size: var(--h1-size);
+  line-height: var(--h1-lh);
+  color: var(--fg);
+  margin: 0;
+}
+
+.h2, h2.nk {
+  font-family: var(--font-serif);
+  font-weight: var(--h2-weight);
+  font-size: var(--h2-size);
+  line-height: var(--h2-lh);
+  color: var(--fg);
+  margin: 0;
+}
+
+.h3, h3.nk {
+  font-family: var(--font-sans);
+  font-weight: var(--h3-weight);
+  font-size: var(--h3-size);
+  line-height: var(--h3-lh);
+  color: var(--fg);
+  margin: 0;
+}
+
+.body {
+  font-family: var(--font-sans);
+  font-weight: var(--body-weight);
+  font-size: var(--body-size);
+  line-height: var(--body-lh);
+  color: var(--fg);
+}
+
+.body-sm {
+  font-family: var(--font-sans);
+  font-weight: var(--body-sm-weight);
+  font-size: var(--body-sm-size);
+  line-height: var(--body-sm-lh);
+  color: var(--fg-2);
+}
+
+.meta {
+  font-family: var(--font-sans);
+  font-weight: var(--meta-weight);
+  font-size: var(--meta-size);
+  line-height: var(--meta-lh);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.code, code.nk, pre.nk code {
+  font-family: var(--font-mono);
+  font-weight: var(--code-weight);
+  font-size: var(--code-size);
+  line-height: var(--code-lh);
+  color: var(--fg);
+}
+
+.numeric {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Link
+   -------------------------------------------------------------------------- */
+.nk-link, a.nk {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color var(--t-fast) var(--ease);
+}
+.nk-link:hover, a.nk:hover {
+  color: var(--link-hover);
+}
+
+/* --------------------------------------------------------------------------
+   Rule
+   -------------------------------------------------------------------------- */
+.nk-rule {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: var(--s-5) 0;
+}
+
+/* --------------------------------------------------------------------------
+   Focus
+   -------------------------------------------------------------------------- */
+.nk-focusable:focus-visible,
+button.nk:focus-visible,
+a.nk:focus-visible,
+input.nk:focus-visible,
+textarea.nk:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+  border-radius: var(--radius-sm);
+}

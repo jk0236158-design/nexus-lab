@@ -2,7 +2,31 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+/* nokaze-design system fonts: Noto Serif JP + Noto Sans JP + JetBrains Mono は layout.tsx で next/font/google 経由 load */
+
 @custom-variant dark (&:is(.dark *));
+
+/* nokaze brand color tokens (skill colors_and_type.css 由来、 shadcn variable 並走、 個別 hard-code 置換用) */
+:root {
+  --nokaze-ivory: #F5F3EE;
+  --nokaze-ivory-2: #EEEBE3;
+  --nokaze-ink: #1F1F1F;
+  --nokaze-ink-2: #3D3D3D;
+  --nokaze-ink-3: #6B6B6B;
+  --nokaze-olive: #6B8E23;
+  --nokaze-olive-soft: #8AAF2E;
+  --nokaze-olive-deep: #556F1C;
+  --nokaze-kare: #C19A6B;
+  --nokaze-kare-deep: #A77F4F;
+  --nokaze-rule: #D9D3C4;
+  --nokaze-rule-strong: #BCB4A0;
+  --nokaze-sumi-bg: #0F0F0F;
+  --nokaze-sumi-surface: #18181A;
+  --nokaze-sumi-border: #27272A;
+  --nokaze-font-serif: var(--font-noto-serif-jp), "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", Georgia, serif;
+  --nokaze-font-sans: var(--font-noto-sans-jp), "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --nokaze-font-mono: var(--font-jetbrains-mono), "JetBrains Mono", "JetBrains Mono NL", ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace;
+}
 
 @theme inline {
   --color-background: var(--background);
@@ -126,5 +150,13 @@
   }
   html {
     @apply font-sans;
+    /* nokaze-design system: heading は serif (Noto Serif JP)、 sans は Noto Sans JP、 mono は JetBrains Mono を default として nokaze brand reify */
+    font-family: var(--nokaze-font-sans);
+  }
+  h1, h2, h3 {
+    font-family: var(--nokaze-font-serif);
+  }
+  code, pre {
+    font-family: var(--nokaze-font-mono);
   }
 }

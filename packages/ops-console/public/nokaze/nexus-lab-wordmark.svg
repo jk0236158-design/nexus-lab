@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 64" role="img" aria-label="Nexus Lab">
+  
+  <circle cx="10" cy="32" r="4" class="nl-wm-dot"></circle>
+  <text x="24" y="40" class="nl-wm nl-wm-name">Nexus Lab</text>
+  <text x="186" y="40" class="nl-wm-tag">— mcp templates</text>
+</svg>
