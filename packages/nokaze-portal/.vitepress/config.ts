@@ -8,10 +8,18 @@ export default defineConfig({
   cleanUrls: true,
 
   head: [
-    ["meta", { name: "theme-color", content: "#1a1a1a" }],
+    /* nokaze theme-color: 墨色 (sumi-bg、 nokaze-design skill 由来) */
+    ["meta", { name: "theme-color", content: "#0F0F0F" }],
+    /* preconnect for Google Fonts (Noto Serif/Sans JP + JetBrains Mono via theme/style.css) */
+    ["link", { rel: "preconnect", href: "https://fonts.googleapis.com" }],
+    ["link", { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "" }],
   ],
 
   themeConfig: {
+    /* logo に nokaze wordmark を採用 (skill assets 由来) */
+    logo: "/assets/nokaze-wordmark.svg",
+    siteTitle: false, /* logo 内に「野風 nokaze」 が含まれるので title 重複を避ける */
+
     nav: [
       { text: "Nexus Lab", link: "/nexus-lab/" },
       { text: "Weekly Signal Desk", link: "/weekly-signal-desk/" },
@@ -20,6 +28,7 @@ export default defineConfig({
         items: [
           { text: "nexus-lab.nokaze.dev", link: "https://nexus-lab.nokaze.dev" },
           { text: "Articles (GitHub)", link: "https://github.com/nexus-lab-zen/Nexus.Lab.Zen" },
+          { text: "Zenn (nexus_lab_zen)", link: "https://zenn.dev/nexus_lab_zen" },
         ],
       },
     ],
