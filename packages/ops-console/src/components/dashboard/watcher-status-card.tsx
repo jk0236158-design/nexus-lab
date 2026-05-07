@@ -22,9 +22,9 @@ const STATE_BADGE_VARIANT: Record<
 };
 
 const STATE_LABEL: Record<WatcherStatus['state'], string> = {
-  running: 'running',
-  stale: 'stale',
-  down: 'down',
+  running: '稼働中',
+  stale: '更新が古い',
+  down: '停止中',
 };
 
 export function WatcherStatusCard({ status }: WatcherStatusCardProps) {

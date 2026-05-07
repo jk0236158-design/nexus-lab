@@ -39,6 +39,10 @@ export default async function DogfoodPage() {
         <h2 className="text-sm font-semibold text-zinc-200 mb-3">
           6 step status
         </h2>
+        <p className="text-xs text-zinc-500 mb-3">
+          現状 Aira dispatch log には 6 step 形式の event がまだ記録されていない (`zen_board_review_request` 等の action_type のみ)。
+          {' '}6 step 形式の closed-loop log は Phase B (5/13-5/22) で Kai-side が拡張予定、 現在は placeholder 表示。
+        </p>
         <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
           {CLOSED_LOOP_STEPS.map((step) => {
             const info = stepMap[step];
@@ -54,7 +58,7 @@ export default async function DogfoodPage() {
                         info?.lastStatus === 'ok' ? 'default' : 'secondary'
                       }
                     >
-                      {info?.lastStatus ?? 'no data'}
+                      {info?.lastStatus ?? '記録なし'}
                     </Badge>
                   </div>
                 </CardHeader>
