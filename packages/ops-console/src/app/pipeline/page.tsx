@@ -8,10 +8,10 @@ export default function PipelinePage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-semibold tracking-tight text-zinc-100">
+      <h1 className="text-2xl font-semibold tracking-tight text-muted-foreground">
         Pipeline
       </h1>
-      <p className="mt-2 text-zinc-400">
+      <p className="mt-2 text-muted-foreground">
         Kaiの営業パイプライン — リードのステータス管理
       </p>
 

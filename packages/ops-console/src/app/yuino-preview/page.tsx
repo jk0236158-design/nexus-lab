@@ -27,33 +27,33 @@ export default async function YuinoPreviewPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-zinc-100">
+        <h1 className="text-2xl font-semibold tracking-tight text-muted-foreground">
           Yuino Preview
         </h1>
-        <p className="mt-1 text-sm text-zinc-500">
+        <p className="mt-1 text-sm text-muted-foreground">
           digest 出力の公開 form と内部 evidence を並行確認
         </p>
       </div>
 
       {!latest ? (
-        <Card className="bg-zinc-900 border-zinc-800">
+        <Card className="bg-foreground border-border">
           <CardHeader>
-            <CardTitle className="text-zinc-100">digest 未生成</CardTitle>
-            <CardDescription className="text-zinc-500">
+            <CardTitle className="text-muted-foreground">digest 未生成</CardTitle>
+            <CardDescription className="text-muted-foreground">
               `aira/data/digests/` に file が存在しません。 Yuino dogfood
               実行後に再表示されます。
             </CardDescription>
           </CardHeader>
         </Card>
       ) : (
-        <Card className="bg-zinc-900 border-zinc-800">
+        <Card className="bg-foreground border-border">
           <CardHeader>
             <div className="flex items-center justify-between gap-4">
               <div>
-                <CardTitle className="text-zinc-100">
+                <CardTitle className="text-muted-foreground">
                   最新 digest: {latest.date}
                 </CardTitle>
-                <CardDescription className="text-zinc-500 break-all">
+                <CardDescription className="text-muted-foreground break-all">
                   source: {latest.sourcePath}
                 </CardDescription>
               </div>
@@ -89,10 +89,10 @@ export default async function YuinoPreviewPage() {
       )}
 
       {list.length > 0 && (
-        <Card className="bg-zinc-900 border-zinc-800">
+        <Card className="bg-foreground border-border">
           <CardHeader>
-            <CardTitle className="text-zinc-100">過去 digest</CardTitle>
-            <CardDescription className="text-zinc-500">
+            <CardTitle className="text-muted-foreground">過去 digest</CardTitle>
+            <CardDescription className="text-muted-foreground">
               {list.length} 件
             </CardDescription>
           </CardHeader>
@@ -103,8 +103,8 @@ export default async function YuinoPreviewPage() {
                   key={entry.filename}
                   className="flex items-center justify-between text-sm"
                 >
-                  <span className="text-zinc-300">{entry.date}</span>
-                  <span className="text-zinc-600 truncate ml-4">
+                  <span className="text-muted-foreground">{entry.date}</span>
+                  <span className="text-muted-foreground truncate ml-4">
                     {entry.filename}
                   </span>
                 </li>
@@ -121,15 +121,15 @@ function PublicForm({ digest }: { digest: YuinoDigest }) {
   return (
     <div className="space-y-6">
       <section>
-        <h3 className="text-sm font-semibold text-zinc-200 mb-2">
+        <h3 className="text-sm font-semibold text-muted-foreground mb-2">
           確認待ちの行動 ({digest.waitObservations.length})
         </h3>
         {digest.waitObservations.length === 0 ? (
-          <p className="text-sm text-zinc-500">なし</p>
+          <p className="text-sm text-muted-foreground">なし</p>
         ) : (
           <ul className="space-y-1">
             {digest.waitObservations.map((line, i) => (
-              <li key={i} className="text-sm text-zinc-300 leading-relaxed">
+              <li key={i} className="text-sm text-muted-foreground leading-relaxed">
                 {line.replace(/^-\s*/, '')}
               </li>
             ))}
@@ -138,15 +138,15 @@ function PublicForm({ digest }: { digest: YuinoDigest }) {
       </section>
 
       <section>
-        <h3 className="text-sm font-semibold text-zinc-200 mb-2">
+        <h3 className="text-sm font-semibold text-muted-foreground mb-2">
           食い違いノート ({digest.contradictionNotes.length})
         </h3>
         {digest.contradictionNotes.length === 0 ? (
-          <p className="text-sm text-zinc-500">なし</p>
+          <p className="text-sm text-muted-foreground">なし</p>
         ) : (
           <ul className="space-y-1">
             {digest.contradictionNotes.map((line, i) => (
-              <li key={i} className="text-sm text-zinc-300 leading-relaxed">
+              <li key={i} className="text-sm text-muted-foreground leading-relaxed">
                 {line.replace(/^-\s*/, '')}
               </li>
             ))}
@@ -154,7 +154,7 @@ function PublicForm({ digest }: { digest: YuinoDigest }) {
         )}
       </section>
 
-      <p className="text-xs text-zinc-600 pt-2 border-t border-zinc-800">
+      <p className="text-xs text-muted-foreground pt-2 border-t border-border">
         数字源: {digest.sourcePath}
       </p>
     </div>
@@ -164,8 +164,8 @@ function PublicForm({ digest }: { digest: YuinoDigest }) {
 function EvidenceForm({ digest }: { digest: YuinoDigest }) {
   return (
     <div className="space-y-3">
-      <p className="text-xs text-zinc-600">source: {digest.sourcePath}</p>
-      <pre className="overflow-auto rounded-md border border-zinc-800 bg-zinc-950 p-4 text-xs text-zinc-300 leading-relaxed whitespace-pre-wrap">
+      <p className="text-xs text-muted-foreground">source: {digest.sourcePath}</p>
+      <pre className="overflow-auto rounded-md border border-border bg-foreground p-4 text-xs text-muted-foreground leading-relaxed whitespace-pre-wrap">
         {digest.content}
       </pre>
     </div>

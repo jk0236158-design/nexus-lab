@@ -11,7 +11,7 @@ interface KnotListProps {
 
 function KnotGrid({ knots }: { knots: UnifiedKnot[] }) {
   if (knots.length === 0) {
-    return <p className="mt-6 text-zinc-500 text-sm">Knots not found.</p>;
+    return <p className="mt-6 text-muted-foreground text-sm">Knots not found.</p>;
   }
   return (
     <div className="mt-4 flex flex-col gap-3">

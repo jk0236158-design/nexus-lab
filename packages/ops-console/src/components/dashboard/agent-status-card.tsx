@@ -21,10 +21,10 @@ export function AgentStatusCard({
 }: AgentStatusCardProps) {
   if (!status) {
     return (
-      <Card className="bg-zinc-900 border-zinc-800">
+      <Card className="bg-foreground border-border">
         <CardHeader>
-          <CardTitle className="text-zinc-100">{label}</CardTitle>
-          <CardDescription className="text-zinc-500">
+          <CardTitle className="text-muted-foreground">{label}</CardTitle>
+          <CardDescription className="text-muted-foreground">
             ステータス情報なし
           </CardDescription>
         </CardHeader>
@@ -38,22 +38,22 @@ export function AgentStatusCard({
     .slice(0, 4);
 
   return (
-    <Card className="bg-zinc-900 border-zinc-800">
+    <Card className="bg-foreground border-border">
       <CardHeader>
         <div className="flex items-center gap-3">
-          <CardTitle className="text-zinc-100">{label}</CardTitle>
+          <CardTitle className="text-muted-foreground">{label}</CardTitle>
           <Badge variant={status.isOnline ? 'default' : 'secondary'}>
             {status.isOnline ? 'Online' : 'Offline'}
           </Badge>
         </div>
-        <CardDescription className="text-zinc-400">
+        <CardDescription className="text-muted-foreground">
           最終セッション: {status.lastSession || '不明'}
         </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-1">
           {summaryLines.map((line, i) => (
-            <p key={i} className="text-sm text-zinc-400 leading-relaxed">
+            <p key={i} className="text-sm text-muted-foreground leading-relaxed">
               {line}
             </p>
           ))}

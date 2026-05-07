@@ -16,13 +16,13 @@ export function OwnerDecisions({ decisions }: OwnerDecisionsProps) {
   );
 
   return (
-    <Card className="bg-zinc-900 border-zinc-800">
+    <Card className="bg-foreground border-border">
       <CardHeader>
-        <CardTitle className="text-zinc-100">オーナー判断</CardTitle>
+        <CardTitle className="text-muted-foreground">オーナー判断</CardTitle>
       </CardHeader>
       <CardContent>
         {sorted.length === 0 ? (
-          <p className="text-sm text-zinc-500">判断記録なし</p>
+          <p className="text-sm text-muted-foreground">判断記録なし</p>
         ) : (
           <ul className="space-y-2">
             {sorted.map((d) => (
@@ -30,10 +30,10 @@ export function OwnerDecisions({ decisions }: OwnerDecisionsProps) {
                 key={d.filename}
                 className="flex items-center gap-3 text-sm"
               >
-                <span className="shrink-0 text-xs text-zinc-600 tabular-nums">
+                <span className="shrink-0 text-xs text-muted-foreground tabular-nums">
                   {d.date}
                 </span>
-                <span className="text-zinc-300">{d.title}</span>
+                <span className="text-muted-foreground">{d.title}</span>
               </li>
             ))}
           </ul>

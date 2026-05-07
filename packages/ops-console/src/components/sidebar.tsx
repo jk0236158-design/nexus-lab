@@ -25,9 +25,9 @@ export function Sidebar() {
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <aside className="fixed inset-y-0 left-0 z-30 flex w-56 flex-col border-r border-zinc-800 bg-zinc-950">
+    <aside className="fixed inset-y-0 left-0 z-30 flex w-56 flex-col border-r border-border bg-foreground">
       <div className="flex h-14 items-center px-5">
-        <span className="text-lg font-semibold tracking-tight text-zinc-100">
+        <span className="text-lg font-semibold tracking-tight text-muted-foreground">
           Ops Console
         </span>
       </div>
@@ -41,8 +41,8 @@ export function Sidebar() {
               href={item.href}
               className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${
                 active
-                  ? "bg-zinc-800 text-zinc-100"
-                  : "text-zinc-400 hover:bg-zinc-900 hover:text-zinc-200"
+                  ? "bg-foreground text-muted-foreground"
+                  : "text-muted-foreground hover:bg-foreground hover:text-muted-foreground"
               }`}
             >
               {item.label}
@@ -50,7 +50,7 @@ export function Sidebar() {
           );
         })}
 
-        <div className="mt-4 mb-1 px-3 text-[10px] font-semibold uppercase tracking-wider text-zinc-600">
+        <div className="mt-4 mb-1 px-3 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
           Phase 6 Full Console
         </div>
         {phase6NavItems.map((item) => {
@@ -62,8 +62,8 @@ export function Sidebar() {
               href={item.href}
               className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
                 active
-                  ? "bg-zinc-800 text-zinc-100"
-                  : "text-zinc-400 hover:bg-zinc-900 hover:text-zinc-200"
+                  ? "bg-foreground text-muted-foreground"
+                  : "text-muted-foreground hover:bg-foreground hover:text-muted-foreground"
               }`}
             >
               <Icon className="h-4 w-4" />

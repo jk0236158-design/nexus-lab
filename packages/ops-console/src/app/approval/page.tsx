@@ -15,28 +15,28 @@ export default async function ApprovalPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-zinc-100">
+        <h1 className="text-2xl font-semibold tracking-tight text-muted-foreground">
           承認待ち
         </h1>
-        <p className="mt-1 text-sm text-zinc-500">
+        <p className="mt-1 text-sm text-muted-foreground">
           shared-ops/inbox の判断待ち item を一覧表示。 承認 / 修正 / 却下 を
           1 click で実行 (Yuino セキュリティ v0 axis 10 Approval Gate UI)
         </p>
       </div>
 
-      <div className="flex items-center gap-3 text-sm text-zinc-400">
+      <div className="flex items-center gap-3 text-sm text-muted-foreground">
         <span>
-          pending <span className="text-zinc-100">{items.length}</span> 件
+          pending <span className="text-muted-foreground">{items.length}</span> 件
         </span>
       </div>
 
       {items.length === 0 ? (
-        <Card className="bg-zinc-900 border-zinc-800">
+        <Card className="bg-foreground border-border">
           <CardHeader>
-            <CardTitle className="text-zinc-100">
+            <CardTitle className="text-muted-foreground">
               pending な判断はありません
             </CardTitle>
-            <CardDescription className="text-zinc-500">
+            <CardDescription className="text-muted-foreground">
               新しい判断待ち item が `~/.shared-ops/inbox/` に入ると、
               ここに表示されます。
             </CardDescription>

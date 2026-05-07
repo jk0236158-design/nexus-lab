@@ -21,10 +21,10 @@ function AgentOverviewCard({
 }) {
   if (!status) {
     return (
-      <Card className="bg-zinc-900 border-zinc-800">
+      <Card className="bg-foreground border-border">
         <CardHeader>
-          <CardTitle className="text-zinc-100">{label}</CardTitle>
-          <CardDescription className="text-zinc-500">
+          <CardTitle className="text-muted-foreground">{label}</CardTitle>
+          <CardDescription className="text-muted-foreground">
             ステータス情報なし
           </CardDescription>
         </CardHeader>
@@ -38,26 +38,26 @@ function AgentOverviewCard({
     .slice(0, 5);
 
   return (
-    <Card className="bg-zinc-900 border-zinc-800">
+    <Card className="bg-foreground border-border">
       <CardHeader>
         <div className="flex items-center gap-3">
-          <CardTitle className="text-zinc-100">{label}</CardTitle>
+          <CardTitle className="text-muted-foreground">{label}</CardTitle>
           <Badge variant={status.isOnline ? 'default' : 'secondary'}>
             {status.isOnline ? 'Online' : 'Offline'}
           </Badge>
         </div>
-        <CardDescription className="text-zinc-400">
+        <CardDescription className="text-muted-foreground">
           {role}
         </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-2">
-          <p className="text-xs text-zinc-500">
+          <p className="text-xs text-muted-foreground">
             最終セッション: {status.lastSession || '不明'}
           </p>
           <div className="space-y-1">
             {summaryLines.map((line, i) => (
-              <p key={i} className="text-sm text-zinc-400 leading-relaxed">
+              <p key={i} className="text-sm text-muted-foreground leading-relaxed">
                 {line}
               </p>
             ))}
@@ -71,7 +71,7 @@ function AgentOverviewCard({
 function SessionHistoryTable({ metrics }: { metrics: SessionMetrics[] }) {
   if (metrics.length === 0) {
     return (
-      <p className="text-sm text-zinc-500">セッションデータがありません</p>
+      <p className="text-sm text-muted-foreground">セッションデータがありません</p>
     );
   }
 
@@ -79,7 +79,7 @@ function SessionHistoryTable({ metrics }: { metrics: SessionMetrics[] }) {
     <div className="overflow-x-auto">
       <table className="w-full text-sm text-left">
         <thead>
-          <tr className="text-xs text-zinc-500 uppercase tracking-wider">
+          <tr className="text-xs text-muted-foreground uppercase tracking-wider">
             <th className="py-3 pr-4 font-medium">日付</th>
             <th className="py-3 pr-4 font-medium text-right">成果物数</th>
             <th className="py-3 pr-4 font-medium text-right">エラー数</th>
@@ -93,17 +93,17 @@ function SessionHistoryTable({ metrics }: { metrics: SessionMetrics[] }) {
             <tr
               key={m.sessionDate}
               className={
-                i % 2 === 1 ? 'bg-zinc-800/40' : ''
+                i % 2 === 1 ? 'bg-foreground/40' : ''
               }
             >
-              <td className="py-2.5 pr-4 text-zinc-300 whitespace-nowrap">
+              <td className="py-2.5 pr-4 text-muted-foreground whitespace-nowrap">
                 {m.sessionDate}
               </td>
-              <td className="py-2.5 pr-4 text-right text-zinc-300">
+              <td className="py-2.5 pr-4 text-right text-muted-foreground">
                 {m.outputCount}
               </td>
               <td className="py-2.5 pr-4 text-right">
-                <span className={m.errorCount > 0 ? 'text-red-400' : 'text-zinc-400'}>
+                <span className={m.errorCount > 0 ? 'text-red-400' : 'text-muted-foreground'}>
                   {m.errorCount}
                 </span>
               </td>
@@ -120,7 +120,7 @@ function SessionHistoryTable({ metrics }: { metrics: SessionMetrics[] }) {
                   {m.qualityScore}/5
                 </span>
               </td>
-              <td className="py-2.5 pr-4 text-right text-zinc-300">
+              <td className="py-2.5 pr-4 text-right text-muted-foreground">
                 {Math.round(m.delegationRatio * 100)}%
               </td>
               <td className="py-2.5">
@@ -132,7 +132,7 @@ function SessionHistoryTable({ metrics }: { metrics: SessionMetrics[] }) {
                       </Badge>
                     ))
                   ) : (
-                    <span className="text-zinc-600">-</span>
+                    <span className="text-muted-foreground">-</span>
                   )}
                 </div>
               </td>
@@ -156,10 +156,10 @@ export default function AgentsPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-zinc-100">
+        <h1 className="text-2xl font-semibold tracking-tight text-muted-foreground">
           Agents
         </h1>
-        <p className="mt-1 text-sm text-zinc-500">
+        <p className="mt-1 text-sm text-muted-foreground">
           エージェントの状態と活動履歴
         </p>
       </div>
@@ -180,7 +180,7 @@ export default function AgentsPage() {
 
       {/* Session History Table */}
       <section>
-        <h2 className="text-lg font-medium text-zinc-200 mb-4">
+        <h2 className="text-lg font-medium text-muted-foreground mb-4">
           セッション履歴（Zen）
         </h2>
         <SessionHistoryTable metrics={sessionMetrics} />
@@ -188,9 +188,9 @@ export default function AgentsPage() {
 
       {/* Coming Soon */}
       <section>
-        <Card className="bg-zinc-800 border-zinc-700/50">
+        <Card className="bg-foreground border-border/50">
           <CardContent className="py-2">
-            <p className="text-sm text-zinc-500 text-center">
+            <p className="text-sm text-muted-foreground text-center">
               タスク投入・リアルタイム実行機能は今後のアップデートで追加予定です
             </p>
           </CardContent>

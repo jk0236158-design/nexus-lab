@@ -14,7 +14,7 @@ function scoreVariant(score: number): 'default' | 'secondary' | 'destructive' {
 function whyNowColor(score: number): string {
   if (score >= 80) return 'bg-amber-500/20 text-amber-400 border-amber-500/30';
   if (score >= 50) return 'bg-sky-500/15 text-sky-400 border-sky-500/25';
-  return 'bg-zinc-700/50 text-zinc-400 border-zinc-600/40';
+  return 'bg-muted-foreground/50 text-muted-foreground border-border/40';
 }
 
 export function LeadCard({ lead }: LeadCardProps) {
@@ -24,15 +24,15 @@ export function LeadCard({ lead }: LeadCardProps) {
     <div
       className={`rounded-lg border p-3 transition-colors ${
         isHighScore
-          ? 'border-amber-500/30 bg-zinc-900/80 ring-1 ring-amber-500/20'
-          : 'border-zinc-700/50 bg-zinc-900'
+          ? 'border-amber-500/30 bg-foreground/80 ring-1 ring-amber-500/20'
+          : 'border-border/50 bg-foreground'
       }`}
     >
-      <div className="mb-1.5 font-semibold text-sm text-zinc-100 leading-tight">
+      <div className="mb-1.5 font-semibold text-sm text-muted-foreground leading-tight">
         {lead.company}
       </div>
 
-      <div className="mb-2 text-xs text-zinc-500">{lead.sector}</div>
+      <div className="mb-2 text-xs text-muted-foreground">{lead.sector}</div>
 
       <div className="mb-2 flex flex-wrap items-center gap-1.5">
         <Badge variant={scoreVariant(lead.score)} className="text-[10px] h-4 px-1.5">
@@ -46,7 +46,7 @@ export function LeadCard({ lead }: LeadCardProps) {
       </div>
 
       {lead.pain && (
-        <p className="text-xs text-zinc-400 leading-snug line-clamp-1">
+        <p className="text-xs text-muted-foreground leading-snug line-clamp-1">
           {lead.pain}
         </p>
       )}

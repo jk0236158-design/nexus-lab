@@ -32,10 +32,10 @@ export function NorthStarProgress({ progress }: NorthStarProgressProps) {
   );
 
   return (
-    <Card className="bg-zinc-950 border-zinc-800">
+    <Card className="bg-foreground border-border">
       <CardHeader>
-        <CardTitle className="text-zinc-100">北極星 (Phase 1.5/2 完成条件)</CardTitle>
-        <CardDescription className="text-zinc-500">
+        <CardTitle className="text-muted-foreground">北極星 (Phase 1.5/2 完成条件)</CardTitle>
+        <CardDescription className="text-muted-foreground">
           ジュン介入 週 1-2 回 + 売上が固定費超え安定 を同時達成
         </CardDescription>
       </CardHeader>
@@ -43,12 +43,12 @@ export function NorthStarProgress({ progress }: NorthStarProgressProps) {
         <div className="space-y-4">
           <div className="space-y-1">
             <div className="flex items-center justify-between text-xs">
-              <span className="text-zinc-400">距離スコア</span>
+              <span className="text-muted-foreground">距離スコア</span>
               <span className="tabular-nums" style={{ color: YUINO_OLIVE }}>
                 {distanceScore} / 100
               </span>
             </div>
-            <div className="h-3 w-full rounded-full bg-zinc-800">
+            <div className="h-3 w-full rounded-full bg-foreground">
               <div
                 className="h-3 rounded-full transition-all"
                 style={{
@@ -59,43 +59,43 @@ export function NorthStarProgress({ progress }: NorthStarProgressProps) {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-2 text-xs text-zinc-400 md:grid-cols-3">
+          <div className="grid grid-cols-1 gap-2 text-xs text-muted-foreground md:grid-cols-3">
             <div>
-              <span className="text-zinc-500">ジュン介入 (直近 7 day)</span>:
+              <span className="text-muted-foreground">ジュン介入 (直近 7 day)</span>:
               {' '}
-              <span className="tabular-nums text-zinc-200">
+              <span className="tabular-nums text-muted-foreground">
                 {junInterventionFrequencyWeekly} 件
               </span>
             </div>
             <div>
-              <span className="text-zinc-500">売上カバー率</span>:
+              <span className="text-muted-foreground">売上カバー率</span>:
               {' '}
-              <span className="tabular-nums text-zinc-200">{revenuePct}%</span>
+              <span className="tabular-nums text-muted-foreground">{revenuePct}%</span>
             </div>
             <div>
-              <span className="text-zinc-500">AI 裁量予算消費</span>:
+              <span className="text-muted-foreground">AI 裁量予算消費</span>:
               {' '}
-              <span className="tabular-nums text-zinc-200">{budgetPct}%</span>
+              <span className="tabular-nums text-muted-foreground">{budgetPct}%</span>
             </div>
           </div>
 
           <div>
-            <p className="mb-2 text-xs font-medium text-zinc-300">5 step 実務</p>
+            <p className="mb-2 text-xs font-medium text-muted-foreground">5 step 実務</p>
             <ul className="space-y-1">
               {fiveStepChecklist.map((item, i) => (
-                <li key={i} className="flex items-start gap-2 text-xs text-zinc-400">
+                <li key={i} className="flex items-start gap-2 text-xs text-muted-foreground">
                   <span
                     className={
                       item.done
                         ? 'inline-block h-3 w-3 flex-shrink-0 rounded-full bg-emerald-500'
-                        : 'inline-block h-3 w-3 flex-shrink-0 rounded-full border border-zinc-600 bg-zinc-800'
+                        : 'inline-block h-3 w-3 flex-shrink-0 rounded-full border border-border bg-foreground'
                     }
                     aria-label={item.done ? '完了' : '未完'}
                   />
                   <span className="flex-1">
-                    <span className="text-zinc-200">{item.step}</span>
+                    <span className="text-muted-foreground">{item.step}</span>
                     {' '}
-                    <span className="text-zinc-500">— {item.evidence}</span>
+                    <span className="text-muted-foreground">— {item.evidence}</span>
                   </span>
                 </li>
               ))}

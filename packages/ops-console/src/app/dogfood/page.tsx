@@ -22,24 +22,24 @@ export default async function DogfoodPage() {
     <div className="space-y-8">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-zinc-100">
+          <h1 className="text-2xl font-semibold tracking-tight text-muted-foreground">
             Dogfood
           </h1>
-          <p className="mt-1 text-sm text-zinc-500">
+          <p className="mt-1 text-sm text-muted-foreground">
             Aira closed loop (observe → decide → dispatch → verify → recover →
             execute) の観察 view (read-only)
           </p>
         </div>
-        <p className="text-xs text-zinc-600 self-end">
+        <p className="text-xs text-muted-foreground self-end">
           last run: {status.lastRunAt ?? '不明'}
         </p>
       </div>
 
       <section>
-        <h2 className="text-sm font-semibold text-zinc-200 mb-3">
+        <h2 className="text-sm font-semibold text-muted-foreground mb-3">
           6 step status
         </h2>
-        <p className="text-xs text-zinc-500 mb-3">
+        <p className="text-xs text-muted-foreground mb-3">
           現状 Aira dispatch log には 6 step 形式の event がまだ記録されていない (`zen_board_review_request` 等の action_type のみ)。
           {' '}6 step 形式の closed-loop log は Phase B (5/13-5/22) で Kai-side が拡張予定、 現在は placeholder 表示。
         </p>
@@ -47,10 +47,10 @@ export default async function DogfoodPage() {
           {CLOSED_LOOP_STEPS.map((step) => {
             const info = stepMap[step];
             return (
-              <Card key={step} className="bg-zinc-900 border-zinc-800">
+              <Card key={step} className="bg-foreground border-border">
                 <CardHeader className="pb-2">
                   <div className="flex items-center justify-between">
-                    <CardTitle className="text-zinc-100 text-base">
+                    <CardTitle className="text-muted-foreground text-base">
                       {step}
                     </CardTitle>
                     <Badge
@@ -63,7 +63,7 @@ export default async function DogfoodPage() {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-xs text-zinc-500">
+                  <p className="text-xs text-muted-foreground">
                     {info?.lastTimestamp ?? '-'}
                   </p>
                 </CardContent>
@@ -74,60 +74,60 @@ export default async function DogfoodPage() {
       </section>
 
       <section className="grid grid-cols-1 gap-4 md:grid-cols-3">
-        <Card className="bg-zinc-900 border-zinc-800">
+        <Card className="bg-foreground border-border">
           <CardHeader>
-            <CardTitle className="text-zinc-100 text-sm">
+            <CardTitle className="text-muted-foreground text-sm">
               false positive
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-semibold text-zinc-100">
+            <p className="text-2xl font-semibold text-muted-foreground">
               {status.falsePositiveCount}
             </p>
-            <p className="text-xs text-zinc-600 mt-1">
+            <p className="text-xs text-muted-foreground mt-1">
               axis 12 v0 connect 後に更新
             </p>
           </CardContent>
         </Card>
 
-        <Card className="bg-zinc-900 border-zinc-800">
+        <Card className="bg-foreground border-border">
           <CardHeader>
-            <CardTitle className="text-zinc-100 text-sm">
+            <CardTitle className="text-muted-foreground text-sm">
               false negative
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-semibold text-zinc-100">
+            <p className="text-2xl font-semibold text-muted-foreground">
               {status.falseNegativeCount}
             </p>
-            <p className="text-xs text-zinc-600 mt-1">
+            <p className="text-xs text-muted-foreground mt-1">
               axis 12 v0 connect 後に更新
             </p>
           </CardContent>
         </Card>
 
-        <Card className="bg-zinc-900 border-zinc-800">
+        <Card className="bg-foreground border-border">
           <CardHeader>
-            <CardTitle className="text-zinc-100 text-sm">last reset</CardTitle>
+            <CardTitle className="text-muted-foreground text-sm">last reset</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-zinc-300">
+            <p className="text-sm text-muted-foreground">
               {status.lastResetAt ?? '-'}
             </p>
           </CardContent>
         </Card>
       </section>
 
-      <Card className="bg-zinc-900 border-zinc-800">
+      <Card className="bg-foreground border-border">
         <CardHeader>
-          <CardTitle className="text-zinc-100">直近 events</CardTitle>
-          <CardDescription className="text-zinc-500">
+          <CardTitle className="text-muted-foreground">直近 events</CardTitle>
+          <CardDescription className="text-muted-foreground">
             {status.recentEvents.length} 件 (新しい順)
           </CardDescription>
         </CardHeader>
         <CardContent>
           {status.recentEvents.length === 0 ? (
-            <p className="text-sm text-zinc-500">
+            <p className="text-sm text-muted-foreground">
               event 未記録 ({status.sources.logPath} 不在)
             </p>
           ) : (
@@ -135,18 +135,18 @@ export default async function DogfoodPage() {
               {status.recentEvents.map((ev, i) => (
                 <div
                   key={i}
-                  className="flex items-start gap-3 text-xs text-zinc-400 py-1 border-b border-zinc-900 last:border-b-0"
+                  className="flex items-start gap-3 text-xs text-muted-foreground py-1 border-b border-border last:border-b-0"
                 >
-                  <span className="shrink-0 text-zinc-600 w-44 truncate">
+                  <span className="shrink-0 text-muted-foreground w-44 truncate">
                     {ev.timestamp || '-'}
                   </span>
-                  <span className="shrink-0 text-zinc-300 w-56 truncate">
+                  <span className="shrink-0 text-muted-foreground w-56 truncate">
                     {ev.step}
                   </span>
-                  <span className="shrink-0 text-zinc-500 w-20 truncate">
+                  <span className="shrink-0 text-muted-foreground w-20 truncate">
                     {ev.status}
                   </span>
-                  <span className="flex-1 text-zinc-500 truncate">
+                  <span className="flex-1 text-muted-foreground truncate">
                     {ev.evidence ?? ''}
                   </span>
                 </div>
@@ -156,7 +156,7 @@ export default async function DogfoodPage() {
         </CardContent>
       </Card>
 
-      <p className="text-xs text-zinc-600">
+      <p className="text-xs text-muted-foreground">
         sources: {status.sources.statusPath} / {status.sources.logPath}
       </p>
     </div>

@@ -19,29 +19,29 @@ export function BoardMessages({ messages }: BoardMessagesProps) {
     .slice(0, 5);
 
   return (
-    <Card className="bg-zinc-900 border-zinc-800">
+    <Card className="bg-foreground border-border">
       <CardHeader>
-        <CardTitle className="text-zinc-100">最新メッセージ</CardTitle>
+        <CardTitle className="text-muted-foreground">最新メッセージ</CardTitle>
       </CardHeader>
       <CardContent>
         {sorted.length === 0 ? (
-          <p className="text-sm text-zinc-500">メッセージなし</p>
+          <p className="text-sm text-muted-foreground">メッセージなし</p>
         ) : (
           <div className="space-y-0">
             {sorted.map((msg, i) => (
               <div key={msg.filename}>
-                {i > 0 && <Separator className="my-3 bg-zinc-800" />}
+                {i > 0 && <Separator className="my-3 bg-foreground" />}
                 <div className="flex items-start justify-between gap-4">
                   <div className="min-w-0">
-                    <p className="text-sm text-zinc-100">
-                      <span className="text-zinc-400">{msg.from}</span>
-                      <span className="text-zinc-600 mx-1.5">&rarr;</span>
-                      <span className="text-zinc-400">{msg.to}</span>
-                      <span className="text-zinc-600 mx-1.5">:</span>
+                    <p className="text-sm text-muted-foreground">
+                      <span className="text-muted-foreground">{msg.from}</span>
+                      <span className="text-muted-foreground mx-1.5">&rarr;</span>
+                      <span className="text-muted-foreground">{msg.to}</span>
+                      <span className="text-muted-foreground mx-1.5">:</span>
                       <span className="font-medium">{msg.subject}</span>
                     </p>
                   </div>
-                  <span className="shrink-0 text-xs text-zinc-600">
+                  <span className="shrink-0 text-xs text-muted-foreground">
                     {msg.date}
                   </span>
                 </div>

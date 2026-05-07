@@ -31,12 +31,12 @@ export function WatcherStatusCard({ status }: WatcherStatusCardProps) {
   const recentTail = status.recentLogLines.slice(-5);
 
   return (
-    <Card className="bg-zinc-900 border-zinc-800">
+    <Card className="bg-foreground border-border">
       <CardHeader>
         <div className="flex items-center justify-between gap-4">
           <div>
-            <CardTitle className="text-zinc-100">SharedOpsWatcher</CardTitle>
-            <CardDescription className="text-zinc-500">
+            <CardTitle className="text-muted-foreground">SharedOpsWatcher</CardTitle>
+            <CardDescription className="text-muted-foreground">
               pid: {status.pid ?? '-'} / last log:{' '}
               {status.lastLogModifiedAt ?? '-'}
             </CardDescription>
@@ -49,14 +49,14 @@ export function WatcherStatusCard({ status }: WatcherStatusCardProps) {
       <CardContent>
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div>
-            <p className="text-xs text-zinc-500">本日 suppressed</p>
-            <p className="text-2xl font-semibold text-zinc-100">
+            <p className="text-xs text-muted-foreground">本日 suppressed</p>
+            <p className="text-2xl font-semibold text-muted-foreground">
               {status.suppressedCountToday}
             </p>
           </div>
           <div>
-            <p className="text-xs text-zinc-500">累計 suppressed</p>
-            <p className="text-2xl font-semibold text-zinc-100">
+            <p className="text-xs text-muted-foreground">累計 suppressed</p>
+            <p className="text-2xl font-semibold text-muted-foreground">
               {status.suppressedCountTotal}
             </p>
           </div>
@@ -64,25 +64,25 @@ export function WatcherStatusCard({ status }: WatcherStatusCardProps) {
 
         <div className="mb-4 grid grid-cols-2 gap-4">
           <div>
-            <p className="text-xs text-zinc-500">false_positive (placeholder)</p>
-            <p className="text-sm text-zinc-300">0</p>
+            <p className="text-xs text-muted-foreground">false_positive (placeholder)</p>
+            <p className="text-sm text-muted-foreground">0</p>
           </div>
           <div>
-            <p className="text-xs text-zinc-500">false_negative (placeholder)</p>
-            <p className="text-sm text-zinc-300">0</p>
+            <p className="text-xs text-muted-foreground">false_negative (placeholder)</p>
+            <p className="text-sm text-muted-foreground">0</p>
           </div>
         </div>
 
-        <p className="text-xs text-zinc-500 mb-1">直近 log (最新 5 件)</p>
+        <p className="text-xs text-muted-foreground mb-1">直近 log (最新 5 件)</p>
         {recentTail.length === 0 ? (
-          <p className="text-xs text-zinc-600">log 未記録</p>
+          <p className="text-xs text-muted-foreground">log 未記録</p>
         ) : (
-          <pre className="overflow-auto rounded-md border border-zinc-800 bg-zinc-950 p-2 text-[10px] text-zinc-400 leading-snug whitespace-pre-wrap">
+          <pre className="overflow-auto rounded-md border border-border bg-foreground p-2 text-[10px] text-muted-foreground leading-snug whitespace-pre-wrap">
             {recentTail.join('\n')}
           </pre>
         )}
 
-        <p className="mt-2 text-[10px] text-zinc-600">
+        <p className="mt-2 text-[10px] text-muted-foreground">
           last suppressed: {status.lastSuppressedAt ?? '-'} / source:{' '}
           {status.sources.logPath}
         </p>

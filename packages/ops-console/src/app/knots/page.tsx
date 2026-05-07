@@ -11,10 +11,10 @@ export default function KnotsPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-semibold tracking-tight text-zinc-100">
+      <h1 className="text-2xl font-semibold tracking-tight text-muted-foreground">
         Knots
       </h1>
-      <p className="mt-2 text-zinc-400">
+      <p className="mt-2 text-muted-foreground">
         条件付き変形演算子（Knot）の一覧と管理
       </p>
 

@@ -36,7 +36,7 @@ const KINDS: ChatKind[] = ['相談', '指示', '雑談', '報告'];
 const KIND_BADGE_COLOR: Record<ChatKind, string> = {
   相談: 'bg-sky-900/60 text-sky-300 border-sky-700/50',
   指示: 'bg-amber-900/60 text-amber-300 border-amber-700/50',
-  雑談: 'bg-zinc-800 text-zinc-400 border-zinc-700/50',
+  雑談: 'bg-foreground text-muted-foreground border-border/50',
   報告: 'bg-emerald-900/60 text-emerald-300 border-emerald-700/50',
 };
 
@@ -115,13 +115,13 @@ function SentMessageRow({ msg }: { msg: SentMessageEntry }) {
   return (
     <div className="flex items-start justify-between gap-4 py-2">
       <div className="min-w-0 space-y-0.5">
-        <p className="text-sm text-zinc-200 truncate">
+        <p className="text-sm text-muted-foreground truncate">
           {msg.subject || '(件名なし)'}
         </p>
-        <p className="text-xs text-zinc-500">
+        <p className="text-xs text-muted-foreground">
           {directionLabel}
           {msg.kind && (
-            <span className="ml-2 text-zinc-600">[{msg.kind}]</span>
+            <span className="ml-2 text-muted-foreground">[{msg.kind}]</span>
           )}
         </p>
       </div>
@@ -131,7 +131,7 @@ function SentMessageRow({ msg }: { msg: SentMessageEntry }) {
             返信
           </Badge>
         )}
-        <span className="text-xs text-zinc-600 tabular-nums">{msg.date}</span>
+        <span className="text-xs text-muted-foreground tabular-nums">{msg.date}</span>
       </div>
     </div>
   );
@@ -187,7 +187,7 @@ function SendForm({ haltActive, onSendSuccess, onSendError }: SendFormProps) {
         <div className="space-y-1.5">
           <label
             htmlFor="chat-to"
-            className="block text-xs font-medium text-zinc-400 uppercase tracking-wider"
+            className="block text-xs font-medium text-muted-foreground uppercase tracking-wider"
           >
             宛先
           </label>
@@ -195,7 +195,7 @@ function SendForm({ haltActive, onSendSuccess, onSendError }: SendFormProps) {
             id="chat-to"
             value={to}
             onChange={(e) => setTo(e.target.value as ChatRecipient)}
-            className="w-full rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-zinc-100 focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500 transition-colors"
+            className="w-full rounded-md border border-border bg-foreground px-3 py-2 text-sm text-muted-foreground focus:border-border focus:outline-none focus:ring-1 focus:ring-ring transition-colors"
           >
             {RECIPIENTS.map((r) => (
               <option key={r} value={r}>
@@ -208,7 +208,7 @@ function SendForm({ haltActive, onSendSuccess, onSendError }: SendFormProps) {
         <div className="space-y-1.5">
           <label
             htmlFor="chat-kind"
-            className="block text-xs font-medium text-zinc-400 uppercase tracking-wider"
+            className="block text-xs font-medium text-muted-foreground uppercase tracking-wider"
           >
             種別
           </label>
@@ -216,7 +216,7 @@ function SendForm({ haltActive, onSendSuccess, onSendError }: SendFormProps) {
             id="chat-kind"
             value={kind}
             onChange={(e) => setKind(e.target.value as ChatKind)}
-            className="w-full rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-zinc-100 focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500 transition-colors"
+            className="w-full rounded-md border border-border bg-foreground px-3 py-2 text-sm text-muted-foreground focus:border-border focus:outline-none focus:ring-1 focus:ring-ring transition-colors"
           >
             {KINDS.map((k) => (
               <option key={k} value={k}>
@@ -231,7 +231,7 @@ function SendForm({ haltActive, onSendSuccess, onSendError }: SendFormProps) {
       <div className="space-y-1.5">
         <label
           htmlFor="chat-subject"
-          className="block text-xs font-medium text-zinc-400 uppercase tracking-wider"
+          className="block text-xs font-medium text-muted-foreground uppercase tracking-wider"
         >
           件名
         </label>
@@ -242,16 +242,16 @@ function SendForm({ haltActive, onSendSuccess, onSendError }: SendFormProps) {
           onChange={(e) => setSubject(e.target.value)}
           maxLength={100}
           placeholder="例: api-proxy テンプレートの方向性を相談したい"
-          className="w-full rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-600 focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500 transition-colors"
+          className="w-full rounded-md border border-border bg-foreground px-3 py-2 text-sm text-muted-foreground placeholder:text-muted-foreground focus:border-border focus:outline-none focus:ring-1 focus:ring-ring transition-colors"
         />
-        <p className="text-right text-xs text-zinc-600">{subject.length}/100</p>
+        <p className="text-right text-xs text-muted-foreground">{subject.length}/100</p>
       </div>
 
       {/* 本文 */}
       <div className="space-y-1.5">
         <label
           htmlFor="chat-body"
-          className="block text-xs font-medium text-zinc-400 uppercase tracking-wider"
+          className="block text-xs font-medium text-muted-foreground uppercase tracking-wider"
         >
           本文
         </label>
@@ -262,13 +262,13 @@ function SendForm({ haltActive, onSendSuccess, onSendError }: SendFormProps) {
           maxLength={2000}
           rows={5}
           placeholder="本文を入力してください..."
-          className="w-full resize-y rounded-md border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-zinc-100 placeholder:text-zinc-600 focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-500 transition-colors"
+          className="w-full resize-y rounded-md border border-border bg-foreground px-3 py-2 text-sm text-muted-foreground placeholder:text-muted-foreground focus:border-border focus:outline-none focus:ring-1 focus:ring-ring transition-colors"
         />
-        <p className="text-right text-xs text-zinc-600">{body.length}/2000</p>
+        <p className="text-right text-xs text-muted-foreground">{body.length}/2000</p>
       </div>
 
       {/* 機微情報注意 */}
-      <div className="flex items-start gap-2 rounded-md border border-zinc-700/50 bg-zinc-800/40 px-3 py-2.5 text-xs text-zinc-500">
+      <div className="flex items-start gap-2 rounded-md border border-border/50 bg-foreground/40 px-3 py-2.5 text-xs text-muted-foreground">
         <span className="shrink-0">ℹ</span>
         <span>{SENSITIVE_WARNING}</span>
       </div>
@@ -340,10 +340,10 @@ export function ChatPageClient({ haltActive, initialMessages }: ChatPageClientPr
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-zinc-100">
+        <h1 className="text-2xl font-semibold tracking-tight text-muted-foreground">
           Chat
         </h1>
-        <p className="mt-1 text-sm text-zinc-500">
+        <p className="mt-1 text-sm text-muted-foreground">
           Kai / Zen / チームメンバーに短いメッセージを送る
         </p>
       </div>
@@ -351,10 +351,10 @@ export function ChatPageClient({ haltActive, initialMessages }: ChatPageClientPr
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
         {/* 送信フォーム (3/5) */}
         <div className="lg:col-span-3">
-          <Card className="bg-zinc-900 border-zinc-800">
+          <Card className="bg-foreground border-border">
             <CardHeader>
-              <CardTitle className="text-zinc-100">新規メッセージ</CardTitle>
-              <CardDescription className="text-zinc-500">
+              <CardTitle className="text-muted-foreground">新規メッセージ</CardTitle>
+              <CardDescription className="text-muted-foreground">
                 board に Markdown として保存されます
               </CardDescription>
             </CardHeader>
@@ -370,23 +370,23 @@ export function ChatPageClient({ haltActive, initialMessages }: ChatPageClientPr
 
         {/* 最近のメッセージ (2/5) */}
         <div className="lg:col-span-2">
-          <Card className="bg-zinc-900 border-zinc-800">
+          <Card className="bg-foreground border-border">
             <CardHeader>
-              <CardTitle className="text-zinc-100">最近の送信 / 返信</CardTitle>
-              <CardDescription className="text-zinc-500">
+              <CardTitle className="text-muted-foreground">最近の送信 / 返信</CardTitle>
+              <CardDescription className="text-muted-foreground">
                 board ファイルから読み取り (v0)
               </CardDescription>
             </CardHeader>
             <CardContent>
               {messages.length === 0 ? (
-                <p className="text-sm text-zinc-600">
+                <p className="text-sm text-muted-foreground">
                   まだメッセージがありません
                 </p>
               ) : (
                 <div className="space-y-0">
                   {messages.slice(0, 10).map((msg, i) => (
                     <div key={msg.filename}>
-                      {i > 0 && <Separator className="my-1 bg-zinc-800" />}
+                      {i > 0 && <Separator className="my-1 bg-foreground" />}
                       <SentMessageRow msg={msg} />
                     </div>
                   ))}

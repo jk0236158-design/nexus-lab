@@ -10,7 +10,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 
 const hardnessColors: Record<string, string> = {
-  L0: 'bg-zinc-600 text-zinc-200',
+  L0: 'bg-muted-foreground text-muted-foreground',
   L1: 'bg-blue-600 text-blue-100',
   L2: 'bg-yellow-600 text-yellow-100',
   L3: 'bg-orange-600 text-orange-100',
@@ -40,10 +40,10 @@ export function KnotCard({ knot }: KnotCardProps) {
   const compensationText = formatValue(knot.compensation);
 
   return (
-    <Card className="bg-zinc-900 border-zinc-800">
+    <Card className="bg-foreground border-border">
       <CardHeader>
         <div className="flex items-center gap-2 flex-wrap">
-          <CardTitle className="text-zinc-100 font-mono text-sm">
+          <CardTitle className="text-muted-foreground font-mono text-sm">
             {knot.id}
           </CardTitle>
           <Badge
@@ -57,32 +57,32 @@ export function KnotCard({ knot }: KnotCardProps) {
             {knot.agent}
           </Badge>
         </div>
-        <CardDescription className="text-zinc-400 mt-1">
+        <CardDescription className="text-muted-foreground mt-1">
           {knot.description}
         </CardDescription>
       </CardHeader>
 
       <CardContent>
         <details className="group">
-          <summary className="cursor-pointer text-sm text-zinc-500 hover:text-zinc-300 transition-colors select-none">
+          <summary className="cursor-pointer text-sm text-muted-foreground hover:text-muted-foreground transition-colors select-none">
             Details
           </summary>
           <div className="mt-3 space-y-3 text-sm">
             <div>
-              <span className="text-zinc-500 font-medium">Trigger</span>
-              <pre className="mt-1 text-zinc-300 bg-zinc-800 rounded-md p-2 overflow-x-auto whitespace-pre-wrap break-words text-xs">
+              <span className="text-muted-foreground font-medium">Trigger</span>
+              <pre className="mt-1 text-muted-foreground bg-foreground rounded-md p-2 overflow-x-auto whitespace-pre-wrap break-words text-xs">
                 {triggerText}
               </pre>
             </div>
             <div>
-              <span className="text-zinc-500 font-medium">Effect</span>
-              <pre className="mt-1 text-zinc-300 bg-zinc-800 rounded-md p-2 overflow-x-auto whitespace-pre-wrap break-words text-xs">
+              <span className="text-muted-foreground font-medium">Effect</span>
+              <pre className="mt-1 text-muted-foreground bg-foreground rounded-md p-2 overflow-x-auto whitespace-pre-wrap break-words text-xs">
                 {effectText}
               </pre>
             </div>
             <div>
-              <span className="text-zinc-500 font-medium">Compensation</span>
-              <pre className="mt-1 text-zinc-300 bg-zinc-800 rounded-md p-2 overflow-x-auto whitespace-pre-wrap break-words text-xs">
+              <span className="text-muted-foreground font-medium">Compensation</span>
+              <pre className="mt-1 text-muted-foreground bg-foreground rounded-md p-2 overflow-x-auto whitespace-pre-wrap break-words text-xs">
                 {compensationText}
               </pre>
             </div>
@@ -90,7 +90,7 @@ export function KnotCard({ knot }: KnotCardProps) {
         </details>
       </CardContent>
 
-      <CardFooter className="text-xs text-zinc-500 gap-4">
+      <CardFooter className="text-xs text-muted-foreground gap-4">
         <span>Observed: {knot.observedCount}x</span>
         <span>Last: {knot.lastObserved ?? 'N/A'}</span>
       </CardFooter>

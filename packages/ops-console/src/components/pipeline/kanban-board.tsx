@@ -42,14 +42,14 @@ function columnHeaderClass(accent?: string): string {
   if (accent === 'red') {
     return 'bg-red-950/60 border-red-800/40';
   }
-  return 'bg-zinc-800 border-zinc-700/50';
+  return 'bg-foreground border-border/50';
 }
 
 function columnBorderClass(accent?: string): string {
   if (accent === 'red') {
     return 'border-red-900/30';
   }
-  return 'border-zinc-800';
+  return 'border-border';
 }
 
 interface KanbanBoardProps {
@@ -61,7 +61,7 @@ export function KanbanBoard({ leads }: KanbanBoardProps) {
 
   if (leads.length === 0) {
     return (
-      <p className="mt-6 text-zinc-500 text-sm">
+      <p className="mt-6 text-muted-foreground text-sm">
         リードデータがありません。
       </p>
     );
@@ -81,10 +81,10 @@ export function KanbanBoard({ leads }: KanbanBoardProps) {
               <div
                 className={`flex items-center justify-between rounded-t-lg border-b px-3 py-2 ${columnHeaderClass(col.accent)}`}
               >
-                <span className="text-sm font-medium text-zinc-200">
+                <span className="text-sm font-medium text-muted-foreground">
                   {col.label}
                 </span>
-                <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-zinc-700/60 px-1.5 text-[11px] font-medium text-zinc-300">
+                <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-muted-foreground/60 px-1.5 text-[11px] font-medium text-muted-foreground">
                   {colLeads.length}
                 </span>
               </div>
@@ -92,7 +92,7 @@ export function KanbanBoard({ leads }: KanbanBoardProps) {
               {/* Cards */}
               <div className="flex flex-col gap-2 p-2">
                 {colLeads.length === 0 ? (
-                  <p className="py-4 text-center text-xs text-zinc-600">--</p>
+                  <p className="py-4 text-center text-xs text-muted-foreground">--</p>
                 ) : (
                   colLeads.map((lead) => (
                     <LeadCard key={lead.id} lead={lead} />

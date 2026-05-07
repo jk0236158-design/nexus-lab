@@ -27,12 +27,12 @@ export function NokazeEcosystemView({
   const yuinoStatus = agentStatuses.find((s) => s.agent === 'yuino');
 
   return (
-    <Card className="bg-zinc-950 border-zinc-800">
+    <Card className="bg-foreground border-border">
       <CardHeader>
-        <CardTitle className="text-zinc-100">nokaze ecosystem</CardTitle>
-        <CardDescription className="text-zinc-500">
+        <CardTitle className="text-muted-foreground">nokaze ecosystem</CardTitle>
+        <CardDescription className="text-muted-foreground">
           <span
-            className="cursor-help underline decoration-dotted decoration-zinc-600 underline-offset-4"
+            className="cursor-help underline decoration-dotted decoration-muted-foreground underline-offset-4"
             title={NARRATIVE_TOOLTIP}
             aria-label={NARRATIVE_TOOLTIP}
             data-testid="nokaze-narrative-tooltip"

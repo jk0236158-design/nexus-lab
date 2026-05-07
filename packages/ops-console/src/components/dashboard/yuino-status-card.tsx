@@ -20,7 +20,7 @@ export function YuinoStatusCard({ status }: YuinoStatusCardProps) {
   if (!status) {
     return (
       <Card
-        className="bg-zinc-900"
+        className="bg-foreground"
         style={{
           borderWidth: '1px',
           borderStyle: 'solid',
@@ -34,10 +34,10 @@ export function YuinoStatusCard({ status }: YuinoStatusCardProps) {
               style={{ color: YUINO_OLIVE }}
               aria-hidden="true"
             />
-            <CardTitle className="text-zinc-100">Yuino</CardTitle>
+            <CardTitle className="text-muted-foreground">Yuino</CardTitle>
             <Badge variant="outline">公開商品</Badge>
           </div>
-          <CardDescription className="text-zinc-400">
+          <CardDescription className="text-muted-foreground">
             公開商品 surface (Zen + Kai 共同) — 状態不明
           </CardDescription>
         </CardHeader>
@@ -52,7 +52,7 @@ export function YuinoStatusCard({ status }: YuinoStatusCardProps) {
 
   return (
     <Card
-      className="bg-zinc-900"
+      className="bg-foreground"
       style={{
         borderWidth: '1px',
         borderStyle: 'solid',
@@ -66,23 +66,23 @@ export function YuinoStatusCard({ status }: YuinoStatusCardProps) {
             style={{ color: YUINO_OLIVE }}
             aria-hidden="true"
           />
-          <CardTitle className="text-zinc-100">Yuino</CardTitle>
+          <CardTitle className="text-muted-foreground">Yuino</CardTitle>
           <Badge variant="outline">公開商品</Badge>
           <Badge variant={status.isOnline ? 'default' : 'secondary'}>
             {status.isOnline ? 'Online' : 'Offline'}
           </Badge>
         </div>
-        <CardDescription className="text-zinc-400">
+        <CardDescription className="text-muted-foreground">
           公開商品 surface (Zen + Kai 共同) ・ 最終: {status.lastSession || '不明'}
         </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-1">
           {summaryLines.length === 0 ? (
-            <p className="text-sm text-zinc-500">summary なし</p>
+            <p className="text-sm text-muted-foreground">summary なし</p>
           ) : (
             summaryLines.map((line, i) => (
-              <p key={i} className="text-sm text-zinc-400 leading-relaxed">
+              <p key={i} className="text-sm text-muted-foreground leading-relaxed">
                 {line}
               </p>
             ))

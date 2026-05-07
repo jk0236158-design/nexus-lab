@@ -14,13 +14,13 @@ export function SessionQuality({ metrics }: SessionQualityProps) {
   const recent = metrics.slice(0, 5);
 
   return (
-    <Card className="bg-zinc-900 border-zinc-800">
+    <Card className="bg-foreground border-border">
       <CardHeader>
-        <CardTitle className="text-zinc-100">セッション品質</CardTitle>
+        <CardTitle className="text-muted-foreground">セッション品質</CardTitle>
       </CardHeader>
       <CardContent>
         {recent.length === 0 ? (
-          <p className="text-sm text-zinc-500">メトリクスデータなし</p>
+          <p className="text-sm text-muted-foreground">メトリクスデータなし</p>
         ) : (
           <div className="space-y-3">
             {recent.map((m) => {
@@ -35,14 +35,14 @@ export function SessionQuality({ metrics }: SessionQualityProps) {
               return (
                 <div key={m.sessionDate} className="space-y-1">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="text-zinc-400 tabular-nums">
+                    <span className="text-muted-foreground tabular-nums">
                       {m.sessionDate}
                     </span>
-                    <span className="text-zinc-500">
+                    <span className="text-muted-foreground">
                       {m.qualityScore}/5
                     </span>
                   </div>
-                  <div className="h-2 w-full rounded-full bg-zinc-800">
+                  <div className="h-2 w-full rounded-full bg-foreground">
                     <div
                       className={`h-2 rounded-full ${color} transition-all`}
                       style={{ width: `${pct}%` }}
