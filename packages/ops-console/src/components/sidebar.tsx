@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Sparkles, Activity } from "lucide-react";
+import { Sparkles, Activity, ShieldCheck } from "lucide-react";
 
 const baseNavItems = [
   { href: "/", label: "Home" },
@@ -15,6 +15,7 @@ const baseNavItems = [
 const phase6NavItems = [
   { href: "/yuino-preview", label: "Yuino Preview", Icon: Sparkles },
   { href: "/dogfood", label: "Dogfood", Icon: Activity },
+  { href: "/approval", label: "承認待ち", Icon: ShieldCheck },
 ];
 
 export function Sidebar() {

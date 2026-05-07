@@ -113,3 +113,18 @@ export interface OwnerDecision {
   title: string;
   content: string;
 }
+
+// Inbox の判断待ち item (Yuino セキュリティ v0 axis 10 Approval Gate UI 用)
+export type InboxStatus = 'pending' | 'approved' | 'rejected' | 'modified';
+
+export interface InboxItem {
+  filename: string;
+  date: string;
+  from: string;
+  to: string;
+  subject: string;
+  priority: string;
+  deadline: string;
+  body: string;
+  status: InboxStatus;
+}
