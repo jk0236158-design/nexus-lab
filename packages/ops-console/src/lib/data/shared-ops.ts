@@ -1,9 +1,17 @@
-import { readFileSync, readdirSync, existsSync } from 'fs';
+import { readFileSync, readdirSync, existsSync, statSync } from 'fs';
 import { join, basename } from 'path';
 import type { BoardMessage, OwnerDecision, AgentStatus, ChatSentMessage } from '../types';
 
 const SHARED_OPS_PATH =
   process.env.SHARED_OPS_PATH || 'C:\\Users\\jk023\\.shared-ops';
+
+const AIRA_CLOSED_LOOP_STATUS_PATH =
+  process.env.AIRA_CLOSED_LOOP_STATUS_PATH ||
+  'C:\\Users\\jk023\\.shared-ops\\status\\aira_closed_loop_status.md';
+
+const YUINO_DIGEST_DIR =
+  process.env.YUINO_DIGEST_DIR ||
+  'C:\\Users\\jk023\\nexus-lab\\aira\\data\\digests';
 
 export function getBoardMessages(): BoardMessage[] {
   const boardDir = join(SHARED_OPS_PATH, 'board');
@@ -46,15 +54,16 @@ export function getOwnerDecisions(): OwnerDecision[] {
 }
 
 export function getAgentStatuses(): AgentStatus[] {
+  const results: AgentStatus[] = [];
+
+  // ── zen / kai (既存 path 維持) ──
   const statusDir = join(SHARED_OPS_PATH, 'status');
-  const agents: Array<{ file: string; agent: 'zen' | 'kai' }> = [
+  const aiAgents: Array<{ file: string; agent: 'zen' | 'kai' }> = [
     { file: 'zen_status.md', agent: 'zen' },
     { file: 'kai_status.md', agent: 'kai' },
   ];
 
-  const results: AgentStatus[] = [];
-
-  for (const { file, agent } of agents) {
+  for (const { file, agent } of aiAgents) {
     const filePath = join(statusDir, file);
     if (!existsSync(filePath)) continue;
 
@@ -66,7 +75,88 @@ export function getAgentStatuses(): AgentStatus[] {
     }
   }
 
+  // ── aira (内部実装、 Kai-side daemon が生成する state file を readonly read) ──
+  results.push(readAiraStatus());
+
+  // ── yuino (公開商品、 最新 digest を mtime で選択) ──
+  results.push(readYuinoStatus());
+
   return results;
+}
+
+function readAiraStatus(): AgentStatus {
+  const placeholder: AgentStatus = {
+    agent: 'aira',
+    lastSession: '未取得',
+    summary: '内部実装 (Kai owned)、 closed_loop_status.md 不在のため待機中',
+    isOnline: false,
+  };
+
+  if (!existsSync(AIRA_CLOSED_LOOP_STATUS_PATH)) return placeholder;
+
+  try {
+    const content = readFileSync(AIRA_CLOSED_LOOP_STATUS_PATH, 'utf-8');
+    // markdown form を簡易 parse (zen/kai parser 流用)
+    const parsed = parseAgentStatus(content, 'zen');
+    return {
+      agent: 'aira',
+      lastSession: parsed.lastSession || '不明',
+      summary: parsed.summary || '内部実装 supervisor (Kai 主導)',
+      isOnline: false,
+    };
+  } catch {
+    return placeholder;
+  }
+}
+
+function readYuinoStatus(): AgentStatus {
+  const placeholder: AgentStatus = {
+    agent: 'yuino',
+    lastSession: '未取得',
+    summary: '公開商品 surface (Zen + Kai 共同)、 digest 未生成',
+    isOnline: false,
+  };
+
+  if (!existsSync(YUINO_DIGEST_DIR)) return placeholder;
+
+  try {
+    const files = readdirSync(YUINO_DIGEST_DIR)
+      .filter((f) => f.endsWith('_yuino_digest.md'))
+      .map((f) => ({
+        file: f,
+        path: join(YUINO_DIGEST_DIR, f),
+      }));
+
+    if (files.length === 0) return placeholder;
+
+    // mtime 最新を選択
+    let latest: { file: string; path: string; mtime: number } | null = null;
+    for (const f of files) {
+      try {
+        const stat = statSync(f.path);
+        const mtime = stat.mtimeMs as number;
+        if (!latest || mtime > latest.mtime) {
+          latest = { ...f, mtime };
+        }
+      } catch {
+        // skip
+      }
+    }
+    if (!latest) return placeholder;
+
+    const content = readFileSync(latest.path, 'utf-8');
+    const parsed = parseAgentStatus(content, 'zen');
+    const dateMatch = latest.file.match(/^(\d{4}-\d{2}-\d{2})/);
+    const lastSession = parsed.lastSession || (dateMatch ? dateMatch[1] : '不明');
+    return {
+      agent: 'yuino',
+      lastSession,
+      summary: parsed.summary || '公開商品 digest (Zen + Kai 共同)',
+      isOnline: false,
+    };
+  } catch {
+    return placeholder;
+  }
 }
 
 export function getChatMessages(): ChatSentMessage[] {

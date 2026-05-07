@@ -1,6 +1,9 @@
+// エージェント識別子 (4 axis: zen / kai = AI 運営者、 aira / yuino = 1 実体 2 語り)
+export type AgentName = 'zen' | 'kai' | 'aira' | 'yuino';
+
 // エージェントの状態
 export interface AgentStatus {
-  agent: 'zen' | 'kai';
+  agent: AgentName;
   lastSession: string;
   summary: string;
   isOnline: boolean;

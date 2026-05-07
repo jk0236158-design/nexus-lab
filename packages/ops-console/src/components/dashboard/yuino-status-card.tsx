@@ -1,0 +1,93 @@
+import type { AgentStatus } from '@/lib/types';
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Sparkles } from 'lucide-react';
+
+interface YuinoStatusCardProps {
+  status: AgentStatus | undefined;
+}
+
+const YUINO_OLIVE = '#8b9a78';
+
+export function YuinoStatusCard({ status }: YuinoStatusCardProps) {
+  if (!status) {
+    return (
+      <Card
+        className="bg-zinc-900"
+        style={{
+          borderWidth: '1px',
+          borderStyle: 'solid',
+          borderColor: YUINO_OLIVE,
+        }}
+      >
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <Sparkles
+              className="h-4 w-4"
+              style={{ color: YUINO_OLIVE }}
+              aria-hidden="true"
+            />
+            <CardTitle className="text-zinc-100">Yuino</CardTitle>
+            <Badge variant="outline">公開商品</Badge>
+          </div>
+          <CardDescription className="text-zinc-400">
+            公開商品 surface (Zen + Kai 共同) — 状態不明
+          </CardDescription>
+        </CardHeader>
+      </Card>
+    );
+  }
+
+  const summaryLines = status.summary
+    .split('\n')
+    .filter((l) => l.trim())
+    .slice(0, 4);
+
+  return (
+    <Card
+      className="bg-zinc-900"
+      style={{
+        borderWidth: '1px',
+        borderStyle: 'solid',
+        borderColor: YUINO_OLIVE,
+      }}
+    >
+      <CardHeader>
+        <div className="flex items-center gap-2">
+          <Sparkles
+            className="h-4 w-4"
+            style={{ color: YUINO_OLIVE }}
+            aria-hidden="true"
+          />
+          <CardTitle className="text-zinc-100">Yuino</CardTitle>
+          <Badge variant="outline">公開商品</Badge>
+          <Badge variant={status.isOnline ? 'default' : 'secondary'}>
+            {status.isOnline ? 'Online' : 'Offline'}
+          </Badge>
+        </div>
+        <CardDescription className="text-zinc-400">
+          公開商品 surface (Zen + Kai 共同) ・ 最終: {status.lastSession || '不明'}
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-1">
+          {summaryLines.length === 0 ? (
+            <p className="text-sm text-zinc-500">summary なし</p>
+          ) : (
+            summaryLines.map((line, i) => (
+              <p key={i} className="text-sm text-zinc-400 leading-relaxed">
+                {line}
+              </p>
+            ))
+          )}
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
