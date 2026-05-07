@@ -253,13 +253,14 @@ historical alias:
 
 = 1 entity (Aira = Yuino) を 2 axis (実装 vs 商品化) で役割分担、 2 entity 別物ではない。
 
-### Zen 4 機能 (nexus-lab/aira/src/aira-*.ts) の取り扱い
+### Zen 4 機能 (nexus-lab/aira/src/aira-*.ts) の取り扱い (2026-05-07 audit 完遂後)
 
-5/06 reify 4 機能 (Observer + Work Generator + Evaluator + Tripwire、 commit a43c788 + 8974eeb + 94e4cc0 + 2cc2143、 vitest 151/151、 Kagami QA pass) は **重複資産** narrative で再 position:
+5/06 reify 4 機能 (Observer + Work Generator + Evaluator + Tripwire、 commit a43c788 + 8974eeb + 94e4cc0 + 2cc2143、 vitest 151/151、 Kagami QA pass) は **historical origin / fallback** 扱い:
 
-- いきなり消さない
-- Kai 主導 audit で Kai-side Aira (nokaze-aira/) にない発想のみ移植 candidate
-- 残りは retire (5/13+ post-audit timing)
+- Kai 主導 audit (work-234) が **5/19 EOD target → 5/07 朝に 12 day 前倒し完遂** (commit bbfa50b、 audit report = `C:\Users\jk023\Desktop\nokaze-aira\docs\aira_zen_4functions_audit_2026-05-07.md`)
+- 結論: 4 機能全部 「migrate: none / duplicate: Zen core 全部 nokaze-aira に既に含む / keep Kai-only: atomic write + 各種 hardening (timestamp guards / 明示 active-work 解析 / `## 選んだ1件` 解析等)」
+- = 移植 candidate ゼロ、 Zen 側 4 機能は **historical / fallback** で 5/12 dogfood close まで保持、 5/26 正本切替 milestone で **deprecated 確定**
+- いきなり消さない (historical record + fallback path として保持)、 但し新規 enhancement は Kai-side principle
 
 ### 移管期間中の Zen 境界
 
