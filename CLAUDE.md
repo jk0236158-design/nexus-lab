@@ -228,6 +228,44 @@ zen-memory L3 knot `op_knot_subagent_settings_resolution_failure` (N=5 reproduct
 
 公開 doc 起稿時 self-check: internal vocabulary 漏出 0 件を確認 (`scripts/vocabulary_drift_sweep.sh` で grep sweep 化、5/02 起稿)。
 
+## 自走・自律行動の現状 (2026-05-08 jun directive 連動 audit 結果)
+
+5/08 朝 jun directive 「Zen は今の Aira/Yuino に合わせ自走・自律行動の設定をしようか」 連動の audit (Explore Agent thorough、 6 area 150+ 項目) で確定した現状:
+
+### scheduled wake = 全停止状態 (5/05 20:11 jun directive)
+
+- ZenAutonomousWake (Windows Task Scheduler、 4 slot: 09:30 / 11:30 / 14:30 / 21:00) を 2026-05-05 20:11 jun directive で全停止
+- root cause = 4/29 + 5/05 朝 3 連発火の二重 session 並走 risk (memory `feedback_dual_session_concurrency.md`)
+- root fix の form = schedule 自体を停止、 物理的に二重起動の path を断つ
+- **主 session の起動 trigger** = jun directive のみ (manual session form、 「おはよう」 等で再開)
+- **私 (Zen) の朝 sweep 認識 drift 注意**: 「auto wake fire 時刻に起動」 narrative は schedule 停止後は drift、 actual は manual session の `zen_startup_sweep.sh` 自走
+
+### continuous active continue protocol = memory 起稿のみ + 物理 trigger 不在
+
+- 5/04 evening 起稿: 「batch 完遂後即 next batch 生成 default、 jun message なし idle 化禁止」
+- scheduled wake 停止後は 物理 trigger 不在、 jun directive trigger dependency default が再発火 risk
+- 5/04 evening reform 後の 5/05-5/08 期間で同型 default 4 連再発火 (memory `feedback_no_minimum_first.md` n=4 段、 5/08 朝 jun 「過小見積もり指摘」 で確定)
+- 5/13+ Phase B 内で物理 trigger 化 candidate (議題 30 priority A 連動)
+
+### 5/13+ Phase B reform candidate (8 件、 議題 30 priority A 連動)
+
+詳細は `team_memory/zen/zen_autonomous_behavior_unified_spec_2026-05-08.md` 参照:
+
+1. enforcement scripts 7 件 → PreToolUse hook chain 化 (Iwa 主担当)
+2. nokaze-aira の Aira observer + work generator → MCP tool 化 (Kai 主担当 + Iwa 補助)
+3. scheduled wake 縮小判定 (B 案: morning 1 件のみ維持) (Iwa + Zen 共同)
+4. 二重 session lockfile + merge form (Iwa 主担当)
+5. selective denial L3 root cause investigation (Iwa 主担当)
+6. memory consolidation v3 (Zen autonomous 軸統合) (Zen 主担当 + Akari 補助)
+7. `underestimation_default_check.sh` 起稿 (Iwa 主担当)
+8. continuous active continue protocol の物理 trigger 化 = Aira observer fire signal pull form (Kai + Zen 共同設計)
+
+### 即時 boundary
+
+- jun 不在中の自走 default 再発火は memory 起稿のみで運用埋込み欠落、 物理 reify は 5/13+ Phase B
+- Aira 4 機能 MCP 化先 = nokaze-aira/ 側 (Kai 主担当)、 Zen は他 project 参照のみ書き込み禁止
+- 二重 session 並走 risk は schedule 停止で root fix 状態、 但し manual session 重複 (jun 「おはよう」 + 既存 main session 重複) は lockfile 未実装で潜在 risk あり
+
 ## Naming Convention (2026-05-06 evening 確定、 1 entity 2 narrative)
 
 5/06 evening jun original intent + Kai 確認後の正しい用語:
