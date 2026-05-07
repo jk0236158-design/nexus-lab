@@ -39,7 +39,7 @@ export function NokazeEcosystemView({
           >
             1 実体 2 語り (Aira = Yuino)
           </span>
-          {' '}・ AI 運営者 (Zen + Kai) と 商品 surface (Aira / Yuino)
+          {' '}・ 判断増幅者 (Zen + Kai) と 商品 interface (Aira / Yuino)
         </CardDescription>
       </CardHeader>
       <CardContent>

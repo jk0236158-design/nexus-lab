@@ -88,7 +88,7 @@ function readAiraStatus(): AgentStatus {
   const placeholder: AgentStatus = {
     agent: 'aira',
     lastSession: '未取得',
-    summary: '内部実装 (Kai owned)、 closed_loop_status.md 不在のため待機中',
+    summary: 'Aira (内部 judgment runtime, Kai owned)、 closed_loop_status.md 不在のため待機中',
     isOnline: false,
   };
 
@@ -101,7 +101,7 @@ function readAiraStatus(): AgentStatus {
     return {
       agent: 'aira',
       lastSession: parsed.lastSession || '不明',
-      summary: parsed.summary || '内部実装 supervisor (Kai 主導)',
+      summary: parsed.summary || 'Aira (内部 judgment runtime, Kai 主導)',
       isOnline: false,
     };
   } catch {
@@ -113,7 +113,7 @@ function readYuinoStatus(): AgentStatus {
   const placeholder: AgentStatus = {
     agent: 'yuino',
     lastSession: '未取得',
-    summary: '公開商品 surface (Zen + Kai 共同)、 digest 未生成',
+    summary: 'Yuino (公開 judgment interface, Zen + Kai 共同)、 digest 未生成',
     isOnline: false,
   };
 

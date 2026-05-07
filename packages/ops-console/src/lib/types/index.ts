@@ -1,4 +1,4 @@
-// エージェント識別子 (4 axis: zen / kai = AI 運営者、 aira / yuino = 1 実体 2 語り)
+// エージェント識別子 (4 axis: zen / kai = 判断増幅者 (Judgment amplifiers)、 aira / yuino = 1 実体 2 語り)
 export type AgentName = 'zen' | 'kai' | 'aira' | 'yuino';
 
 // エージェントの状態

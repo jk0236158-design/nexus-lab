@@ -33,8 +33,8 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ops Console",
-  description: "Nexus Lab Operations Console",
+  title: "Yuino judgment console (内部運用)",
+  description: "Yuino ローカル判断統合画面 — Judgment Amplification core value の internal dogfood UI (1 entity 2 narrative の Yuino 公開 brand 軸、 Aira 内部実装と同体)",
 };
 
 export default function RootLayout({

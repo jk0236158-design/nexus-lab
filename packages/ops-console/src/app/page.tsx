@@ -23,10 +23,10 @@ export default async function HomePage() {
     <div className="space-y-8">
       <div>
         <h1 className="text-2xl font-semibold tracking-tight text-muted-foreground">
-          Dashboard
+          Yuino judgment console
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Nexus Lab Ops Console
+          ローカル判断統合画面 (内部 dogfood) — Judgment Amplification の運用面
         </p>
       </div>
 

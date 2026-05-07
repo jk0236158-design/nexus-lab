@@ -26,8 +26,7 @@ export default async function DogfoodPage() {
             Dogfood
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Aira closed loop (observe → decide → dispatch → verify → recover →
-            execute) の観察 view (read-only)
+            Yuino dogfood closed loop (観察 → 判断 → 実行 → 検証 → 復旧 → 実行) の観察 view (read-only) — 内部実装 = Aira (Kai 主導)
           </p>
         </div>
         <p className="text-xs text-muted-foreground self-end">

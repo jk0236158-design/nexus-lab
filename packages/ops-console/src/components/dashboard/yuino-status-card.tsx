@@ -38,7 +38,7 @@ export function YuinoStatusCard({ status }: YuinoStatusCardProps) {
             <Badge variant="outline">公開商品</Badge>
           </div>
           <CardDescription className="text-muted-foreground">
-            公開商品 surface (Zen + Kai 共同) — 状態不明
+            公開 judgment interface (Zen + Kai 共同) — 状態不明
           </CardDescription>
         </CardHeader>
       </Card>
@@ -73,7 +73,7 @@ export function YuinoStatusCard({ status }: YuinoStatusCardProps) {
           </Badge>
         </div>
         <CardDescription className="text-muted-foreground">
-          公開商品 surface (Zen + Kai 共同) ・ 最終: {status.lastSession || '不明'}
+          公開 judgment interface (Zen + Kai 共同) ・ 最終: {status.lastSession || '不明'}
         </CardDescription>
       </CardHeader>
       <CardContent>

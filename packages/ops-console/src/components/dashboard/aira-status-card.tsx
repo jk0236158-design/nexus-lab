@@ -24,7 +24,7 @@ export function AiraStatusCard({ status }: AiraStatusCardProps) {
             <Badge variant="secondary">内部実装</Badge>
           </div>
           <CardDescription className="text-muted-foreground">
-            内部 supervisor (Kai 主導) — 状態不明
+            内部 judgment runtime (Kai 主導) — 状態不明
           </CardDescription>
         </CardHeader>
       </Card>
@@ -48,7 +48,7 @@ export function AiraStatusCard({ status }: AiraStatusCardProps) {
           </Badge>
         </div>
         <CardDescription className="text-muted-foreground">
-          内部 supervisor (Kai 主導) ・ 最終: {status.lastSession || '不明'}
+          内部 judgment runtime (Kai 主導) ・ 最終: {status.lastSession || '不明'}
         </CardDescription>
       </CardHeader>
       <CardContent>

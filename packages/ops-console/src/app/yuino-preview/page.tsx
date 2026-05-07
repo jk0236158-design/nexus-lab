@@ -31,7 +31,7 @@ export default async function YuinoPreviewPage() {
           Yuino Preview
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          digest 出力の公開 form と内部 evidence を並行確認
+          judgment digest 出力の公開 form と内部 evidence を並行確認 (Yuino 公開 brand = Aira 内部実装の同体)
         </p>
       </div>
 
