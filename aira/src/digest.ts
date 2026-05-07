@@ -212,7 +212,7 @@ function buildGeminiPrompt(inputs: InputCollection): string {
 async function main() {
   const dryRun = process.env["DRY_RUN"] !== "false";
   const apiKey = process.env["GEMINI_API_KEY"] ?? "";
-  const today = new Date().toISOString().slice(0, 10);
+  const today = new Date(Date.now() + 9 * 60 * 60 * 1000).toISOString().slice(0, 10);
 
   console.log(`[Aira] digest generation start — date=${today} dryRun=${dryRun}`);
 
