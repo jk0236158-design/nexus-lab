@@ -34,11 +34,21 @@ export function getNorthStarProgress(): NorthStarProgress {
   };
 }
 
+/**
+ * jun 物理介入頻度 (直近 7 day rolling)。
+ * 北極星 「jun 介入週 1-2 回」 narrative の measure として:
+ *   - board file で from=owner or to=owner (owner 直接 reply / 起稿) のみ計上
+ *   - inbox は 「owner-decisions/」 path での起稿のみ計上 (jun 直接 decide、 pending 起票は除外)
+ *   - AI 同士の dispatch / Zen-Kai response 系は除外 (Zen-side AI 内部 mention は jun 介入ではない)
+ *
+ * memory `feedback_yuino_security_axis.md` 連動 = Approval Gate boundary 「External Execute jun 確認必須」 と form 整合。
+ */
 function countJunInterventionWeekly(): number {
   const now = Date.now();
   const sevenDaysAgo = now - 7 * 24 * 60 * 60 * 1000;
   let count = 0;
 
+  // board: owner_*.md (owner = jun が from or to の file 件数)
   const boardDir = join(SHARED_OPS_PATH, 'board');
   if (existsSync(boardDir)) {
     try {
@@ -50,6 +60,7 @@ function countJunInterventionWeekly(): number {
         if (!dateMatch) continue;
         const fileTime = Date.parse(dateMatch[1]);
         if (Number.isNaN(fileTime) || fileTime < sevenDaysAgo) continue;
+        // owner = jun が from (parts[1]) or to (parts[2]) の file
         if (parts[1] === 'owner' || parts[2] === 'owner') {
           count += 1;
         }
@@ -59,10 +70,11 @@ function countJunInterventionWeekly(): number {
     }
   }
 
-  const inboxDir = join(SHARED_OPS_PATH, 'inbox');
-  if (existsSync(inboxDir)) {
+  // owner-decisions: jun 直接 decide のみ (inbox pending 起票は AI-driven、 jun 介入 ≠ 起票件数)
+  const decisionsDir = join(SHARED_OPS_PATH, 'owner-decisions');
+  if (existsSync(decisionsDir)) {
     try {
-      const files = readdirSync(inboxDir).filter((f) => f.endsWith('.md'));
+      const files = readdirSync(decisionsDir).filter((f) => f.endsWith('.md'));
       for (const filename of files) {
         const dateMatch = filename.match(/^(\d{4}-\d{2}-\d{2})/);
         if (!dateMatch) continue;

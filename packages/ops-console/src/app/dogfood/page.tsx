@@ -137,14 +137,16 @@ export default async function DogfoodPage() {
                   key={i}
                   className="flex items-start gap-3 text-xs text-zinc-400 py-1 border-b border-zinc-900 last:border-b-0"
                 >
-                  <span className="shrink-0 text-zinc-600 w-44">
+                  <span className="shrink-0 text-zinc-600 w-44 truncate">
                     {ev.timestamp || '-'}
                   </span>
-                  <span className="shrink-0 text-zinc-300 w-20">{ev.step}</span>
-                  <span className="shrink-0 text-zinc-500 w-16">
+                  <span className="shrink-0 text-zinc-300 w-56 truncate">
+                    {ev.step}
+                  </span>
+                  <span className="shrink-0 text-zinc-500 w-20 truncate">
                     {ev.status}
                   </span>
-                  <span className="text-zinc-500 truncate">
+                  <span className="flex-1 text-zinc-500 truncate">
                     {ev.evidence ?? ''}
                   </span>
                 </div>
