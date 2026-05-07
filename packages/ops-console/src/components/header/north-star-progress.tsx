@@ -32,7 +32,7 @@ export function NorthStarProgress({ progress }: NorthStarProgressProps) {
   );
 
   return (
-    <Card className="bg-foreground border-border">
+    <Card className="bg-card border-border">
       <CardHeader>
         <CardTitle className="text-muted-foreground">北極星 (Phase 1.5/2 完成条件)</CardTitle>
         <CardDescription className="text-muted-foreground">
@@ -48,7 +48,7 @@ export function NorthStarProgress({ progress }: NorthStarProgressProps) {
                 {distanceScore} / 100
               </span>
             </div>
-            <div className="h-3 w-full rounded-full bg-foreground">
+            <div className="h-3 w-full rounded-full bg-card">
               <div
                 className="h-3 rounded-full transition-all"
                 style={{
@@ -88,7 +88,7 @@ export function NorthStarProgress({ progress }: NorthStarProgressProps) {
                     className={
                       item.done
                         ? 'inline-block h-3 w-3 flex-shrink-0 rounded-full bg-emerald-500'
-                        : 'inline-block h-3 w-3 flex-shrink-0 rounded-full border border-border bg-foreground'
+                        : 'inline-block h-3 w-3 flex-shrink-0 rounded-full border border-border bg-card'
                     }
                     aria-label={item.done ? '完了' : '未完'}
                   />

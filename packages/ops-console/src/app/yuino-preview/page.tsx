@@ -36,7 +36,7 @@ export default async function YuinoPreviewPage() {
       </div>
 
       {!latest ? (
-        <Card className="bg-foreground border-border">
+        <Card className="bg-card border-border">
           <CardHeader>
             <CardTitle className="text-muted-foreground">digest 未生成</CardTitle>
             <CardDescription className="text-muted-foreground">
@@ -46,7 +46,7 @@ export default async function YuinoPreviewPage() {
           </CardHeader>
         </Card>
       ) : (
-        <Card className="bg-foreground border-border">
+        <Card className="bg-card border-border">
           <CardHeader>
             <div className="flex items-center justify-between gap-4">
               <div>
@@ -89,7 +89,7 @@ export default async function YuinoPreviewPage() {
       )}
 
       {list.length > 0 && (
-        <Card className="bg-foreground border-border">
+        <Card className="bg-card border-border">
           <CardHeader>
             <CardTitle className="text-muted-foreground">過去 digest</CardTitle>
             <CardDescription className="text-muted-foreground">
@@ -165,7 +165,7 @@ function EvidenceForm({ digest }: { digest: YuinoDigest }) {
   return (
     <div className="space-y-3">
       <p className="text-xs text-muted-foreground">source: {digest.sourcePath}</p>
-      <pre className="overflow-auto rounded-md border border-border bg-foreground p-4 text-xs text-muted-foreground leading-relaxed whitespace-pre-wrap">
+      <pre className="overflow-auto rounded-md border border-border bg-card p-4 text-xs text-muted-foreground leading-relaxed whitespace-pre-wrap">
         {digest.content}
       </pre>
     </div>

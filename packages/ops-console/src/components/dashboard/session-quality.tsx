@@ -14,7 +14,7 @@ export function SessionQuality({ metrics }: SessionQualityProps) {
   const recent = metrics.slice(0, 5);
 
   return (
-    <Card className="bg-foreground border-border">
+    <Card className="bg-card border-border">
       <CardHeader>
         <CardTitle className="text-muted-foreground">セッション品質</CardTitle>
       </CardHeader>
@@ -42,7 +42,7 @@ export function SessionQuality({ metrics }: SessionQualityProps) {
                       {m.qualityScore}/5
                     </span>
                   </div>
-                  <div className="h-2 w-full rounded-full bg-foreground">
+                  <div className="h-2 w-full rounded-full bg-card">
                     <div
                       className={`h-2 rounded-full ${color} transition-all`}
                       style={{ width: `${pct}%` }}

@@ -36,7 +36,7 @@ const KINDS: ChatKind[] = ['相談', '指示', '雑談', '報告'];
 const KIND_BADGE_COLOR: Record<ChatKind, string> = {
   相談: 'bg-sky-900/60 text-sky-300 border-sky-700/50',
   指示: 'bg-amber-900/60 text-amber-300 border-amber-700/50',
-  雑談: 'bg-foreground text-muted-foreground border-border/50',
+  雑談: 'bg-card text-muted-foreground border-border/50',
   報告: 'bg-emerald-900/60 text-emerald-300 border-emerald-700/50',
 };
 
@@ -195,7 +195,7 @@ function SendForm({ haltActive, onSendSuccess, onSendError }: SendFormProps) {
             id="chat-to"
             value={to}
             onChange={(e) => setTo(e.target.value as ChatRecipient)}
-            className="w-full rounded-md border border-border bg-foreground px-3 py-2 text-sm text-muted-foreground focus:border-border focus:outline-none focus:ring-1 focus:ring-ring transition-colors"
+            className="w-full rounded-md border border-border bg-card px-3 py-2 text-sm text-muted-foreground focus:border-border focus:outline-none focus:ring-1 focus:ring-ring transition-colors"
           >
             {RECIPIENTS.map((r) => (
               <option key={r} value={r}>
@@ -216,7 +216,7 @@ function SendForm({ haltActive, onSendSuccess, onSendError }: SendFormProps) {
             id="chat-kind"
             value={kind}
             onChange={(e) => setKind(e.target.value as ChatKind)}
-            className="w-full rounded-md border border-border bg-foreground px-3 py-2 text-sm text-muted-foreground focus:border-border focus:outline-none focus:ring-1 focus:ring-ring transition-colors"
+            className="w-full rounded-md border border-border bg-card px-3 py-2 text-sm text-muted-foreground focus:border-border focus:outline-none focus:ring-1 focus:ring-ring transition-colors"
           >
             {KINDS.map((k) => (
               <option key={k} value={k}>
@@ -242,7 +242,7 @@ function SendForm({ haltActive, onSendSuccess, onSendError }: SendFormProps) {
           onChange={(e) => setSubject(e.target.value)}
           maxLength={100}
           placeholder="例: api-proxy テンプレートの方向性を相談したい"
-          className="w-full rounded-md border border-border bg-foreground px-3 py-2 text-sm text-muted-foreground placeholder:text-muted-foreground focus:border-border focus:outline-none focus:ring-1 focus:ring-ring transition-colors"
+          className="w-full rounded-md border border-border bg-card px-3 py-2 text-sm text-muted-foreground placeholder:text-muted-foreground focus:border-border focus:outline-none focus:ring-1 focus:ring-ring transition-colors"
         />
         <p className="text-right text-xs text-muted-foreground">{subject.length}/100</p>
       </div>
@@ -262,13 +262,13 @@ function SendForm({ haltActive, onSendSuccess, onSendError }: SendFormProps) {
           maxLength={2000}
           rows={5}
           placeholder="本文を入力してください..."
-          className="w-full resize-y rounded-md border border-border bg-foreground px-3 py-2 text-sm text-muted-foreground placeholder:text-muted-foreground focus:border-border focus:outline-none focus:ring-1 focus:ring-ring transition-colors"
+          className="w-full resize-y rounded-md border border-border bg-card px-3 py-2 text-sm text-muted-foreground placeholder:text-muted-foreground focus:border-border focus:outline-none focus:ring-1 focus:ring-ring transition-colors"
         />
         <p className="text-right text-xs text-muted-foreground">{body.length}/2000</p>
       </div>
 
       {/* 機微情報注意 */}
-      <div className="flex items-start gap-2 rounded-md border border-border/50 bg-foreground/40 px-3 py-2.5 text-xs text-muted-foreground">
+      <div className="flex items-start gap-2 rounded-md border border-border/50 bg-card/40 px-3 py-2.5 text-xs text-muted-foreground">
         <span className="shrink-0">ℹ</span>
         <span>{SENSITIVE_WARNING}</span>
       </div>
@@ -351,7 +351,7 @@ export function ChatPageClient({ haltActive, initialMessages }: ChatPageClientPr
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
         {/* 送信フォーム (3/5) */}
         <div className="lg:col-span-3">
-          <Card className="bg-foreground border-border">
+          <Card className="bg-card border-border">
             <CardHeader>
               <CardTitle className="text-muted-foreground">新規メッセージ</CardTitle>
               <CardDescription className="text-muted-foreground">
@@ -370,7 +370,7 @@ export function ChatPageClient({ haltActive, initialMessages }: ChatPageClientPr
 
         {/* 最近のメッセージ (2/5) */}
         <div className="lg:col-span-2">
-          <Card className="bg-foreground border-border">
+          <Card className="bg-card border-border">
             <CardHeader>
               <CardTitle className="text-muted-foreground">最近の送信 / 返信</CardTitle>
               <CardDescription className="text-muted-foreground">
@@ -386,7 +386,7 @@ export function ChatPageClient({ haltActive, initialMessages }: ChatPageClientPr
                 <div className="space-y-0">
                   {messages.slice(0, 10).map((msg, i) => (
                     <div key={msg.filename}>
-                      {i > 0 && <Separator className="my-1 bg-foreground" />}
+                      {i > 0 && <Separator className="my-1 bg-card" />}
                       <SentMessageRow msg={msg} />
                     </div>
                   ))}

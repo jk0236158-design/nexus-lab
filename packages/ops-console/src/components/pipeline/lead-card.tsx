@@ -14,7 +14,7 @@ function scoreVariant(score: number): 'default' | 'secondary' | 'destructive' {
 function whyNowColor(score: number): string {
   if (score >= 80) return 'bg-amber-500/20 text-amber-400 border-amber-500/30';
   if (score >= 50) return 'bg-sky-500/15 text-sky-400 border-sky-500/25';
-  return 'bg-muted-foreground/50 text-muted-foreground border-border/40';
+  return 'bg-muted/50 text-muted-foreground border-border/40';
 }
 
 export function LeadCard({ lead }: LeadCardProps) {
@@ -24,8 +24,8 @@ export function LeadCard({ lead }: LeadCardProps) {
     <div
       className={`rounded-lg border p-3 transition-colors ${
         isHighScore
-          ? 'border-amber-500/30 bg-foreground/80 ring-1 ring-amber-500/20'
-          : 'border-border/50 bg-foreground'
+          ? 'border-amber-500/30 bg-card/80 ring-1 ring-amber-500/20'
+          : 'border-border/50 bg-card'
       }`}
     >
       <div className="mb-1.5 font-semibold text-sm text-muted-foreground leading-tight">

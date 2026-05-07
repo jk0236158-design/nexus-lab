@@ -16,7 +16,7 @@ export function OwnerDecisions({ decisions }: OwnerDecisionsProps) {
   );
 
   return (
-    <Card className="bg-foreground border-border">
+    <Card className="bg-card border-border">
       <CardHeader>
         <CardTitle className="text-muted-foreground">オーナー判断</CardTitle>
       </CardHeader>

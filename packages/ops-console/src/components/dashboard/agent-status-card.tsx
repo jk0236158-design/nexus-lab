@@ -21,7 +21,7 @@ export function AgentStatusCard({
 }: AgentStatusCardProps) {
   if (!status) {
     return (
-      <Card className="bg-foreground border-border">
+      <Card className="bg-card border-border">
         <CardHeader>
           <CardTitle className="text-muted-foreground">{label}</CardTitle>
           <CardDescription className="text-muted-foreground">
@@ -38,7 +38,7 @@ export function AgentStatusCard({
     .slice(0, 4);
 
   return (
-    <Card className="bg-foreground border-border">
+    <Card className="bg-card border-border">
       <CardHeader>
         <div className="flex items-center gap-3">
           <CardTitle className="text-muted-foreground">{label}</CardTitle>

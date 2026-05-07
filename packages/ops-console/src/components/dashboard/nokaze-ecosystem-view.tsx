@@ -27,7 +27,7 @@ export function NokazeEcosystemView({
   const yuinoStatus = agentStatuses.find((s) => s.agent === 'yuino');
 
   return (
-    <Card className="bg-foreground border-border">
+    <Card className="bg-card border-border">
       <CardHeader>
         <CardTitle className="text-muted-foreground">nokaze ecosystem</CardTitle>
         <CardDescription className="text-muted-foreground">

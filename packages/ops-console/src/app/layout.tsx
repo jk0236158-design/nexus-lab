@@ -47,7 +47,7 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${notoSansJP.variable} ${notoSerifJP.variable} ${jetbrainsMono.variable} dark h-full antialiased`}
     >
-      <body className="min-h-full bg-foreground text-muted-foreground">
+      <body className="min-h-full bg-card text-muted-foreground">
         <Sidebar />
         <main className="pl-56 min-h-screen">
           <div className="p-8">{children}</div>

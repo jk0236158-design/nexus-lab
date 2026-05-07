@@ -47,7 +47,7 @@ export default async function DogfoodPage() {
           {CLOSED_LOOP_STEPS.map((step) => {
             const info = stepMap[step];
             return (
-              <Card key={step} className="bg-foreground border-border">
+              <Card key={step} className="bg-card border-border">
                 <CardHeader className="pb-2">
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-muted-foreground text-base">
@@ -74,7 +74,7 @@ export default async function DogfoodPage() {
       </section>
 
       <section className="grid grid-cols-1 gap-4 md:grid-cols-3">
-        <Card className="bg-foreground border-border">
+        <Card className="bg-card border-border">
           <CardHeader>
             <CardTitle className="text-muted-foreground text-sm">
               false positive
@@ -90,7 +90,7 @@ export default async function DogfoodPage() {
           </CardContent>
         </Card>
 
-        <Card className="bg-foreground border-border">
+        <Card className="bg-card border-border">
           <CardHeader>
             <CardTitle className="text-muted-foreground text-sm">
               false negative
@@ -106,7 +106,7 @@ export default async function DogfoodPage() {
           </CardContent>
         </Card>
 
-        <Card className="bg-foreground border-border">
+        <Card className="bg-card border-border">
           <CardHeader>
             <CardTitle className="text-muted-foreground text-sm">last reset</CardTitle>
           </CardHeader>
@@ -118,7 +118,7 @@ export default async function DogfoodPage() {
         </Card>
       </section>
 
-      <Card className="bg-foreground border-border">
+      <Card className="bg-card border-border">
         <CardHeader>
           <CardTitle className="text-muted-foreground">直近 events</CardTitle>
           <CardDescription className="text-muted-foreground">

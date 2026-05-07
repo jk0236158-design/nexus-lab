@@ -57,7 +57,7 @@ export function ApproveCard({ inboxItem }: ApproveCardProps) {
   }
 
   return (
-    <Card className="bg-foreground border-border">
+    <Card className="bg-card border-border">
       <CardHeader>
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
@@ -91,7 +91,7 @@ export function ApproveCard({ inboxItem }: ApproveCardProps) {
             <p className="text-xs text-muted-foreground break-all">
               file: {inboxItem.filename}
             </p>
-            <pre className="max-h-64 overflow-auto rounded-md border border-border bg-foreground p-3 text-xs text-muted-foreground leading-relaxed whitespace-pre-wrap">
+            <pre className="max-h-64 overflow-auto rounded-md border border-border bg-card p-3 text-xs text-muted-foreground leading-relaxed whitespace-pre-wrap">
               {truncate(inboxItem.body, 1200)}
             </pre>
           </div>
@@ -102,7 +102,7 @@ export function ApproveCard({ inboxItem }: ApproveCardProps) {
               <textarea
                 value={editBody}
                 onChange={(e) => setEditBody(e.target.value)}
-                className="mt-1 block w-full min-h-48 rounded-md border border-border bg-foreground p-3 text-xs text-muted-foreground leading-relaxed"
+                className="mt-1 block w-full min-h-48 rounded-md border border-border bg-card p-3 text-xs text-muted-foreground leading-relaxed"
                 disabled={submitting}
               />
             </label>
@@ -113,7 +113,7 @@ export function ApproveCard({ inboxItem }: ApproveCardProps) {
                 value={reason}
                 onChange={(e) => setReason(e.target.value)}
                 placeholder="例: 文言調整 + 期限延長"
-                className="mt-1 block w-full rounded-md border border-border bg-foreground p-2 text-xs text-muted-foreground"
+                className="mt-1 block w-full rounded-md border border-border bg-card p-2 text-xs text-muted-foreground"
                 disabled={submitting}
               />
             </label>

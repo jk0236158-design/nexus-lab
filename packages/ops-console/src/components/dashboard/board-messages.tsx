@@ -19,7 +19,7 @@ export function BoardMessages({ messages }: BoardMessagesProps) {
     .slice(0, 5);
 
   return (
-    <Card className="bg-foreground border-border">
+    <Card className="bg-card border-border">
       <CardHeader>
         <CardTitle className="text-muted-foreground">最新メッセージ</CardTitle>
       </CardHeader>
@@ -30,7 +30,7 @@ export function BoardMessages({ messages }: BoardMessagesProps) {
           <div className="space-y-0">
             {sorted.map((msg, i) => (
               <div key={msg.filename}>
-                {i > 0 && <Separator className="my-3 bg-foreground" />}
+                {i > 0 && <Separator className="my-3 bg-card" />}
                 <div className="flex items-start justify-between gap-4">
                   <div className="min-w-0">
                     <p className="text-sm text-muted-foreground">

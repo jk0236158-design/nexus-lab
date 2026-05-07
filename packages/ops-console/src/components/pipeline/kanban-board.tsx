@@ -42,7 +42,7 @@ function columnHeaderClass(accent?: string): string {
   if (accent === 'red') {
     return 'bg-red-950/60 border-red-800/40';
   }
-  return 'bg-foreground border-border/50';
+  return 'bg-card border-border/50';
 }
 
 function columnBorderClass(accent?: string): string {
@@ -84,7 +84,7 @@ export function KanbanBoard({ leads }: KanbanBoardProps) {
                 <span className="text-sm font-medium text-muted-foreground">
                   {col.label}
                 </span>
-                <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-muted-foreground/60 px-1.5 text-[11px] font-medium text-muted-foreground">
+                <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-muted/60 px-1.5 text-[11px] font-medium text-muted-foreground">
                   {colLeads.length}
                 </span>
               </div>

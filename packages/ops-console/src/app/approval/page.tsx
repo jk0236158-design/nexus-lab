@@ -31,7 +31,7 @@ export default async function ApprovalPage() {
       </div>
 
       {items.length === 0 ? (
-        <Card className="bg-foreground border-border">
+        <Card className="bg-card border-border">
           <CardHeader>
             <CardTitle className="text-muted-foreground">
               pending な判断はありません

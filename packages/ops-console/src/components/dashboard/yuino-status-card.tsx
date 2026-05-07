@@ -20,7 +20,7 @@ export function YuinoStatusCard({ status }: YuinoStatusCardProps) {
   if (!status) {
     return (
       <Card
-        className="bg-foreground"
+        className="bg-card"
         style={{
           borderWidth: '1px',
           borderStyle: 'solid',
@@ -52,7 +52,7 @@ export function YuinoStatusCard({ status }: YuinoStatusCardProps) {
 
   return (
     <Card
-      className="bg-foreground"
+      className="bg-card"
       style={{
         borderWidth: '1px',
         borderStyle: 'solid',

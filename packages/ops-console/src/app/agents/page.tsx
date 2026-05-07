@@ -21,7 +21,7 @@ function AgentOverviewCard({
 }) {
   if (!status) {
     return (
-      <Card className="bg-foreground border-border">
+      <Card className="bg-card border-border">
         <CardHeader>
           <CardTitle className="text-muted-foreground">{label}</CardTitle>
           <CardDescription className="text-muted-foreground">
@@ -38,7 +38,7 @@ function AgentOverviewCard({
     .slice(0, 5);
 
   return (
-    <Card className="bg-foreground border-border">
+    <Card className="bg-card border-border">
       <CardHeader>
         <div className="flex items-center gap-3">
           <CardTitle className="text-muted-foreground">{label}</CardTitle>
@@ -93,7 +93,7 @@ function SessionHistoryTable({ metrics }: { metrics: SessionMetrics[] }) {
             <tr
               key={m.sessionDate}
               className={
-                i % 2 === 1 ? 'bg-foreground/40' : ''
+                i % 2 === 1 ? 'bg-card/40' : ''
               }
             >
               <td className="py-2.5 pr-4 text-muted-foreground whitespace-nowrap">
@@ -188,7 +188,7 @@ export default function AgentsPage() {
 
       {/* Coming Soon */}
       <section>
-        <Card className="bg-foreground border-border/50">
+        <Card className="bg-card border-border/50">
           <CardContent className="py-2">
             <p className="text-sm text-muted-foreground text-center">
               タスク投入・リアルタイム実行機能は今後のアップデートで追加予定です

@@ -16,7 +16,7 @@ interface AiraStatusCardProps {
 export function AiraStatusCard({ status }: AiraStatusCardProps) {
   if (!status) {
     return (
-      <Card className="bg-foreground border border-border font-mono">
+      <Card className="bg-card border border-border font-mono">
         <CardHeader>
           <div className="flex items-center gap-2">
             <Cog className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
@@ -37,7 +37,7 @@ export function AiraStatusCard({ status }: AiraStatusCardProps) {
     .slice(0, 4);
 
   return (
-    <Card className="bg-foreground border border-border font-mono">
+    <Card className="bg-card border border-border font-mono">
       <CardHeader>
         <div className="flex items-center gap-2">
           <Cog className="h-4 w-4 text-muted-foreground" aria-hidden="true" />

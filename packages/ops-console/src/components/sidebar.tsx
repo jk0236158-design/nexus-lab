@@ -25,7 +25,7 @@ export function Sidebar() {
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <aside className="fixed inset-y-0 left-0 z-30 flex w-56 flex-col border-r border-border bg-foreground">
+    <aside className="fixed inset-y-0 left-0 z-30 flex w-56 flex-col border-r border-border bg-card">
       <div className="flex h-14 items-center px-5">
         <span className="text-lg font-semibold tracking-tight text-muted-foreground">
           Ops Console
@@ -41,8 +41,8 @@ export function Sidebar() {
               href={item.href}
               className={`rounded-md px-3 py-2 text-sm font-medium transition-colors ${
                 active
-                  ? "bg-foreground text-muted-foreground"
-                  : "text-muted-foreground hover:bg-foreground hover:text-muted-foreground"
+                  ? "bg-card text-muted-foreground"
+                  : "text-muted-foreground hover:bg-card hover:text-muted-foreground"
               }`}
             >
               {item.label}
@@ -62,8 +62,8 @@ export function Sidebar() {
               href={item.href}
               className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
                 active
-                  ? "bg-foreground text-muted-foreground"
-                  : "text-muted-foreground hover:bg-foreground hover:text-muted-foreground"
+                  ? "bg-card text-muted-foreground"
+                  : "text-muted-foreground hover:bg-card hover:text-muted-foreground"
               }`}
             >
               <Icon className="h-4 w-4" />

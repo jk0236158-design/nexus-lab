@@ -31,7 +31,7 @@ export function WatcherStatusCard({ status }: WatcherStatusCardProps) {
   const recentTail = status.recentLogLines.slice(-5);
 
   return (
-    <Card className="bg-foreground border-border">
+    <Card className="bg-card border-border">
       <CardHeader>
         <div className="flex items-center justify-between gap-4">
           <div>
@@ -77,7 +77,7 @@ export function WatcherStatusCard({ status }: WatcherStatusCardProps) {
         {recentTail.length === 0 ? (
           <p className="text-xs text-muted-foreground">log 未記録</p>
         ) : (
-          <pre className="overflow-auto rounded-md border border-border bg-foreground p-2 text-[10px] text-muted-foreground leading-snug whitespace-pre-wrap">
+          <pre className="overflow-auto rounded-md border border-border bg-card p-2 text-[10px] text-muted-foreground leading-snug whitespace-pre-wrap">
             {recentTail.join('\n')}
           </pre>
         )}
