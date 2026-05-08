@@ -80,6 +80,23 @@ is_cooldown_active() {
 }
 
 # ============================================================
+# helper: yuino_response_result_audit.json connect (Kai commit 2bb425a 連動)
+#   Kai-side で 「replied / read / unanswered」 mark 済 request は wake skip
+# ============================================================
+
+YUINO_RESULT_AUDIT_JSON="$HOME/.shared-ops/status/yuino_response_result_audit.json"
+
+is_replied_or_read() {
+  local request_id="$1"
+  if [[ ! -f "$YUINO_RESULT_AUDIT_JSON" ]]; then
+    return 1  # json 不在 = audit 連動なし、 通常通り actionable list
+  fi
+  # grep ベース (Windows + Git Bash で precision 動作確認済、 python3 は path translation 問題で skip)
+  # JSON 構造: items[].request_id == request_id の直後 (1-3 line) に "result": "replied|read"
+  grep -A 1 "\"request_id\": \"$request_id\"" "$YUINO_RESULT_AUDIT_JSON" 2>/dev/null | grep -qE '"result":\s*"(replied|read)"'
+}
+
+# ============================================================
 # action: list (default)
 # ============================================================
 
@@ -102,6 +119,13 @@ if [[ "$ACTION" == "list" || "$ACTION" == "--json" ]]; then
     # safety check
     if [[ "$SAFETY" != "green" ]]; then
       NON_GREEN+=("$REQUEST_ID|$SAFETY|$BOARD_PATH")
+      continue
+    fi
+
+    # Yuino response result audit connect (Kai commit 2bb425a 連動)
+    # replied / read mark 済の request は wake skip (Yuino-side で resolved 認識済)
+    if is_replied_or_read "$REQUEST_ID"; then
+      COOLDOWN_SKIP+=("$REQUEST_ID|$BOARD_PATH (resolved: replied/read in yuino_response_result_audit.json)")
       continue
     fi
 
