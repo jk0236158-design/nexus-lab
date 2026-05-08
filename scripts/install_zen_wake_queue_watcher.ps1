@@ -67,6 +67,7 @@ $LockFile      = Join-Path $DaemonDir "zen_session.lock"
 $WakeLogJsonl  = Join-Path $SharedOps "wake-log\zen_wake_log.jsonl"
 $WatcherLog    = Join-Path $DaemonDir "zen_wake_queue_watcher.log"
 $SkipLog       = Join-Path $DaemonDir "zen_wake_queue_watcher_skip.log"
+$ResultAuditJson = Join-Path $SharedOps "status\yuino_response_result_audit.json"
 
 New-Item -ItemType Directory -Force -Path $InboxDir   | Out-Null
 New-Item -ItemType Directory -Force -Path $DaemonDir  | Out-Null
@@ -96,6 +97,26 @@ if (Test-Path $LockFile) {
     $lockAge = (Get-Date) - (Get-Item $LockFile).LastWriteTime
     if ($lockAge.TotalMinutes -lt 60) {
         $sessionActive = $true
+    }
+}
+
+# Yuino-side audit connect: skip if Kai-side already marked replied/read.
+# yuino_response_result_audit.json structure: { items: [{ request_id, result }, ...] }
+function Test-ResultMarkedReplied([string]$requestId) {
+    if (-not (Test-Path $ResultAuditJson)) { return $false }
+    try {
+        $auditObj = Get-Content -Path $ResultAuditJson -Raw -ErrorAction SilentlyContinue | ConvertFrom-Json
+        if (-not $auditObj) { return $false }
+        $items = $auditObj.items
+        if (-not $items) { return $false }
+        foreach ($item in $items) {
+            if ($item.request_id -eq $requestId) {
+                return ($item.result -eq "replied" -or $item.result -eq "read")
+            }
+        }
+        return $false
+    } catch {
+        return $false
     }
 }
 
@@ -146,6 +167,10 @@ foreach ($f in $candidateFiles) {
     }
     if ($safety -ne "green") {
         Write-SkipLog $requestId "safety_$safety"
+        continue
+    }
+    if (Test-ResultMarkedReplied $requestId) {
+        Write-SkipLog $requestId "yuino_audit_already_replied_or_read"
         continue
     }
     if (Test-CooldownActive $requestId) {
