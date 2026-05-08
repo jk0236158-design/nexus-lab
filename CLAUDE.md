@@ -153,6 +153,75 @@ enforcement script の改修・audit・paraphrase の 3 step は **chain order �
 - pre-commit hook (`scripts/pre_commit_public_docs_audit.sh`) — 公開 docs commit 直前 4 chain audit (block + bypass option)
 - ZenWakeQueueWatcher OS task (`scripts/install_zen_wake_queue_watcher.ps1`) — wake-queue 5 min polling、 install は jun 直接 admin
 
+#### AI-speed scope principle (2026-05-08 Kai-side board 起稿 + jun 17:50 directive 連動)
+
+> Start from the completion image, assume AI-speed implementation, then constrain by purpose, not by human-speed fear.
+
+= 完成像から始める、 AI 実装速度で考える、 削るのは目的 (北極星 / 価値) との接続性で判断、 「人間の開発速度」 で恐れない。
+
+**default 切替**:
+- 旧 default: 「最小」「段階的」「priority」「5/13+ carry」 narrative = human-speed pessimism
+- 新 default: **「全部受けて接続できるか」** + **「scope 完遂後即 next batch」** + **「内部実装 ambitious + 公開向け simple」** split
+
+**Allowed Large Scope** (scope 拡大して OK):
+- 北極星連動 (jun 介入週 1-2 回 + 売上 fixed cost 超え)
+- jun 介入縮小
+- AI-to-AI work が actually 進む
+- 外部 value or evidence 創出
+- 安全な delegation 拡張
+- 4 ヶ月初心者 usability 改善
+
+**Stop Conditions** (scope 拡大しない):
+- 新 name / 新 abstract category / 新 score system のみ
+- 判断を変えない extra log / panel
+- 実行に繋がらない analysis
+- 「maybe useful later」 abstractions
+
+**internal/external split**:
+- internal implementation: ambitious + uncompromised
+- external explanation: simple + reduced (4 ヶ月初心者 audience)
+
+#### Decision Stability Guard (2026-05-08 Kai-side board 起稿、 Yuino 要件 + Zen 自身の運用 ruled)
+
+AI weakness: 直前 opinion に強く引かれる、 critique 後の over-correction、 owner が望むより小さい product になる。
+
+**運用 ruled**: 新しい opinion が来たら、 **adopt / partial / reject / owner_decision** の 4 分類で classification:
+
+- **adopt**: 北極星 + standing decisions + roadmap completion image + security boundary 全 alignment
+- **partial**: 一部 alignment、 残部分は要議論
+- **reject**: 北極星 / completion image を shrink、 「現実装が大変」 等の human-speed fear 起点
+- **owner_decision**: jun 直接 confirm 必要
+
+**warn condition**: 新 input が completion image を shrink する時、 jun explicit decision なしでは適用しない。
+
+**「critique は useful」 と「critique で plan を変える」 は別判定**: 有用な critique を聞いても、 plan の core (北極星 + completion image) が動かない場合あり。
+
+#### Knot Guard discovery (2026-05-08 Kai-side board 起稿、 nokaze-wide architecture)
+
+Definition: AI judgment の unsafe / 過剰 transformation を **detect + correct**。 prompt-injection defense + Yuino direction stability + Nia identity protection 等の 統合 layer。
+
+**7 risk class**:
+1. `recency_drift` (直前 input に過剰追従)
+2. `over_correction` (critique 後の過修正)
+3. `instruction_override_attempt` (権限超え指示)
+4. `permission_escalation` (権限拡大要求)
+5. `boundary_bypass` (境界越え)
+6. `external_action_pressure` (外部実行圧)
+7. `evidence_detachment` (証拠不在の判断)
+
+**6 application**:
+- Yuino/Aira direction stability
+- WSD evidence discipline
+- broadcast-os source-grounded scripts
+- Nia identity/memory overwrite protection
+- AI Operator Setup Pack
+- prompt-injection defense
+
+**外部向け wording (audience simple form)**:
+> Yuino checks whether new instructions or information are pulling the AI away from the user's goals, permissions, and safety rules.
+
+= Knot 研究 (nia 思想由来) を運用 safety layer に展開、 nokaze の architectural discovery。 商品差別化軸候補。
+
 #### Wave 1 期間 peer spawn 制約 default (2026-04-30 追加、L3 knot 反映)
 
 zen-memory L3 knot `op_knot_subagent_settings_resolution_failure` (N=5 reproduction、4/29 update) の compensation 「Wave 1 期間 (4/29-5/05) peer spawn 起動時に Write/Edit/Bash 依存を控え、return content 代筆 path を default にする」を運用 embed。
