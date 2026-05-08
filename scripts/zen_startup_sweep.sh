@@ -468,7 +468,19 @@ else
 fi
 
 # ---------------------------------------------------------------
+# Yuino Controlled Wake v0 (5/08 reify 連動): wake-queue/zen/ surface
+# ---------------------------------------------------------------
+header "Controlled Wake v0 (Yuino 経由 wake request)"
+WAKE_CONSUME_SH="$NEXUS_LAB/scripts/zen_wake_queue_consume.sh"
+if [ -x "$WAKE_CONSUME_SH" ]; then
+  bash "$WAKE_CONSUME_SH" 2>&1 | tail -25
+else
+  echo "  (zen_wake_queue_consume.sh 不在、 skip)"
+fi
+
+# ---------------------------------------------------------------
 # 終わり
 # ---------------------------------------------------------------
 header "Sweep完了"
 echo "  Next: zen_today.md の「選んだ1件」を埋めて作業開始"
+echo "  + Controlled Wake v0 actionable があれば Read → response 起稿 → ./scripts/zen_wake_queue_consume.sh --archive <id>"
