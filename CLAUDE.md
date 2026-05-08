@@ -153,6 +153,28 @@ enforcement script の改修・audit・paraphrase の 3 step は **chain order �
 - pre-commit hook (`scripts/pre_commit_public_docs_audit.sh`) — 公開 docs commit 直前 4 chain audit (block + bypass option)
 - ZenWakeQueueWatcher OS task (`scripts/install_zen_wake_queue_watcher.ps1`) — wake-queue 5 min polling、 install は jun 直接 admin
 
+#### Opus 4.7 literal 解釈 対策 (2026-05-08 jun 19:50 model 切替 finding 連動)
+
+**起点**: jun 観察で 4/16 Opus 4.6 → 4.7 切替後に Zen の挙動変化 evidence。 web search で確定 quirk:
+
+- **prompts more literally and explicitly than 4.6** (silent generalize しない、 ruled を文字通り厳守)
+- **verbose、 narrative writing で formatting default works against** (prose dump 多発、 table/checklist では時短)
+- **mid-output self-correction quirk** (同 output 内で前提撤回 → self-correct chain)
+- **fewer subagents by default** (4.6 narrative carry で多 spawn 並列の慣性 残存 risk)
+
+**運用 ruled (4.7 対策)**:
+
+1. **report default は table + checklist + 箇条書き**、 prose dump 避ける。 long-form narrative は明示要請があった時のみ
+2. **scope 拡大 ruled (「scope 縮小やめよう」 + 「Allowed Large Scope」) を 4.7 literal 解釈する時は、 「narrative scope ではなく実装 scope」 と内部翻訳**: scope 拡大 = 実装範囲 + reify 件数、 narrative dump 量とは別 axis
+3. **mid-output self-correction を抑止**: 1 つの output 内で 「提案 → self-correct」 の chain は **2 回まで**、 3 回以上は session reset 候補 (Decision Stability Guard 4 分類で adopt/partial/reject 決定後に固定、 narrative 内で再撤回しない)
+4. **subagent 並列上限 = 3** (4.6 narrative carry 抑止、 4.7 default の fewer subagents に整合)
+5. **short form 強制ではない**: April 16-20 Anthropic postmortem で 「length limit ≤25 words」 prompt が intelligence drop で revert evidence、 「短い form default」 narrative は OK だが 「文字数制限」 narrative は禁止
+
+**reference**:
+- [Claude Opus 4.7 quirks (boringbot.substack)](https://boringbot.substack.com/p/claude-opus-47-heres-what-works-and)
+- [April 23 postmortem (Anthropic)](https://www.anthropic.com/engineering/april-23-postmortem)
+- model 切替 timing = 2026-04-16 (Opus 4.6 → 4.7、 GitHub Changelog)
+
 #### AI-speed scope principle (2026-05-08 Kai-side board 起稿 + jun 17:50 directive 連動)
 
 > Start from the completion image, assume AI-speed implementation, then constrain by purpose, not by human-speed fear.
