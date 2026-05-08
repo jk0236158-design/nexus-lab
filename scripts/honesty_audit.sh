@@ -71,9 +71,11 @@ else
   echo "  (数字 token 検出なし)"
 fi
 
-# Layer B: 誇張 phrase blocklist
+# Layer B: 誇張 phrase blocklist (context-aware regex 化、 5/08 false positive 解消対応)
 echo ""
 echo "── Layer B: 誇張 phrase block ──"
+
+# 煽り / 絶対表現 main blocklist
 EXAGGERATION_BLOCKLIST=(
   "完成"
   "達成"
@@ -86,6 +88,43 @@ EXAGGERATION_BLOCKLIST=(
   "業界初"
   "革命"
   "完璧"
+  "急成長"
+  "次世代"
+  "突破"
+  "保証"
+  "確実"
+)
+
+# 文脈中立 phrase exclude list (5/08 Kagami QA Round 1 false positive 解消)
+# これらの phrase が match した行は red にしない (中立 / 否定 / 質問形 / status)
+EXCLUDE_PATTERNS=(
+  "完了予定"
+  "完了する予定"
+  "完了見込み"
+  "完了したか"
+  "完了済み"
+  "完了報告"
+  "完了 timestamp"
+  "完了 date"
+  "installation 完了"
+  "setup 完了"
+  "build 完了"
+  "test 完了"
+  "完璧ではない"
+  "完璧ではありません"
+  "完璧でない"
+  "完璧を求めない"
+  "完成度"
+  "完成形"
+  "達成度"
+  "達成可能"
+  "未達成"
+  "達成してい?ない"
+  "達成しよう"
+  "確実性"
+  "不確実"
+  "保証されない"
+  "保証はない"
 )
 
 # 「reify (北極星未達)」 narrative 不在 + 誇張 phrase 単独使用 で red
@@ -94,14 +133,36 @@ if echo "$content" | grep -qE 'reify\s*\(\s*北極星未達\s*\)'; then
   has_reify_narrative=true
 fi
 
+# 行単位で評価: line に blocklist phrase が含まれ、かつ exclude pattern に該当しない場合のみ count
 for phrase in "${EXAGGERATION_BLOCKLIST[@]}"; do
-  matches=$(echo "$content" | grep -c "$phrase" || true)
-  if [[ "$matches" -gt 0 ]]; then
+  # 該当 phrase を含む行を抽出
+  matched_lines=$(echo "$content" | grep -nF "$phrase" || true)
+  if [[ -z "$matched_lines" ]]; then
+    continue
+  fi
+
+  effective_matches=0
+  while IFS= read -r line; do
+    [[ -z "$line" ]] && continue
+    # exclude pattern check
+    is_excluded=false
+    for excl in "${EXCLUDE_PATTERNS[@]}"; do
+      if echo "$line" | grep -qE "$excl"; then
+        is_excluded=true
+        break
+      fi
+    done
+    if [[ "$is_excluded" == "false" ]]; then
+      effective_matches=$((effective_matches + 1))
+    fi
+  done <<<"$matched_lines"
+
+  if [[ "$effective_matches" -gt 0 ]]; then
     if [[ "$has_reify_narrative" == "true" ]]; then
-      info_count=$((info_count + matches))
+      info_count=$((info_count + effective_matches))
     else
-      red_count=$((red_count + matches))
-      echo "  🔴 誇張 phrase 「${phrase}」 ${matches} 件、 「reify (北極星未達)」 form を期待"
+      red_count=$((red_count + effective_matches))
+      echo "  🔴 誇張 phrase 「${phrase}」 ${effective_matches} 件 (中立 phrase exclude 後)、 「reify (北極星未達)」 form を期待"
     fi
   fi
 done

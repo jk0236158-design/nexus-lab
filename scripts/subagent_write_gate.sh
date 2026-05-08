@@ -18,17 +18,19 @@
 #   - それ以外: decision JSON で deny
 #   - identity.md への Write/Edit が許可された場合: sha256 baseline を自動更新
 #
-# 許可 4 path-prefix:
+# 許可 5 path-prefix:
 #   /c/Users/jk023/nexus-lab       (C:\Users\jk023\nexus-lab に相当)
 #   /c/Users/jk023/.claude/projects/c--Users-jk023-nexus-lab/team_memory
 #   /c/Users/jk023/.claude/projects/c--Users-jk023-nexus-lab/memory  [Task B 追加]
 #   /c/Users/jk023/.shared-ops
+#   /c/Users/jk023/Nexus.Lab.Zen   (Zenn 記事 repo、 5/08 追加)
 #
 # 明示 deny (Red 境界):
 #   project-nia  (C:\Users\jk023\Desktop\project-nia)
 #   Weekly Signal Desk  (C:\Users\jk023\Desktop\Weekly Signal Desk)
 #   C:\Users\jk023\Desktop\Nero
 #   C:\Users\jk023\Desktop\codex
+#   nokaze-aira  (C:\Users\jk023\Desktop\nokaze-aira) — Kai-side Aira 正本、 readonly 参照のみ
 
 set -uo pipefail
 
@@ -94,6 +96,7 @@ DENY_PREFIXES=(
     "/c/Users/jk023/Desktop/Weekly Signal Desk"
     "/c/Users/jk023/Desktop/Weekly_Signal_Desk"
     "/c/Users/jk023/Desktop/codex"
+    "/c/Users/jk023/Desktop/nokaze-aira"
 )
 
 for deny_prefix in "${DENY_PREFIXES[@]}"; do
@@ -132,12 +135,13 @@ update_identity_baseline() {
     fi
 }
 
-# --- 許可 4 path-prefix (Task B: memory dir 追加) ---
+# --- 許可 5 path-prefix (Task B: memory dir 追加 + 5/08: Nexus.Lab.Zen Zenn repo 追加) ---
 ALLOWED_PREFIXES=(
     "/c/Users/jk023/nexus-lab"
     "/c/Users/jk023/.claude/projects/c--Users-jk023-nexus-lab/team_memory"
     "/c/Users/jk023/.claude/projects/c--Users-jk023-nexus-lab/memory"
     "/c/Users/jk023/.shared-ops"
+    "/c/Users/jk023/Nexus.Lab.Zen"
 )
 
 for allowed_prefix in "${ALLOWED_PREFIXES[@]}"; do
@@ -151,5 +155,5 @@ for allowed_prefix in "${ALLOWED_PREFIXES[@]}"; do
 done
 
 # --- どの prefix にも一致しない → deny ---
-printf '{"decision":"block","reason":"BLOCKED: 許可 path-prefix 外への書き込み禁止。path=%s 許可範囲: nexus-lab / team_memory / memory / shared-ops"}' "$FILE_PATH" >&2
+printf '{"decision":"block","reason":"BLOCKED: 許可 path-prefix 外への書き込み禁止。path=%s 許可範囲: nexus-lab / team_memory / memory / shared-ops / Nexus.Lab.Zen"}' "$FILE_PATH" >&2
 exit 2

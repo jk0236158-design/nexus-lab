@@ -51,7 +51,7 @@ echo "════════════════════════�
 echo "naming_mixup_check: ${input_file}"
 echo "═══════════════════════════════════════════════"
 
-# Layer A: 「2 entity 別物」 narrative (red)
+# Layer A: 「2 entity 別物」 narrative (red、 context-aware regex 化、 5/08 false positive 解消対応)
 RED_PATTERNS=(
   "Aira と Yuino は別"
   "Aira と Yuino は 2"
@@ -67,12 +67,60 @@ RED_PATTERNS=(
   "Yuino を実装"
 )
 
+# 否定 / 同一性肯定 context exclude (1 entity 2 narrative ruled 遵守の記述は red 不要)
+# 例: 「Aira と Yuino は別の道具ではない」 「別物ではなく同じ」 等
+NAMING_EXCLUDE_PATTERNS=(
+  "別の道具ではない"
+  "別の存在ではない"
+  "別物ではない"
+  "別物ではなく"
+  "別のものではない"
+  "別entity ではない"
+  "別 entity ではない"
+  "2 entity ではない"
+  "2 つの product ではない"
+  "別 product ではない"
+  "別ではない"
+  "Yuino ではない"
+  "Aira と Yuino は同じ"
+  "Yuino と Aira は同じ"
+  "1 entity"
+  "1 entity 2 narrative"
+  "同じ 1 つの道具"
+  "同じ実体"
+  "同じ entity"
+)
+
+# pattern が match した行を抽出、 exclude pattern に該当する行は red にしない
+# Note: bash glob match (case ... esac) を使用して Git Bash で grep -q SIGPIPE の job control noise 回避
 for pattern in "${RED_PATTERNS[@]}"; do
-  matches=$(echo "$content" | grep -oiE "$pattern" 2>/dev/null | wc -l | tr -d ' ' || true)
-  matches=${matches:-0}
-  if [[ "$matches" -gt 0 ]]; then
-    red_count=$((red_count + matches))
-    echo "  🔴 「2 entity 別物」 narrative 「${pattern}」 ${matches} 件"
+  matched_lines=$(echo "$content" | grep -niE "$pattern" 2>/dev/null || true)
+  if [[ -z "$matched_lines" ]]; then
+    continue
+  fi
+
+  effective_matches=0
+  while IFS= read -r line; do
+    [[ -z "$line" ]] && continue
+    is_excluded=false
+    for excl in "${NAMING_EXCLUDE_PATTERNS[@]}"; do
+      # bash glob match (* で挟む)、 case insensitive は shopt nocasematch で実現
+      shopt -s nocasematch
+      if [[ "$line" == *"$excl"* ]]; then
+        is_excluded=true
+        shopt -u nocasematch
+        break
+      fi
+      shopt -u nocasematch
+    done
+    if [[ "$is_excluded" == "false" ]]; then
+      effective_matches=$((effective_matches + 1))
+    fi
+  done <<<"$matched_lines"
+
+  if [[ "$effective_matches" -gt 0 ]]; then
+    red_count=$((red_count + effective_matches))
+    echo "  🔴 「2 entity 別物」 narrative 「${pattern}」 ${effective_matches} 件 (否定 context exclude 後)"
   fi
 done
 
