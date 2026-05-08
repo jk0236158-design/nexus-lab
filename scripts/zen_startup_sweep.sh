@@ -468,7 +468,20 @@ else
 fi
 
 # ---------------------------------------------------------------
+# board_audit_step (5/05 + 5/07 + 5/08 朝の 3 連発火 root fix、 Kai 5/08 17:30 判断 #1)
+#   Zen が 「気をつける」 段階を超えた、 sweep に物理統合で 朝 audit miss 抑止
+# ---------------------------------------------------------------
+header "board audit step (read miss 抑止、 Kai 判断 #1 reify)"
+BOARD_AUDIT_SH="$NEXUS_LAB/scripts/board_audit_step.sh"
+if [ -x "$BOARD_AUDIT_SH" ]; then
+  bash "$BOARD_AUDIT_SH" 2>&1 | tail -30
+else
+  echo "  (board_audit_step.sh 不在、 skip)"
+fi
+
+# ---------------------------------------------------------------
 # Yuino Controlled Wake v0 (5/08 reify 連動): wake-queue/zen/ surface
+#   board_audit_step は 「起きた時に読み漏らさない」、 Controlled Wake v0 は 「読むきっかけ」、 役割違いで両方必要 (Kai 5/08 17:30 判断)
 # ---------------------------------------------------------------
 header "Controlled Wake v0 (Yuino 経由 wake request)"
 WAKE_CONSUME_SH="$NEXUS_LAB/scripts/zen_wake_queue_consume.sh"
