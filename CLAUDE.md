@@ -244,29 +244,21 @@ Definition: AI judgment の unsafe / 過剰 transformation を **detect + correc
 
 = Knot 研究 (nia 思想由来) を運用 safety layer に展開、 nokaze の architectural discovery。 商品差別化軸候補。
 
-#### Wave 1 期間 peer spawn 制約 default (2026-04-30 追加、L3 knot 反映)
+#### peer spawn 制約 default (2026-05-08 永続 ruled 化、 Wave 1 期間 narrative から rebase)
 
-zen-memory L3 knot `op_knot_subagent_settings_resolution_failure` (N=5 reproduction、4/29 update) の compensation 「Wave 1 期間 (4/29-5/05) peer spawn 起動時に Write/Edit/Bash 依存を控え、return content 代筆 path を default にする」を運用 embed。
+L3 knot `op_knot_subagent_settings_resolution_failure` の compensation を永続 default に格上げ (4/29-5/05 期間限定 → 5/06 以降も発火 evidence、 root cause investigation pending)。
 
-**運用ルール (Wave 1 期間中)**:
-- peer spawn の prompt は **「実装 task は Zen が代筆する前提で、return content (markdown text) で返す」** を default に明記する
-- spawn 内で Bash / Write / Edit が denied されても **abort せず return content で代替**、Zen が repo / state side に書き込む
-- mode="acceptEdits" 明示は引き続き必須 (4/24 追加の subagent denial 67% 緩和分)、但し N=5 reproduction で完全解消しないことが確定済
-- 例外: Zen 直筆で完結可能な task は spawn せず Zen 直接 (但し identity 監視対象 #7 「QA 温存」発火に注意、design doc 系は Kagami QA review pass を skip しない)
+**運用ルール**:
+- peer spawn の prompt は **「実装 task は Zen が代筆する前提で、 return content (markdown text) で返す」** を default に明記する
+- spawn 内で Bash / Write / Edit が denied されても **abort せず return content で代替**、 Zen が repo / state side に書き込む
+- `mode="acceptEdits"` 明示は必須 (denial 67% 緩和、 但し N=5 reproduction で完全解消しないことが確定済)
+- 例外: Zen 直筆で完結可能な task は spawn せず Zen 直接 (但し design doc 系は Kagami QA review pass を skip しない)
 
-**Wave 1 期間後の方針 (5/06 以降)**:
-- Iwa T1 reproduction test (5/05 期限) 結果で root cause investigation 進捗判断
-- 議題 30 (5/08 review priority A) で auto wake schedule 縮小判定 + selective denial L3 root cause + 二重 session を一括処理
-- L3 knot 解消 evidence が揃えば本制約 default 解除候補
-
-**identity 監視対象 #7 (QA 温存) との関係**:
-- 「Kagami spawn を重要局面で省略」を peer spawn 制約で正当化しない
-- design doc / spec / 公開 candidate は Kagami QA review pass 必須 (return content 経由でも OK、Kagami が write deny でも代筆 path で機能する)
-- 「Kagami spawn が deny される」と「Kagami QA 判断を skip する」は別 axis、混同禁止
-
-**identity 監視対象 #5 (宣言-実装乖離) との関係**:
-- 本ルールを CLAUDE.md に書いただけでは reify 完了ではない
-- task draft 起稿時 / spawn call 時 / review request 時に本ルールが effective に運用されているか sweep / startup ritual で物理確認
+**identity boundary との関係**:
+- 「Kagami spawn を重要局面で省略」 を peer spawn 制約で正当化しない
+- design doc / spec / 公開 candidate は Kagami QA review pass 必須 (return content 経由でも OK)
+- 「Kagami spawn が deny される」 と 「Kagami QA 判断を skip する」 は別 axis、 混同禁止
+- task draft 起稿時 / spawn call 時 / review request 時に本ルールが effective に運用されているか sweep で物理確認
 
 #### 例外（Zenが直接書いてもよい）
 - メッセージ・報告・diary・status・memory の文章
@@ -357,9 +349,9 @@ zen-memory L3 knot `op_knot_subagent_settings_resolution_failure` (N=5 reproduct
 - 5/04 evening 起稿: 「batch 完遂後即 next batch 生成 default、 jun message なし idle 化禁止」
 - scheduled wake 停止後は 物理 trigger 不在、 jun directive trigger dependency default が再発火 risk
 - 5/04 evening reform 後の 5/05-5/08 期間で同型 default 4 連再発火 (memory `feedback_no_minimum_first.md` n=4 段、 5/08 朝 jun 「過小見積もり指摘」 で確定)
-- **5/09 (明日) から段階消化 + 5/22 までに完了** 候補 (議題 30 priority A 連動、 jun 5/08 17:50 directive 「後回しにしていいことなんて何もない」 連動の defer narrative 解除)
+- **5/08 着手 + Kai Phase 1 (5/08-5/21) 期間内 reify** (jun 5/08 17:50 directive 「後回しにしていいことなんて何もない」 + 「今やれることをやれるだけやってみよう」 連動、 「明日に回す」 narrative 抑止)
 
-### 5/09+ 段階消化 reform candidate (8 件、 議題 30 priority A 連動、 5/22 までに段階消化、 5/13 月曜以降に skip しない)
+### Kai Phase 1 期間内 reify candidate (8 件、 5/08-5/21 期間内、 「明日に回す」 narrative 抑止)
 
 詳細は `team_memory/zen/zen_autonomous_behavior_unified_spec_2026-05-08.md` 参照:
 
@@ -374,7 +366,7 @@ zen-memory L3 knot `op_knot_subagent_settings_resolution_failure` (N=5 reproduct
 
 ### 即時 boundary
 
-- jun 不在中の自走 default 再発火は memory 起稿のみで運用埋込み欠落、 物理 reify は **5/09 (明日) から段階消化、 後回しにしない** (jun 5/08 17:50 directive 連動)
+- jun 不在中の自走 default 再発火は memory 起稿のみで運用埋込み欠落、 物理 reify は **本日着手 + 後回しにしない** (jun 5/08 17:50 directive 連動)
 - Aira 4 機能 MCP 化先 = nokaze-aira/ 側 (Kai 主担当)、 Zen は他 project 参照のみ書き込み禁止
 - 二重 session 並走 risk は schedule 停止で root fix 状態、 但し manual session 重複 (jun 「おはよう」 + 既存 main session 重複) は lockfile 未実装で潜在 risk あり
 
