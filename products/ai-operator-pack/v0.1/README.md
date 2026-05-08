@@ -1,6 +1,6 @@
 # AI Operator Pack v0.1 (development progress、 商品 publish 前)
 
-> ⚠️ 開発中です。 まだ販売開始していません。 90 点品質 gate 到達 + dogfood verify 14 day 完遂後に release 予定 (target: 2026-05-26)。
+> ⚠️ 開発中です。 まだ販売開始していません。 観察負荷試験 (Phase 1: 2026-05-08〜2026-05-21) + Launch Readiness Gate (Phase 6: yes/no 判断、 evidence ベース) を経てから release します。
 
 ## これは何ですか
 
@@ -42,13 +42,19 @@ release 後も 5 layer で継続改善:
 
 ## ロードマップ
 
-| Phase | 中身 | 予定 |
+開発の流れは Kai (Aira 実装担当) が起稿した [Yuino/Aira Roadmap](https://github.com/jk0236158-design/nexus-lab/blob/master/aira/docs/yuino_aira_roadmap.md) に整合。 日付が決まっているのは **観察試験期間 (Phase 1)** だけ、 他のフェーズは 「完了条件で次に進む」 順序です (人間の時間で恐れない、 完了像から始める)。
+
+| Phase | 中身 | 期間 / 完了条件 |
 |---|---|---|
-| 開発中 (Phase 0) | dogfood + 設計 + 実装 | 2026-05-08 〜 5/12 |
-| 開発前期 (Phase B) | Base 層 + Vocabulary 層 + Execution 層 起稿 | 2026-05-13 〜 5/22 |
-| 開発後期 (Phase C 入口) | dogfood verify 2 day + 商品準備 + LP 起稿 | 2026-05-23 〜 5/25 |
-| **Release** (canonical switch milestone) | 60+ 点 → release 90+ 到達後 | **2026-05-26** |
-| 継続改善期 | 5 layer で改善を回す | 2026-05-27+ |
+| **Phase 1: 観察負荷試験** (date 固定) | 商品 v0.1 起稿 + 動作確認 + 自社利用 evidence | **2026-05-08 (Day 1) 〜 2026-05-21 (Day 14)** |
+| Phase 2: 自走ループの完成 (date なし) | Kai 依頼 → Yuino 判断 → Zen 返信 → 結果記録 の e2e | 完了条件: 重複 wake 抑止 + 結果監査 動作 |
+| Phase 3: オーナー負荷の圧縮 | jun が確認する量を減らす | 完了条件: 「次に必要な質問」 が 1 件に集約 |
+| Phase 4: 初心者向け体験 | 内部用語なしで使える | 完了条件: first-run flow + Reset/Forget が分かる |
+| Phase 5: 外部価値の生産 | 商品 / 1 page 説明 / 短い動画 / X / Zenn | 完了条件: nokaze 内部を説明せずに 1 件理解できる成果 |
+| **Phase 6: Launch Readiness Gate** | dogfood → 限定 release の判断 | **yes/no 決定 (score ではない)、 evidence ベース** |
+| Phase 7: 配布と収益実験 | 1 channel 試験 + 反応記録 | 完了条件: 反応 / 混乱 / 摩擦の記録 |
+
+「90+ になったから release」 ではなく、 「evidence が揃ったら Phase 6 で yes/no 判断」 form。 score は判断の材料、 自動 release 条件ではありません。
 
 ## 開発の透明性
 
