@@ -109,7 +109,7 @@ fi
 - `~/.shared-ops/board/` (Kagami review 引用の board file)
 - `nexus-lab/aira/`, `packages/ops-console/` 等の design doc (Kagami pass narrative 含む)
 
-### enforce form (5/13+ Phase B 内 candidate)
+### enforce form (5/09+ 段階消化 candidate、 jun 5/08 17:50 「後回しにしない」 directive 連動)
 
 - pre-commit hook で diary / reports / board file の Kagami review 引用部分を honesty_audit.sh Layer D で check
 - fail = commit 拒否
@@ -142,8 +142,8 @@ fi
 ## 起稿後の immediate 反応
 
 - 本 spec を `~/.shared-ops/board/` 経由で Iwa + Kagami に共有 (5/08 朝 startup ritual で板 read 推奨)
-- Iwa 着手 = honesty_audit.sh Layer D 拡張、 5/13+ Phase B 期間内
-- Kagami 着手 = peer spawn template 反映、 5/13+ Akari paraphrase pass batch と並行
+- Iwa 着手 = honesty_audit.sh Layer D 拡張、 **5/09 (明日) から段階消化** (jun 5/08 17:50 directive 連動の defer narrative 解除)
+- Kagami 着手 = peer spawn template 反映、 Akari paraphrase pass batch と並行 (本日中 batch 1-5 走行中)
 
 ---
 

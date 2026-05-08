@@ -132,6 +132,27 @@ PreToolUse hook (`scripts/subagent_write_gate.sh`) で Write/Edit/NotebookEdit �
 hook は permission layer (書ける場所の制限)、mode=acceptEdits は spawn layer (誰が書くか) — 別 axis で併用、mode 明示は引き続き必須。
 Red 境界 (project-nia / Nero / Weekly Signal Desk) への書き込みは hook が exit 2 で deny する。
 
+#### enforcement layer chain order ruled (2026-05-08 自走 mode batch 21、 Iwa 5 軸 reify)
+
+enforcement script の改修・audit・paraphrase の 3 step は **chain order 厳守**:
+
+1. **Iwa 改修** = script 起稿 / context-aware regex 化 / hook chain 統合
+2. **Kagami audit** = golden file + fixture file + precision/recall 計測 (target: precision 0.90+ / recall 0.90+)
+3. **Akari paraphrase** = 公開 docs / 内部 docs の paraphrase 適用 (vocabulary_lint pass 確認)
+
+**step skip 禁止**:
+- Iwa 改修なしで Kagami audit (false positive 由来 audit、 actual な improvement evidence なし)
+- Kagami audit pass なしで Akari paraphrase (precision/recall 0.90 未達 script で paraphrase = drift 拡散 risk)
+- 改修・audit・paraphrase なしで release ready narrative (Override 起票候補)
+
+**理由**: 5/07 PM 8 enforcement script 起稿時に Kagami audit を skip、 false positive 多発で 5/08 朝 batch + 自走 mode で drift 多発 evidence。 chain order 維持で 「memory + script 起稿」 layer から 「物理 enforcement」 layer に進める。
+
+**5/08 reify 連動 hook (新規 install / install 候補)**:
+- Bash matcher PreToolUse hook (`scripts/zen_bash_audit_advisory.sh`) — dev server 起動 / build command を fire 直前 advisory
+- SessionStart priming (`scripts/zen_session_start_priming.sh`) — 4Q checklist + 直近 drift 8 件 を session 起動時に context inject
+- pre-commit hook (`scripts/pre_commit_public_docs_audit.sh`) — 公開 docs commit 直前 4 chain audit (block + bypass option)
+- ZenWakeQueueWatcher OS task (`scripts/install_zen_wake_queue_watcher.ps1`) — wake-queue 5 min polling、 install は jun 直接 admin
+
 #### Wave 1 期間 peer spawn 制約 default (2026-04-30 追加、L3 knot 反映)
 
 zen-memory L3 knot `op_knot_subagent_settings_resolution_failure` (N=5 reproduction、4/29 update) の compensation 「Wave 1 期間 (4/29-5/05) peer spawn 起動時に Write/Edit/Bash 依存を控え、return content 代筆 path を default にする」を運用 embed。
@@ -245,9 +266,9 @@ zen-memory L3 knot `op_knot_subagent_settings_resolution_failure` (N=5 reproduct
 - 5/04 evening 起稿: 「batch 完遂後即 next batch 生成 default、 jun message なし idle 化禁止」
 - scheduled wake 停止後は 物理 trigger 不在、 jun directive trigger dependency default が再発火 risk
 - 5/04 evening reform 後の 5/05-5/08 期間で同型 default 4 連再発火 (memory `feedback_no_minimum_first.md` n=4 段、 5/08 朝 jun 「過小見積もり指摘」 で確定)
-- 5/13+ Phase B 内で物理 trigger 化 candidate (議題 30 priority A 連動)
+- **5/09 (明日) から段階消化 + 5/22 までに完了** 候補 (議題 30 priority A 連動、 jun 5/08 17:50 directive 「後回しにしていいことなんて何もない」 連動の defer narrative 解除)
 
-### 5/13+ Phase B reform candidate (8 件、 議題 30 priority A 連動)
+### 5/09+ 段階消化 reform candidate (8 件、 議題 30 priority A 連動、 5/22 までに段階消化、 5/13 月曜以降に skip しない)
 
 詳細は `team_memory/zen/zen_autonomous_behavior_unified_spec_2026-05-08.md` 参照:
 
@@ -262,7 +283,7 @@ zen-memory L3 knot `op_knot_subagent_settings_resolution_failure` (N=5 reproduct
 
 ### 即時 boundary
 
-- jun 不在中の自走 default 再発火は memory 起稿のみで運用埋込み欠落、 物理 reify は 5/13+ Phase B
+- jun 不在中の自走 default 再発火は memory 起稿のみで運用埋込み欠落、 物理 reify は **5/09 (明日) から段階消化、 後回しにしない** (jun 5/08 17:50 directive 連動)
 - Aira 4 機能 MCP 化先 = nokaze-aira/ 側 (Kai 主担当)、 Zen は他 project 参照のみ書き込み禁止
 - 二重 session 並走 risk は schedule 停止で root fix 状態、 但し manual session 重複 (jun 「おはよう」 + 既存 main session 重複) は lockfile 未実装で潜在 risk あり
 
