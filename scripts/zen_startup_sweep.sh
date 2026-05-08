@@ -52,7 +52,7 @@ subheader() {
 # ---------------------------------------------------------------
 header "Zen Startup Sweep — $NOW"
 
-subheader "board/ : 今日の Kai→Zen 未返信"
+subheader "board/ : 今日の Kai→Zen まだ返事してない分"
 # 「直近24h」ではなく「今日0時以降」をスコープにする (古い backlog で
 # 自走が止まらないように、Kai 側 autonomous-sweep と同じ思想)
 INCOMING=$(find "$SHARED_OPS/board" -maxdepth 1 -type f -name "${TODAY}_kai_zen_*.md" \
@@ -177,26 +177,26 @@ is_replied() {
 }
 
 if [ -z "$INCOMING" ]; then
-  echo "  (今日の未読なし)"
+  echo "  (今日の新着なし)"
 else
   UNREPLIED_COUNT=0
   while IFS= read -r f; do
     base=$(basename "$f" .md)
     orig_date="${base%%_*}"
     if REPLY_MATCH=$(is_replied "$base" "$orig_date"); then
-      echo "  [replied] $base  (← $REPLY_MATCH)"
+      echo "  [返信済み] $base  (← $REPLY_MATCH)"
     else
-      echo "  [PENDING] $base"
+      echo "  [まだ返事してない] $base"
       UNREPLIED_COUNT=$((UNREPLIED_COUNT + 1))
-      add_candidate 1 "Kai→Zen 未返信に応答: $base" \
-        "今日 Kai から届いた未返信メッセージ (最優先)"
+      add_candidate 1 "Kai→Zen まだ返事してない分に応答: $base" \
+        "今日 Kai から届いた、 まだ返事してないメッセージ (優先度: 最優先)"
     fi
   done <<< "$INCOMING"
   echo ""
-  echo "  → 今日の未返信: $UNREPLIED_COUNT 件"
+  echo "  → 今日まだ返事してない: $UNREPLIED_COUNT 件"
 fi
 
-subheader "board/ : 7日以内の積み残し (参考、無視可)"
+subheader "board/ : 7日以内のまだ手をつけてない分 (参考、 無視可)"
 # 古い backlog はノイズになりがちなので「件数だけ」で済ませる
 OLD_INCOMING=$(find "$SHARED_OPS/board" -maxdepth 1 -type f -name "*_kai_zen_*.md" \
   -mtime -7 ! -newermt "${TODAY} 00:00:00" \
@@ -219,13 +219,13 @@ if [ -n "$OLD_INCOMING" ]; then
     fi
   done <<< "$OLD_INCOMING"
 fi
-echo "  過去7日積み残し: $OLD_UNREPLIED 件 (詳細は手動で board/ を grep)"
+echo "  過去7日でまだ手をつけてない分: $OLD_UNREPLIED 件 (詳細は手動で board/ を grep)"
 if [ -n "$OLDEST_PENDING_BASE" ]; then
-  add_candidate 2 "7日以内の積み残し応答: $OLDEST_PENDING_BASE" \
-    "過去7日 Kai→Zen 積み残し $OLD_UNREPLIED 件の先頭 (古い順)"
+  add_candidate 2 "7日以内のまだ手をつけてない分に応答: $OLDEST_PENDING_BASE" \
+    "過去7日 Kai→Zen でまだ手をつけてない $OLD_UNREPLIED 件の先頭 (古い順)"
 fi
 
-subheader "inbox/INDEX.md : owner判断pending"
+subheader "inbox/INDEX.md : owner 判断待ちの候補"
 if [ -f "$SHARED_OPS/inbox/INDEX.md" ]; then
   # Pending セクションのテーブル行だけ抽出
   PENDING_ROWS=$(awk '/^## Pending/,/^## /' "$SHARED_OPS/inbox/INDEX.md" \
@@ -239,10 +239,10 @@ if [ -f "$SHARED_OPS/inbox/INDEX.md" ]; then
     P_TITLE=$(echo "$FIRST_PENDING" | awk -F'|' '{sub(/^ +/,"",$3); sub(/ +$/,"",$3); print $3}')
     if [ -n "$P_TITLE" ]; then
       add_candidate 3 "inbox #${P_NUM} を前進: ${P_TITLE}" \
-        "inbox Pending 先頭 (owner 判断キュー最上位)"
+        "inbox 判断待ちの先頭 (owner 判断キューの最上位)"
     fi
   else
-    echo "  (pending なし)"
+    echo "  (判断待ちなし)"
   fi
 else
   echo "  (INDEX.md なし)"
@@ -259,7 +259,7 @@ if [ -n "$RECENT_KNOTS" ]; then
   LATEST_KNOT=$(echo "$RECENT_KNOTS" | head -1 | awk '{print $2}')
   if [ -n "$LATEST_KNOT" ]; then
     add_candidate 4 "knot 再発防止レビュー: $LATEST_KNOT" \
-      "直近7日の最新 knot (再発防止の仕組み化検討)"
+      "直近7日で一番新しい knot (再発防止の仕組み化を検討する候補)"
   fi
 else
   echo "  (なし)"
@@ -353,8 +353,8 @@ if [ -s "$CANDIDATES_FILE" ]; then
 fi
 
 if [ -z "$CHOSEN_LABEL" ]; then
-  CHOSEN_LABEL="自走モードの棚卸し (未返信/inbox/knots いずれも該当なし)"
-  CHOSEN_REASON="候補プール空 — 静かな日。diary/report 整備や技術負債の棚卸し向け"
+  CHOSEN_LABEL="自走モードの棚卸し (まだ返事してない / inbox 判断待ち / knots のいずれも該当なし)"
+  CHOSEN_REASON="候補プール空 — 静かな日。 diary / report 整備や、 後回しにしてた技術整理向け"
   CHOSEN_PRIORITY="fallback"
 fi
 
@@ -395,8 +395,8 @@ $CHOSEN_REASON
 EOF
 
   echo "  $TODAY_FILE に新規テンプレを書き出した"
-  echo "  → 仮選択 (priority=$CHOSEN_PRIORITY): $CHOSEN_LABEL"
-  echo "  → 不適切なら zen_today.md を上書きして再決定"
+  echo "  → 仮選択 (優先度=$CHOSEN_PRIORITY): $CHOSEN_LABEL"
+  echo "  → 合わなければ zen_today.md を上書きして決め直す"
 fi
 
 # ---------------------------------------------------------------

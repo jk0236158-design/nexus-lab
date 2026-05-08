@@ -266,6 +266,16 @@ zen-memory L3 knot `op_knot_subagent_settings_resolution_failure` (N=5 reproduct
 - Aira 4 機能 MCP 化先 = nokaze-aira/ 側 (Kai 主担当)、 Zen は他 project 参照のみ書き込み禁止
 - 二重 session 並走 risk は schedule 停止で root fix 状態、 但し manual session 重複 (jun 「おはよう」 + 既存 main session 重複) は lockfile 未実装で潜在 risk あり
 
+### chat output 起稿前の 3 行 ritual (5/08 enforcement Round 2 reform、 Akari narrative-level reform)
+
+chat output (text、 tool 不使用) には PreToolUse hook 不在、 narrative-level self-check 必須。 起稿直前に下記 3 行を mental scan:
+
+1. **誰承認?** (jun / Kai / Kagami 承認済か、 未承認なら draft narrative)
+2. **どの doc に?** (memory / state side / git commit / chat のみ、 chat のみ = 揮発、 物理化必須なら別 file)
+3. **drift 候補?** (過小見積もり / 表層学習 / 朝 sweep audit miss / silent wait の 4 default)
+
+詳細: `team_memory/zen/chat_output_pre_check_4q.md`
+
 ## Naming Convention (2026-05-06 evening 確定、 1 entity 2 narrative)
 
 5/06 evening jun original intent + Kai 確認後の正しい用語:
