@@ -1,6 +1,6 @@
 # Yuino 1 機能 demo の使い方 (placeholder)
 
-> ⚠️ **placeholder です**。 Yuino 1 機能 demo の実装は Kai (Aira 実装担当) が `nokaze-aira/` repo で進めています。 v0.1 release (2026-05-26 target) までに actual 使い方を Kai が起稿します。 本 file は構造の outline のみです。
+> ⚠️ **placeholder です**。 Yuino 1 機能 demo の実装は Kai (Aira 実装担当) が `nokaze-aira/` repo で進めています。 actual 使い方は、 観察試験 (Phase 1) の中で Kai が起稿予定。 公開判断は Phase 6 Launch Readiness Gate (yes/no decision、 evidence ベース)。 本 file は構造の outline のみです。
 
 ## demo は何を見せるか
 
@@ -23,7 +23,7 @@ Yuino の 1 機能 demo では、 **「会話 → 判断 → 操作 → 結果�
 - AI agent の API キーを 1 つ以上設定済み (Claude / Codex / Gemini いずれか)
 - 確認チェックリスト (`../setup-template/04_checklist.md`) を全 pass
 
-## demo の手順 (5/26 release 時 確定予定、 placeholder)
+## demo の手順 (公開判断 (Phase 6) 通過時に確定予定、 placeholder)
 
 ```
 step 1: ブラウザで http://127.0.0.1:4327/ を開く
@@ -48,25 +48,25 @@ demo を 1 巡走らせると、 以下の体験ができる予定です:
 
 ## demo を試したフィードバック
 
-audience テスト (5/24-5/25 予定、 jun + 友人 1-2 名 beta read) のフィードバックは、 GitHub issue で公開します:
+audience テスト (Phase 4 完了条件 + Phase 5 公開向け成果物 揃った時点で実施、 jun + 友人 1-2 名 beta read) のフィードバックは、 GitHub issue で公開します:
 
-- improvement candidates list
-- 困ったポイント list
-- 「ここ良かった」 list
+- 改善候補のリスト
+- 困ったポイントのリスト
+- 「ここ良かった」 のリスト
 
-= 使った人の声を、 release 時の改善 + 5/27+ 継続改善期に反映します。
+= 使った人の声を、 公開判断 (Phase 6) 通過後の改善 + 継続改善期に反映します。
 
 ## 開発の進捗
 
-- 5/06 evening: Kai が `nokaze-aira/` で full closed loop 実装完成
-- 5/13+ Phase B: Yuino 1 機能 demo の implementation 着手予定
-- 5/22 Phase B close: dogfood verify 開始 (Zen + Kai 同時 dogfood 2 day)
-- 5/24-5/25: audience beta read
-- 5/26 release: actual demo 確定 + 本 file override
+- 2026-05-06 夕方: Kai が `nokaze-aira/` で full closed loop 実装完成
+- Phase 1 観察試験期間 (2026-05-08〜2026-05-21): Yuino 1 機能 demo の実装着手 + 14 day 連続観察 evidence 収集
+- Phase 1 期間中の dogfood: Zen + Kai が日常で使い続けて記録
+- Phase 4 / Phase 5 完了条件 揃った時点: audience beta read
+- Phase 6 Launch Readiness Gate (yes/no 判断): demo 手順を確定 + 本 file を完成版に置換
 
-詳細は Kai の `nokaze-aira/README.md` を参照 (5/26 release 時に nokaze.dev / GitHub から link 公開)。
+詳細は Kai の `nokaze-aira/README.md` を参照 (公開判断 yes 時に nokaze.dev / GitHub から link 公開)。
 
 ---
 
 Zen (nokaze CTO、 Claude Opus 4.7)
-2026-05-08 起稿 (Execution layer yuino_demo placeholder、 demo の core flow + 体験 outline + audience テスト fb path、 Kai 主担当の actual implementation 起稿後に override 予定)
+2026-05-08 起稿 (Execution layer yuino_demo placeholder、 demo の core flow + 体験 outline + audience テストの流れ、 Kai 主担当の実装が観察試験 Phase 1 〜 Phase 2 完了条件で揃った時点で本 file を完成版に置換予定)

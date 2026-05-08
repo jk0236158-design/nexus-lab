@@ -5,7 +5,7 @@ description: AI Operator Pack v0.1 の動作確認用、 サンプルの状態�
 
 # サンプルの状態ファイル (sample_state)
 
-> ⚠️ AI Operator Pack v0.1 は開発中です。 まだ販売開始していません。 5/26 release 予定。 このディレクトリは 5/08 段階では README のみで、 中身のサンプルは 5/13+ Phase B で起稿予定です。
+> ⚠️ AI Operator Pack v0.1 は開発中です。 まだ販売開始していません。 観察試験 Phase 1 期間 = 2026-05-08〜2026-05-21、 公開判断 = Phase 6 Launch Readiness Gate (yes/no decision、 evidence ベース)。 このディレクトリは 2026-05-08 (Phase 1 Day 1) 段階では README のみで、 中身のサンプルは観察試験 Phase 1 期間中に起稿予定です。
 
 ## このディレクトリは何ですか
 
@@ -15,11 +15,11 @@ setup の手順 (`01_quick_start.md` step 2) で、 このディレクトリの�
 
 ## 何が入っているか
 
-### 5/08 時点 (Phase 0 開発中)
+### 2026-05-08 (Phase 1 Day 1) 時点
 
-このディレクトリには **README.md (本ファイル) のみ** が入っています。 中身のサンプルは 5/13+ Phase B で Iwa (Lead Engineer) が起稿予定です。
+このディレクトリには **README.md (本ファイル) のみ** が入っています。 中身のサンプルは、 観察試験 Phase 1 期間中に Iwa (Lead Engineer) が起稿予定です。
 
-### 5/13+ Phase B 起稿予定の中身
+### 観察試験 Phase 1 期間中に起稿予定の中身
 
 | ファイル名 | 何のファイルか | 必須 / 任意 |
 |---|---|---|
@@ -30,7 +30,7 @@ setup の手順 (`01_quick_start.md` step 2) で、 このディレクトリの�
 | `conversations/.gitkeep` | 会話の履歴が保存される場所、 空のディレクトリ | 必須 |
 | `knots/.gitkeep` | 気づきの結び目 (= knot) が記録される場所、 空のディレクトリ | 必須 |
 
-> 💡 上のリストは予定です。 5/13+ Phase B で実装が始まり次第、 中身が確定します。
+> 💡 上のリストは予定です。 観察試験 Phase 1 期間中に実装が始まり次第、 中身が確定します。
 
 ## 使い方
 
@@ -47,7 +47,7 @@ mkdir -p ~/.local/share/yuino/state
 cp -r docs/setup-template/sample_state/* ~/.local/share/yuino/state/
 ```
 
-> ⚠️ 5/08 段階では README のみなので、 コピーしても README が 1 件入るだけです。 5/13+ Phase B で中身が起稿されてから、 改めて setup の手順が機能します。
+> ⚠️ 2026-05-08 (Phase 1 Day 1) 段階では README のみなので、 コピーしても README が 1 件入るだけです。 観察試験 Phase 1 期間中に中身が起稿されてから、 改めて setup の手順が機能します。
 
 ## カスタマイズの form
 
@@ -76,4 +76,4 @@ cp -r docs/setup-template/sample_state/* ~/.local/share/yuino/state/
 ---
 
 Akari (Frontend / Docs、 Claude Sonnet 4.6)
-2026-05-08 起稿 (Base layer 05 sample_state ディレクトリの placeholder、 5/13+ Phase B で Iwa が中身起稿予定)
+2026-05-08 起稿 (Base layer 05 sample_state ディレクトリの placeholder、 観察試験 Phase 1 期間中に Iwa が中身起稿予定)

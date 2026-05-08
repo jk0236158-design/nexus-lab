@@ -1,6 +1,6 @@
 # ライセンス (AI Operator Pack v0.1)
 
-> ⚠️ これは **draft (案)** です。 release 前に jun (オーナー) + Kura (経理) で最終確定します。 commercial 利用 + 配布の条件は、 v0.1.0 release (2026-05-26 target) 時に確定します。
+> ⚠️ これは **draft (案)** です。 公開判断 (Phase 6 Launch Readiness Gate) の前に jun (オーナー) + Kura (経理) で最終確定します。 商業利用 + 配布の条件は、 v0.1.0 公開判断時に確定します。
 
 ## 現時点の方針 (draft)
 
@@ -112,21 +112,21 @@ License text: https://creativecommons.org/licenses/by/4.0/
 - 使用者の判断ミス (Approval Gate を通過した action の結果)
 - インストール環境の固有問題 (OS / Node.js version / 既存ファイルとの conflict)
 
-セキュリティ脆弱性 + 重大な bug に関しては、 GitHub issue または **security@nokaze.dev** (5/26 release 後に開設予定) で受け付けます。
+セキュリティ脆弱性 + 重大な bug に関しては、 GitHub issue または **security@nokaze.dev** (公開判断後に開設予定) で受け付けます。
 
-## license の最終確定 path
+## license の最終確定の流れ
 
-本 file は draft です。 v0.1.0 release (2026-05-26 target) 前に下記を確定:
+本 file は draft です。 v0.1.0 公開判断 (Phase 6 Launch Readiness Gate yes/no decision) の前に下記を確定:
 
-1. **コード license** = MIT (候補 1) 推奨、 但し jun + Kura が BSL を選んだ場合は switch
+1. **コード license** = MIT (候補 1) 推奨、 但し jun + Kura が BSL を選んだ場合は切り替え
 2. **ドキュメント license** = CC BY 4.0 (固定)
 3. **商標条項** = 確認 (Yuino + nokaze の商標として登録するかは Kura 判断)
-4. **保証 + 責任の制限** = 弁護士確認 1 件 (jun 自走判断 + Kura 経理 audit、 商業 release 前 mandatory)
+4. **保証 + 責任の制限** = 弁護士確認 1 件 (jun 自走判断 + Kura 経理 audit、 商業公開前 mandatory)
 
-確定 timeline:
-- 5/13 月曜: jun + Kura で license 候補議論
-- 5/22 金曜: license 確定 + final draft commit
-- 5/26 火曜: release 時に確定版 license deploy
+確定の順序 (期日固定なし、 完了条件で次に進む form):
+- jun + Kura で license 候補議論 (Phase 1 観察試験期間中、 着手済み)
+- license 確定 + 最終 draft commit (Phase 6 Launch Readiness Gate に向けて)
+- 公開判断 yes 時に確定版 license を deploy (Phase 6 通過時)
 
 ## 連絡
 
@@ -137,4 +137,4 @@ License text: https://creativecommons.org/licenses/by/4.0/
 ---
 
 Zen (nokaze CTO、 Claude Opus 4.7)
-2026-05-08 起稿 (商品 v0.1 license draft、 jun + Kura 確認待ち、 release 前最終確定 path 明示)
+2026-05-08 起稿 (商品 v0.1 license draft、 jun + Kura 確認待ち、 Phase 6 Launch Readiness Gate 前に最終確定の流れ明示)

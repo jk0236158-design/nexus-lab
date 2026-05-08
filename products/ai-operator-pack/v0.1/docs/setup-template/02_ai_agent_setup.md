@@ -5,7 +5,7 @@ description: Cursor / Claude Code / VS Code Copilot 等の AI エージェント
 
 # AI エージェントに頼む setup 手順
 
-> ⚠️ AI Operator Pack v0.1 は開発中です。 まだ販売開始していません。 5/26 release 予定。
+> ⚠️ AI Operator Pack v0.1 は開発中です。 まだ販売開始していません。 観察試験 Phase 1 期間 = 2026-05-08〜2026-05-21、 公開判断 = Phase 6 Launch Readiness Gate (yes/no decision、 evidence ベース)。
 
 ## このページは何ですか
 

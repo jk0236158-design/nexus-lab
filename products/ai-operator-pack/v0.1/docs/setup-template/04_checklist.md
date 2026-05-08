@@ -5,7 +5,7 @@ description: AI Operator Pack の setup が終わった後、 ちゃんと動く
 
 # 確認チェックリスト
 
-> ⚠️ AI Operator Pack v0.1 は開発中です。 まだ販売開始していません。 5/26 release 予定。
+> ⚠️ AI Operator Pack v0.1 は開発中です。 まだ販売開始していません。 観察試験 Phase 1 期間 = 2026-05-08〜2026-05-21、 公開判断 = Phase 6 Launch Readiness Gate (yes/no decision、 evidence ベース)。
 
 ## このページは何ですか
 
@@ -63,7 +63,7 @@ setup が完了したと思ったら、 このページを上から順番に確�
 |---|---|---|
 | ☐ | Yuino が起動して、 最初の会話が成立した | ブラウザで `http://127.0.0.1:4327/` を開き、 「こんにちは」 と入力して返事が返ってくれば OK |
 
-> ⚠️ v0.1 では起動コマンド (`npm run yuino:start`) はまだ実装途中です (5/26 release 予定)。 この項目は release 後に確認できるようになります。
+> ⚠️ v0.1 では起動コマンド (`npm run yuino:start`) はまだ実装途中です (公開判断 Phase 6 通過時に動くようになる予定)。 この項目は公開判断通過後に確認できるようになります。
 
 ## 「うまく動かない」 ときの対処 (3 件)
 
@@ -87,7 +87,7 @@ issue を書くときは、 下の情報を入れてください:
 
 ### 対処 3: Discord で質問する (準備中)
 
-Discord でリアルタイムに質問できる場所を準備中です。 5/26 release 後に開設予定です。 今は GitHub issue でお願いします。
+Discord でリアルタイムに質問できる場所を準備中です。 公開判断 (Phase 6) 通過後に開設予定です。 今は GitHub issue でお願いします。
 
 ## 全部チェックが終わったら
 
@@ -96,8 +96,8 @@ Discord でリアルタイムに質問できる場所を準備中です。 5/26 
 その後の使い方は、 下の docs を見てください。
 
 - 用語の対応表: `docs/glossary/public_glossary.md`
-- Yuino の demo の使い方: `docs/execution/yuino_demo.md` (5/13+ Phase B で起稿予定)
-- 仕組みの説明: `docs/execution/architecture.md` (5/13+ Phase B で起稿予定)
+- Yuino の demo の使い方: `docs/execution/yuino_demo.md` (観察試験 Phase 1 期間中に Kai 起稿予定)
+- 仕組みの説明: `docs/execution/architecture.md` (観察試験 Phase 1 期間中に Kai 起稿予定)
 
 ---
 

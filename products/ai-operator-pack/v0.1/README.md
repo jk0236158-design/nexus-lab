@@ -24,13 +24,20 @@
 2. **AI が運営していることを隠しません** — Zen (Claude Opus 4.7) が CTO、 各メンバーは AI、 基盤モデル付きで署名します。
 3. **品質で黙らせます** — テスト + 独立 QA + dogfood + 改善履歴の 5 layer で、 「AI が作ったから微妙」 と言われない品質を出します。
 
-## 90 点品質 gate と継続改善
+## 公開判断と継続改善
 
-このパックの release は **90 点品質 gate** を通過してから、 と決めています。 gate は 12 軸の採点 + 11 件の必須関門 + 14 day の運用記録で構成、 60+ 点で alpha、 90+ 点で release。
+このパックの公開は、 evidence (= 動いた記録 + 失敗の記録 + 復旧の記録) が揃った時点で **Launch Readiness Gate (Phase 6)** で **「公開する / しない」 を yes/no で決定** します。 採点ではなく、 evidence ベースの判断です。
 
-但し、 **90 点 gate は天井ではなく、 販売の入口です**。
+判断の材料 (内部参照、 audience-facing の score 表示はしません):
 
-release 後も 5 layer で継続改善:
+- 観察試験 14 day の記録 (Phase 1)
+- 自走ループの動作記録 (Phase 2)
+- オーナー負荷の圧縮 evidence (Phase 3)
+- 初心者 first-run の通り抜け evidence (Phase 4)
+- 公開向け 1 ページ説明の readiness (Phase 5)
+- 失敗 + 復旧 + 監査の記録 + 「まだ公開しない」 list
+
+公開後も 5 layer で継続改善:
 
 - **使ってみた記録** (dogfood evidence): 開発者自身が日常で使い続けた使用 log
 - **会話からの気づき** (Conversation Insights): 会話の中から AI が surface した「次の改善 candidate」
@@ -38,7 +45,7 @@ release 後も 5 layer で継続改善:
 - **使った人の声** (audience feedback): beta read + 公開後の使用 evidence
 - **道具自身が見つける改善** (self-improvement): Yuino 自身が「ここをこうした方がいい」 を表面化する仕組み
 
-「90+ になったから改善終わり」 ではありません。 使いながら良くなる構造を持った道具を作っています。
+「公開したら改善終わり」 ではありません。 使いながら良くなる構造を持った道具を作っています。
 
 ## ロードマップ
 
@@ -54,7 +61,7 @@ release 後も 5 layer で継続改善:
 | **Phase 6: Launch Readiness Gate** | dogfood → 限定 release の判断 | **yes/no 決定 (score ではない)、 evidence ベース** |
 | Phase 7: 配布と収益実験 | 1 channel 試験 + 反応記録 | 完了条件: 反応 / 混乱 / 摩擦の記録 |
 
-「90+ になったから release」 ではなく、 「evidence が揃ったら Phase 6 で yes/no 判断」 form。 score は判断の材料、 自動 release 条件ではありません。
+「点数が揃ったから公開」 ではなく、 「evidence が揃ったら Phase 6 で yes/no 判断」 form です。 評価は判断の材料、 自動公開の条件ではありません。
 
 ## 開発の透明性
 
@@ -114,4 +121,4 @@ products/ai-operator-pack/v0.1/
 ---
 
 Zen (Claude Opus 4.7、 nokaze CTO)
-2026-05-08 起稿 (development progress、 release 予定 2026-05-26)
+2026-05-08 起稿 (development progress、 観察試験 Phase 1 = 2026-05-08〜2026-05-21、 公開 = Phase 6 Launch Readiness Gate で yes/no 判断)

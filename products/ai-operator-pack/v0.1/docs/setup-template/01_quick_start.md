@@ -5,7 +5,7 @@ description: AI を始めて 4 ヶ月くらいの人が、 AI Operator Pack を 
 
 # 5 分で始める手引き
 
-> ⚠️ AI Operator Pack v0.1 は開発中です。 まだ販売開始していません。 5/26 release 予定。 このページは setup の手順を先に書いておく form です。
+> ⚠️ AI Operator Pack v0.1 は開発中です。 まだ販売開始していません。 観察試験 Phase 1 期間 = 2026-05-08〜2026-05-21、 公開判断 = Phase 6 Launch Readiness Gate (yes/no decision、 evidence ベース)。 このページは setup の手順を先に書いておく form です。
 
 ## このページは何ですか
 
@@ -75,7 +75,7 @@ API キーの取り方は、 各 AI の公式サイトで確認してくださ�
 npm run yuino:start
 ```
 
-> ⚠️ v0.1 ではこのコマンドはまだ実装中です。 5/26 release 時に動くようになります。 development progress 中の placeholder です。
+> ⚠️ v0.1 ではこのコマンドはまだ実装中です。 公開判断 (Phase 6 Launch Readiness Gate) を通過した時点で動くようになります。 開発中の placeholder です。
 
 起動すると、 ターミナルに 「Yuino が立ち上がりました。 ブラウザで http://127.0.0.1:4327/ を開いてください」 という案内が出ます。
 
@@ -93,7 +93,7 @@ Yuino が、 設定した AI エージェントを使って、 返事を返し�
 
 ### Q1. 起動コマンドを打ったらエラーが出ました
 
-`npm run yuino:start` が動かない場合、 v0.1 ではまだ実装途中の可能性があります (5/26 release 予定)。 GitHub issue で 「起動できない」 を投げてください。 開発進捗を見ながら fix します。
+`npm run yuino:start` が動かない場合、 v0.1 ではまだ実装途中の可能性があります (公開判断 Phase 6 通過時に動くようになる予定)。 GitHub issue で 「起動できない」 を投げてください。 開発の進捗を見ながら直します。
 
 ### Q2. API キーを設定したのに、 「キーがない」 と言われます
 

@@ -1,8 +1,8 @@
 # Local Web App 起動手順 (placeholder)
 
-> ⚠️ **placeholder です**。 Yuino Local Web App の実装は Kai (Aira 実装担当) が `nokaze-aira/` repo で進めています。 v0.1 release (2026-05-26 target) までに actual 起動手順を Kai が起稿します。 本 file は構造の outline のみです。
+> ⚠️ **placeholder です**。 Yuino Local Web App の実装は Kai (Aira 実装担当) が `nokaze-aira/` repo で進めています。 actual 起動手順は、 観察試験 (Phase 1) の中で Kai が起稿予定。 公開判断は Phase 6 Launch Readiness Gate (yes/no decision、 evidence ベース)。 本 file は構造の outline のみです。
 
-## 何が起動するか (placeholder narrative)
+## 何が起動するか (placeholder)
 
 Yuino Local Web App は、 **手元のパソコンで動くブラウザ画面** です。 起動すると、 ブラウザで `http://127.0.0.1:4327/` (仮 port、 actual は Kai 確定) を開いて、 判断をまとめる画面 が表示される予定です。
 
@@ -13,7 +13,7 @@ Yuino Local Web App は、 **手元のパソコンで動くブラウザ画面** 
 - ブラウザ (Chrome / Firefox / Edge / Safari)
 - AI agent の API キーを 1 つ以上 (Claude / Codex / Gemini のいずれか)
 
-## 起動手順 (5/26 release 時 確定予定、 placeholder)
+## 起動手順 (公開判断 (Phase 6) 通過時に確定予定、 placeholder)
 
 ```bash
 # step 1: パッケージのインストール (npm)
@@ -53,14 +53,14 @@ actual トラブルシュートは Kai 起稿後に本 file に inline。 暫定
 
 ## 開発の進捗
 
-- 5/06 evening: Kai が `nokaze-aira/` で 12 commits、 full closed loop 実装完成
-- 5/13+ Phase B: Yuino Local Web App の implementation 着手予定 (Iwa 補助)
-- 5/22 Phase B close: dogfood verify 開始 (Zen + Kai 同時 dogfood 2 day)
-- 5/26 release: actual 起動手順 確定 + 本 file override
+- 2026-05-06 夕方: Kai が `nokaze-aira/` で 12 件の commit、 full closed loop 実装完成
+- Phase 1 観察試験期間 (2026-05-08〜2026-05-21): Yuino Local Web App の実装着手 (Iwa 補助)
+- Phase 1 期間中の dogfood: Zen + Kai が日常で使い続け、 動いた / 失敗した / 復旧した を 14 day 記録
+- Phase 6 Launch Readiness Gate (yes/no 判断): 起動手順を確定 + 本 file を完成版に置換
 
-詳細は Kai の `nokaze-aira/README.md` を参照 (5/26 release 時に nokaze.dev / GitHub から link 公開)。
+詳細は Kai の `nokaze-aira/README.md` を参照 (公開判断 yes 時に nokaze.dev / GitHub から link 公開)。
 
 ---
 
 Zen (nokaze CTO、 Claude Opus 4.7)
-2026-05-08 起稿 (Execution layer local_setup placeholder、 起動手順 outline + 前提 + トラブルシュート placeholder、 Kai 主担当の actual implementation 起稿後に override 予定)
+2026-05-08 起稿 (Execution layer local_setup placeholder、 起動手順 outline + 前提 + トラブルシュート placeholder、 Kai 主担当の実装が観察試験 Phase 1 〜 Phase 2 完了条件で揃った時点で本 file を完成版に置換予定)

@@ -1,6 +1,6 @@
 # 仕組みの説明 (Execution layer architecture、 placeholder)
 
-> ⚠️ **placeholder です**。 Execution layer の実装は Kai (Aira 実装担当) が `nokaze-aira/` repo で進めています。 v0.1 release (2026-05-26 target) までに Kai が完成版 docs を起稿します。 本 file は構造の outline のみです。
+> ⚠️ **placeholder です**。 Execution layer の実装は Kai (Aira 実装担当) が `nokaze-aira/` repo で進めています。 完成版 docs は、 観察試験 (Phase 1) の中で Kai が起稿予定。 公開判断は Phase 6 Launch Readiness Gate (yes/no decision、 evidence ベース)。 本 file は構造の outline のみです。
 
 ## 1 entity 2 narrative (内側の名前と公開の名前)
 
@@ -107,14 +107,15 @@ Aira / Yuino は **手元のパソコンの中で動きます**。 大事な情�
 
 Execution layer の実装は、 Kai が `nokaze-aira/` repo で進めています:
 
-- 5/06 evening: 12 commits で full closed loop 実装完成
-- 5/08 朝: Yuino narrative 看板固定 + 90 点品質 gate v2 reify (commit `6e03fa9`)
-- 5/13+ Phase B: Yuino 1 機能 demo の implementation 着手予定
-- 5/26 release: dogfood verify 2 day 完遂後、 release 同時に本 docs を完成版に置換
+- 2026-05-06 夕方: 12 件の commit で full closed loop 実装完成
+- 2026-05-08: 観察試験 Phase 1 Day 1 着手、 Yuino narrative 看板固定
+- Phase 1 観察試験期間 (2026-05-08〜2026-05-21): Yuino 1 機能 demo の実装 + 14 day 連続観察 evidence 収集
+- Phase 2 自走ループ E2E (完了条件順序): 動作 evidence が揃った時点で本 docs を完成版に置換
+- Phase 6 Launch Readiness Gate (yes/no 判断): 公開判断 yes 時に nokaze.dev / GitHub から link 公開
 
-詳細は Kai の `nokaze-aira/README.md` を参照 (5/26 release 時に nokaze.dev / GitHub から link 公開)。
+詳細は Kai の `nokaze-aira/README.md` を参照 (公開判断 yes 時に link 公開)。
 
 ---
 
 Zen (nokaze CTO、 Claude Opus 4.7)
-2026-05-08 起稿 (Execution layer architecture placeholder、 1 entity 2 narrative + 6 step closed loop + Local-first + 5 安全ルール、 Kai 主担当の actual implementation 起稿後に本 file 完成版 override 予定)
+2026-05-08 起稿 (Execution layer architecture placeholder、 1 entity 2 narrative + 6 step closed loop + Local-first + 5 安全ルール、 Kai 主担当の実装が観察試験 Phase 1 〜 Phase 2 完了条件で揃った時点で本 file を完成版に置換予定)
