@@ -55,7 +55,7 @@ echo "════════════════════════�
 # Layer A: 数字 token + source annotation check
 echo ""
 echo "── Layer A: literal verification (数字 token + source link) ──"
-number_tokens=$(echo "$content" | grep -oE '[0-9]+(\.[0-9]+)?\s*(day|日|時間|ヶ月|月|週間?|分|秒|件|名|円|¥|%|連続|回)' | head -20)
+number_tokens=$(echo "$content" | grep -oE '[0-9]+(\.[0-9]+)?\s*(day|日|時間|ヶ月|月|週間?|分|秒|件|名|円|¥|%|連続|回)' 2>/dev/null | head -20 || true)
 
 if [[ -n "$number_tokens" ]]; then
   while IFS= read -r token; do
