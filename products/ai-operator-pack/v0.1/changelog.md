@@ -50,7 +50,27 @@
 主要 commit (商品 v0.1 起稿関連、 5/08 時点):
 
 - `927b095` 商品 v0.1 README + Vocabulary layer 3 file 起稿 (Phase B Day 1-2 前倒し)
+- `0e23b20` 商品 v0.1 Base layer 5 file (Akari spawn) + Execution layer 3 placeholder + changelog + license draft
+- `29bec62` `underestimation_default_check.sh` 起稿 (重要発見 #3 物理 enforcement)
+- (Kagami QA Review Round 1 = 5/08 自走 batch 7、 board file `2026-05-08_kagami_zen_product_v01_qa_review_round1.md`、 14 file 全 release ready (Round 1 段階)、 actual ruled 違反 0 件、 false positive 6 件 + yellow 8 件 (Round 2-3 で議論))
 - (続く)
+
+## QA review log
+
+| Round | timing | 結果 |
+|---|---|---|
+| Round 1 | 2026-05-08 自走 batch 7 (~30 min batch、 Kagami spawn return) | 14 file 全 release ready、 actual ruled 違反 0 件、 false positive 6 件 (Iwa script 改善 candidate) + yellow 8 件 (audience axis balance / source link annotation) |
+| Round 2 | 2026-05-15 木曜 candidate | Round 1 fix 適用後 verify + content depth audit |
+| Round 3 | 2026-05-18 土曜 candidate | dogfood evidence link 一括 embed verify + cross-ref consistency |
+| Round 4-5 | 2026-05-20-21 candidate | Kai override 後の Execution layer 再 audit |
+| Round 6 | 2026-05-22 candidate | dogfood verify 開始時 audit |
+| Round 7 | 2026-05-25 candidate | release pre-flight audit (200 確認 ritual 連動) |
+
+## score narrative update (5/08 自走 batch 8 = state side で記録、 audience-facing form は jun + Kai 議論後)
+
+5/08 朝 Kai 再採点で **local implementation score 91.2 / 100** に到達 (5/08 0:08 時点 推定 46/100 + 06:31 commit `6e03fa9` 時点 41/100 → 5/08 朝再採点 91.2/100、 nokaze-aira/README.md line ~38 に記録)。 但し paid launch readiness は別 axis (14 day Zen + Kai dogfood evidence 必要)。
+
+商品 v0.1 audience-facing form での score narrative update は jun + Kai 議論後 (board file `2026-05-08_zen_kai_self_correct_score_drift_91_evidence.md` 起稿済、 Kai response 待ち) に統合 reify。
 
 ## 脆弱性修正履歴
 
