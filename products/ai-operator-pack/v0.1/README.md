@@ -16,6 +16,17 @@
 | **言葉の層** (Vocabulary layer) | 内部用語と公開用語の対応表 (「気づきの結び目」「気づきの硬さ」 等)、 4 ヶ月初心者向けの説明 | AI を運営する人 (Claude Code / Codex / Cursor 利用者) |
 | **動かす層** (Execution layer) | Yuino の小さな demo (会話 → 判断 → 操作 → 結果のまとめ の 1 機能)、 ローカル動作 | 4 ヶ月初心者 + 開発者 両方 |
 
+## Yuino (動かす層 の中核) — 商品 narrative 3 軸
+
+[Yuino LP draft](yuino_lp_draft.md) — 1 文の定義 + できること 5 軸 + 開発状況誠実版
+
+| 軸 | 商品文書 |
+|---|---|
+| 1. **Local Web App first** | [Yuino LP draft](yuino_lp_draft.md) (3 段階移行: Phase 1 Local Web App → Phase 2 Tauri Desktop → Phase 3 Web SaaS) |
+| 2. **Conversation Insights** | [yuino_conversation_insights.md](yuino_conversation_insights.md) (4+1 panel 構造、 Knot 研究接続) |
+| 3. **Security 絶対妥協なし** | [yuino_security_promise.md](yuino_security_promise.md) (8 軸 安全 narrative) |
+| setup | [yuino_setup_with_ai_agent.md](yuino_setup_with_ai_agent.md) (AI エージェント経由 4 ヶ月初心者 form) |
+
 ## 3 つの姿勢
 
 このパックは nokaze の 3 つの姿勢に従って作っています。
