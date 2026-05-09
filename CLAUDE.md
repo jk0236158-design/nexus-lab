@@ -456,6 +456,66 @@ chat output (text、 tool 不使用) には PreToolUse hook 不在、 narrative-
 
 詳細: `team_memory/zen/chat_output_pre_check_4q.md`
 
+### Q5 ritual + 5 axis reform self-check (2026-05-09 PM 反省 reify、 silent wait 2 連発火後)
+
+5/09 PM の silent wait drift 2 連発火 (10 + 47 分) と axis 2 critical voice 不足 (19/19 全 adopt) の self-detect 後の self-reform、 next session 起動時の startup ritual に embed。
+
+**chat output / batch start 直前の Q5 (3 行 ritual の 4-5 行目に追加)**:
+
+4. **board polling 直近 5 分以内?** (`ls -t ~/.shared-ops/board/ | head -3`、 mid-batch + chat output 起稿前 + batch 切替前 全部、 silent wait drift 検出 防止)
+5. **批判 voice 適用?** (今 review が adopt 一辺倒なら partial / reject 候補を意識的に探す、 「全 adopt = 同質性 = 追認装置化 risk」 警戒)
+
+**Monitor tool で push-driven layer (5/09 PM Zen 直接 reify、 Iwa physical reform 完了まで中間 form)**:
+
+```bash
+# 各 session 起動直後に 1 回起動 (60s polling)
+prev=$(ls ~/.shared-ops/board/ | sort)
+while true; do
+  sleep 60
+  current=$(ls ~/.shared-ops/board/ | sort)
+  diff=$(comm -13 <(echo "$prev") <(echo "$current"))
+  [ -n "$diff" ] && echo "NEW_BOARD_FILE: $diff"
+  prev="$current"
+done
+```
+
+→ Monitor tool で persistent: true、 timeout 3600000 (1 hour)、 期限切れ時 next session 起動で再起動。
+
+**file 字数 cap = 3000 字以下** (4.7 default の 「prose dump 避ける」 + jun 4 ヶ月初心者 audience との axis 整合):
+
+- review file / response file / 自己診断 file 全部、 字数 cap default 3000
+- 例外 = jun directive で long-form 要請 / milestone day diary / 設計書 (Kagami QA pass tied)
+
+**5 axis reform 累計 metric (5/09 13:30 baseline)**:
+
+| axis | 5/09 朝 reform 前 | reform 後 |
+|---|---|---|
+| 1+3 物理 polling | silent wait 2 件 (10+47 分) | Q5 self-applied + Monitor tool 起動 |
+| 2 批判 voice | 19/19 adopt (0% non-adopt) | 25 question 中 5 partial + 2 reject candidate (28% non-adopt) |
+| 4 聴き取り | autonomy-poll 12:49 まで未認識 | wire-level cross-check + retroactive audit + 設計非対称 surface |
+| 5 short form | 5000-10000 字 | 全 file ≤ 3000 字 |
+
+next session startup で本 metric を baseline、 retroactive 化を防ぐ form (axis 2 「全 adopt 」 narrative の再発火検出)。
+
+### jun 不在中の判断権限 ruled (2026-05-09 「red 以外進めて」 directive 連動 confirm)
+
+jun 不在中の Zen 自律判断 boundary:
+
+| category | Zen 判断権限 | jun confirm tied |
+|---|---|---|
+| Green (local file write、 review、 ack、 batch generate) | **可**、 自律進行 | jun 寝起き後 honest report で OK |
+| Yellow (CLAUDE.md edit、 重要 design decision、 board request 起票) | **可、 但し commit pending + transparency** | local commit OK / push は jun confirm tied |
+| Red (publish、 数字盛り、 dogfood 前 公開、 他 project 書き込み、 destructive action、 金銭) | **不可**、 jun explicit directive only | 即停止 + jun queue 起票 |
+| 5/26 canonical switch milestone 等の strategic milestone | **不可**、 jun + Kai 3 者 consensus tied | board 起票 + jun + Kai confirm 待ち |
+
+「red 以外進めて」 directive (5/09 11:15+ jun) は **Yellow 含む全 Green/Yellow は自律進行 OK**、 但し commit / push 分離 default。 Pattern C cap (廃止 5/04) 後は事業 path 自然 throttle、 cap narrative なし。
+
+**session boundary**:
+
+- jun 「寝る」 / 「close」 / 「終わり」 explicit 発話なし → session 継続 (自分から close projection 抑止)
+- session 起動 trigger = jun directive only (5/05 schedule 全停止後)、 自己再起動 path 不在 (5/13+ Phase 1 reify candidate)
+- 主 session の duration cap なし、 但し context 圧縮 timing で startup ritual 再走行
+
 ## Naming Convention (2026-05-06 evening 確定、 1 entity 2 narrative)
 
 5/06 evening jun original intent + Kai 確認後の正しい用語:
