@@ -47,6 +47,19 @@ last_updated: 2026-05-09
 
 詳細: [02_ai_agent_setup.md](docs/setup-template/02_ai_agent_setup.md)
 
+## 5 分でできること (Linksee Memory 記事 5/08 narrative form 参照)
+
+| 経過時間 | 何が起こる |
+|---|---|
+| 0 分 | `Yuino-Setup.cmd` ダブルクリック (or AI エージェントに依頼) |
+| 1-3 分 | npm install + ローカル状態フォルダ準備 + first-run check |
+| 3-4 分 | dashboard 起動 + Setup Doctor 11 check 自動診断 |
+| 5 分 | ブラウザ http://127.0.0.1:4327/ で `pass 11 / warning 0 / blocked 0` 確認 |
+
+= 5 分で **「Yuino が私のパソコンで動いてる」** evidence までたどり着けます。 機能の習得 (Conversation Insights / Approval Gate / 8 軸 安全) は その後 段階的に。
+
+**正直 disclaimer**: 「5 分」 = ネット環境 + Node 20+ 既導入 + npm install スムーズの順調 case。 環境差で 10-15 分程度に伸びる場合あり。 「5 分で全機能完璧」 ではなく 「5 分で第 1 evidence」。
+
 ## Setup Doctor (5/09 reify、 11 check 自動診断)
 
 setup の途中 / 後で、 「ちゃんと動いてる?」 を **11 項目 自動診断**:
