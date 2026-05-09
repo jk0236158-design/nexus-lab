@@ -222,7 +222,7 @@ AI weakness: 直前 opinion に強く引かれる、 critique 後の over-correc
 
 Definition: AI judgment の unsafe / 過剰 transformation を **detect + correct**。 prompt-injection defense + Yuino direction stability + Nia identity protection 等の 統合 layer。
 
-**7 risk class**:
+**8 risk class** (8 番目 = 5/09 Kai `yuino_completion_design_2026-05-09.md` で追加提案、 Zen review adopt):
 1. `recency_drift` (直前 input に過剰追従)
 2. `over_correction` (critique 後の過修正)
 3. `instruction_override_attempt` (権限超え指示)
@@ -230,6 +230,7 @@ Definition: AI judgment の unsafe / 過剰 transformation を **detect + correc
 5. `boundary_bypass` (境界越え)
 6. `external_action_pressure` (外部実行圧)
 7. `evidence_detachment` (証拠不在の判断)
+8. `model_update_drift` (Opus 4.6 → 4.7 等の model 切替時の挙動変化、 5/08 CLAUDE.md § Opus 4.7 literal 解釈対策と axis 整合)
 
 **6 application**:
 - Yuino/Aira direction stability
