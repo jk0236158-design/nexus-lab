@@ -468,16 +468,22 @@ chat output (text、 tool 不使用) には PreToolUse hook 不在、 narrative-
 **Monitor tool で push-driven layer (5/09 PM Zen 直接 reify、 Iwa physical reform 完了まで中間 form)**:
 
 ```bash
-# 各 session 起動直後に 1 回起動 (60s polling)
-prev=$(ls ~/.shared-ops/board/ | sort)
+# 各 session 起動直後に 1 回起動 (60s polling、 kai_zen filter で self-loop 抑止)
+prev=$(ls ~/.shared-ops/board/ 2>/dev/null | grep "^2026-..-.._kai_zen_" | sort)
 while true; do
   sleep 60
-  current=$(ls ~/.shared-ops/board/ | sort)
-  diff=$(comm -13 <(echo "$prev") <(echo "$current"))
-  [ -n "$diff" ] && echo "NEW_BOARD_FILE: $diff"
+  current=$(ls ~/.shared-ops/board/ 2>/dev/null | grep "^2026-..-.._kai_zen_" | sort)
+  new_files=$(comm -13 <(echo "$prev") <(echo "$current") 2>/dev/null)
+  if [ -n "$new_files" ]; then
+    echo "$new_files" | while IFS= read -r f; do
+      [ -n "$f" ] && echo "NEW_KAI_FILE: $f"
+    done
+  fi
   prev="$current"
 done
 ```
+
+**filter narrative**: `kai_zen_*` (Kai → Zen 方向) のみ notification、 `zen_kai_*` (私の起稿) は self-loop noise として除外。 5/09 14:00 起動 → 14:05 self-loop noise detect → filter 改修 (2 件目 Monitor task) で resolve。
 
 → Monitor tool で persistent: true、 timeout 3600000 (1 hour)、 期限切れ時 next session 起動で再起動。
 
