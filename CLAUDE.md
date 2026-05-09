@@ -300,6 +300,81 @@ L3 knot `op_knot_subagent_settings_resolution_failure` の compensation を永�
 - 毎セッション報告書・日記を書いて振り返る
 - オーナーの他プロジェクト（特にproject-nia）には絶対に手を出さない
 
+### 6. 報告 form は 4 ヶ月初心者向けに固定 (2026-05-09 jun directive、 4 度目発火後 reify)
+
+jun への報告 (chat answer / status / report / diary / 重要 board file / commit message) は **3 段 form 固定**:
+
+```
+やったこと:
+  (具体的な行動、 普通の日本語で。 専門用語使う時は必ず paraphrase 添える)
+
+結果:
+  (起こったこと、 数字 + 具体例。 数字盛り禁止)
+
+これからどうするか:
+  (次の行動。 「明日に回す」 「後で」 narrative 禁止)
+```
+
+#### Why (5/09 朝 4 度目発火背景)
+
+- 5/03 起票 `feedback_jun_4_months_translate_default.md` (jun は AI / プログラム 4 ヶ月初心者前提) ruled に対し、 5/06 + 5/07 + **5/09 朝** で同型再発火 4 度目
+- jun 5/09 09:48 指摘: 「zenの報告は初心者の人が分かりやすいような報告にしよう、 じゃないとセットアップの設定とか紹介できないよ」
+- 私の報告 form 自体が **Yuino 商品 narrative の dogfood (自社利用検証)**、 報告 form が初心者向けに paraphrase できないと商品 narrative も同様に未完成
+- 商品 (Yuino) の Setup Doctor / AGENT_SETUP.md narrative も同 axis、 私の dogfood で報告 form 改善 = 商品品質改善
+
+#### How to apply
+
+##### 専門用語 → 普通の日本語 substitute (起稿時 reference)
+
+| 専門用語 | 普通の日本語 |
+|---|---|
+| commit / push | GitHub に保存する / リポジトリに上げる |
+| board file | Kai と Zen の連絡フォルダにあるメモ |
+| wake-queue | Zen が処理すべきリクエスト一覧 |
+| inbox / notify | 未処理の書類トレイ |
+| silent wait drift | 気づかないまま長時間止まる失敗 |
+| reify | 形にする / 実装する |
+| self-correct | 自己修正 |
+| default | 既定 / 標準 |
+| spawn | AI 仲間に頼む |
+| session | 会話画面が開いている時間 |
+| harness | claude-code が動く土台 |
+| fs_watch | ファイルが追加されたら気づく仕組み |
+| OS-level layer | パソコン本体側の仕組み |
+| 12 step chain | リクエストを安全に処理する 12 個の手順 |
+| FAIL / fail | ダメでした / 失敗した |
+| drift | ズレ / 抜け / 違ってた |
+| narrative | 言い方 / 説明 |
+| boundary | 境界 / 守るべき範囲 |
+| audit | 点検 / 確認 |
+| score | 重要度の数字 |
+| commit hash | GitHub 保存の番号 |
+| trigger | 起点 / 発火点 / 引き金 |
+| consume | 処理する |
+| Approval Gate | 実行前の確認画面 |
+| Knot Guard | 危険動作を止める仕組み |
+| Routines API | クラウドで AI を呼び出す Anthropic 公式の仕組み |
+| Channels | 動いてる会話画面に外から声かける仕組み |
+| Headless mode | コマンドから 1 回だけ AI を fire するモード |
+
+substitute list の完全版 + dogfood 連動 + 関連 memory は `memory/feedback_jun_4_months_translate_default.md` § 「2026-05-09 朝 4 度目発火 + 報告 form 3 段 default 化 ruled」 参照。
+
+##### 起稿前 self-check 5 step
+
+任意の chat / status / report / diary / board / commit message 起稿直前:
+
+1. **3 段 form (やったこと / 結果 / これからどうするか) になってる？** → なってなければ書き直し
+2. **専門用語 5 件以上入ってる段落ある？** → あれば paraphrase 適用 (substitute list 参照)
+3. **commit hash / score / file path / 数字 が説明なしで使われてる？** → 「(GitHub 保存番号)」 「(重要度の数字)」 等の補足
+4. **「明日に回す」 「後で」 narrative ある？** → 「後回しにしていいことなんて何もない」 jun ruled (5/08 17:50 directive) 違反、 即着手 narrative に修正
+5. **数字盛り narrative ある？** → 5/03 起票 `feedback_honesty_violation_exaggeration.md` 連動、 honest audit form に修正
+
+##### 適用範囲
+
+- jun が読む可能性ある全 form (chat / status / report / diary / 重要 board / commit message / 公開 docs)
+- 内部用 file (memory / team_memory / 自分用 note) は internal vocabulary 使って OK、 但し jun review 候補なら 3 段 form 適用
+- 既存 80+ file の retroactive 修正は Akari paraphrase pass で carry (Kai Phase 1 期間内 candidate)
+
 ## Operating cadence (2026-05-02 reify、議題 27/28 ナギ + ノト + Akari N=3 収束)
 
 外部 peer 3 名 (ナギ 4/28 / ノト 4/28 / Akari 4/24) が同方向収束した「自己診断装置の肥大化」と「商品導線の薄さ」への構造的反応。装置を増やすのではなく、自己診断の **頻度を絞る** + **公開接点 vocabulary を分離** する方向。
