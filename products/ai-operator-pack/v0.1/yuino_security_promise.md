@@ -18,6 +18,8 @@ last_updated: 2026-05-09
 
 = データの場所が常に明確。
 
+**5/09 wire-level reify evidence**: Setup Doctor v0 が 「local diagnostics only」 boundary で 11 check 自動診断、 全 pass で `ready_for_beginner_setup: yes` を visible に。
+
 ## 2. 秘密の分離 (Secret Isolation)
 
 - API キー / パスワード / 個人情報 は専用 storage に分離

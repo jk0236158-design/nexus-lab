@@ -66,10 +66,18 @@ AI エージェントに **やらせて大丈夫**:
 - ローカル status file の refresh
 - `127.0.0.1` (= あなたのパソコン内のみ) に dashboard を bind
 
-## setup が終わったら
+## setup が終わったら (Setup Doctor 11 check 確認)
 
-- ブラウザで http://127.0.0.1:4327/ が開いて 「OK」 になっていれば完了
-- もし 「needs attention」 が出ていたら、 表示された check name を AI エージェントに 「これを直してください」 と頼んでください
+ブラウザで http://127.0.0.1:4327/ が開いて、 **Setup Doctor panel に `pass 11 / warning 0 / blocked 0`** が表示されれば setup OK。
+
+Setup Doctor は 11 項目を自動診断:
+- Node.js / npm / リポジトリ・パス
+- ローカル状態フォルダ + 書き込み権限 + 監査ログ書き込み
+- Yuino dashboard 起動 + board file watcher 動作
+- Startup folder fallback + 夜間サイクル task
+- 重複 watcher プロセス + API キー設定 (秘密値は表示せず)
+
+もし 「needs attention」 が出ていたら、 表示された check name を AI エージェントに 「これを直してください」 と頼んでください。 1 つずつ確認しながら直します。
 
 ## 困ったとき
 

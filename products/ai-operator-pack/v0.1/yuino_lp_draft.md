@@ -47,6 +47,24 @@ last_updated: 2026-05-09
 
 詳細: [02_ai_agent_setup.md](docs/setup-template/02_ai_agent_setup.md)
 
+## Setup Doctor (5/09 reify、 11 check 自動診断)
+
+setup の途中 / 後で、 「ちゃんと動いてる?」 を **11 項目 自動診断**:
+
+- Node.js / npm のバージョン確認
+- リポジトリ・パスの存在
+- ローカル状態フォルダ (`~/.shared-ops`) の準備
+- Yuino dashboard の起動
+- board file watcher の動作
+- Startup folder fallback の存在
+- 夜間サイクル task の存在
+- 書き込み権限の確認
+- 監査ログの書き込み可能性
+- 重複 watcher プロセスの状態
+- API キー設定の有無 (秘密値は表示せず)
+
+dashboard で `pass 11 / warning 0 / blocked 0` が出ていれば、 setup OK。 何か 「needs attention」 が出ていれば、 表示された check 名を AI エージェントに 「これを直して」 と頼んでください。
+
 ## 開発状況 (誠実版)
 
 - **まだ販売していません**: 観察試験 (Phase 1) を 2026-05-08〜2026-05-21 で実施中
