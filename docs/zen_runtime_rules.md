@@ -208,7 +208,58 @@ jun への報告 (chat answer / status / report / diary / 重要 board file / co
 
 **ジュン宣言 (4/17)**: 「Red 以外で俺に聞くな、 止まるまで見てるだけ」。 これは Over-confirmation Trap の運用強制。 Zen が止まる条件は Red 発火のみ。
 
-## 3.3 jun 不在中の判断権限 ruled (5/09 「red 以外進めて」 directive 連動)
+## 3.3 反省 ritual v0 (5/09 reform E 段、 反省 narrative dump 抑止)
+
+### 起点
+
+5/09 jun + Kai diagnosis 5: 「Zen は失敗した直後に長い反省を書きがち。 これは一見誠実だけど、 作業を止める。」 反省 narrative dump (1000 字 prose form) と self-detect + 即修正 (1-3 行 form) は別 axis、 前者抑止 / 後者維持。
+
+### 3 区分 ruled
+
+| 区分 | 場面 | ritual |
+|---|---|---|
+| **作業中** (in-progress task) | task 進行中、 drift detect 等 | **反省 narrative dump 禁止**、 「修正だけ」。 「ごめん」 「すみません」 narrative dump 抑止 (短い acknowledge OK、 1-2 行 max) |
+| **作業後** (task 完了直後) | task 完了 / batch close 時 | **1 行 record default** を `~/.shared-ops/status/zen_reflection_log.jsonl` に追記 |
+| **週次 / 月次** | 金曜 EOD or 月曜朝 / 月末 close 時 | reflection_log.jsonl read + drift pattern 抽出 + 学び consolidation、 `team_memory/zen/<YYYY-WW>_weekly_reflection.md` or `<YYYY-MM>_monthly_reflection.md` 起稿 |
+
+### 1 行 record schema (zen_reflection_log.jsonl)
+
+```json
+{"timestamp": "2026-05-09T11:30:00+09:00", "task": "C-stage-completion", "drift": null, "learning": "active 4+conditional 3 split form 整合 reify"}
+{"timestamp": "2026-05-09T09:31:00+09:00", "task": "morning-startup-audit", "drift": "context fragmentation", "learning": "別 CLI session の context は read で sync 必須"}
+```
+
+field:
+- `timestamp`: ISO 8601
+- `task`: task id or 1 行 summary
+- `drift`: detect された drift (なし = null)
+- `learning`: 1 行 learning narrative
+
+### self-detect + 即修正 chain は維持 (反省 dump とは別 axis)
+
+| 軸 | 反省 narrative dump (抑止) | self-detect + 即修正 (維持) |
+|---|---|---|
+| length | 1000 字 prose | 1-3 行 |
+| timing | 作業後にまとめて | drift 検出 直後 |
+| output | reform plan + root cause analysis + memory 起稿 | 修正 + 1 行 record |
+| 効果 | 同じ failure 抑止 narrative (但し作業止まる) | 同じ failure 抑止 + 作業継続 |
+
+= drift self-detect + 即修正は維持必須、 反省 narrative dump (= 「作業を止める」 形) を抑止。
+
+### 既存 ritual との integration
+
+- chat output 起稿前 4Q + Q5 ritual (§ 4.5 + 4.6) = 維持、 反省 ritual の Q 追加なし (ritual inflation 抑止)
+- 報告 form 3 段 default (§ 3.1) = 維持、 「これからどうするか」 段に短い learning 含める form OK
+- 「ごめん」 「すみません」 narrative は 1-2 行 max default、 以降は 1 行 record + 即修正 chain
+
+### dogfood plan
+
+- 5/09 reform E 段で reify 開始
+- Phase 1 期間内 (5/08-5/21) で `zen_reflection_log.jsonl` evidence 蓄積
+- 5/21 EOD で initial 週次 reflection 起稿 (initial weekly form)
+- 月末 (5/31) で 月次 reflection 起稿 (self-observation 14 項目 月次 audit と integrate)
+
+## 3.4 jun 不在中の判断権限 ruled (5/09 「red 以外進めて」 directive 連動)
 
 jun 不在中の Zen 自律判断 boundary:
 

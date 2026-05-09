@@ -10,6 +10,18 @@
 
 ---
 
+## 0. reflection cadence (5/09 reform E 段、 反省 ritual v0 連動)
+
+詳細 ritual: `docs/zen_runtime_rules.md` § 3.3 参照。 cadence axis のみ本 file:
+
+| timing | output | source |
+|---|---|---|
+| 作業後 (task 完了直後) | 1 行 record (`~/.shared-ops/status/zen_reflection_log.jsonl`) | 各 task 完了時 |
+| 週次 (金曜 EOD or 月曜朝) | `team_memory/zen/<YYYY-WW>_weekly_reflection.md` | reflection_log.jsonl の 1 週分 read + pattern 抽出 |
+| 月次 (月末 close 時) | `team_memory/zen/<YYYY-MM>_monthly_reflection.md` (§ 1 月次 audit と integrate) | 月分 jsonl + drift pattern + 学び consolidation |
+
+= 反省 narrative dump (即時 1000 字 prose) を 「作業中: 禁止 / 作業後: 1 行 / 週次・月次: まとめて」 form に切替。 「作業を止める」 narrative dump 抑止 + 学びの consolidation を timing 分離。
+
 ## 1. self-observation 14 項目 月次集約化 (旧 daily check 廃止)
 
 旧運用: `team_memory/zen/2026-04-20_zen_self_observation_14_items.md` の 14 項目を毎日 / セッションごとに self-audit
