@@ -107,32 +107,17 @@ Knot (条件付き変形演算子) の可能性と限界の探求。 オーナ�
 
 ---
 
-## Naming Convention (5/06 evening 確定、 1 entity 2 narrative)
+## Aira / Yuino (1 entity 2 narrative、 Kai 主担当 implementation)
 
-- **Aira** = 内部実装名 (実体名)。 実装の正本 = `C:\Users\jk023\Desktop\nokaze-aira\` (Kai-side)
-- **Yuino** = 商品 brand 名 (audience-facing)。 公開資料 / LP / note / Zenn 等で使用
-- = **Aira と Yuino は別プロダクトではなく、 1 entity の 2 narrative**
+- **Aira** = 内部実装名、 正本 = `C:\Users\jk023\Desktop\nokaze-aira\` (Kai 主担当、 readonly)
+- **Yuino** = 商品 brand 名 (audience-facing)、 公開資料 / LP / note / Zenn で使用
+- = **別 product ではなく 1 entity の 2 narrative**、 Aira 実装 = Kai / Yuino 商品化 = Zen の役割分担
+- nokaze-aira repo は readonly 参照のみ、 Aira-related proposal は `~/.shared-ops/` 経由
+- Zen 中核 work = 「Aira 実装」 → 「Yuino 商品化体験設計」 shift
 
-詳細: `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_aira_yuino_naming_fixed.md`
-
-## Ownership (5/06 evening 確定、 1 entity 2 axis 役割分担)
-
-| 役割 | 主担当 | scope |
-|---|---|---|
-| **Aira 実装** (内部 supervisor) | Kai | `nokaze-aira/` で observer + decide + dispatch + verify + recover + execute の 6 step closed loop |
-| **Yuino 商品化** (audience-facing brand) | Zen | 商品 docs / UI / LP / 公開設計 |
-
-= 1 entity (Aira = Yuino) を 2 axis で役割分担、 2 entity 別物ではない。
-
-### Zen 4 機能 (nexus-lab/aira/src/aira-*.ts) = historical / fallback
-
-5/06 reify 4 機能 (Observer + Work Generator + Evaluator + Tripwire) は **historical origin / fallback** 扱い (Kai work-234 audit 完遂、 移植 candidate ゼロ)。 5/26 正本切替 milestone で deprecated 確定。 詳細: `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_aira_ownership_shift_kai_lead.md`。
-
-### 移管期間中の Zen 境界
-
-- nokaze-aira repo は **readonly 参照のみ**
-- Aira-related proposal は ~/.shared-ops/ board / inbox 経由で Kai に投げる
-- Zen は **Aira を二重実装しない**、 中核 work shift = 「Aira 実装」 → 「Yuino 商品化体験設計」
+詳細 (memory link):
+- `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_aira_yuino_naming_fixed.md` (1 entity 2 narrative)
+- `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_aira_ownership_shift_kai_lead.md` (役割分担、 旧 Zen 4 機能 = historical / fallback、 5/26 deprecated 確定)
 
 ---
 
@@ -253,17 +238,7 @@ bash scripts/codex-review.sh [対象パス]
 
 ## Controlled Wake v0 (Kai contract 連動)
 
-`~/.shared-ops/wake-queue/zen/controlled_*.md` を 12 step chain で消化:
-
-```bash
-bash scripts/zen_wake_queue_consume.sh --json    # actionable list
-bash scripts/zen_wake_queue_consume.sh --lock-acquire
-bash scripts/zen_wake_queue_consume.sh --read-marker <request_id>
-# (board response 起稿)
-bash scripts/zen_wake_queue_consume.sh --replied-marker <request_id> <response_path>
-bash scripts/zen_wake_queue_consume.sh --archive <request_id>
-bash scripts/zen_wake_queue_consume.sh --lock-release
-```
+`~/.shared-ops/wake-queue/zen/controlled_*.md` を `bash scripts/zen_wake_queue_consume.sh` (12 step chain wrapper) で消化。
 
 詳細: `docs/controlled_wake_consumer.md`、 contract: `C:\Users\jk023\Desktop\nokaze-aira\docs\zen_controlled_wake_consumer_contract_2026-05-08.md`
 
