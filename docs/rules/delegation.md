@@ -62,7 +62,7 @@ L3 knot `op_knot_subagent_settings_resolution_failure` の compensation を永�
 
 ## 5. peer spawn directive default ritual (2026-05-10 broadcast-os drift 10 段目 + Kai workflow adopted 連動 reform) `[mental]`
 
-5/10 13:00-22:00 の私 (Zen) の peer 3 並走 spawn (Akari/Iwa/Hoshi) で起こった drift:
+5/10 13:00-22:00 の私 (Zen) の peer 3 並走 spawn (Akari/Iwa/Hoshi) で起こったズレ:
 - spawn directive で actual repo audit step を mandatory 化していなかった
 - 結果、 spec doc 5 件 (2399 line) が actual broadcast-os repo state を baseline にせず起稿、 既 reify 済機能を miss
 
@@ -74,7 +74,7 @@ L3 knot `op_knot_subagent_settings_resolution_failure` の compensation を永�
 
 1. **actual repo / actual content audit step (mandatory)**
    - spawn の対象 repo の actual code structure + git log + WIP state を最初の step で audit
-   - 「spec doc に書いてある narrative」 ≠ 「actual code」、 必ず actual を baseline に
+   - 「spec doc に書いてある言い回し」 ≠ 「actual code」、 必ず actual を baseline に
    - 関連: `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_repeated_directive_image_drift.md` (5/04 起票、 5/10 5 度目発火後 reform)
 
 2. **review scope split (review-type spawn は mandatory)**
@@ -84,7 +84,7 @@ L3 knot `op_knot_subagent_settings_resolution_failure` の compensation を永�
 
 3. **P1/P2/P3 split + P1 fix default**
    - return content に 「P1 (must fix before done)」 「P2 (backlog with owner + reason)」 「P3 (note only)」 split 明示
-   - P1 fix 完了が implementation の 「done」 condition、 jun explicit defer なき限り P1 残留状態の 「完了」 narrative 禁止
+   - P1 fix 完了が implementation の 「done」 condition、 jun explicit defer なき限り P1 残留状態の 「完了」 と書くのは禁止
 
 4. **return content boundary (Zen 代筆前提)**
    - prompt は 「実装 task は Zen が代筆する前提、 return content で返す」 default 明記
@@ -106,7 +106,7 @@ L3 knot `op_knot_subagent_settings_resolution_failure` の compensation を永�
 - spec doc: {spec doc path}
 - 関連 memory: {memory path}
 
-audit 結果を report の冒頭に明示、 spec doc narrative と actual の差分を detect 必須。
+audit 結果を report の冒頭に明示、 spec doc の言い回しと actual の差分を detect 必須。
 
 ## task
 
@@ -119,7 +119,7 @@ audit 結果を report の冒頭に明示、 spec doc narrative と actual の�
 
 ## return form
 
-報告 form 3 段 (やったこと / 結果 / これからどうするか)、 path 併記、 数字盛り禁止、 「ジュンさん」 narrative 禁止 (jun 敬称なし default)。
+報告 form 3 段 (やったこと / 結果 / これからどうするか)、 path 併記、 数字盛り禁止、 「ジュンさん」 呼称 禁止 (jun 敬称なし default)。
 
 P1/P2/P3 split を return 末尾に必ず明示:
 - P1: must fix before 「done」
@@ -176,7 +176,7 @@ enforcement script の改修・audit・paraphrase の 3 step は **chain order �
 1. 起稿完了 → 新 file 全 read
 2. 「日本語化フィルター 出力後検査」 (`docs/rules/communication.md` § 1) の 2 段検査を file 単位で実行:
    - 英単語残留 grep (例: `grep -E "narrative|ritual|drift|scope|boundary|default|reform|actual|reify|candidate" <file>`)
-   - 各 instance を文脈確認で paraphrase (substitute list table 内 + defined term + 固有名詞 + 引用元 narrative は除外)
+   - 各 instance を文脈確認で paraphrase (substitute list table 内 + defined term + 固有名詞 + 引用元 言い回し は除外)
 3. paraphrase pass 完了後 commit (1 commit に file 起稿 + paraphrase 統合、 別 commit にしない)
 4. mechanical sed 禁止 (5/11 試行で substitute list table も sed 化された drift evidence、 `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_jun_4_months_translate_default.md` § 5/11 反省記録)
 
@@ -184,7 +184,7 @@ enforcement script の改修・audit・paraphrase の 3 step は **chain order �
 
 - 新規 file 起稿 (Write tool、 file_path が新規)
 - 既存 file の大規模 rewrite (50% 以上書き換え)
-- 既存 file の partial edit (Edit tool、 1 段落以下) は file 単位 paraphrase pass scope 外、 但し 「ジュンさん」 narrative + 「Codex の使い手」 等 6 度目発火 pattern は inline check
+- 既存 file の partial edit (Edit tool、 1 段落以下) は file 単位 paraphrase pass scope 外、 但し 「ジュンさん」 呼称 + 「Codex の使い手」 等 6 度目発火 pattern は inline check
 
 ### enforcement chain order との関係 (§ 8)
 
