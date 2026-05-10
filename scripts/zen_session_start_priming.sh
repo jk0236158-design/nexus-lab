@@ -47,17 +47,13 @@ echo "  Q4: drift 候補に該当するか? (下記 8 件と照合)"
 echo ""
 
 # ---------------------------------------------------------------
-# block 2: 直近 drift 8 件 (5/08 record 起点)
+# block 2: 今週の重点 1 件 (5/11 reform、 旧 8 件 drift list は cognitive overload で廃止)
 # ---------------------------------------------------------------
-echo "■ 直近 drift 8 件 (5/08 record):"
-echo "  1. 過小見積もり n=4/n=5 (1 hour 想定 → 実 3-4 hour)"
-echo "  2. 表層学習 n=3/n=4 (memory に書いて運用 embed しない)"
-echo "  3. 朝 sweep audit miss (board listing visible ≠ 内容認識 visible)"
-echo "  4. 14 day narrative drift (5/06 reify → 5/19 audit target に伸ばす)"
-echo "  5. score narrative (実 evidence なしで 「7-8 / 10」 narrative)"
-echo "  6. silent wait (Kai reply 待ち narrative で物理 audit 飛ばす)"
-echo "  7. 同 session 内 別 file での self-correction violation"
-echo "  8. 公開 docs commit ritual skip (vocabulary / naming / honesty / defer)"
+# 旧: 30 行の drift list 注入 → 「自分はミスしがち」 認知強化 + 慎重さで遅くなる drift detect (5/10 Cowork 診断 § 2.10)
+# 新: 今週の重点 1 件 (build action narrative) のみ surface
+echo "■ 今週の重点:"
+echo "  Phase 1 期間中 (5/08-5/21) = jun が一般 user として Yuino 試用、 reform action は organic 着手"
+echo "  「明日に回す」 narrative 禁止、 Green 範囲は寝てる間も polling 内で 1 batch ずつ進める"
 echo ""
 
 # ---------------------------------------------------------------

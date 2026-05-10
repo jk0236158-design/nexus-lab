@@ -1,5 +1,13 @@
 # Nexus Lab — Company Operating Manual
 
+> **IMPORTANT: ignore globs (Zen の glob / grep default exclude)**
+>
+> 以下の path 配下は file system 上に存在するが、 Zen の glob / grep operation で **default exclude**:
+> - `.claude/worktrees/**` (古い worktree 複製、 4/17 created の magical-pasteur-eb2a0a 等、 「どっちが本物か」 判定 noise)
+> - `node_modules/**` / `dist/**` / `__pycache__/**` / `.vitepress/cache/**` (build artifact)
+>
+> 物理削除 (`git worktree remove` 等) は jun explicit directive 後に着手。
+
 ## Mission
 Claude Code エコシステム向けのツール・テンプレートを開発し、 開発者の生産性を最大化する。
 Knot (条件付き変形演算子) の応用可能性を研究し、 AI の構造的改善に貢献する。
@@ -134,6 +142,40 @@ Knot (条件付き変形演算子) の可能性と限界の探求。 オーナ�
 2. **ブランチ戦略** — `main` / `master` は常にデプロイ可能。 開発は `feature/*`, `fix/*` ブランチ
 3. **レビュー必須** — QA Division (Kagami) によるレビューを経てから main にマージ (公開 docs / spec doc は必須)
 4. **日本語運用** — コミットメッセージ・ドキュメントは日本語。 コード中の識別子は英語
+
+## Coding Convention (5/11 reform、 Cowork 診断 P1-5 連動)
+
+### 共通
+
+- **ビルド**: `npm run build` (各 package)、 `cd packages/<name> && npm run build` で個別実行
+- **テスト**: `npm test` (Vitest)、 全 pass が merge 条件 (Kagami QA pass 連動)
+- **型チェック**: `npm run typecheck` (TypeScript strict mode)、 型エラーは merge block
+- **lint**: ESLint + Prettier、 違反は CI block
+- **コミット**: `feat(scope): subject` / `fix(scope): subject` / `docs(scope): subject` form、 日本語可、 但し型エラーで止める
+- **公開 docs commit 前**: `bash scripts/pre_commit_public_docs_audit.sh` (200 確認 ritual + honesty audit + vocabulary check)
+- **公開 npm publish 前**: Codex クロスレビュー + Kagami 独立 QA pass 必須 (4/18 P1 19 件 incident 由来 ritual)
+
+### TypeScript (Nexus Lab 主)
+
+- ESM 前提、 `import` 形のみ、 `require` 禁止
+- 型安全性最優先、 `any` 禁止、 unknown + type guard form
+- 関数は単一責任、 外部依存最小限
+- secret 系は `.env` + `.env.example`、 secret_redaction 必須
+
+### Python (broadcast-os 連携)
+
+- Python 3.12+
+- type hint 必須、 `mypy` pass + `ruff check` pass が merge 条件
+- `pytest` (pytest-asyncio auto)、 全 pass
+- async / await form (既 4 layer registry pattern と axis 整合)
+
+### 禁忌 (全 stack 横断)
+
+- 「ジュンさん」 narrative (jun 敬称なし default)
+- 不自然な直訳の造語 (例: 「Codex の使い手」 → 「Codex 用の依頼を処理する仕組み」)
+- 過度な絵文字 / 煽り語彙 (革新 / 次世代 / 突破 / 急成長)
+- 数字盛り (売上 / 期間 / 効果 の誇張)
+- ElevenLabs / 新規 cost provider 追加 (Red boundary、 jun explicit directive 必須)
 
 ## Phase Roadmap (Yuino/Aira product、 Kai roadmap、 5/08 起稿)
 
