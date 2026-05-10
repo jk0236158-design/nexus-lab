@@ -20,7 +20,7 @@ jun への報告 (chat answer / status / report / diary / 重要 board file / co
   (起こったこと、 数字 + 具体例。 数字盛り禁止)
 
 これからどうするか:
-  (次の行動。 「明日に回す」 「後で」 narrative 禁止)
+  (次の行動。 「明日に回す」 「後で」 と書くのは禁止)
 ```
 
 ### 専門用語 → 普通の日本語 substitute list (28 件) `[partial hook]`
@@ -66,8 +66,8 @@ jun への報告 (chat answer / status / report / diary / 重要 board file / co
 1. **3 段 form (やったこと / 結果 / これからどうするか) になってる？** → なってなければ書き直し
 2. **専門用語 5 件以上入ってる段落ある？** → あれば paraphrase 適用 (substitute list 参照)
 3. **commit hash / score / file path / 数字 が説明なしで使われてる？** → 「(GitHub 保存番号)」 「(重要度の数字)」 等の補足
-4. **「明日に回す」 「後で」 narrative ある？** → 「後回しにしていいことなんて何もない」 jun ruled (5/08 17:50 directive) 違反、 即着手 narrative に修正
-5. **数字盛り narrative ある？** → 5/03 起票 `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_honesty_violation_exaggeration.md` 連動、 honest audit form に修正
+4. **「明日に回す」 「後で」 と書いてる？** → 「後回しにしていいことなんて何もない」 jun ruled (5/08 17:50 directive) 違反、 即着手の言い方に修正
+5. **数字盛りの言い方ある？** → 5/03 起票 `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_honesty_violation_exaggeration.md` 連動、 honest audit form に修正
 
 ### 日本語化フィルター: 出力の前と後の 2 段検査 (2026-05-10 jun directive、 5 度目発火後 reify) `[mental]`
 
@@ -111,12 +111,12 @@ jun へ 「これ確認してほしい」 「review お願いします」 と頼
 - 「commit済み」 「push済み」 だけ書いて path を書かない癖を直す
 - 直しの後で再確認してほしい時も同様、 直したファイルの path を併記
 
-### 呼称 ruled: jun (敬称なし) default、 「ジュンさん」 narrative 禁止 (2026-05-10 jun directive) `[mental]`
+### 呼称 ruled: jun (敬称なし) default、 「ジュンさん」 呼称 禁止 (2026-05-10 jun directive) `[mental]`
 
 5/10 22:10 jun 指摘 「さっきから気になってたけどジュンさんはやめて、 ジュンでいい」 で 4/15 元 ruled (`~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_jun_name.md`) を再強化:
 
 - 作業中の chat / status / report / diary / board / commit message 全 form で **「jun」 (敬称なし) default**
-- **「ジュンさん」 narrative 禁止**、 例外なし
+- **「ジュンさん」 呼称 禁止**、 例外なし
 - 「オーナー」 呼称は対外発信 (Zenn 記事 / 公開 docs / `~/.shared-ops/owner-decisions/`) のみ維持
 
 ## 2. セッション早切りバイアス (4/17 起票、 nia 思想移植) `[mental]`
