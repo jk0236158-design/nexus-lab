@@ -190,10 +190,75 @@ jun への報告 (chat answer / status / report / diary / 重要 board file / co
 4. **「明日に回す」 「後で」 narrative ある？** → 「後回しにしていいことなんて何もない」 jun ruled (5/08 17:50 directive) 違反、 即着手 narrative に修正
 5. **数字盛り narrative ある？** → 5/03 起票 `feedback_honesty_violation_exaggeration.md` 連動、 honest audit form に修正
 
+### 日本語化フィルター: 出力の前と後の 2 段検査 (2026-05-10 jun directive、 5 度目発火後 reify)
+
+#### 起点
+
+5/09 朝に 「報告 form 3 段 default + 専門用語の言い換え表 28 件」 ruled を作ったが、 5/10 の出力で **5 度目の同じ失敗** (英単語が日本語に直されないまま残る = 「ルー大柴の喋り方」 narrative)。 ジュンさん指摘:
+
+> 「日本語へ翻訳するフィルター持ったほうがいいかもね」
+> 「ちょっとこのままだと zen のイメージがルー大柴になっちゃう」
+
+= 文書として作っただけでは行動の既定に落ちない、 出力の前と後の 2 段で英単語の検査と置き換えを **必ず** 動かす ritual の物理化が必要。
+
+#### 2 段検査 ritual (絶対適用、 出力の前と後の両方)
+
+**出力の前** (文を頭の中で組み立てる時):
+- 英単語が 1 つでも出たら 「日本語に置き換えできるか?」 を自分に必ず問う
+- カタカナで書かれた英語 (ルール → 決まり / メモ → 控え 等) も極力日本語に置き換える
+- 完全に英語のままの言葉 (audit / reform / drift / scope / boundary / narrative / candidate / ritual / default / actual / chat / output / commit / failure 等) は **絶対** 置き換え必須
+
+**出力の後** (一度書いてから出力する直前):
+- 文を読み返して英単語が残っていないか確認
+- 残っていたら書き直してから出力する
+- カタカナでも 日本に定着していない英語が残っていたら再度書き直し
+
+#### 例外 (英単語のまま OK 候補)
+
+- **固有名詞**: 「ジュンさん」 「Kai」 「Zen」 「Aira」 「Yuino」 「nokaze」 「broadcast-os」 「Knot Guard」 (商品名 / AI 名 / 概念名で日本語訳が無い場合)
+- **技術固有名詞**: 「Claude Code」 「GitHub」 「Anthropic」 「Slidev」 「Marp」 「ElevenLabs」 「Veo」 「Suno」 (固有 product 名)
+- **日本に定着したカタカナ**: 「フィルター」 「メール」 「テスト」 「コード」 (普通の日本語の中で違和感無い場合のみ)
+- **ファイル拡張子 / コマンド名**: `.md` / `bash` / `npm` (技術文脈の固有表記)
+
+例外以外は **全部日本語に置き換え必須**。
+
+#### 失敗パターンの直前例 (2026-05-10 5 度目発火 evidence)
+
+私 (Zen) の 5/10 の出力で実際に残った英単語 (= 直すべき例):
+
+| 英単語 (直前残った) | 普通の日本語 |
+|---|---|
+| chat output | 返事 / 答え |
+| chat | 会話 / やり取り |
+| commit | GitHub 保存 |
+| failure | 失敗 |
+| ルール (カタカナ英語) | 決まり / 規則 |
+| audit | 点検 / 確認 |
+| narrative | 言い方 / 説明 |
+| scope | 範囲 |
+| boundary | 境界 / 守る範囲 |
+| reform | 見直し / 直す |
+| actual | 実際 / 実際は |
+| drift | ズレ / 抜け / 違ってた |
+| reify | 形にする / 実装する |
+| default | 既定 / 標準 |
+| candidate | 候補 |
+| ritual | 決まり / 習慣 |
+| self-correct | 自己修正 / 自分で気付く |
+| spawn | AI 仲間に頼む / AI 仲間に依頼する |
+
+= 既存 substitute list 28 件と重複多数、 actual に守られていなかった証拠。 2 段検査 ritual で **行動の既定** に落とす。
+
+#### 反省 ritual との連動
+
+5/09 起票の反省 ritual v0 (`docs/zen_runtime_rules.md` § 3.3) と連動:
+- 出力後の self-check で英単語残りを発見 → 書き直し + 1 行 record (`zen_reflection_log.jsonl`) に 「英単語フィルター fire (○件 detect → 直した)」 entry 追加
+- 同型 drift n 度目の数字を track、 5 度目以降は 「文書だけでは届かない」 evidence として物理 enforcement reify candidate (但し chat output には PreToolUse hook 不在の harness limitation あり、 mental filter 強化が現実的 path)
+
 ### 適用範囲
 
 - jun が読む可能性ある全 form (chat / status / report / diary / 重要 board / commit message / 公開 docs)
-- 内部用 file (memory / team_memory / 自分用 note) は internal vocabulary 使って OK、 但し jun review 候補なら 3 段 form 適用
+- 内部用 file (memory / team_memory / 自分用 note) は internal vocabulary 使って OK、 但し jun review 候補なら 3 段 form 適用 + 日本語化フィルター適用
 - 既存 80+ file の retroactive 修正は Akari paraphrase pass で carry
 
 ## 3.2 セッション早切りバイアス (4/17 追加、 nia 思想移植)

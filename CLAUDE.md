@@ -75,7 +75,7 @@ Knot (条件付き変形演算子) の可能性と限界の探求。 オーナ�
 |---|---|
 | Trigger 別重いチェック | 公開 200 確認 ritual / Zenn rate limit 判定 / 商品 publish 前 dogfood ritual |
 | 委任 / peer spawn | 委任判定 / Agent tool default (mode=acceptEdits) / permission gating / peer spawn 制約 default / Zen 直接 OK 例外 / Tempo Trap |
-| 行動 default | 報告 form 3 段 default / 専門用語 substitute list / 起稿前 self-check 5 step / セッション早切りバイアス抑止 / jun 不在中の判断権限 (Green/Yellow/Red) |
+| 行動 default | 報告 form 3 段 default / 専門用語 substitute list / 起稿前 self-check 5 step / **日本語化フィルター: 出力の前と後の 2 段検査 (5/10 jun directive、 5 度目発火後 reify、 「ルー大柴 narrative 抑止」)** / セッション早切りバイアス抑止 / jun 不在中の判断権限 (Green/Yellow/Red) |
 | drift 抑止 + reform | 4.7 literal 解釈対策 5 ruled / AI-speed scope principle / Decision Stability Guard 4 分類 / Knot Guard 8 risk class / chat output 起稿前 4Q + Q5 ritual / file 字数 cap = 3000 字 |
 | enforcement chain order | Iwa 改修 → Kagami audit → Akari paraphrase の 3 step 厳守 |
 
