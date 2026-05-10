@@ -1,9 +1,13 @@
 # Aira 商品化 design doc — 連休 β release plan
 
+> ⚠️ **historical reference** (2026-05-11 marked):
+> 本 file は 2026-05-02 起稿の 「5/06 β release candidate」 narrative の design doc。 5/03 evening jun directive 「実際に Yuino を実装して本当に使ってからにしようか」 で β release 全 channel 中止 + 商品化第一形 が Local Web App に shift、 5/06 evening 以降 Aira 実装は Kai 主担当 (nokaze-aira repo) に移管 (memory `feedback_aira_ownership_shift_kai_lead.md`)。
+> 本 file 内 reference (yuino.config.yml / 2026-05-05 zen_iwa packet 等) は **当時 design 用 placeholder** で actual には作成されていない、 「intentionally unresolved」 として historical document 化。 現在の Yuino 正本: `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_yuino_productization_consolidated.md` + Kai 主担当 nokaze-aira repo。
+
 date: 2026-05-02 (Sat)
 author: Zen
-status: draft (jun Path C + Aira 軸 directive 受領、5/02 朝起稿)
-target: 5/06 (Wed) 連休最終日 β release candidate
+status: draft (jun Path C + Aira 軸 directive 受領、5/02 朝起稿) — historical 2026-05-11、 5/03 evening β release 中止 + 5/06+ Kai-side ownership shift で superseded
+target: 5/06 (Wed) 連休最終日 β release candidate — 中止 (5/03 evening jun directive)
 related: aira/docs/phase1_specs_draft_2026-05-01.md / Kai 4/29 21:00 mcp_market_structure_reframe / Kai 4/30 ai_operating_os design vision
 
 ---
@@ -451,7 +455,7 @@ Console / Yuino / Aira record から slide-led explainer を作る、 raw chat-l
 
 ### 9.9 商品 audience-facing 全体 reform (5/13+ Akari paraphrase pass で実施)
 
-本追記は内部設計 narrative の position 変更のみ反映。 商品 LP / docs / README / Setup Memo の audience facing form の全体 reform は 5/13+ post-dogfood publish phase で Akari paraphrase pass + 言語選択 axis (日本語 default + 英語は固有名詞のみ、 memory `feedback_excessive_english_mixing.md` 連動) + 「5 分まとめ + 判断待ち一元化」 narrative pivot で実施 candidate。
+本追記は内部設計 narrative の position 変更のみ反映。 商品 LP / docs / README / Setup Memo の audience facing form の全体 reform は 5/13+ post-dogfood publish phase で Akari paraphrase pass + 言語選択 axis (日本語 default + 英語は固有名詞のみ、 memory `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_excessive_english_mixing.md` 連動) + 「5 分まとめ + 判断待ち一元化」 narrative pivot で実施 candidate。
 
 ---
 

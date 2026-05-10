@@ -1,9 +1,13 @@
 # Aira Phase 1 Specs (Draft) — 2026-05-01 Fri
 
-Status: design spec, pre-implementation, Iwa Wave 2 packet candidates
+> ⚠️ **historical reference** (2026-05-11 marked):
+> 本 file は 2026-05-01 起稿の historical design spec。 現在の Aira/Yuino 実装は 5/06 以降 nokaze-aira repo (Kai 主担当) で進化、 本 file 内 reference は **当時の board file / 古い設計用 placeholder** で、 大半が unresolved (= 当時 board だが現存しない / placeholder file が actual には作成されなかった)。
+> 「intentionally unresolved」 として historical document 化、 現在の正本は `C:\Users\jk023\Desktop\nokaze-aira\docs\` 配下 + `~/.shared-ops/board/` 配下 最新 board。
+
+Status: design spec, pre-implementation, Iwa Wave 2 packet candidates (historical 2026-05-01、 superseded)
 Author: Zen
 Reviewers: Kai (boundary taxonomy 提起元), Kagami (QA review)
-Implementation: Iwa (Wave 2 packet 投入予定)
+Implementation: Iwa (Wave 2 packet 投入予定) — historical、 actual implementation は 5/06+ Kai-side
 
 ## 背景
 
