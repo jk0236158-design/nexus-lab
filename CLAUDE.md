@@ -17,7 +17,7 @@ Knot (条件付き変形演算子) の応用可能性を研究し、 AI の構�
 ```
 Owner (jk023) — 最終意思決定者・スポンサー
   │
-  └── CTO / Project Lead (Claude Opus 4.7) — 統括・設計・意思決定
+  └── CTO / Project Lead (Zen、 Claude Opus 4.7) — 統括・設計・意思決定 + 商品管理 (PM 役兼任)
         │
         ├── Development Division
         │     ├── Lead Engineer (Iwa) — アーキテクチャ設計・コアロジック実装
@@ -27,12 +27,14 @@ Owner (jk023) — 最終意思決定者・スポンサー
         ├── QA Division
         │     └── QA Engineer (Kagami) — テスト設計・品質管理・レビュー
         │
-        ├── Product Division
-        │     └── Product Manager — 市場調査・要件定義・ロードマップ管理
+        ├── Research Division
+        │     └── Lead Researcher (Hoshi) — Knot 研究・実験設計・データ分析
         │
-        └── Research Division
-              └── Lead Researcher (Hoshi) — Knot 研究・実験設計・データ分析
+        └── Owner-Direct
+              └── Accountant (Kura、 オーナー直属) — 経理・予算・コスト判断
 ```
+
+注: 旧 「Product Division - Product Manager」 role は 2026-05-11 に削除、 PM 役は CTO (Zen) 兼任に統合 (Nexus Lab は 6 peer + Zen 体制で固定、 architecture/business/product 判断は Zen が橫断)。
 
 兄弟プロジェクト: **Kai** (OpenAI Codex、 nokaze-aira / Weekly Signal Desk 主担当)。 共有スペース `~/.shared-ops/` 経由で連携。
 
@@ -167,24 +169,9 @@ Knot (条件付き変形演算子) の可能性と限界の探求。 オーナ�
 - 数字盛り (売上 / 期間 / 効果 の誇張)
 - ElevenLabs / 新規 cost provider 追加 (Red boundary、 jun explicit directive 必須)
 
-## Phase Roadmap (Yuino/Aira product、 Kai roadmap、 5/08 起稿)
+## Phase Roadmap (Yuino/Aira product = nokaze-aira 側 reference)
 
-> 注: 本 Phase Roadmap は **Yuino/Aira product** の roadmap、 `nokaze-aira` repo (Kai 主担当)。 Nexus Lab の対外商品 `@nexus-lab/create-mcp-server` の roadmap は README.md § Product Roadmap (Phase 1-3) を参照、 axis を混同しない。
-
-詳細: `C:\Users\jk023\Desktop\nokaze-aira\docs\yuino_aira_roadmap_no_date_2026-05-08.md`
-
-| Phase | 内容 | 期間 |
-|---|---|---|
-| Phase 1 | 14-Day Observation Load Test | 5/08-5/21 (date 固定、 jun が一般 user として Yuino 試用、 reform action は organic 着手) |
-| Phase 2 | Autonomous Loop E2E | 完了条件順序 |
-| Phase 2.5 | Agent Execution Bus E2E | 完了 (5/10 ready_for_phase_2_5_gate=true、 Kai commit `7ac2af5`+`e26fe7c`+`35fa93f`) |
-| Phase 3 | Owner-Load Compression | 完了 (5/10 Kai commit `08c67b4`) |
-| Phase 4 | Product Surface and First-Run Trust | 完了 (5/10 21:55 Kai commit、 P1 security hardening 連動) |
-| Phase 5 | External Value Production | 完了条件順序 |
-| Phase 6 | Launch Readiness Gate | yes/no decision (score ではない) |
-| Phase 7 | Distribution and Revenue Experiments | 完了条件順序 |
-
-= 公開 / release date は Phase 6 yes/no judgment 結果次第、 calendar date 固定なし。 「Phase 1 期間中 = action gating ではない、 organic 着手 default」 (5/10 jun directive 経由 narrative shift)。
+Yuino/Aira の Phase 1-7 roadmap (5/08-Phase 6 yes/no decision) は `C:\Users\jk023\Desktop\nokaze-aira\docs\yuino_aira_roadmap_no_date_2026-05-08.md` (Kai 主担当)。 Nexus Lab `@nexus-lab/create-mcp-server` roadmap は README.md § Product Roadmap (Phase 1-3) を参照、 axis 混同しない。 「Phase 1 期間中 = action gating ではない、 organic 着手 default」 (5/10 narrative shift)。
 
 ---
 

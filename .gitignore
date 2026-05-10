@@ -7,7 +7,9 @@ dist/
 *.env.nokaze
 .DS_Store
 coverage/
-.claude/
+.claude/*
+!.claude/agents/
+!.claude/settings.json
 dist/
 __pycache__/
 *.pyc

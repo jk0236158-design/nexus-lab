@@ -95,7 +95,7 @@ Knot（条件付き変形演算子）の応用可能性を研究し、AIの構�
 - [x] 市場調査・競合分析
 - [x] MVP 仕様策定
 - [x] コアライブラリ開発
-- [x] `@nexus-lab/create-mcp-server` v0.5.0 npm publish
+- [x] `@nexus-lab/create-mcp-server` v0.5.0 → v0.5.1 npm publish (4/22、 repository field 追加)
 - [x] Zenn 記事 9 本公開（2026-04-19 時点）
 - [x] Premium テンプレート 4 種（config / database / auth / api-proxy）Gumroad + BOOTH 販売開始
 
