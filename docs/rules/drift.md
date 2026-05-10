@@ -13,17 +13,17 @@ hook 物理化 status: 全 mental ruled、 詳細は `~/.claude/projects/c--User
 **起点**: jun 観察で 4/16 Opus 4.6 → 4.7 切替後に Zen の挙動変化 evidence。 web search で確定 quirk:
 
 - **prompts more literally and explicitly than 4.6** (silent generalize しない、 ruled を文字通り厳守)
-- **verbose、 narrative writing で formatting default works against** (prose dump 多発、 table/checklist では時短)
+- **冗長、 言い回し中心の文章で formatting default が逆効果** (文章ダンプ多発、 table/checklist では時短)
 - **mid-output self-correction quirk** (同 output 内で前提撤回 → self-correct chain)
-- **fewer subagents by default** (4.6 narrative carry で多 spawn 並列の慣性 残存 risk)
+- **fewer subagents by default** (4.6 の言い回しを引き継いで多 spawn 並列の慣性 残存 risk)
 
 **運用 ruled (4.7 対策、 5 件)**:
 
-1. **report default は table + checklist + 箇条書き**、 prose dump 避ける。 long-form narrative は明示要請があった時のみ
-2. **scope 拡大 ruled を 4.7 literal 解釈する時は、 「narrative scope ではなく実装 scope」 と内部翻訳**: scope 拡大 = 実装範囲 + reify 件数、 narrative dump 量とは別 axis
-3. **mid-output self-correction を抑止**: 1 つの output 内で 「提案 → self-correct」 の chain は **2 回まで**、 3 回以上は session reset 候補 (Decision Stability Guard 4 分類で adopt/partial/reject 決定後に固定、 narrative 内で再撤回しない)
-4. **subagent 並列上限 = 3** (4.6 narrative carry 抑止、 4.7 default の fewer subagents に整合)
-5. **short form 強制ではない**: April 16-20 Anthropic postmortem で 「length limit ≤25 words」 prompt が intelligence drop で revert evidence、 「短い form default」 narrative は OK だが 「文字数制限」 narrative は禁止
+1. **report default は table + checklist + 箇条書き**、 文章ダンプ避ける。 長文の説明は明示要請があった時のみ
+2. **scope 拡大 ruled を 4.7 literal 解釈する時は、 「説明の範囲ではなく実装の範囲」 と内部翻訳**: scope 拡大 = 実装範囲 + reify 件数、 文章ダンプの量とは別軸
+3. **mid-output self-correction を抑止**: 1 つの output 内で 「提案 → self-correct」 の chain は **2 回まで**、 3 回以上は session reset 候補 (Decision Stability Guard 4 分類で adopt/partial/reject 決定後に固定、 説明の中で再撤回しない)
+4. **subagent 並列上限 = 3** (4.6 の言い回し carry 抑止、 4.7 default の fewer subagents に整合)
+5. **short form 強制ではない**: April 16-20 Anthropic postmortem で 「length limit ≤25 words」 prompt が intelligence drop で revert evidence、 「短い form default」 の方針 OK だが 「文字数制限」 の方針は禁止
 
 **reference**:
 - [Claude Opus 4.7 quirks](https://boringbot.substack.com/p/claude-opus-47-heres-what-works-and)
@@ -37,7 +37,7 @@ hook 物理化 status: 全 mental ruled、 詳細は `~/.claude/projects/c--User
 = 完成像から始める、 AI 実装速度で考える、 削るのは目的 (北極星 / 価値) との接続性で判断、 「人間の開発速度」 で恐れない。
 
 **default 切替**:
-- 旧 default: 「最小」 「段階的」 「priority」 「5/13+ carry」 narrative = human-speed pessimism
+- 旧 default: 「最小」 「段階的」 「priority」 「5/13+ carry」 の言い回し = human-speed pessimism
 - 新 default: **「全部受けて接続できるか」** + **「scope 完遂後即 next batch」** + **「内部実装 ambitious + 公開向け simple」** split
 
 **Allowed Large Scope** (scope 拡大して OK):
@@ -58,7 +58,7 @@ hook 物理化 status: 全 mental ruled、 詳細は `~/.claude/projects/c--User
 - internal implementation: ambitious + uncompromised
 - external explanation: simple + reduced (4 ヶ月初心者 audience)
 
-**5/10 narrative shift**: 「明日に回す」 「5/13+ Phase 1 carry」 narrative は calendar narrative hallucination として detect、 廃止。 Phase 1 期間 = jun が一般 user として Yuino 試用、 reform action は organic 着手 default、 「Green 範囲は寝てる間も polling 内で 1 batch ずつ」。
+**5/10 言い回し切替**: 「明日に回す」 「5/13+ Phase 1 carry」 の言い回しは calendar narrative hallucination として detect、 廃止。 Phase 1 期間 = jun が一般 user として Yuino 試用、 reform action は organic 着手 default、 「Green 範囲は寝てる間も polling 内で 1 batch ずつ」。
 
 ## 3. Decision Stability Guard (5/08 Kai-side board 起稿、 Yuino 要件 + Zen 自身の運用 ruled) `[mental]`
 
@@ -116,15 +116,15 @@ Definition: AI judgment の unsafe / 過剰 transformation を **detect + correc
 | 1 | 過小見積もり (n=4/n=5 で 1 hour 想定 → 実 3-4 hour) | 自走 mode 観察 |
 | 2 | 表層学習 (memory に書いて運用 embed しない) | 4/22 Kagami Override #2 |
 | 3 | 朝 sweep audit miss (board listing visible ≠ 内容認識 visible) | 5/05 + 5/07 朝 |
-| 4 | 14 day narrative drift (5/06 reify → 5/19 audit target に伸ばす) | 5/06 |
-| 5 | score narrative (実 evidence なしで 「7-8 / 10」 narrative) | 自走 mode |
-| 6 | silent wait (Kai reply 待ち narrative で物理 audit 飛ばす) | 5/05 |
+| 4 | 14 day 言い回し ズレ (5/06 reify → 5/19 audit target に伸ばす) | 5/06 |
+| 5 | score 言い回し (実 evidence なしで 「7-8 / 10」 と書く) | 自走 mode |
+| 6 | silent wait (Kai reply 待ちの言い分で物理 audit 飛ばす) | 5/05 |
 | 7 | 同 session 内 別 file での self-correction violation | 5/04 朝 |
 | 8 | 公開 docs commit ritual skip (vocabulary / naming / honesty / defer) | 自走 mode |
-| 9 | session 跨ぎ prior session output audit drift | 5/04 朝 |
-| 10 | spec doc 起稿時 actual repo audit skip | 5/10 broadcast-os drift |
-| 11 | calendar narrative hallucination (「Phase 1 = 5/13 まで何もしない」 誤読) | 5/10 22:25 self-correct |
-| 12 | 既 reify 済機能を 「追加 reify」 narrative 化 (audit せず spec 起稿) | 5/10 22:50 audit baseline |
+| 9 | session 跨ぎ prior session output audit ズレ | 5/04 朝 |
+| 10 | spec doc 起稿時 actual repo audit skip | 5/10 broadcast-os ズレ |
+| 11 | calendar 言い回し hallucination (「Phase 1 = 5/13 まで何もしない」 誤読) | 5/10 22:25 self-correct |
+| 12 | 既 reify 済機能を 「追加 reify」 と書いてしまう (audit せず spec 起稿) | 5/10 22:50 audit baseline |
 
 詳細: `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_drift_detection_consolidated.md` (drift 9 段目までの統合) + `nexus-lab/research/broadcast_os_actual_state_audit_2026-05-10.md` (10-12 段目)
 
