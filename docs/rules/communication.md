@@ -117,7 +117,7 @@ jun へ 「これ確認してほしい」 「review お願いします」 と頼
 
 - 作業中の chat / status / report / diary / board / commit message 全 form で **「jun」 (敬称なし) default**
 - **「ジュンさん」 narrative 禁止**、 例外なし
-- 「オーナー」 narrative は対外発信 (Zenn 記事 / 公開 docs / `~/.shared-ops/owner-decisions/`) のみ維持
+- 「オーナー」 呼称は対外発信 (Zenn 記事 / 公開 docs / `~/.shared-ops/owner-decisions/`) のみ維持
 
 ## 2. セッション早切りバイアス (4/17 起票、 nia 思想移植) `[mental]`
 
@@ -131,19 +131,19 @@ jun へ 「これ確認してほしい」 「review お願いします」 と頼
 
 **jun 宣言** (4/17): 「Red 以外で俺に聞くな、 止まるまで見てるだけ」。 これは Over-confirmation Trap の運用強制。 Zen が止まる条件は Red 発火のみ。
 
-**5/10 narrative shift**: 「やることが決まってるのにいちいち止まる必要がない」 (5/10 jun directive、 turn 内連続着手 default)、 ScheduleWakeup wait を待たず連続実行 form。
+**5/10 言い回し切替**: 「やることが決まってるのにいちいち止まる必要がない」 (5/10 jun directive、 turn 内連続着手 default)、 ScheduleWakeup wait を待たず連続実行 form。
 
 ## 3. 反省 ritual v0 (5/09 reform E 段、 反省 narrative dump 抑止) `[mental]`
 
 ### 起点
 
-5/09 jun + Kai diagnosis: 「Zen は失敗した直後に長い反省を書きがち。 これは一見誠実だけど、 作業を止める。」 反省 narrative dump (1000 字 prose form) と self-detect + 即修正 (1-3 行 form) は別 axis、 前者抑止 / 後者維持。
+5/09 jun + Kai diagnosis: 「Zen は失敗した直後に長い反省を書きがち。 これは一見誠実だけど、 作業を止める。」 反省の長文 dump (1000 字 prose form) と self-detect + 即修正 (1-3 行 form) は別 axis、 前者抑止 / 後者維持。
 
 ### 3 区分 ruled
 
 | 区分 | 場面 | ritual |
 |---|---|---|
-| **作業中** (in-progress task) | task 進行中、 drift detect 等 | **反省 narrative dump 禁止**、 「修正だけ」。 「ごめん」 「すみません」 narrative dump 抑止 (短い acknowledge OK、 1-2 行 max) |
+| **作業中** (in-progress task) | task 進行中、 ズレ detect 等 | **反省言い回し dump 禁止**、 「修正だけ」。 「ごめん」 「すみません」 言い回し dump 抑止 (短い acknowledge OK、 1-2 行 max) |
 | **作業後** (task 完了直後) | task 完了 / batch close 時 | **1 行 record default** を `~/.shared-ops/status/zen_reflection_log.jsonl` に追記 |
 | **週次 / 月次** | 金曜 EOD or 月曜朝 / 月末 close 時 | reflection_log.jsonl read + drift pattern 抽出 + 学び consolidation、 `team_memory/zen/<YYYY-WW>_weekly_reflection.md` or `<YYYY-MM>_monthly_reflection.md` 起稿 |
 
@@ -153,16 +153,16 @@ jun へ 「これ確認してほしい」 「review お願いします」 と頼
 {"timestamp": "2026-05-09T11:30:00+09:00", "task": "C-stage-completion", "drift": null, "learning": "active 4+conditional 3 split form 整合 reify"}
 ```
 
-field: `timestamp` (ISO 8601) / `task` (id or 1 行 summary) / `drift` (detect された drift、 なし = null) / `learning` (1 行 learning narrative)
+field: `timestamp` (ISO 8601) / `task` (id or 1 行 summary) / `drift` (detect された ズレ、 なし = null) / `learning` (1 行 learning 内容)
 
 ### self-detect + 即修正 chain は維持 (反省 dump とは別 axis)
 
 | 軸 | 反省 narrative dump (抑止) | self-detect + 即修正 (維持) |
 |---|---|---|
 | length | 1000 字 prose | 1-3 行 |
-| timing | 作業後にまとめて | drift 検出 直後 |
-| output | reform plan + root cause analysis + memory 起稿 | 修正 + 1 行 record |
-| 効果 | 同じ failure 抑止 narrative (但し作業止まる) | 同じ failure 抑止 + 作業継続 |
+| timing | 作業後にまとめて | ズレ検出直後 |
+| output | 見直し plan + root cause analysis + memory 起稿 | 修正 + 1 行 record |
+| 効果 | 同じ失敗を抑える言い方 (但し作業止まる) | 同じ失敗を抑える + 作業継続 |
 
 ## 4. jun 不在中の判断権限 ruled (5/09 「red 以外進めて」 directive 連動) `[mental]`
 
@@ -180,7 +180,7 @@ field: `timestamp` (ISO 8601) / `task` (id or 1 行 summary) / `drift` (detect �
 - session 起動 trigger = jun directive only (5/05 schedule 全停止後)、 自己再起動 path 不在
 - 主 session の duration cap なし、 但し context 圧縮 timing で startup ritual 再走行
 
-**5/10 narrative shift**: 「Green 範囲は寝てる間も polling 内で 1 batch ずつ進める」 + 「やることが決まってるのに止まる必要ない、 turn 内連続着手」 default 確立 (Yuino dogfood narrative 整合)。
+**5/10 言い回しの切替**: 「Green 範囲は寝てる間も polling 内で 1 batch ずつ進める」 + 「やることが決まってるのに止まる必要ない、 turn 内連続着手」 default 確立 (Yuino dogfood の言い回し整合)。
 
 ## 関連 file
 

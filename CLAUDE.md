@@ -106,11 +106,16 @@ Knot (条件付き変形演算子) の可能性と限界の探求。 オーナ�
 ### 関連 file (詳細参照、 全件絶対 path 修正済 2026-05-11)
 
 - `~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/identity_v3.md` (Identity Core 8 件)
-- `nexus-lab/docs/zen_runtime_rules.md` (Runtime Rule layer)
+- `nexus-lab/docs/rules/publishing.md` (Runtime Rule layer 1 — 公開接点の品質保証)
+- `nexus-lab/docs/rules/delegation.md` (Runtime Rule layer 2 — 委任 + 並走 + chain order)
+- `nexus-lab/docs/rules/communication.md` (Runtime Rule layer 3 — chat output 系 mental ritual)
+- `nexus-lab/docs/rules/drift.md` (Runtime Rule layer 4 — drift 抑止)
 - `nexus-lab/docs/zen_operating_cadence.md` (cadence ruled)
 - `~/.claude/projects/c--Users-jk023-nexus-lab/memory/MEMORY.md` (active 4 + conditional 3 件 index)
 - `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_jun_4_months_translate_default.md` (報告 form 3 段 詳細)
 - `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_model_update_drift_knot_guard_8th.md` (Knot Guard 8 番目 risk class)
+
+注: 旧 `nexus-lab/docs/zen_runtime_rules.md` は 24 行 pointer file (2026-05-11 split)、 historical reference のみ、 新 reform は上記 4 file 側に追記。
 
 ---
 
