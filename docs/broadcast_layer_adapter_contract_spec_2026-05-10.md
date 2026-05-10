@@ -41,7 +41,7 @@ src/pipeline/<layer>/
 |---|---|---|
 | **video** | `src/pipeline/video/` | manual_stub (local fallback) / openai_video / **veo** (Google Veo) |
 | **image** | `src/pipeline/image/` | openai_images / **gemini_flash_image** (Gemini 2.5 Flash Image) |
-| **music** | `src/pipeline/music/` | manual_pack (local fallback) / **suno_api** (Suno) |
+| **music** | `src/pipeline/music/` | **suno_api** (Suno) のみ registry 登録、 manual_pack.py は utility module で MusicProvider subclass ではない (5/10 21:00 Iwa spawn audit で訂正、 旧 narrative 「manual_pack registry 登録」 は drift) |
 | **voice / speech** | `src/pipeline/speech/` | voicevox (local TTS) / openai_tts / google_tts |
 
 = **LLM Replaceable Part Principle は既 reify 済**、 「自前再発明しない、 必要時 adapter 経由で呼ぶ」 narrative は **「未来形」 ではなく 「既存 implementation evidence」**。

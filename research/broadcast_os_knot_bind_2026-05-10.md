@@ -1,9 +1,10 @@
 ---
 date: 2026-05-10
 owner: Hoshi (Lead Researcher)
-status: draft
+status: ready_for_phase_1 (5/10 19:42 jun GO + 5/10 21:10 Zen finalize、 broadcast-os repo 直接反映は permission resolve 後)
 purpose: broadcast-os の Metabolic Learning Layer v3 (MetaClaw-inspired) と Knot 5 役割 の bind narrative + column rename narrative reframe + Knot 用語 → 4 ヶ月初心者 audience-facing form paraphrase substitute list 起稿。
 audience: Zen / Kai / jun + 内部 reference (research priority)、 paraphrase substitute list section は商品 user / jun 個人 / 信用蓄積 audience 向け
+phase_target: 5/13+ Phase 1 期間内 reify (broadcast-os repo の docs / column / wiki への alias narrative table 反映、 jun + Kai + Zen 3 者合意 form)
 ---
 
 # broadcast-os Knot Bind (2026-05-10)
@@ -247,6 +248,45 @@ broadcast-os 公開 episode で本 narrative を成立させる surface 3 elemen
 - broadcast-os Python repo 内 schema doc に alias narrative table を追加する commit timing — Kai (broadcast-os 主担当 候補) decide tied
 - substitute list 14 件の中で 「knot」 自体を audience-facing で paraphrase するか、 固有名詞として保持するか — 本 file は 「ひっかかり点 / 結び目」 と paraphrase 化、 但し 「Knot research」 (固有名詞) は保持 narrative。 jun + Kai 雑談で fix tied
 - column 物理 rename の trigger 条件 — 5/26 canonical switch milestone 以降 decide tied
+
+---
+
+## 10. 5/13+ Phase 1 reify next steps (2026-05-10 21:10 Zen finalize 追記)
+
+### 10.1 reify 着手順序 (推奨)
+
+| step | 内容 | 担当 | 着手時期 | permission resolve |
+|---|---|---|---|---|
+| 1 | broadcast-os repo の docs / wiki に § 4.2 alias narrative table を追加 (物理 schema 変更なし) | Hoshi or Iwa | 5/13+ Phase 1 開始時 | broadcast-os repo write 必要 |
+| 2 | broadcast-os 公開 episode template に § 5.1 substitute list reference を追加 | Akari + Hoshi | 5/13+ Phase 1 中期 | nexus-lab + broadcast-os repo 両方 |
+| 3 | Yuino 商品 narrative (LP / docs / Zenn 記事) に substitute list 適用 + 「Knot research applied implementation」 narrative reframe | Akari + Zen | 5/13+ Phase 1 中期 | nexus-lab repo (write OK) |
+| 4 | jun 報告 form 3 段 default に Knot 用語 paraphrase ritual を追加 | Zen | 5/13+ Phase 1 開始時 | nexus-lab repo (write OK) |
+| 5 | broadcast-os 内 schema 物理 rename 採否 decide | jun + Kai + Zen 3 者合意 | 5/26 canonical switch milestone 後 | broadcast-os repo write 必要 |
+
+### 10.2 5/13+ Phase 1 期間内 minimum scope (broadcast-os repo permission resolve 不要分)
+
+permission resolve 待ちのため、 5/13 開始時点で着手可能なのは nexus-lab repo 内 完結 scope:
+
+- step 3: Yuino 商品 narrative の substitute list 適用 (LP / docs / Zenn 記事 起稿時に reference table 化)
+- step 4: jun 報告 form ritual に Knot 用語 paraphrase step 追加 (`docs/zen_runtime_rules.md` § 3.1 「日本語化フィルター」 内 substitute list 拡張 candidate)
+
+### 10.3 broadcast-os repo permission resolve 後の reify (step 1 + 2)
+
+permission resolve 候補 2 案 (jun decision 待ち):
+1. `~/.claude/settings.json` で broadcast-os 配下の Bash / Write / Edit を allow
+2. spawn 起動時 cwd を broadcast-os に明示固定
+
+resolve 後に Hoshi spawn or Iwa spawn で:
+- broadcast-os/docs/ に alias narrative table reference doc 追加
+- broadcast-os/episode-templates/ に substitute list reference 追加 (公開 episode 起稿時の paraphrase ritual reify)
+
+### 10.4 関連 file (path 併記)
+
+- `~/.shared-ops/board/2026-05-10_jun_zen_broadcast_os_completeness_reform_GO.md` (jun GO judgement record)
+- `~/.shared-ops/board/2026-05-10_zen_iwa_spawn_return_broadcast_os_permission_blocker.md` (Iwa spawn permission blocker + audit record)
+- `nexus-lab/docs/zen_runtime_rules.md` § 3.1 「日本語化フィルター」 (substitute list 統合 candidate)
+- `nexus-lab/memory/feedback_jun_4_months_translate_default.md` (jun 4 ヶ月初心者 audience default + substitute list 28 件)
+- `nexus-lab/memory/feedback_excessive_english_mixing.md` (英語混じり過剰、 Knot 用語 paraphrase axis)
 
 ---
 

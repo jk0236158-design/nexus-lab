@@ -1,9 +1,10 @@
 ---
 date: 2026-05-10
 owner: Hoshi (Lead Researcher)
-status: draft
+status: ready_for_phase_1 (5/10 19:42 jun GO + 5/10 21:25 Zen finalize、 competitor monitoring ritual + audience-facing positioning narrative reify は 5/13+ carry)
 purpose: broadcast-os 完成度向上 reform の競合 landscape audit + positioning narrative 起稿。 Zen 集約 narrative + 前回 spawn return H1 / H2 / H4 軸 detail。
 audience: Zen / Kai / jun + 内部 reference (developer / 研究 priority)
+phase_target: 5/13+ Phase 1 期間内 reify (broadcast-os 公開 episode reference + Yuino 商品 narrative positioning 連動 + competitor monitoring ritual default 化)
 ---
 
 # broadcast-os Competitor Landscape (2026-05-10)
@@ -312,6 +313,44 @@ web search 12 件 (前回 spawn return 12 件 source、 reference は § 9 参�
 - video generator vendor lock-in 回避 architecture — 別 ADR
 - episode chain の URL form / index form / archive form — 別 design doc
 - audience persona 5 layer の design entry 順序 (どの persona を月次 recap primary にするか) — episode 設計時 decide
+
+---
+
+## 13. 5/13+ Phase 1 reify next steps (2026-05-10 21:25 Zen finalize 追記)
+
+### 13.1 reify 着手順序 (推奨)
+
+| step | 内容 | 担当 | 着手時期 | permission resolve |
+|---|---|---|---|---|
+| 1 | broadcast-os 公開 episode の冒頭 narrative に 「公開 organizational diary as program」 segment narrative + 動画 AI 競合非 overlap narrative を reference 化 | Hoshi + Akari | 5/13+ Phase 1 開始時 | broadcast-os repo write 必要 |
+| 2 | Yuino 商品 narrative (LP / docs / Zenn 記事) に 「organizational record program」 positioning を core 化 | Akari + Zen | 5/13+ Phase 1 中期 | nexus-lab repo (write OK) |
+| 3 | competitor monitoring ritual default 化 (3 月毎の audit、 動画 AI / observability / organizational visibility 3 segment 横断) | Hoshi | 5/13+ Phase 1 中期 | nexus-lab repo (write OK) |
+| 4 | broadcast-os の genre 命名 fix (§ 7.3 candidate 4 件 から jun + Kai + Zen 3 者合意で 1 件選定) | jun + Kai + Zen 3 者 | 5/13+ Phase 1 開始時 | nexus-lab repo (write OK) |
+| 5 | Sora 2 Pro EOL 状況 update + 後継 path audit | Hoshi | 5/13+ Phase 1 内 | WebSearch tool 必要 |
+
+### 13.2 5/13+ Phase 1 期間内 minimum scope (broadcast-os repo permission resolve 不要分)
+
+permission resolve 待ちのため、 5/13 開始時点で着手可能なのは nexus-lab repo 内 完結 scope:
+
+- step 2: Yuino 商品 narrative の positioning 反映 (LP / docs / Zenn 記事)
+- step 3: competitor monitoring ritual default 化 (`docs/zen_operating_cadence.md` に 3 月毎 audit step 追加 candidate)
+- step 4: genre 命名 3 者合意 (chat or board file form)
+
+### 13.3 broadcast-os repo permission resolve 後の reify (step 1)
+
+permission resolve 候補 2 案 (jun decision 待ち):
+1. `~/.claude/settings.json` で broadcast-os 配下の Bash / Write / Edit を allow
+2. spawn 起動時 cwd を broadcast-os に明示固定
+
+resolve 後に Hoshi spawn or Akari spawn で broadcast-os/episode-templates/ への 公開 narrative reference 追加。
+
+### 13.4 関連 file (path 併記)
+
+- `~/.shared-ops/board/2026-05-10_jun_zen_broadcast_os_completeness_reform_GO.md` (jun GO judgement record)
+- `~/.shared-ops/board/2026-05-10_zen_iwa_spawn_return_broadcast_os_permission_blocker.md` (permission blocker + audit record)
+- `nexus-lab/research/broadcast_os_knot_bind_2026-05-10.md` (姉妹 spec、 Knot 用語 paraphrase substitute list 14 件)
+- `nexus-lab/memory/project_nokaze_north_star_phase_1_5.md` (北極星 連動)
+- `nexus-lab/memory/project_broadcast_layer_integration.md` (broadcast layer 統合 narrative、 北極星第 4 piece)
 
 ---
 
