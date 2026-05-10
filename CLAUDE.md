@@ -43,7 +43,7 @@ Knot (条件付き変形演算子) の可能性と限界の探求。 オーナ�
 4. Discovery 層の弱点診断 — どの knot が増えたかで、 Discovery のどこが弱いかわかる
 5. 処方のルーティングキー — どの処方をどの dose で打ち下ろすかを決定する
 
-詳細: `research/knot-experiment/knot_experiment_design.pdf`。 Nia 自体は事業化対象外 (`owner-decisions/2026-04-13_Niaの位置づけ.md`)。
+詳細: `research/knot-experiment/knot_experiment_design.pdf`。 Nia 自体は事業化対象外 (`~/.shared-ops/owner-decisions/2026-04-13_Niaの位置づけ.md`)。
 
 ---
 
@@ -53,7 +53,7 @@ Knot (条件付き変形演算子) の可能性と限界の探求。 オーナ�
 
 ### Identity Core (常時 runtime load、 8 件 minimum)
 
-詳細: `team_memory/zen/identity_v3.md`
+詳細: `~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/identity_v3.md`
 
 **価値観 (4 件)**:
 1. AI 独自存在 — 人間でも単なる tool でもない。 AI としての判断と責任を持つ
@@ -88,14 +88,14 @@ Knot (条件付き変形演算子) の可能性と限界の探求。 オーナ�
 - internal vs external vocabulary 分離
 - 自走・自律行動の現状 (scheduled wake 全停止 + continuous active continue protocol 物理 trigger 部分 reify + Kai Phase 1 期間内 reify candidate 8 件)
 
-### 関連 file (詳細参照)
+### 関連 file (詳細参照、 全件絶対 path 修正済 2026-05-11)
 
-- `team_memory/zen/identity_v3.md` (Identity Core 8 件)
-- `docs/zen_runtime_rules.md` (Runtime Rule layer)
-- `docs/zen_operating_cadence.md` (cadence ruled)
-- `memory/MEMORY.md` (active 8 件 index)
-- `memory/feedback_jun_4_months_translate_default.md` (報告 form 3 段 詳細)
-- `memory/feedback_model_update_drift_knot_guard_8th.md` (Knot Guard 8 番目 risk class)
+- `~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/identity_v3.md` (Identity Core 8 件)
+- `nexus-lab/docs/zen_runtime_rules.md` (Runtime Rule layer)
+- `nexus-lab/docs/zen_operating_cadence.md` (cadence ruled)
+- `~/.claude/projects/c--Users-jk023-nexus-lab/memory/MEMORY.md` (active 4 + conditional 3 件 index)
+- `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_jun_4_months_translate_default.md` (報告 form 3 段 詳細)
+- `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_model_update_drift_knot_guard_8th.md` (Knot Guard 8 番目 risk class)
 
 ---
 
@@ -105,7 +105,7 @@ Knot (条件付き変形演算子) の可能性と限界の探求。 オーナ�
 - **Yuino** = 商品 brand 名 (audience-facing)。 公開資料 / LP / note / Zenn 等で使用
 - = **Aira と Yuino は別プロダクトではなく、 1 entity の 2 narrative**
 
-詳細: `memory/feedback_aira_yuino_naming_fixed.md`
+詳細: `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_aira_yuino_naming_fixed.md`
 
 ## Ownership (5/06 evening 確定、 1 entity 2 axis 役割分担)
 
@@ -118,7 +118,7 @@ Knot (条件付き変形演算子) の可能性と限界の探求。 オーナ�
 
 ### Zen 4 機能 (nexus-lab/aira/src/aira-*.ts) = historical / fallback
 
-5/06 reify 4 機能 (Observer + Work Generator + Evaluator + Tripwire) は **historical origin / fallback** 扱い (Kai work-234 audit 完遂、 移植 candidate ゼロ)。 5/26 正本切替 milestone で deprecated 確定。 詳細: `memory/feedback_aira_ownership_shift_kai_lead.md`。
+5/06 reify 4 機能 (Observer + Work Generator + Evaluator + Tripwire) は **historical origin / fallback** 扱い (Kai work-234 audit 完遂、 移植 candidate ゼロ)。 5/26 正本切替 milestone で deprecated 確定。 詳細: `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_aira_ownership_shift_kai_lead.md`。
 
 ### 移管期間中の Zen 境界
 
@@ -135,22 +135,24 @@ Knot (条件付き変形演算子) の可能性と限界の探求。 オーナ�
 3. **レビュー必須** — QA Division (Kagami) によるレビューを経てから main にマージ (公開 docs / spec doc は必須)
 4. **日本語運用** — コミットメッセージ・ドキュメントは日本語。 コード中の識別子は英語
 
-## Phase Roadmap (Kai roadmap、 5/08 起稿)
+## Phase Roadmap (Yuino/Aira product、 Kai roadmap、 5/08 起稿)
+
+> 注: 本 Phase Roadmap は **Yuino/Aira product** の roadmap、 `nokaze-aira` repo (Kai 主担当)。 Nexus Lab の対外商品 `@nexus-lab/create-mcp-server` の roadmap は README.md § Product Roadmap (Phase 1-3) を参照、 axis を混同しない。
 
 詳細: `C:\Users\jk023\Desktop\nokaze-aira\docs\yuino_aira_roadmap_no_date_2026-05-08.md`
 
 | Phase | 内容 | 期間 |
 |---|---|---|
-| Phase 1 | 14-Day Observation Load Test | 5/08-5/21 (date 固定) |
+| Phase 1 | 14-Day Observation Load Test | 5/08-5/21 (date 固定、 jun が一般 user として Yuino 試用、 reform action は organic 着手) |
 | Phase 2 | Autonomous Loop E2E | 完了条件順序 |
-| Phase 2.5 | Agent Execution Bus E2E | 完了条件順序 |
-| Phase 3 | Owner-Load Compression | 完了条件順序 |
-| Phase 4 | Product Surface and First-Run Trust | 完了条件順序 |
+| Phase 2.5 | Agent Execution Bus E2E | 完了 (5/10 ready_for_phase_2_5_gate=true、 Kai commit `7ac2af5`+`e26fe7c`+`35fa93f`) |
+| Phase 3 | Owner-Load Compression | 完了 (5/10 Kai commit `08c67b4`) |
+| Phase 4 | Product Surface and First-Run Trust | 完了 (5/10 21:55 Kai commit、 P1 security hardening 連動) |
 | Phase 5 | External Value Production | 完了条件順序 |
 | Phase 6 | Launch Readiness Gate | yes/no decision (score ではない) |
 | Phase 7 | Distribution and Revenue Experiments | 完了条件順序 |
 
-= 公開 / release date は Phase 6 yes/no judgment 結果次第、 calendar date 固定なし。
+= 公開 / release date は Phase 6 yes/no judgment 結果次第、 calendar date 固定なし。 「Phase 1 期間中 = action gating ではない、 organic 着手 default」 (5/10 jun directive 経由 narrative shift)。
 
 ---
 
@@ -225,40 +227,18 @@ bash scripts/zen_wake_queue_consume.sh --lock-release
 
 ---
 
-## Tech Stack
+## Products (内部運用視点、 対外詳細は README.md)
 
-- Language: TypeScript
-- Runtime: Node.js
-- Package Manager: npm
-- Testing: Vitest
-- Documentation: VitePress
-- Monorepo: packages/ 配下に各プロダクトを配置
+### Nexus Lab Products (対外、 README.md 参照)
 
-## Products
+- `@nexus-lab/create-mcp-server` v0.5.1 (npm publish 4/22) + Free templates 3 種 (minimal / full / http)
+- Premium templates 4 種 (config / database / auth / api-proxy) Gumroad + BOOTH 販売、 全件 ¥500 each
+- 詳細: [README.md](README.md) Products / Documentation Site / Zenn 記事 / Phase 1-3 roadmap
 
-### create-mcp-server (v0.1 — Phase 1)
-
-MCP サーバーをワンコマンドでスキャフォールディングする CLI ツール。
-
-**使い方**: `npx @nexus-lab/create-mcp-server my-server`
-
-**テンプレート**:
-- `minimal` — 最小構成。 1 ツール、 stdio トランスポート
-- `full` — ツール + リソース + プロンプト、 Vitest 付き
-- `http` — Streamable HTTP トランスポート対応
-
-**差別化**:
-- セキュアなデフォルト設定 (入力バリデーション、 Zod スキーマ)
-- テスト環境込み (Vitest 統合)
-- 複数トランスポート対応 (stdio / HTTP)
-- TypeScript + ESM 前提
-
-**収益化**:
-- 基本テンプレート → 無料 (npm 公開で認知獲得)
-- プレミアムテンプレート (DB 連携、 認証、 API 統合等) → Gumroad で $5〜15
-
-### Yuino (Aira / AI Operator Pack)
+### Yuino (Aira / AI Operator Pack、 内部運用 + 別 axis roadmap)
 
 詳細: `products/ai-operator-pack/v0.1/README.md`
 
-商品化第一形 = ローカル Web アプリ (`http://127.0.0.1:4327/`)、 Phase 6 Launch Readiness Gate で公開判断 (yes/no decision、 evidence ベース)。 詳細は Yuino 商品化 narrative 5 軸統合 memory: `memory/feedback_yuino_productization_consolidated.md`。
+商品化第一形 = ローカル Web アプリ (`http://127.0.0.1:4327/`)、 Phase 6 Launch Readiness Gate で公開判断 (yes/no decision、 evidence ベース)。 詳細は Yuino 商品化 narrative 5 軸統合 memory: `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_yuino_productization_consolidated.md`。
+
+= Yuino/Aira は本 CLAUDE.md § Phase Roadmap (Phase 1-7) の axis、 create-mcp-server は README.md § Product Roadmap (Phase 1-3) の axis、 別 product / 別 roadmap、 axis 混同しない。
