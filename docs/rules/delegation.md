@@ -165,6 +165,33 @@ enforcement script の改修・audit・paraphrase の 3 step は **chain order �
 - Kagami audit pass なしで Akari paraphrase (precision/recall 0.90 未達 script で paraphrase = drift 拡散 risk)
 - 改修・audit・paraphrase なしで release ready narrative (Override 起票候補)
 
+## 9. 新 file 起稿後 paraphrase pass ritual (2026-05-11 Cowork validate 経由 P1-6 反省 reform) `[mental]`
+
+5/11 P1-4 split で 新 4 file (publishing/delegation/communication/drift) を起稿時、 旧 file 内の英単語 (narrative / ritual / drift / scope / default / reform / boundary / actual / reify 等) を そのまま carry した結果、 新 4 file 内で 213 instance に拡散 (Cowork validate 指摘)。 = 「禁止語彙でルールを書いている」 自己矛盾が分割で悪化方向に動いた drift。
+
+### ritual
+
+新 file (`docs/` 配下、 `~/.claude/projects/.../memory/` 配下、 `~/.shared-ops/board/` 配下) を起稿した直後、 **その file 単独で paraphrase pass を即 fire**:
+
+1. 起稿完了 → 新 file 全 read
+2. 「日本語化フィルター 出力後検査」 (`docs/rules/communication.md` § 1) の 2 段検査を file 単位で実行:
+   - 英単語残留 grep (例: `grep -E "narrative|ritual|drift|scope|boundary|default|reform|actual|reify|candidate" <file>`)
+   - 各 instance を文脈確認で paraphrase (substitute list table 内 + defined term + 固有名詞 + 引用元 narrative は除外)
+3. paraphrase pass 完了後 commit (1 commit に file 起稿 + paraphrase 統合、 別 commit にしない)
+4. mechanical sed 禁止 (5/11 試行で substitute list table も sed 化された drift evidence、 `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_jun_4_months_translate_default.md` § 5/11 反省記録)
+
+### 適用範囲
+
+- 新規 file 起稿 (Write tool、 file_path が新規)
+- 既存 file の大規模 rewrite (50% 以上書き換え)
+- 既存 file の partial edit (Edit tool、 1 段落以下) は file 単位 paraphrase pass scope 外、 但し 「ジュンさん」 narrative + 「Codex の使い手」 等 6 度目発火 pattern は inline check
+
+### enforcement chain order との関係 (§ 8)
+
+§ 8 の chain (Iwa 改修 → Kagami audit → Akari paraphrase) は **release-ready narrative** 用の 3 step。 本 § 9 ritual はそれより前段の **起稿者 self-paraphrase pass**、 起稿者 (Zen / peer) が 1 commit 内で完結する form。
+
+= Akari paraphrase pass が走る前に起稿者が 1 段先行 cleanup、 Akari pass の load 軽減 + 「禁止語彙拡散」 drift 構造的抑止。
+
 ## 関連 file
 
 - `docs/rules/README.md` (本 file の親、 分割設計)
