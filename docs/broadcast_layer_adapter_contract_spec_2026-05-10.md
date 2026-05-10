@@ -18,9 +18,47 @@ related:
 本 spec は broadcast-os が外部生成サービス (video / voice / music / slide) を呼び出す際の **共通 adapter contract** を定義する。 `BroadcastAdapter<I, O>` interface + 4 種 adapter (video_gen / voice_gen / music_gen / slide_gen) の推奨実装 form + Approval Gate / Audit Log / Fail Closed boundary を含む。
 
 **out of scope**:
-- 各外部サービスの actual API 呼び出し実装 (Red boundary、 jun explicit directive 必須)
+- 各外部サービスの actual API 呼び出し実装 (新規 provider のみ Red boundary、 jun explicit directive 必須、 但し既導入 provider は既運用継続 narrative)
 - broadcast-os Showrunner Layer / Continuity Layer の内部実装 (前回 spawn return I1 + 姉妹 spec で記述)
 - Yuino 4 file pull form の interface 詳細 (姉妹 spec に分離)
+
+## 0.1 既存 implementation evidence (2026-05-10 audit、 drift correction)
+
+> **重要 finding** (5/10 jun directive 「Veo + 音楽生成 既使ってる」 連動 audit): broadcast-os は **既に 4 layer 全部 Provider Registry Pattern + multi-provider 実装済 + 運用中**。 本 spec doc 旧 narrative 「default = local pipeline / external = optional 新規 adapter integration」 は drift、 **「既存 Provider Registry Pattern を audience-facing narrative form で整理 + 不足 2 件 (slide / voice ElevenLabs) を既存 pattern に追加 + Approval Gate / Audit Log / cost_estimate を既存 layer に統合」** が正しい narrative。
+
+### 既存 Provider Registry Pattern (4 layer 既 reify 済)
+
+```
+src/pipeline/<layer>/
+  base.py        # XProvider abstract interface
+  registry.py    # get_X_provider(name) で provider 切替 (lru_cache + lazy import)
+  <provider>.py  # 各 provider 実装
+```
+
+### 既存 provider 一覧 (5/10 audit、 actual code evidence)
+
+| layer | path | 既存 provider |
+|---|---|---|
+| **video** | `src/pipeline/video/` | manual_stub (local fallback) / openai_video / **veo** (Google Veo) |
+| **image** | `src/pipeline/image/` | openai_images / **gemini_flash_image** (Gemini 2.5 Flash Image) |
+| **music** | `src/pipeline/music/` | manual_pack (local fallback) / **suno_api** (Suno) |
+| **voice / speech** | `src/pipeline/speech/` | voicevox (local TTS) / openai_tts / google_tts |
+
+= **LLM Replaceable Part Principle は既 reify 済**、 「自前再発明しない、 必要時 adapter 経由で呼ぶ」 narrative は **「未来形」 ではなく 「既存 implementation evidence」**。
+
+### 5/10 reform で追加候補 (本 spec doc の actual scope)
+
+1. **slide adapter** (新規追加、 Akari 推奨 = Slidev): `src/pipeline/slide/` (新規 layer) + `slide/registry.py` + `slidev.py` provider
+2. **voice ElevenLabs provider 追加** (既存 speech registry pattern に 1 件追加): `src/pipeline/speech/elevenlabs.py`
+3. **Approval Gate / Audit Log / cost_estimate 統合** (既存 4 layer 全 provider に共通機能追加): provider 横断 cross-cutting concern として既 base.py 拡張
+
+video / image / music は **既 multi-provider で追加不要**、 本 spec doc の主目的は 「既存 evidence 整理 + 不足 2 件追加 + 横断機能統合」。
+
+### cost narrative (jun 「既使ってる」 directive 連動)
+
+- **既導入 provider** (Veo / Gemini Flash Image / Suno / OpenAI Video / OpenAI Images / OpenAI TTS / Google TTS) = jun 既 decide 済、 既運用継続、 新規 cost 発生ではない
+- **新規 provider** (ElevenLabs / 将来 Udio 等) = 新規 cost 発生 = Red boundary、 jun explicit directive 必須
+- **cost_estimate doc 起稿 + Audit Log 整理** = Green、 既導入 + 新規共通の運用整備
 
 ---
 
@@ -32,20 +70,24 @@ broadcast-os は 「外部生成サービスは交換可能な部品」 とし�
 
 これは Yuino 側の LLM (Claude / GPT / Gemini) replaceable narrative と同 axis、 nokaze 全体の architectural principle (= 「model lock-in しない」 商品差別化軸の broadcast layer 反映)。
 
-### 1.2 default = local pipeline、 external = optional
+### 1.2 default = local fallback / 既存 multi-provider registry / external 追加候補 (5/10 audit corrected)
 
-| layer | default | external 時 |
-|---|---|---|
-| video | Slidev / Reveal.js + ffmpeg 合成 | video_gen_adapter call (Veo 3.1 等) |
-| voice | broadcast-os 既存 Voice Layer (local TTS) | voice_gen_adapter call (ElevenLabs / OpenAI) |
-| music | broadcast-os 既存 Audio Layer royalty-free BGM | music_gen_adapter call (Suno / Udio) |
-| slide | Slidev subprocess (前回 spawn return I1) | (将来 Marp / Reveal.js 切替 contract のみ用意) |
+既存 implementation evidence 反映の actual default form:
 
-**default = local** の理由:
-- cost (外部 API 課金、 Red boundary)
-- privacy (外部送信前に Continuity Layer audit が必要)
-- reproducibility (CI / dogfood で API key なしで動く)
-- 北極星 「jun 介入週 1-2 回」 阻害しない (external call は Approval Gate 経由 → jun 確認頻度上げる risk)
+| layer | local fallback | 既存 external provider (運用中) | 5/10 reform 追加候補 |
+|---|---|---|---|
+| video | manual_stub | **veo** (Google Veo) / openai_video | (追加なし、 既 multi-provider) |
+| image | (manual fallback 不在、 base.py audit 候補) | openai_images / **gemini_flash_image** (Gemini 2.5 Flash Image) | (追加なし、 既 multi-provider) |
+| music | manual_pack | **suno_api** (Suno) | (option: udio / musicgen は v1 candidate) |
+| voice / speech | voicevox (local TTS) | openai_tts / google_tts | **ElevenLabs 追加** (新規 cost 発生 = Red boundary) |
+| slide | (既 layer 不在) | (既 layer 不在) | **Slidev 新規 layer 追加** (Akari 推奨、 Node 依存 subprocess form) |
+
+**default narrative の core**:
+- **既導入 provider は既運用継続**、 新規 「拡張」 narrative ではなく 「整理」 narrative
+- **Approval Gate / Audit Log / cost_estimate** は **既存 4 layer 全 provider に横断追加** (既 + 新規共通の運用整備、 Green)
+- **新規 provider 追加** (ElevenLabs voice / 将来 Udio music 等) は **新規 cost 発生 = Red boundary**、 jun explicit directive 必須
+- **slide layer 新規追加** (broadcast-os に既 layer 不在) = scope 大、 但し外部 API 不要 (Slidev = OSS)、 cost 発生なし、 Green
+- 北極星 「jun 介入週 1-2 回」 阻害しない (既導入は jun 既 decide、 新規は Approval Gate)
 
 ### 1.3 自前再発明しない
 
@@ -169,6 +211,8 @@ interface AuditRecord {
 
 ### 3.1 video_gen_adapter
 
+> **§ 0.1 audit 反映 note** (2026-05-10): 本 section narrative は 「新規 adapter integration」 前提の draft、 actual には **Veo + OpenAI Video + manual_stub 既実装 + 運用中** (`src/pipeline/video/registry.py`)。 「default off / declare-on-demand」 narrative は drift、 actual は **既 Format Bible で provider declare されて Veo 等が運用中**。 5/13+ Iwa actual code audit + Kagami QA pass 後に v1 rewrite candidate、 現 narrative は historical draft 扱い。
+
 **status**: optional (default off)、 declare-on-demand
 
 #### 3.1.1 推奨外部サービス
@@ -211,6 +255,8 @@ async def cost_estimate(self, input: VideoGenInput) -> CostEstimate:
 ```
 
 ### 3.2 voice_gen_adapter
+
+> **§ 0.1 audit 反映 note** (2026-05-10): 既存 speech registry pattern (`src/pipeline/speech/registry.py`) で **voicevox + openai_tts + google_tts** 3 provider 既実装 + 運用中。 本 section は **ElevenLabs 新規追加** scope (provider list の `local | elevenlabs | openai` narrative は actual には `voicevox | elevenlabs | openai_tts | google_tts` の 4 provider form に rewrite candidate)。 ElevenLabs 追加は新規 cost 発生 = Red boundary、 jun explicit directive 必須。
 
 **status**: broadcast-os 既存 Voice Layer 拡張
 
@@ -259,6 +305,8 @@ async def cost_estimate(self, input: VoiceGenInput) -> CostEstimate:
 
 ### 3.3 music_gen_adapter
 
+> **§ 0.1 audit 反映 note** (2026-05-10): 既存 music registry pattern (`src/pipeline/music/registry.py`) で **manual_pack + suno_api** 2 provider 既実装 + 運用中。 「default off / declare-on-demand」 narrative は drift、 actual は **既 Suno 運用中 (royalty-free BGM narrative は wrong、 manual_pack が local fallback)**。 「commercial license 確認必須 (jun confirm tied)」 narrative は 既 jun decide 済の運用継続、 新規 cost narrative ではない。 udio 追加は v1 candidate (Red boundary)。
+
 **status**: optional (default off)、 declare-on-demand
 
 #### 3.3.1 default behavior
@@ -279,6 +327,9 @@ async def cost_estimate(self, input: VoiceGenInput) -> CostEstimate:
 music_gen 出力の commercial use は **jun explicit directive 必須** (Red boundary)。 Suno / Udio の TOS は generated audio の使用範囲が plan tier で異なる、 broadcast-os 側で license metadata を audit log に必ず記録、 後の audit / takedown 対応可能 form を維持。
 
 ### 3.4 slide_gen_adapter
+
+> **§ 0.1 audit 反映 note** (2026-05-10): broadcast-os 既存 implementation に **slide layer 不在** (audit 確認、 5/04 evening jun directive 「資料動画 不適」 narrative の root cause)。 本 section narrative = **新規 layer 追加 spec**、 既存 4 layer (video / image / music / speech) と並ぶ 5 番目の layer 新設。 Slidev = OSS、 外部 API なし、 cost 発生なし、 Green。 Akari 推奨 = Slidev subprocess form、 Node 依存 (Python broadcast-os と隔離)。 既存 registry pattern (`src/pipeline/<layer>/registry.py`) と同 form で `src/pipeline/slide/registry.py` 新設候補。
+
 
 **status**: I1 (前回 spawn return) で記述の Slidev subprocess form を contract 化
 
