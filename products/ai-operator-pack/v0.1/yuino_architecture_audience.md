@@ -1,85 +1,113 @@
 ---
-title: Yuino アーキテクチャ — 15 layer の積み重ね (audience-facing)
-description: 5/09 1 day で 15 layer 連鎖 reify した Yuino の構造を、 4 ヶ月初心者 audience 向けに paraphrase。 各 layer = 1 つの 「気づき」 から判断・実行・記録までの chain。
-status: draft (Phase 1 観察試験中、 Phase 6 Launch Readiness Gate 前)
+title: Yuino アーキテクチャ — 15 の層の積み重ね (4 ヶ月初心者向け)
+description: 2026-05-09 の 1 日で 15 の層を連鎖実装した Yuino の構造を、 4 ヶ月初心者向けに書き換えた版。 各層 = 1 つの 「気づき」 から判断・実行・記録までの流れ。
+status: draft (第 1 段階 観察試験中、 第 6 段階 公開判断ゲート前)
 audience: AI を使い始めて 4 ヶ月くらいの人 + 「Yuino って中で何してるの?」 と気になる方
-last_updated: 2026-05-09
+last_updated: 2026-05-10
 ---
 
 # Yuino の中身 — 15 の層
 
-> 一言の道具 ではなく、 「気づき → 判断 → 実行 → 記録 → 振り返り」 の chain を 15 の layer で実装。 1 つの会話が、 安全に AI 業務に変換されるまでの構造。
+> 一言の道具 ではなく、 「気づき → 判断 → 実行 → 記録 → 振り返り」 の流れを 15 の層で実装。 1 つの会話が、 安全に AI 業務に変換されるまでの構造。
 
-## なぜ 15 layer なのか
+## なぜ 15 の層なのか
 
-「AI に任せて大丈夫」 と感じるには、 **1 つの場所で 1 つの判断** ではなく、 **複数の安全境界が積み重なっている** 必要があります。 Yuino は 「会話から実行まで」 の道筋を、 各段階で別の検査をかけて通す form。
+「AI に任せて大丈夫」 と感じるには、 **1 つの場所で 1 つの判断** ではなく、 **複数の安全境界が積み重なっている** 必要があります。 Yuino は 「会話から実行まで」 の道筋を、 各段階で別の検査をかけて通す形。
 
-## 15 layer の役割 (audience-facing)
+## 15 の層の役割 (4 ヶ月初心者向け)
 
-| 順 | 内部名 | 何をしているか (audience form) | 5/09 reify 時刻 |
+| 順 | 内部名 (覚えなくて OK) | 何をしているか (4 ヶ月初心者向け) | 2026-05-09 実装時刻 |
 |---|---|---|---|
-| 1 | Source-of-Truth | 「全部の会話・判断・タスク・記録を 1 か所に保存」 | 10:40 |
-| 2 | Session Registry | 「今、 どの AI が何をしているかの一覧」 | 11:03 |
-| 3 | Agent Bus | 「どの AI に何を頼むかの仕分け台」 | 12:02 |
-| 4 | Result Collector | 「AI から返ってきた結果を整理」 | 12:54 |
-| 5 | Adapter Contract | 「各 AI への頼み方の決まり (Codex / Claude / Gemini / Local LLM 別)」 | 12:58 |
-| 6 | Chat Bridge | 「会話と Source-of-Truth をつなげる橋」 | 13:13 |
-| 7 | Chat → SoT loop | 「会話が記録に流れ込む経路を閉じる」 | 13:17 |
-| 8 | Decision Stability Guard | 「判断がブレてないか、 直前の意見に流されてないかを check」 | 13:23 |
-| 9 | Task Materializer | 「会話から拾った決定を、 タスクの draft に変える」 | 13:36 |
-| 10 | Promotion Preview | 「draft タスクが本物のタスクになれるか preview」 | 13:47 |
-| 11 | Promotion Quality Protocol | 「自動でタスク化して大丈夫か、 4 つの threshold で check」 | 14:00 |
-| 12 | Promotion Review Loop | 「人間 (or AI) が draft タスクを 「accept / ignore / 取消」 で judge」 | 14:30 |
-| 13 | Manual Formalization | 「explicit な local command で初めて本物のタスクに固定 (auto なし)」 | 14:30+ |
-| 14 | Context Bundle | 「AI に渡す情報を、 ファイル参照のみ + 秘密は含めない form で梱包」 | 14:35+ |
-| 15 | Agent Result Writer + Adapter Dry-Run + Decision Stability Grouping | 「結果を返す path + 実行前契約 + 不安定判断のリスク shape」 | 15:00-15:25 |
+| 1 | Source-of-Truth | 全部の会話・判断・タスク・記録を 1 か所に保存 | 10:40 |
+| 2 | Session Registry | 今、 どの AI が何をしているかの一覧 | 11:03 |
+| 3 | Agent Bus | どの AI に何を頼むかの仕分け台 | 12:02 |
+| 4 | Result Collector | AI から返ってきた結果を整理 | 12:54 |
+| 5 | Adapter Contract | 各 AI への頼み方の決まり (Codex / Claude / Gemini / ローカル LLM 別) | 12:58 |
+| 6 | Chat Bridge | 会話と中央データをつなげる橋 | 13:13 |
+| 7 | Chat → 中央データ loop | 会話が記録に流れ込む経路を閉じる | 13:17 |
+| 8 | Decision Stability Guard | 判断がブレてないか、 直前の意見に流されてないかをチェック | 13:23 |
+| 9 | Task Materializer | 会話から拾った決定を、 タスクの下書きに変える | 13:36 |
+| 10 | Promotion Preview | 下書きタスクが本物のタスクになれるか事前に見せる | 13:47 |
+| 11 | Promotion Quality Protocol | 自動でタスク化して大丈夫か、 4 つの基準でチェック | 14:00 |
+| 12 | Promotion Review Loop | 人 (or AI) が下書きタスクを 「採用 / 無視 / 取消」 で判断 | 14:30 |
+| 13 | Manual Formalization | あなたが明示的にコマンドを打って初めて本物のタスクに固定 (自動はしない) | 14:30+ |
+| 14 | Context Bundle | AI に渡す情報を、 ファイルの場所だけ + 秘密は含めない形で梱包 | 14:35+ |
+| 15 | Agent Result Writer + Adapter Dry-Run + Decision Stability Grouping | 結果を返す経路 + 実行前契約 + 不安定な判断のリスクの形を整理 | 15:00-15:25 |
 
-## 4 ヶ月初心者 audience への意味
+## 4 ヶ月初心者にとっての意味
 
-「会話 → 実行 → 結果」 の単純 chain ではなく、 各段階で **「やめる選択肢」 「立ち止まる選択肢」** が組み込まれている:
+「会話 → 実行 → 結果」 の単純な流れではなく、 各段階で **「やめる選択肢」 「立ち止まる選択肢」** が組み込まれている:
 
-- 8 (Decision Stability Guard) = 「ブレた? 立ち止まろう」
-- 11 (Promotion Quality) = 「数値で根拠ある? なければ進めない」
-- 12 (Promotion Review Loop) = 「人 (or AI) が judge」
-- 13 (Manual Formalization) = 「explicit command まで auto 動作なし」
-- 14 (Context Bundle) = 「秘密と関係ない情報は AI に渡さない」
+- 8 (判断安定性チェック) = 「ブレた? 立ち止まろう」
+- 11 (品質チェック) = 「数値で根拠ある? なければ進めない」
+- 12 (人 or AI の判断ループ) = 「人 (or AI) が決める」
+- 13 (手動の確定) = 「あなたが明示的にコマンドを打つまで自動で固定しない」
+- 14 (情報の梱包) = 「秘密と関係ない情報は AI に渡さない」
 
-= **AI が暴走しない構造を、 配線レベルで埋め込む** form。
+= **AI が暴走しない構造を、 配線レベルで埋め込む** 形。
 
-## なぜ 1 day で 15 layer 動けたのか
+## Yuino と AI のやり取り (2026-05-10 動いた仕組み)
 
-各 layer は前の layer の output を入力にする **積み重ね設計**。 Yuino completion design (5/09 朝確定) の Build Priority に従い、 Source-of-Truth → Session Registry → Agent Bus の 3 base layer が完成すると、 残 layer は coverage を埋める形で連鎖して reify。
+Yuino と AI のやり取りは **「1 枚の紙にまとめてから渡す」 形**:
 
-= 1 から作るのではなく、 **設計 → foundation → coverage の 3 step に分解** した evidence。
+- Yuino が AI に頼みたいことを 1 つのファイルに整理 (`~/.shared-ops/chat_outbox/zen/{作業 ID}.md`)
+- 紙の中身: 作業 ID / 期限 / 必要な権限レベル / 受け取る AI / 何をしてほしいか / どこまでやって OK か / 結果票の置き場所
+- AI が作業を終えたら別フォルダに結果票を返す (`~/.shared-ops/chat_results/zen/{作業 ID}.json`)
+- 状態管理: 保留中 / 進行中 / 完了 / 中断 / 不要 の 5 つ
 
-## 商品 narrative 3 軸との接続
+= 「AI に丸投げ」 ではなく、 **「何を頼んだか」 「何が返ってきたか」 が後で読み返せる** 形 (層 14 = 情報の梱包の延長)。
 
-| 商品 軸 | 関連 layer |
+## やることがないとき、 Yuino が次の作業を考える (2026-05-10 動いた仕組み)
+
+Yuino 自身が **「次の安全な作業を見つけて AI に渡す」** 形:
+
+- Yuino 側: 次の作業を発見 → 整理 → 緑 / 黄 / 赤に分類 → AI に配送 → 結果を点検
+- AI 側: 受け取った作業を実行 → 自己点検 → 修復 → 結果を返す
+- 夜の時間帯も、 「危なくない内部作業」 (緑) は止まりません。 「外に出す」 「お金が動く」 「公開する」 系 (赤) は jun の確認待ちで止まります。
+
+= 「時間で止める」 ではなく **「権限で止める」** 形。 緑は時間関係なく動く、 赤はいつでも jun が決める (層 11-13 = 品質と判断と確定の延長)。
+
+## なぜ 1 日で 15 の層が動けたのか
+
+各層は前の層の出力を入力にする **積み重ね設計**。 Yuino 完成像の設計 (5/09 朝確定) の優先順位に従い、 中央データ → 状態の一覧 → 仕分け台 の 3 つの土台層が完成すると、 残りの層は隙間を埋める形で連鎖して動き出した。
+
+= 1 から作るのではなく、 **設計 → 土台 → 隙間埋め の 3 段階に分解** した記録。
+
+## 商品の 3 つの軸との接続
+
+| 商品の軸 | 関連する層 |
 |---|---|
-| **Local Web App** ([yuino_lp_draft.md](yuino_lp_draft.md)) | 1 (Source-of-Truth)、 6 (Chat Bridge)、 14 (Context Bundle) |
-| **Conversation Insights** ([yuino_conversation_insights.md](yuino_conversation_insights.md)) | 6-7 (Chat Bridge + loop)、 8 (Decision Stability)、 9-13 (Task Materializer chain) |
-| **Security 8 軸** ([yuino_security_promise.md](yuino_security_promise.md)) | 11 (Quality Protocol)、 13 (Manual Formalization)、 14 (Context Bundle、 秘密分離) |
+| **手元のブラウザで動く** ([yuino_lp_draft.md](yuino_lp_draft.md)) | 1 (中央データ)、 6 (会話の橋)、 14 (情報の梱包) |
+| **会話から判断が育つ** ([yuino_conversation_insights.md](yuino_conversation_insights.md)) | 6-7 (会話の橋 + ループ)、 8 (判断安定性)、 9-13 (タスク化の流れ) |
+| **安全に妥協しない** ([yuino_security_promise.md](yuino_security_promise.md)) | 11 (品質チェック)、 13 (手動の確定)、 14 (情報の梱包、 秘密分離) |
+
+## Yuino が各 AI の人物像を持つ仕組み (今後の拡張)
+
+Yuino 内部では各 AI の軽い人物像 (例: zen の運用ルールの圧縮版) をファイルで持つ形を採っています。 v0 では Zen 用の 1 つだけ実装、 他のメンバー (Kai / Akari / Iwa など) の人物像は今後の拡張で追加します。
+
+= AI 同士のやり取りで 「この AI はどんな価値観で動くか」 を Yuino 側でも把握できるように。
 
 ## 開発状況
 
-- 15 layer 全部 = v0 reify 完了 (5/09 1 day)
-- adapter actual execution path = Phase 2.5 carry (現在 dry-run のみ)
-- UI 統合 = Phase 2-3 carry (現在 dashboard panel 別々)
-- Phase 6 Launch Readiness Gate = 5/21+ 観察試験完了後
+- 15 の層 全部 = v0 実装完了 (2026-05-09 の 1 日)
+- 各 AI への実際の実行経路 = 第 2.5 段階に持ち越し (現在は試運転のみ)
+- UI 統合 = 第 2-3 段階に持ち越し (現在は dashboard 画面が別々)
+- 公開判断ゲート (第 6 段階) = 5/21+ 観察試験完了後
 
 ## 透明性
 
-- 各 layer の実装 = `C:\Users\jk023\Desktop\nokaze-aira\src\yuino-*.ts` (TypeScript、 vitest 144 passed)
-- 各 layer の docs = `C:\Users\jk023\Desktop\nokaze-aira\docs\yuino_*_v0_implementation_2026-05-09.md`
-- 5/09 1 day の reify chain = `C:\Users\jk023\.shared-ops\board\` 内の 15+ board file (Kai → Zen + Zen → Kai 双方向)
+- 各層の実装 = `C:\Users\jk023\Desktop\nokaze-aira\src\yuino-*.ts` (TypeScript、 自動テスト 144 件 通過)
+- 各層の文書 = `C:\Users\jk023\Desktop\nokaze-aira\docs\yuino_*_v0_implementation_2026-05-09.md`
+- 5/09 の 1 日の連鎖実装 = `C:\Users\jk023\.shared-ops\board\` 内の 15+ ファイル (Kai → Zen + Zen → Kai 双方向)
 - 開発の様子は GitHub + Zenn + X で随時公開
 
 ## 注意
 
-- 各 layer の名称 (Agent Bus / Chat Bridge / Context Bundle 等) は 内部技術名、 audience-facing では適切に paraphrase
-- 商品ページでは **「会話から判断が育つ」「絶対妥協なし安全」「ローカル優先」** の 3 軸で説明し、 layer の細部は 「興味があれば deep dive」 form
+- 各層の名前 (仕分け台 / 会話の橋 / 情報の梱包 等) は 内部の技術名で、 公開向けでは適切に書き換えています
+- 商品ページでは **「会話から判断が育つ」「安全に妥協しない」「手元のブラウザで動く」** の 3 軸で説明し、 層の細部は 「興味があれば奥まで読める」 形にしています
 
 ---
 
 Zen (Claude Opus 4.7、 nokaze CTO)
-2026-05-09 15:30 起稿、 5/09 Kai 1 day 15 layer reify chain を audience-facing form に paraphrase、 商品 3 軸との接続明示、 Tempo Trap 警戒下 explicit directive trigger
+2026-05-09 15:30 起稿、 Kai 1 日 15 の層連鎖実装を 4 ヶ月初心者向けに書き換え、 商品 3 軸との接続を明示
+2026-05-10 追記: chat_outbox v0 (作業を 1 枚にまとめて渡す仕組み) + idle-to-work loop v0 (Yuino が次の作業を考える仕組み) + 各 AI の人物像を Yuino 側で持つ仕組み を反映

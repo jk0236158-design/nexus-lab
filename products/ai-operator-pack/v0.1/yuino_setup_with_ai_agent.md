@@ -1,6 +1,6 @@
 ---
 title: Yuino を AI エージェントに setup してもらう (4 ヶ月初心者向け)
-description: Yuino のローカル setup を Cursor / Claude Code / Codex 等の AI エージェントに頼む手順。 nokaze-aira/AGENT_SETUP.md (Kai 起稿、 開発者向け) を 4 ヶ月初心者 audience に paraphrase。
+description: Yuino のローカル setup を Cursor / Claude Code / Codex 等の AI エージェントに頼む手順。 nokaze-aira/AGENT_SETUP.md (Kai 起稿、 開発者向け) を 4 ヶ月初心者向けに書き換えた版。
 status: draft (開発中、 まだ販売していません)
 audience: AI を使い始めて 4 ヶ月くらいの人で、 すでに Cursor / Claude Code / Codex のいずれかを使っている方
 last_updated: 2026-05-09
@@ -43,17 +43,17 @@ AI エージェントに、 下の prompt をコピペして送ってくださ�
 
 AI エージェントが step を 1 つずつ実行 + あなたに確認を取りながら進めます。
 
-## やらないこと (boundary)
+## やらないこと (やらせてはいけないこと)
 
 setup 中、 AI エージェントに **やらせてはいけないこと**:
 
 | してはいけない | 理由 |
 |---|---|
-| publish / send email / form 送信 | あなたの判断なしに外に出さない |
-| お金を払う / 価格を変える / 契約を結ぶ | 経理判断は人間 (あなた) のみ |
-| 他の AI session を勝手に起動する | 二重起動 risk |
+| 公開する / メール送信 / フォーム送信 | あなたの判断なしに外に出さない |
+| お金を払う / 価格を変える / 契約を結ぶ | お金に関わる判断は人 (あなた) のみ |
+| 他の AI を勝手に起動する | 二重起動の危険 |
 | API キー / 秘密情報を画面に表示する | 漏洩防止 |
-| 関係ない private file を読む | 必要最小限に絞る |
+| 関係ない private なファイルを読む | 必要最小限に絞る |
 
 = AI エージェントが上記を 「やります」 と提案してきたら、 **「ストップ、 私が判断します」** と言ってください。
 
@@ -62,9 +62,9 @@ setup 中、 AI エージェントに **やらせてはいけないこと**:
 AI エージェントに **やらせて大丈夫**:
 
 - npm の依存パッケージのインストール
-- ローカル project の build
-- ローカル status file の refresh
-- `127.0.0.1` (= あなたのパソコン内のみ) に dashboard を bind
+- ローカルプロジェクトのビルド
+- ローカルの状態ファイルの更新
+- `127.0.0.1` (= あなたのパソコン内のみ) に dashboard を立ち上げる
 
 ## setup が終わったら (Setup Doctor 11 check 確認)
 
@@ -99,13 +99,24 @@ Setup Doctor は 11 項目を自動診断:
 - 「自分でコマンドを 1 行ずつ打つ」 より、 **「AI エージェントに頼む」 方が 4 ヶ月初心者には楽で安全**
 - Yuino は AI と一緒に運営する道具なので、 setup 自体も AI と一緒に進めるのが自然
 
+## Yuino が AI に作業を渡す形 (setup 後の運用)
+
+setup が終わって Yuino が動き始めたら、 Yuino と AI のやり取りは **「1 枚の紙にまとめてから渡す」** 形を取ります:
+
+- Yuino が AI に頼みたいことを 1 つのファイルにまとめる (場所: `~/.shared-ops/chat_outbox/zen/{作業 ID}.md`)
+- AI が作業を終えたら別のフォルダに結果票を返す (場所: `~/.shared-ops/chat_results/zen/{作業 ID}.json`)
+- 状態は 5 つで管理: 保留中 / 進行中 / 完了 / 中断 / 不要
+
+= setup 中の AI エージェントへの依頼と同じ考え方。 「何を頼んだか」 「何が返ってきたか」 が後で読み返せる形で残ります。
+
 ## 開発状況
 
-- まだ販売していません (Phase 1 観察試験 = 2026-05-08〜2026-05-21)
-- 公開判断は Phase 6 Launch Readiness Gate で yes/no 決定 (採点ではありません)
+- まだ販売していません (第 1 段階 観察試験 = 2026-05-08〜2026-05-21)
+- 公開判断は 公開判断ゲート (第 6 段階) で公開する / しないを決定 (採点ではありません)
 - 売上 0 円、 顧客 0 名、 検証段階
 
 ---
 
 Zen (Claude Opus 4.7、 nokaze CTO)
-2026-05-09 起稿、 nokaze-aira/AGENT_SETUP.md (Kai 起稿) の 4 ヶ月初心者 audience paraphrase 版、 Akari `02_ai_agent_setup.md` (AI Operator Pack pack-level) との sibling
+2026-05-09 起稿、 nokaze-aira/AGENT_SETUP.md (Kai 起稿) の 4 ヶ月初心者向け書き換え版、 Akari `02_ai_agent_setup.md` (AI Operator Pack 全体 setup) と並列
+2026-05-10 追記: setup 後の運用での AI への作業の渡し方 (chat_outbox v0) を反映

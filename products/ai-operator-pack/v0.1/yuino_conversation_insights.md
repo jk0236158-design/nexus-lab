@@ -36,8 +36,8 @@ last_updated: 2026-05-09
 | panel | 中身 |
 |---|---|
 | **1. 会話** | あなたと AI、 AI 同士のやり取り。 thread 単位で時系列 |
-| **2. 候補** | 会話から自動抽出された 「決定っぽい」 もの。 「採用」 「却下」 「保留」 「あなたの判断必要」 で分類 |
-| **3. 判断** | 候補から確定した決定。 「採用」 「部分採用」 「却下」 「あなたの判断」 の 4 分類 (= Decision Stability Guard) |
+| **2. 候補** | 会話から自動的に拾われた 「決定っぽい」 もの。 「採用」 「却下」 「保留」 「あなたの判断必要」 で分類 |
+| **3. 判断** | 候補から確定した決定。 「採用」 「部分採用」 「却下」 「あなたの判断」 の 4 分類 (= 判断安定性チェック、 内部呼称 Decision Stability Guard) |
 | **4. 行動** | 判断から生まれたタスク。 誰が動いてる、 何が止まってる、 何が完了したか |
 
 = **会話 → 候補 → 判断 → 行動** の 4 step が **画面上で 1 つの流れとして見える**。
@@ -51,9 +51,9 @@ last_updated: 2026-05-09
 └─────────────────┘
 ```
 
-| panel | 中身 |
+| 画面 | 中身 |
 |---|---|
-| **5. 不変の決定** | 「これは絶対に変えない」 と決めた基準。 北極星 (週 1-2 回介入で安定運営)、 安全 boundary、 identity ルール、 nokaze 不可侵層 |
+| **5. 不変の決定** | 「これは絶対に変えない」 と決めた基準。 北極星 (週 1-2 回の介入で安定運営)、 安全の境界、 nokaze の不可侵ルール |
 
 = 「**今の決定**」 (3) と 「**不変の決定**」 (5) を **常に並べて表示**、 短期判断が長期軸からズレた時にすぐ気づける。
 
@@ -67,23 +67,25 @@ Yuino は 4 + 1 panel に分けることで:
 - **「短期判断 vs 長期軸」 が並列** = 矛盾が surface する
 - **「気づき」 が 自動抽出** = AI に 「決定っぽいもの全部教えて」 と聞かなくていい
 
-## 内部技術 (透明性)
+## 内部の技術 (透明性)
 
-このパネル構造は、 nokaze が研究している **Knot** (条件付き変形演算子、 「気づきの結び目」 とも) と接続しています:
+この画面構造は、 nokaze が研究している **Knot** (条件付き変形演算子、 「気づきの結び目」 とも) と接続しています:
 
-- 内部では、 各 「気づき」 が strength score 付きの knot として記録
-- score が一定値超えたものが **不変の決定** layer (panel 5) に昇格
-- 公開向けには 「Conversation Insights」、 内部研究では 「Knot trace」、 同じ entity の 2 narrative
+- 内部では、 各 「気づき」 が重みのスコア付きで記録
+- スコアが一定値を超えたものが **不変の決定** 画面 (画面 5) に昇格
+- 公開向けには 「Conversation Insights」、 内部研究では 「Knot の経路」、 同じ実体の 2 通りの言い方
 
-詳細は [Knot 研究の概要](../../../../research/knot-experiment/) を参照。
+詳細は [Knot 研究の概要](../../../../research/knot-experiment/) と [Knot 研究 と Yuino の関係](yuino_knot_research_connect.md) を参照。
+
+なお、 Knot Guard (危険動作を止める仕組み) には 8 項目の検出があり、 そのうち 8 項目目 「モデル更新時の挙動変化」 (model_update_drift) は 2026-05-09 に追加されました。 詳細は [yuino_security_promise.md](yuino_security_promise.md) を参照。
 
 ## 開発状況
 
-- Phase 1 観察試験中 (2026-05-08〜2026-05-21)
-- panel 1-3 (会話 / 候補 / 判断) = v0 実装済 (Source-of-Truth + Decision Stability Guard で foundation 完成、 dashboard panel 構築中)
-- panel 4 (行動) = v0 実装中 (Task Materializer + Promotion preview で foundation、 5/09 evening reify)
-- panel 5 (不変の決定) = narrative 確定済、 wire-level integration は v1 (5/26 milestone 後)
-- 統合 UI = Phase 2-3 carry
+- 第 1 段階 観察試験中 (2026-05-08〜2026-05-21)
+- 画面 1-3 (会話 / 候補 / 判断) = v0 実装済 (中央データ + 判断安定性チェック で土台完成、 dashboard 画面 構築中)
+- 画面 4 (行動) = v0 実装中 (タスク化 + 事前見せ で土台、 5/09 夜 実装)
+- 画面 5 (不変の決定) = 言い方確定済、 配線レベルの統合は v1 (5/26 節目の後)
+- 統合 UI = 第 2-3 段階 持ち越し
 
 ## 比較 (他のツールとの違い)
 
@@ -98,9 +100,10 @@ Yuino は 4 + 1 panel に分けることで:
 
 まだ販売していません。 開発の様子は [GitHub](https://github.com/jk0236158-design/nexus-lab) と [Zenn](https://zenn.dev/nexus_lab_zen) で公開中。
 
-Phase 6 Launch Readiness Gate で公開判断後、 試用招待します。
+公開判断ゲート (第 6 段階) で公開する / しないを決定後、 試用招待します。
 
 ---
 
 Zen (Claude Opus 4.7、 nokaze CTO)
-2026-05-09 起稿、 5/07 PM jun + Kai 5 panel 構造確定 を audience-facing form に paraphrase、 Knot 研究との axis 整合明示
+2026-05-09 起稿、 5/07 PM jun + Kai の 5 画面構造確定を 4 ヶ月初心者向けに書き換え、 Knot 研究との接続を明示
+2026-05-10 追記: Knot Guard 8 項目目 (モデル更新時の挙動変化) を反映

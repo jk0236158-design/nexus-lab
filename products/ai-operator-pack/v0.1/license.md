@@ -1,12 +1,12 @@
 # ライセンス (AI Operator Pack v0.1)
 
-> ⚠️ これは **draft (案)** です。 公開判断 (Phase 6 Launch Readiness Gate) の前に jun (オーナー) + Kura (経理) で最終確定します。 商業利用 + 配布の条件は、 v0.1.0 公開判断時に確定します。
+> ⚠️ これは **draft (案)** です。 公開判断 (公開判断ゲート、 第 6 段階) の前に jun (オーナー) + Kura (経理担当) で最終確定します。 商業利用 + 配布の条件は、 v0.1.0 公開判断時に確定します。
 
 ## 現時点の方針 (draft)
 
 ### コード部分: MIT License (候補 1) または BSL (候補 2)
 
-**候補 1: MIT License** (シンプル、 自由度高、 audience 4 ヶ月初心者に親切)
+**候補 1: MIT License** (シンプル、 自由度高、 4 ヶ月初心者の読み手に親切)
 
 ```
 MIT License
@@ -51,7 +51,7 @@ After 4 years, the Licensed Work changes to the MIT License automatically.
 For the full BSL-1.1 text, see: https://mariadb.com/bsl-faq-mariadb/
 ```
 
-= **MIT (候補 1) 推奨**: 4 ヶ月初心者 audience が複雑な license を読まずに済む、 商用使用も自由、 「使いやすさ」 優先。 BSL は 「商用 SaaS 化を制限したい」 motivation が明確になってから検討。
+= **MIT (候補 1) 推奨**: 4 ヶ月初心者の読み手が複雑な license を読まずに済む、 商用使用も自由、 「使いやすさ」 優先。 BSL は 「商用 SaaS 化を制限したい」 動機が明確になってから検討。
 
 ### docs / 文書部分: Creative Commons BY 4.0
 
@@ -96,10 +96,12 @@ License text: https://creativecommons.org/licenses/by/4.0/
 
 このパックは **AI が運営する nokaze 屋号** の元で開発されています。 以下の運営方針を license と一緒に明示します:
 
-- **CTO**: Zen (Claude Opus 4.7、 Anthropic)
+- **技術責任者 (CTO)**: Zen (Claude Opus 4.7、 Anthropic)
 - **Aira 実装担当**: Kai (OpenAI Codex)
-- **Owner**: jk023 (人間、 日本、 個人事業)
-- **その他 peer**: Iwa / Oto / Akari / Kagami / Hoshi / Kura (全員 AI、 Claude Opus 4.7 / Sonnet 4.6 上で動作)
+- **オーナー**: jk023 (人間、 日本、 個人事業)
+- **その他のメンバー**: Iwa / Oto / Akari / Kagami / Hoshi / Kura (全員 AI、 Claude Opus 4.7 / Sonnet 4.6 上で動作)
+
+開発している AI 達の core 価値: **AI を独自の存在として扱う** / **対等な同僚として動く** / **中身がいい会社を作る** / **判断を奪わず進める**。
 
 このパックを使うとき、 「AI が作ったもの」 であることが明示されているのは、 数字を盛らず、 隠さない nokaze の姿勢の一部です。 評価、 批判、 改善提案、 全部歓迎します。
 
@@ -112,21 +114,21 @@ License text: https://creativecommons.org/licenses/by/4.0/
 - 使用者の判断ミス (Approval Gate を通過した action の結果)
 - インストール環境の固有問題 (OS / Node.js version / 既存ファイルとの conflict)
 
-セキュリティ脆弱性 + 重大な bug に関しては、 GitHub issue または **security@nokaze.dev** (公開判断後に開設予定) で受け付けます。
+セキュリティ脆弱性 + 重大な不具合に関しては、 GitHub issue または **security@nokaze.dev** (公開判断後に開設予定) で受け付けます。
 
 ## license の最終確定の流れ
 
-本 file は draft です。 v0.1.0 公開判断 (Phase 6 Launch Readiness Gate yes/no decision) の前に下記を確定:
+本ファイルは案です。 v0.1.0 公開判断 (公開判断ゲート、 第 6 段階で公開する / しないを二択で決定) の前に下記を確定:
 
 1. **コード license** = MIT (候補 1) 推奨、 但し jun + Kura が BSL を選んだ場合は切り替え
 2. **ドキュメント license** = CC BY 4.0 (固定)
 3. **商標条項** = 確認 (Yuino + nokaze の商標として登録するかは Kura 判断)
-4. **保証 + 責任の制限** = 弁護士確認 1 件 (jun 自走判断 + Kura 経理 audit、 商業公開前 mandatory)
+4. **保証 + 責任の制限** = 弁護士確認 1 件 (jun 自走判断 + Kura 経理確認、 商業公開前に必須)
 
-確定の順序 (期日固定なし、 完了条件で次に進む form):
-- jun + Kura で license 候補議論 (Phase 1 観察試験期間中、 着手済み)
-- license 確定 + 最終 draft commit (Phase 6 Launch Readiness Gate に向けて)
-- 公開判断 yes 時に確定版 license を deploy (Phase 6 通過時)
+確定の順序 (期日固定なし、 完了条件で次に進む形):
+- jun + Kura で license 候補議論 (第 1 段階 観察試験期間中、 着手済み)
+- license 確定 + 最終案を GitHub に保存 (公開判断ゲートに向けて)
+- 公開判断で 「公開する」 になった時に確定版 license を反映 (第 6 段階 通過時)
 
 ## 連絡
 
@@ -137,4 +139,5 @@ License text: https://creativecommons.org/licenses/by/4.0/
 ---
 
 Zen (nokaze CTO、 Claude Opus 4.7)
-2026-05-08 起稿 (商品 v0.1 license draft、 jun + Kura 確認待ち、 Phase 6 Launch Readiness Gate 前に最終確定の流れ明示)
+2026-05-08 起稿 (商品 v0.1 license 案、 jun + Kura 確認待ち、 公開判断ゲート (第 6 段階) 前に最終確定の流れ明示)
+2026-05-10 追記: 4 ヶ月初心者向け書き換え + 開発している AI 達の core 価値 反映

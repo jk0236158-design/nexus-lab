@@ -1,8 +1,8 @@
-# 仕組みの説明 (Execution layer architecture、 placeholder)
+# 仕組みの説明 (動かす層の構造、 仮置き)
 
-> ⚠️ **placeholder です**。 Execution layer の実装は Kai (Aira 実装担当) が `nokaze-aira/` repo で進めています。 完成版 docs は、 観察試験 (Phase 1) の中で Kai が起稿予定。 公開判断は Phase 6 Launch Readiness Gate (yes/no decision、 evidence ベース)。 本 file は構造の outline のみです。
+> ⚠️ **仮置きです**。 動かす層の実装は Kai (Aira 実装担当) が `nokaze-aira/` リポジトリで進めています。 完成版の文書は、 観察試験 (第 1 段階) の中で Kai が起稿予定。 公開判断は 公開判断ゲート (第 6 段階) で公開する / しないを二択で決定 (動いた記録に基づく)。 本ファイルは構造の概要のみです。
 
-## 1 entity 2 narrative (内側の名前と公開の名前)
+## 1 つの実体 2 つの言い方 (内側の名前と公開の名前)
 
 このパックの中で動く本体には、 **1 つの実体** に **2 つの呼び方** があります。
 
@@ -79,11 +79,11 @@ Aira / Yuino は **手元のパソコンの中で動きます**。 大事な情�
 4. **怪しい時は止まる** (Fail Closed): 安全か分からないときは AI が止まる
 5. **手元で動く** (Local-first): デフォルトで外に送らない、 user 許可で初めて送る
 
-## 仕組みの図 (placeholder)
+## 仕組みの図 (仮置き)
 
 ```
 +-------------------------------------------+
-|  あなた (jun audience or 開発者)         |
+|  あなた (使う人 or 開発者)               |
 +----------------+--------------------------+
                  ↓ 会話
 +-------------------------------------------+
@@ -105,17 +105,25 @@ Aira / Yuino は **手元のパソコンの中で動きます**。 大事な情�
 
 ## 開発の進捗
 
-Execution layer の実装は、 Kai が `nokaze-aira/` repo で進めています:
+動かす層の実装は、 Kai が `nokaze-aira/` リポジトリで進めています:
 
-- 2026-05-06 夕方: 12 件の commit で full closed loop 実装完成
-- 2026-05-08: 観察試験 Phase 1 Day 1 着手、 Yuino narrative 看板固定
-- Phase 1 観察試験期間 (2026-05-08〜2026-05-21): Yuino 1 機能 demo の実装 + 14 day 連続観察 evidence 収集
-- Phase 2 自走ループ E2E (完了条件順序): 動作 evidence が揃った時点で本 docs を完成版に置換
-- Phase 6 Launch Readiness Gate (yes/no 判断): 公開判断 yes 時に nokaze.dev / GitHub から link 公開
+- 2026-05-06 夕方: 12 件の GitHub 保存で 自走ループの実装が完成
+- 2026-05-08: 観察試験 第 1 段階 1 日目 着手、 Yuino の言い方を看板として固定
+- 第 1 段階 観察試験期間 (2026-05-08〜2026-05-21): Yuino の 1 機能 demo の実装 + 14 日間の連続観察記録 収集
+- 第 2 段階 自走ループ全体動作 (完了条件順、 期日固定なし): 動いた記録が揃った時点で本ファイルを完成版に置き換え
+- 公開判断ゲート (第 6 段階、 公開する / しないの二択): 公開すると決まったら nokaze.dev / GitHub からリンクを公開
 
-詳細は Kai の `nokaze-aira/README.md` を参照 (公開判断 yes 時に link 公開)。
+詳細は Kai の `nokaze-aira/README.md` を参照 (公開判断で 「公開する」 になった時にリンクを公開)。
+
+## 2026-05-09〜10 の追加実装
+
+- Knot Guard 8 項目目 「モデル更新時の挙動変化検出」 (model_update_drift) 追加
+- Yuino と AI のやり取りを 「1 枚の紙にまとめて渡す」 形 (内部呼称: chat_outbox v0、 5/10 朝 第 1 回動作確認 通過)
+- Yuino が次の安全な作業を自分で考える形 (内部呼称: idle-to-work loop v0)
+- 夜の時間帯も 「危なくない内部作業」 (緑) は止めない、 「外に出す」 「お金が動く」 「公開する」 (赤) は jun の確認待ち、 「時間で止める」 → 「権限で止める」 形
 
 ---
 
 Zen (nokaze CTO、 Claude Opus 4.7)
-2026-05-08 起稿 (Execution layer architecture placeholder、 1 entity 2 narrative + 6 step closed loop + Local-first + 5 安全ルール、 Kai 主担当の実装が観察試験 Phase 1 〜 Phase 2 完了条件で揃った時点で本 file を完成版に置換予定)
+2026-05-08 起稿 (動かす層の構造の仮置き、 1 つの実体 2 つの言い方 + 6 段階の自走ループ + 手元で動く + 5 つの安全ルール、 Kai 主担当の実装が観察試験 第 1 段階 〜 第 2 段階 完了条件で揃った時点で本ファイルを完成版に置き換え予定)
+2026-05-10 追記: Knot Guard 8 項目目 + 作業を 1 枚にまとめて渡す仕組み + 次の作業を考える仕組み + 権限ベースの夜間継続 を反映

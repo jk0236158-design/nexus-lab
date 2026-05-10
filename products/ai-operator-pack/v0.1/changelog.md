@@ -2,45 +2,54 @@
 
 > このファイルは [Keep a Changelog](https://keepachangelog.com/) の形式に従っています。 バージョンの番号付けは [Semantic Versioning](https://semver.org/) に従います。
 >
-> 商品はまだ開発中です。 v0.1.0 の公開は **Phase 6 Launch Readiness Gate で yes/no 判断** (採点ではなく evidence ベース)。 観察試験 Phase 1 期間 = **2026-05-08 (Day 1) 〜 2026-05-21 (Day 14)**。
+> 商品はまだ開発中です。 v0.1.0 の公開は **公開判断ゲート (第 6 段階) で 公開する / しないを二択で決定** (採点ではなく動いた記録に基づく)。 観察試験の第 1 段階の期間 = **2026-05-08 (1 日目) 〜 2026-05-21 (14 日目)**。
 
-## [Unreleased] (開発中、 観察試験 Phase 1: 2026-05-08〜2026-05-21)
+## [Unreleased] (開発中、 観察試験 第 1 段階: 2026-05-08〜2026-05-21)
 
 ### 起稿 (Added)
 
-- 商品 v0.1 README.md (商品全体の入口 + 3 layer 構造 + Launch Readiness Gate の説明 + 継続改善 5 layer)
-- Vocabulary layer 3 file:
-  - public_glossary.md (内部用語 ↔ 公開用語 対応表 27 件 + 4 category)
-  - translation_rules.md (翻訳ルール 4 件 + 例外 3 件 + 違反検出 path)
-  - usage_examples.md (UI tooltip 4 件 + ドキュメント 3 件 + X/Zenn 短文 2 件 + エラー/復旧 2 件 + audience 区分 + 公開前チェックリスト)
-- Base layer 5 file (Akari 担当、 5/08 自走 batch 2):
+- 商品 v0.1 README.md (商品全体の入口 + 3 つの層の構造 + 公開判断ゲートの説明 + 継続改善の 5 つの仕組み)
+- 言葉の層 3 ファイル:
+  - public_glossary.md (内部用語 ↔ 公開用語の対応表 27 件 + 4 区分)
+  - translation_rules.md (書き換えルール 4 件 + 例外 3 件 + 違反検出経路)
+  - usage_examples.md (UI 補足説明 4 件 + ドキュメント 3 件 + X/Zenn 短文 2 件 + エラー/復旧 2 件 + 読者区分 + 公開前チェックリスト)
+- 準備の層 5 ファイル (Akari 担当、 5/08 自走 batch 2):
   - 01_quick_start.md (5 分 setup 手順)
-  - 02_ai_agent_setup.md (AI エージェント経由 setup + prompt template 3 件)
+  - 02_ai_agent_setup.md (AI エージェント経由 setup + 依頼文の雛形 3 件)
   - 03_safety_rules.md (5 つの安全のルール)
   - 04_checklist.md (確認チェックリスト)
-  - sample_state/README.md (サンプル状態 file 説明)
-- changelog.md (本 file)
-- license.md (ライセンス draft、 jun + Kura 確認待ち)
+  - sample_state/README.md (サンプル状態ファイルの説明)
+- changelog.md (本ファイル)
+- license.md (ライセンス案、 jun + Kura 確認待ち)
+
+### 5/09-5/10 追記 (Added)
+
+- Yuino LP draft + Conversation Insights + Security Promise + Architecture (Audience 向け) + Knot 研究との接続 文書 起稿
+- Setup Doctor v0 (11 項目自動診断、 dashboard で `pass 11 / warning 0 / blocked 0` 確認)
+- Knot Guard 8 項目目 「モデル更新時の挙動変化」 (model_update_drift) 追加
+- Yuino と AI のやり取りを 「1 枚の紙にまとめて渡す」 形 (chat_outbox v0、 5/10 朝 第 1 回動作確認 通過)
+- Yuino が次の安全な作業を自分で考える形 (idle-to-work loop v0、 5/10 朝 実装)
+- 夜の時間帯も緑 (危なくない内部作業) は止めない、 赤 (外部 / 公開 / お金) は jun 確認待ち、 「時間で止める」 → 「権限で止める」 形
 
 ### 計画中 (Planned)
 
-- Execution layer 3 file (Kai 主担当、 Phase 1 観察試験期間中に着手):
+- 動かす層 3 ファイル (Kai 主担当、 第 1 段階 観察試験期間中に着手):
   - yuino_demo.md (Yuino 1 機能 demo の使い方)
-  - local_setup.md (Local Web App 起動手順)
-  - architecture.md (1 entity 2 narrative + 6 step closed loop)
-- Phase 1 観察試験 (Day 1 = 2026-05-08 〜 Day 14 = 2026-05-21、 Day 14 振り返り = 2026-05-22 or 次の owner review)
-- Phase 2 自走ループ E2E (完了条件順序、 期日固定なし)
-- Phase 3 オーナー負荷の圧縮 (完了条件順序、 期日固定なし)
-- Phase 4 初心者向け体験 (first-run flow、 完了条件順序)
-- Phase 5 公開向け成果物 (1 ページ説明 + broadcast-os 試作、 完了条件順序)
-- Phase 6 Launch Readiness Gate (公開する / しない の yes/no 判断、 evidence ベース)
-- Phase 7 配布 + 反応記録 (1 channel から、 完了条件順序)
+  - local_setup.md (ローカル Web アプリの起動手順)
+  - architecture.md (1 つの実体 2 つの言い方 + 6 段階の自走ループ)
+- 第 1 段階 観察試験 (1 日目 = 2026-05-08 〜 14 日目 = 2026-05-21、 14 日目振り返り = 2026-05-22 or 次のオーナー review)
+- 第 2 段階 自走ループ 全体動作 (完了条件順、 期日固定なし)
+- 第 3 段階 オーナー負荷の圧縮 (完了条件順、 期日固定なし)
+- 第 4 段階 初心者向け体験 (初回使用の流れ、 完了条件順)
+- 第 5 段階 公開向け成果物 (1 ページ説明 + 短い動画の試作、 完了条件順)
+- 第 6 段階 公開判断ゲート (公開する / しないの二択、 動いた記録に基づく)
+- 第 7 段階 配布 + 反応記録 (1 チャネルから、 完了条件順)
 
 ### 既知の制約 (Known Limitations)
 
-- v0.1 段階では Yuino Local Web App は **placeholder のみ**、 動く実装は Launch Readiness Gate 通過時に dogfood verify 済 form で同梱
-- 観察試験 Phase 1 (Day 1〜Day 14) の dogfood は内部 (Zen + Kai 主体)、 jun + 友人の audience テストは Phase 4 / Phase 5 完了条件揃った時点で実施
-- broadcast-os 動画は Phase 5 で 1 分 slide 試作、 自動生成動画は v0.1 scope 外
+- v0.1 段階では Yuino のローカル Web アプリは **placeholder (仮の入れ物) のみ**、 動く実装は公開判断ゲート通過時に自社利用で確認済みの形で同梱
+- 観察試験 第 1 段階 (1 日目〜14 日目) の自社利用検証は内部 (Zen + Kai 主体)、 jun + 友人による試用テストは 第 4 段階 / 第 5 段階 完了条件が揃った時点で実施
+- 動画は 第 5 段階 で 1 分のスライド試作、 自動生成動画は v0.1 範囲外
 
 ## 開発の透明性
 
@@ -49,46 +58,47 @@
 - リポジトリ: https://github.com/jk0236158-design/nexus-lab
 - branch: master (release 直前まで development、 release 時に tag `ai-operator-pack-v0.1.0` 付与)
 
-主要 commit (商品 v0.1 起稿関連、 Phase 1 Day 1 = 2026-05-08 時点):
+主要 GitHub 保存記録 (商品 v0.1 起稿関連、 第 1 段階 1 日目 = 2026-05-08 時点):
 
-- `927b095` 商品 v0.1 README + Vocabulary layer 3 file 起稿 (Phase 1 Day 1 着手)
-- `0e23b20` 商品 v0.1 Base layer 5 file (Akari spawn) + Execution layer 3 placeholder + changelog + license draft
-- `29bec62` `underestimation_default_check.sh` 起稿 (重要発見 #3 物理 enforcement)
-- (Kagami QA Review Round 1 = 2026-05-08 自走 batch 7、 board file `2026-05-08_kagami_zen_product_v01_qa_review_round1.md`、 14 file 全 release ready (Round 1 段階)、 actual ruled 違反 0 件、 false positive 6 件 + yellow 8 件 (Round 2-3 で議論))
+- `927b095` 商品 v0.1 README + 言葉の層 3 ファイル 起稿 (1 日目 着手)
+- `0e23b20` 商品 v0.1 準備の層 5 ファイル (Akari に依頼) + 動かす層 3 ファイル仮置き + changelog + license 案
+- `29bec62` 過小見積もりチェックスクリプト 起稿 (重要発見 #3 の物理的な強制実装)
+- (Kagami QA レビュー 第 1 回 = 2026-05-08 自走 batch 7、 内部レビューファイル `2026-05-08_kagami_zen_product_v01_qa_review_round1.md`、 14 ファイル全部 公開準備可 (第 1 回時点)、 ルール違反 0 件、 誤検出 6 件 + 黄色レビュー 8 件 (第 2-3 回で議論))
 - (続く)
 
-## QA review log
+## QA レビュー記録
 
-| Round | timing | 結果 |
+| 回 | 時刻 | 結果 |
 |---|---|---|
-| Round 1 | 2026-05-08 自走 batch 7 (~30 min batch、 Kagami spawn return) | 14 file 全 release ready、 actual ruled 違反 0 件、 false positive 6 件 (Iwa script 改善 candidate) + yellow 8 件 (audience axis balance / source link annotation) |
-| Round 2 以降 | Phase 1 観察試験期間中、 完了条件順序で実施 | Round 1 fix 適用後 verify + content depth audit + dogfood evidence link 一括 embed verify + cross-ref consistency + Execution layer 再 audit + Phase 6 Launch Readiness Gate 直前の audit |
+| 第 1 回 | 2026-05-08 自走 batch 7 (~30 分 batch、 Kagami 担当返却) | 14 ファイル全部 公開準備可、 ルール違反 0 件、 誤検出 6 件 (Iwa スクリプト改善候補) + 黄色レビュー 8 件 (読者軸のバランス / 出典リンク追記) |
+| 第 2 回以降 | 第 1 段階 観察試験期間中、 完了条件順で実施 | 第 1 回の修正適用後の確認 + 内容の深さ確認 + 自社利用記録リンク一括埋込み確認 + 相互参照の整合性 + 動かす層の再確認 + 公開判断ゲート直前の確認 |
 
-## 開発の進捗の記録 (audience-facing form は採点を表に出さない方針)
+## 開発の進捗の記録 (公開向けは採点を表に出さない方針)
 
-audience-facing の changelog では、 採点 (score) を商品の表面には出しません。 公開判断は Phase 6 Launch Readiness Gate での yes/no 決定で、 評価はその判断の材料 (内部参照) として残します。
+公開向けの changelog では、 採点 (スコア) を商品の表面には出しません。 公開判断は 公開判断ゲート (第 6 段階) で公開する / しないを決定し、 評価はその判断の材料 (内部参照) として残します。
 
-開発の進捗 + 失敗 + 復旧 + 監査の記録は、 GitHub の commit + Zenn の開発記事 + 本 changelog の追記で透明に残します。
+開発の進捗 + 失敗 + 復旧 + 監査の記録は、 GitHub への保存 + Zenn の開発記事 + 本 changelog の追記で透明に残します。
 
 ## 脆弱性修正履歴
 
-v0.1 公開判断時に initial security audit 完了予定:
+v0.1 公開判断時に最初のセキュリティ監査を完了予定:
 
-- 入力バリデーション (Zod schema)
-- API キー分離 (.env / OS keyring)
-- Permission model (Read / Write / External の 3 階層)
-- Audit Log JSONL (immutable + tamper detection)
-- Reset / Forget Hard Gate (user intentional erase)
+- 入力チェック (Zod スキーマ)
+- API キー分離 (.env / OS の鍵管理)
+- 権限モデル (読む / 書く / 外部の 3 階層)
+- 監査ログ JSONL (改ざんできない形 + 改ざん検出)
+- 「全部消す」 「忘れさせる」 ゲート (使用者の意図的な消去)
 
-各項目の audit 結果 + 修正内容は、 公開判断時に本 changelog に追記。
+各項目の監査結果 + 修正内容は、 公開判断時に本 changelog に追記。
 
 ## バージョンの考え方
 
-- **v0.x.y** (開発中): 機能追加 + bug fix + dogfood iteration、 公開判断は Phase 6 Launch Readiness Gate での yes/no 決定
-- **v1.0.0** (正式公開): 自走ループ E2E + オーナー負荷の圧縮 + 初心者 first-run 通り抜け + 公開向け 1 ページ + 監査 / 復旧の記録 + 「まだ公開しない」 list、 すべて evidence ベースで揃った時点
-- **継続改善**: v1.0.0 後は定期的な小さな更新 (v1.1.x、 v1.2.x ...) で改善の流れを回す。 「使いながら良くなる」 form (memory § 7 5 layer 連動)
+- **v0.x.y** (開発中): 機能追加 + バグ修正 + 自社利用での反復、 公開判断は 公開判断ゲート (第 6 段階) で公開する / しないを決定
+- **v1.0.0** (正式公開): 自走ループ全体動作 + オーナー負荷の圧縮 + 初心者の初回使用 通り抜け + 公開向け 1 ページ + 監査 / 復旧の記録 + 「まだ公開しない」 リスト、 すべて動いた記録ベースで揃った時点
+- **継続改善**: v1.0.0 後は定期的な小さな更新 (v1.1.x、 v1.2.x ...) で改善の流れを回す。 「使いながら良くなる」 形
 
 ---
 
 Zen (nokaze CTO、 Claude Opus 4.7)
-2026-05-08 起稿 (商品 v0.1 changelog、 観察試験 Phase 1 = 2026-05-08〜2026-05-21、 公開判断 = Phase 6 Launch Readiness Gate yes/no decision、 evidence ベース)
+2026-05-08 起稿 (商品 v0.1 changelog、 観察試験 第 1 段階 = 2026-05-08〜2026-05-21、 公開判断 = 公開判断ゲート (第 6 段階) で公開する / しないの二択、 動いた記録に基づく)
+2026-05-10 追記: 5/09-5/10 の連鎖実装 (Knot Guard 8 項目目 + chat_outbox v0 + idle-to-work loop v0 + 夜の権限ベース継続) を反映

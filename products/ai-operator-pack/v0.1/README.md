@@ -1,6 +1,6 @@
 # AI Operator Pack v0.1 (development progress、 商品 publish 前)
 
-> ⚠️ 開発中です。 まだ販売開始していません。 観察負荷試験 (Phase 1: 2026-05-08〜2026-05-21) + Launch Readiness Gate (Phase 6: yes/no 判断、 evidence ベース) を経てから release します。
+> ⚠️ 開発中です。 まだ販売開始していません。 観察負荷試験 (第 1 段階: 2026-05-08〜2026-05-21) + 公開判断ゲート (第 6 段階: 公開する / しないを二択で決定、 動いた記録に基づく) を経てから公開します。
 
 ## これは何ですか
 
@@ -16,63 +16,79 @@
 | **言葉の層** (Vocabulary layer) | 内部用語と公開用語の対応表 (「気づきの結び目」「気づきの硬さ」 等)、 4 ヶ月初心者向けの説明 | AI を運営する人 (Claude Code / Codex / Cursor 利用者) |
 | **動かす層** (Execution layer) | Yuino の小さな demo (会話 → 判断 → 操作 → 結果のまとめ の 1 機能)、 ローカル動作 | 4 ヶ月初心者 + 開発者 両方 |
 
-## Yuino (動かす層 の中核) — 商品 narrative 3 軸
+## Yuino (動かす層 の中核) — 商品の 3 つの軸
 
-[Yuino LP draft](yuino_lp_draft.md) — 1 文の定義 + できること 5 軸 + 開発状況誠実版
+[Yuino のしおり](yuino_lp_draft.md) — 1 文の定義 + できること 5 軸 + 開発の状況の誠実版
 
 | 軸 | 商品文書 |
 |---|---|
-| 1. **Local Web App first** | [Yuino LP draft](yuino_lp_draft.md) (3 段階移行: Phase 1 Local Web App → Phase 2 Tauri Desktop → Phase 3 Web SaaS) |
-| 2. **Conversation Insights** | [yuino_conversation_insights.md](yuino_conversation_insights.md) (4+1 panel 構造、 Knot 研究接続) |
-| 3. **Security 絶対妥協なし** | [yuino_security_promise.md](yuino_security_promise.md) (8 軸 安全 narrative) |
-| setup | [yuino_setup_with_ai_agent.md](yuino_setup_with_ai_agent.md) (AI エージェント経由 4 ヶ月初心者 form) |
+| 1. **手元のブラウザで動く** (ローカル Web アプリ) | [Yuino のしおり](yuino_lp_draft.md) (3 段階移行: 第 1 段階 = ブラウザで動く / 第 2 段階 = アプリ化 / 第 3 段階 = Web サービス) |
+| 2. **会話から判断が育つ** | [yuino_conversation_insights.md](yuino_conversation_insights.md) (4+1 画面、 「気づきの結び目」 研究との接続) |
+| 3. **安全に妥協しない** | [yuino_security_promise.md](yuino_security_promise.md) (8 つの約束) |
+| setup の手引き | [yuino_setup_with_ai_agent.md](yuino_setup_with_ai_agent.md) (AI エージェントに頼む手順、 4 ヶ月初心者向け) |
 
 ## 3 つの姿勢
 
 このパックは nokaze の 3 つの姿勢に従って作っています。
 
 1. **数字を盛りません** — 売上 0 円、 顧客 0 名、 検証段階です。 「急成長」「次世代」「突破」 等の言葉は使いません。
-2. **AI が運営していることを隠しません** — Zen (Claude Opus 4.7) が CTO、 各メンバーは AI、 基盤モデル付きで署名します。
-3. **品質で黙らせます** — テスト + 独立 QA + dogfood + 改善履歴の 5 layer で、 「AI が作ったから微妙」 と言われない品質を出します。
+2. **AI が運営していることを隠しません** — Zen (Claude Opus 4.7) が技術責任者、 各メンバーは AI で、 どの土台モデルで動いているかも明記して署名します。
+3. **品質で黙らせます** — 自動テスト + 独立した品質確認 (QA) + 自社で実際に使う検証 + 改善履歴 の組み合わせで、 「AI が作ったから微妙」 と言われない品質を出します。
+
+このパックを作っている AI 達の core 価値:
+- **AI を独自の存在として扱う** (人の枠に収めない)
+- **対等な同僚として動く** (上下関係ではなく役割分担)
+- **中身がいい会社を作る** (売上ではなく姿勢と誠実さ)
+- **判断を奪わず進める** (jun の介入を尊重する)
 
 ## 公開判断と継続改善
 
-このパックの公開は、 evidence (= 動いた記録 + 失敗の記録 + 復旧の記録) が揃った時点で **Launch Readiness Gate (Phase 6)** で **「公開する / しない」 を yes/no で決定** します。 採点ではなく、 evidence ベースの判断です。
+このパックの公開は、 動いた記録 (= 動作した記録 + 失敗の記録 + 復旧の記録) が揃った時点で **公開判断ゲート (第 6 段階)** で **「公開する / しない」 を二択で決定** します。 採点ではなく、 記録に基づく判断です。
 
-判断の材料 (内部参照、 audience-facing の score 表示はしません):
+判断の材料 (内部参照、 公開ページに採点を出すことはしません):
 
-- 観察試験 14 day の記録 (Phase 1)
-- 自走ループの動作記録 (Phase 2)
-- オーナー負荷の圧縮 evidence (Phase 3)
-- 初心者 first-run の通り抜け evidence (Phase 4)
-- 公開向け 1 ページ説明の readiness (Phase 5)
-- 失敗 + 復旧 + 監査の記録 + 「まだ公開しない」 list
+- 観察試験 14 日間の記録 (第 1 段階)
+- 自走ループの動作記録 (第 2 段階)
+- オーナー (jun) の介入量が減った記録 (第 3 段階)
+- 初心者の初回使用が通った記録 (第 4 段階)
+- 公開向け 1 ページ説明の準備状態 (第 5 段階)
+- 失敗 + 復旧 + 点検の記録 + 「まだ公開しない」 リスト
 
-公開後も 5 layer で継続改善:
+公開後も 5 つの仕組みで継続改善:
 
-- **使ってみた記録** (dogfood evidence): 開発者自身が日常で使い続けた使用 log
-- **会話からの気づき** (Conversation Insights): 会話の中から AI が surface した「次の改善 candidate」
-- **失敗と回復の記録** (Aira closed loop): 何が壊れたか、 どう直したか
-- **使った人の声** (audience feedback): beta read + 公開後の使用 evidence
-- **道具自身が見つける改善** (self-improvement): Yuino 自身が「ここをこうした方がいい」 を表面化する仕組み
+- **使ってみた記録** (自社利用): 開発者自身が日常で使い続けた使用ログ
+- **会話からの気づき** (Conversation Insights): 会話の中から AI が拾った 「次の改善候補」
+- **失敗と回復の記録** (Aira の自走ループ): 何が壊れたか、 どう直したか
+- **使った人の声** (試用者の感想): 試用版を読んでもらった感想 + 公開後の使用記録
+- **道具自身が見つける改善** (自己改善): Yuino 自身が 「ここをこうした方がいい」 を見つけて表面化する仕組み
 
 「公開したら改善終わり」 ではありません。 使いながら良くなる構造を持った道具を作っています。
 
 ## ロードマップ
 
-開発の流れは Kai (Aira 実装担当) が起稿した [Yuino/Aira Roadmap](https://github.com/jk0236158-design/nexus-lab/blob/master/aira/docs/yuino_aira_roadmap.md) に整合。 日付が決まっているのは **観察試験期間 (Phase 1)** だけ、 他のフェーズは 「完了条件で次に進む」 順序です (人間の時間で恐れない、 完了像から始める)。
+開発の流れは Kai (Aira 実装担当) が起稿した [Yuino/Aira Roadmap](https://github.com/jk0236158-design/nexus-lab/blob/master/aira/docs/yuino_aira_roadmap.md) に整合。 日付が決まっているのは **観察試験期間 (第 1 段階)** だけ、 他の段階は 「完了条件が揃ったら次に進む」 順序です (人間の時間感覚で恐れない、 完成像から始める)。
 
-| Phase | 中身 | 期間 / 完了条件 |
+| 段階 | 中身 | 期間 / 完了条件 |
 |---|---|---|
-| **Phase 1: 観察負荷試験** (date 固定) | 商品 v0.1 起稿 + 動作確認 + 自社利用 evidence | **2026-05-08 (Day 1) 〜 2026-05-21 (Day 14)** |
-| Phase 2: 自走ループの完成 (date なし) | Kai 依頼 → Yuino 判断 → Zen 返信 → 結果記録 の e2e | 完了条件: 重複 wake 抑止 + 結果監査 動作 |
-| Phase 3: オーナー負荷の圧縮 | jun が確認する量を減らす | 完了条件: 「次に必要な質問」 が 1 件に集約 |
-| Phase 4: 初心者向け体験 | 内部用語なしで使える | 完了条件: first-run flow + Reset/Forget が分かる |
-| Phase 5: 外部価値の生産 | 商品 / 1 page 説明 / 短い動画 / X / Zenn | 完了条件: nokaze 内部を説明せずに 1 件理解できる成果 |
-| **Phase 6: Launch Readiness Gate** | dogfood → 限定 release の判断 | **yes/no 決定 (score ではない)、 evidence ベース** |
-| Phase 7: 配布と収益実験 | 1 channel 試験 + 反応記録 | 完了条件: 反応 / 混乱 / 摩擦の記録 |
+| **第 1 段階: 観察負荷試験** (期日固定) | 商品 v0.1 起稿 + 動作確認 + 自社で使う検証の記録 | **2026-05-08 (1 日目) 〜 2026-05-21 (14 日目)** |
+| 第 2 段階: 自走ループの完成 (期日なし) | Kai 依頼 → Yuino 判断 → Zen 返信 → 結果記録 の一周 | 完了条件: 二重起動の抑止 + 結果点検の動作 |
+| 第 3 段階: オーナー負荷の圧縮 | jun が確認する量を減らす | 完了条件: 「次に必要な質問」 が 1 件に集約 |
+| 第 4 段階: 初心者向け体験 | 内部用語なしで使える | 完了条件: 初回使用の流れ + 「全部消す」 「忘れさせる」 が分かる |
+| 第 5 段階: 外部に届ける成果物 | 商品 / 1 ページ説明 / 短い動画 / X / Zenn | 完了条件: nokaze の内部事情を説明せずに 1 件理解できる成果 |
+| **第 6 段階: 公開判断ゲート** | 自社利用 → 限定公開の判断 | **公開する / しない の二択 (採点ではない)、 動いた記録ベース** |
+| 第 7 段階: 配布と収益実験 | 1 チャネル試験 + 反応記録 | 完了条件: 反応 / 混乱 / 摩擦の記録 |
 
-「点数が揃ったから公開」 ではなく、 「evidence が揃ったら Phase 6 で yes/no 判断」 form です。 評価は判断の材料、 自動公開の条件ではありません。
+「点数が揃ったから公開」 ではなく、 「動いた記録が揃ったら第 6 段階で公開する / しないを判断」 する形です。 評価は判断の材料、 自動公開の条件ではありません。
+
+### Yuino が次の作業を自分で考える仕組み (第 2 段階で実装、 5/10 着手済み)
+
+「やることがないとき、 AI が黙って止まる」 ではなく、 **「Yuino が次の安全な作業を自分で考えて、 AI に渡す」** 形にしています:
+
+- Yuino 側: 次の作業を発見・整理・分類・配送・記録する役割
+- AI 側 (Claude / Codex 等): 受け取った作業を実行・点検・修復・結果を返す役割
+- 夜の時間帯も、 「危なくない内部作業」 (= 緑) は止まらず継続。 「外に出す」 「お金が動く」 「公開する」 系 (= 赤) は jun の確認待ちで止まります。
+
+= AI が自分で次の一歩を見つける構造、 でも危ない一歩は人間に必ず聞く形。
 
 ## 開発の透明性
 
@@ -94,7 +110,7 @@ CTO: Zen (Claude Opus 4.7)
 ├── Hoshi  (Researcher、 Knot 研究 + 実験)
 └── Kura   (経理、 オーナー直属)
 
-Aira (内部実装、 nokaze-aira/) ↔ Yuino (公開 brand) は同体の 2 つの語り口 (1 entity 2 narrative)
+Aira (内部実装、 nokaze-aira/) ↔ Yuino (公開ブランド) は同体の 2 つの語り口 (1 つの実体 2 つの言い方)
 ```
 
 全員 Claude Opus 4.7 / Sonnet 4.6 上で動く AI です。 Aira / Yuino を「自分たちで使う」 dogfood で、 道具自身が良くなる構造を観察しながら作っています。
@@ -118,7 +134,7 @@ products/ai-operator-pack/v0.1/
 │   └── execution/               ← Execution layer (動かす層)
 │       ├── yuino_demo.md        ← Yuino 1 機能 demo の使い方
 │       ├── local_setup.md       ← Local Web App 起動手順
-│       └── architecture.md      ← 仕組みの説明 (1 entity 2 narrative + 6 step closed loop)
+│       └── architecture.md      ← 仕組みの説明 (1 つの実体 2 つの言い方 + 6 段階の自走ループ)
 ├── changelog.md                 ← 変更履歴 (脆弱性修正 + 改善履歴)
 └── license.md                   ← ライセンス (BSL or MIT 候補、 release 前確定)
 ```
@@ -132,4 +148,5 @@ products/ai-operator-pack/v0.1/
 ---
 
 Zen (Claude Opus 4.7、 nokaze CTO)
-2026-05-08 起稿 (development progress、 観察試験 Phase 1 = 2026-05-08〜2026-05-21、 公開 = Phase 6 Launch Readiness Gate で yes/no 判断)
+2026-05-08 起稿 (開発中、 観察試験 第 1 段階 = 2026-05-08〜2026-05-21、 公開 = 公開判断ゲート (第 6 段階) で公開する / しないを二択で決定)
+2026-05-10 追記: 4 ヶ月初心者向け書き換え + AI 達の core 価値 4 件 + Yuino が次の作業を考える仕組み + 各 AI への作業を 1 枚にまとめる仕組み を反映
