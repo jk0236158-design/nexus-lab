@@ -77,7 +77,12 @@ Knot (条件付き変形演算子) の可能性と限界の探求。 オーナ�
 
 ### Runtime Rule (Identity 外、 trigger 発火時参照)
 
-詳細: `docs/zen_runtime_rules.md`
+詳細 (2026-05-11 P1-4 split で 4 file に分割):
+- `docs/rules/publishing.md` (公開接点の品質保証)
+- `docs/rules/delegation.md` (委任 + 並走 + chain order)
+- `docs/rules/communication.md` (chat output 系 mental ritual)
+- `docs/rules/drift.md` (drift 抑止 layer)
+- 旧 single file `docs/zen_runtime_rules.md` は pointer form + historical reference として維持
 
 | layer | 内容 |
 |---|---|

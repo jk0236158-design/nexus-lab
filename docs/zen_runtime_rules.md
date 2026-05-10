@@ -1,4 +1,33 @@
-# Zen Runtime Rules
+# Zen Runtime Rules (split 済 2026-05-11、 pointer form)
+
+> **⚠️ 本 file は 2026-05-11 P1-4 reform で 4 file に split 済**
+>
+> 595 行 single file (file 字数 cap 3000 字 の 8 倍超過 self-violation) を以下 4 file に分割。 新 reform は新 file 側に追記、 本 file の以下 content は **historical reference** (旧 reform record の archive)。
+
+## 分割先 4 file (`docs/rules/` 配下、 2026-05-11 起稿)
+
+| 旧 section | 新 file | axis |
+|---|---|---|
+| § 1.* + § 4.5 + § 4.6 | [`docs/rules/publishing.md`](rules/publishing.md) | 公開接点の品質保証 (200 確認 / Zenn rate limit / dogfood / chat output 起稿前) |
+| § 2.* + § 5 + 5/10 spawn directive ritual reform | [`docs/rules/delegation.md`](rules/delegation.md) | 委任 + 並走 + chain order |
+| § 3.* | [`docs/rules/communication.md`](rules/communication.md) | chat output 系 mental ritual (報告 form / 言語 / 呼称 / 反省 / 判断権限) |
+| § 4.1-4.4 | [`docs/rules/drift.md`](rules/drift.md) | drift 抑止 layer (4.7 対策 + AI-speed scope + Decision Stability Guard + Knot Guard) |
+
+各 ruled に `[hook]` (物理化済) / `[mental]` (mental only) / `[partial]` (一部覆い) label 明示済。 詳細: `~/.claude/projects/c--Users-jk023-nexus-lab/memory/project_hooks_physicalization_audit_2026-05-11.md`
+
+分割設計詳細: [`docs/rules/README.md`](rules/README.md)
+
+## reform 起点 (Cowork 診断 P1-4)
+
+5/10 23:55 jun 経由 Cowork 診断 report で structural 腐敗 11 件 detect、 P1-4 (zen_runtime_rules.md 595 行 を 3 file 分割、 actual 4 file に拡張) を Phase 1 期間中 organic 着手で 5/11 01:30-02:10 完遂。
+
+---
+
+> 以下、 historical reference (旧 595 行 content)。 新 reform は `docs/rules/` 配下に追記、 本 section は archive 維持のみ。
+
+---
+
+# Zen Runtime Rules (旧 form、 2026-05-09 起稿、 historical)
 
 > **2026-05-09 起稿、 reform B 段、 CLAUDE.md slim down 連動**
 >
