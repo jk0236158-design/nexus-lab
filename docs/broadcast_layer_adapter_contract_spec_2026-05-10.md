@@ -1,14 +1,20 @@
 ---
 date: 2026-05-10
 owner: Iwa (Lead Engineer)
-status: draft (jun confirm Q1 GO 済、 Kagami QA review pending)
+status: drift_correction_2026-05-10 (5/10 22:50 audit baseline 起稿経由 「actual 機能既 reify (quality_gate.py / costs.py / run_logs DB) を 『追加 reify』 narrative 化」 drift detect、 詳細は `nexus-lab/research/broadcast_os_actual_state_audit_2026-05-10.md` 参照)
 purpose: broadcast-os 完成度向上 reform — 共通 adapter contract spec 起稿 (前回 spawn return I2 軸 detail)
 audience: developer (technical spec)
 related:
+  - nexus-lab/research/broadcast_os_actual_state_audit_2026-05-10.md (audit baseline、 既 reify 済機能 audit + drift correction)
   - broadcast_os_completion_reform_spec_2026-05-08.md (前回 spawn return)
   - yuino_broadcast_connect_interface_spec_2026-05-10.md (姉妹 spec、 同日起稿)
   - feedback_yuino_security_axis (Approval Gate / Fail Closed / Audit Log axis)
   - LLM Replaceable Part Principle (model も商品も replaceable narrative)
+phase_target: Phase 1 期間中 (5/08-5/21) organic 着手 (「5/13+」 narrative 廃止、 calendar gating ruled なし)
+drift_note:
+  - 本 spec doc § 0.1 で 「manual_pack registry 登録」 narrative は 5/10 21:05 訂正済 (actual = manual_pack.py は utility module、 MusicProvider subclass ではない)
+  - § 1.2 + § 3 の Approval Gate / Audit Log / cost_estimate narrative は actual 既 reify 済 (quality_gate.py / costs.py / run_logs DB) との重複 narrative、 「追加 reify」 ではなく 「既存 form と新 form の integrate refactor」 narrative が正しい
+  - 詳細は audit baseline § 3 「既 reify 済機能 (改善案 4 narrative との重複)」 参照、 本 spec doc は audit baseline で re-sketch 必要
 ---
 
 # broadcast-os 共通 Adapter Contract Spec

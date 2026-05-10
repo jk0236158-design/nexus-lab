@@ -1,16 +1,21 @@
 ---
 date: 2026-05-10
 owner: Iwa (Lead Engineer)
-status: draft (jun confirm Q1 GO 済、 Kagami QA review pending、 Kai schema freeze joint draft 5/13+ tied)
+status: drift_correction_2026-05-10 (5/10 22:50 audit baseline 経由 「broadcast-os 側 actual interface form audit せず pull form narrative 起稿」 drift detect、 詳細は `nexus-lab/research/broadcast_os_actual_state_audit_2026-05-10.md` 参照)
 purpose: broadcast-os 完成度向上 reform — Yuino ↔ broadcast-os connect interface spec (前回 spawn return I3 軸 detail)
 audience: developer (technical spec)
 related:
+  - nexus-lab/research/broadcast_os_actual_state_audit_2026-05-10.md (audit baseline、 broadcast-os repo actual structure)
   - broadcast_os_completion_reform_spec_2026-05-08.md (前回 spawn return)
   - broadcast_layer_adapter_contract_spec_2026-05-10.md (姉妹 spec、 同日起稿)
   - feedback_aira_yuino_naming_fixed (1 entity 2 narrative、 Aira = Yuino)
   - feedback_aira_ownership_shift_kai_lead (Aira 実装 = Kai / Yuino 商品化 = Zen)
   - feedback_yuino_conversation_insights_axis (Knot research connect)
   - project_broadcast_layer_integration (broadcast-os = nokaze 4 layer 第 4 piece)
+phase_target: Phase 1 期間中 (5/08-5/21) organic 着手 (「5/13+」 narrative 廃止)
+drift_note:
+  - 本 spec doc は broadcast-os 側 actual cli.py + orchestrator.py + meeting/ + studio/ の interface form audit 未完了で pull form narrative 起稿
+  - 改善案 5 (Yuino observation cycle pull form connect) は audit baseline で再 sketch 必要、 broadcast-os 側 actual interface 確認後に form 確定
 ---
 
 # Yuino ↔ broadcast-os connect interface spec

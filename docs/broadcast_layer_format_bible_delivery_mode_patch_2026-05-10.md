@@ -1,15 +1,20 @@
 ---
 date: 2026-05-10
 owner: Akari (Frontend / Docs / Visual / Motion Design Engineer)
-status: draft (5/10 起稿、 Iwa + Zen review pending)
+status: drift_correction_2026-05-10 (5/10 22:35 jun 指摘経由 「actual broadcast-os repo audit せず spec doc 起稿」 drift detect、 詳細は `nexus-lab/research/broadcast_os_actual_state_audit_2026-05-10.md` 参照)
 purpose: broadcast-os Format Bible に delivery_mode 拡張 + Slidev subprocess form + process_panel primitive 6 件 + nokaze-design 整合 5 ruled の reference spec
 audience: Akari + Iwa 共同 (4 ヶ月初心者 audience は § 6 のみ)
 related:
+  - nexus-lab/research/broadcast_os_actual_state_audit_2026-05-10.md (audit baseline、 5/13+ narrative 廃止 + 改善案 re-sketch baseline)
   - team_memory/_shared/nokaze_marketing_workflow_2026-05-09.md (slide artifact policy)
   - team_memory/zen/feedback_yuino_conversation_insights_axis.md (5 panel 構造、 process narrative connect)
   - ~/.claude/skills/nokaze-design/SKILL.md (色 + 書体 + 禁忌 visual)
   - CLAUDE.md § 報告 form 4 ヶ月初心者向け 3 段固定 (audience matrix と整合)
-phase_target: 5/13+ Phase 1 期間内 reify (本 patch = spec only、 実装は Iwa 主担当)
+phase_target: Phase 1 期間中 (5/08-5/21) organic 着手 (5/10 22:35 jun 指摘経由 「5/13+」 narrative 廃止、 calendar gating ruled なし、 必要なら今夜 / 明日着手 OK)
+drift_note:
+  - 本 spec doc は 5/10 13:00-22:00 起稿時に broadcast-os repo の actual code audit を skip して 4 layer registry pattern narrative のみで起稿した drift narrative reflect
+  - actual には sibling module 24 件 + 既 reify 済機能 (quality_gate.py / costs.py / metabolic/ + slide artifact form 設定 + docs) あり、 本 spec doc 内の改善案は audit baseline で re-sketch 必要
+  - 5/13+ Phase 1 narrative は廃止、 各 5/13+ occurrence は audit baseline 参照で 「Phase 1 期間中 organic 着手」 narrative に置換
 ---
 
 # broadcast-os Format Bible — delivery_mode 拡張 patch (5/10 起稿)

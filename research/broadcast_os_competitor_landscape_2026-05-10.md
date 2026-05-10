@@ -1,10 +1,14 @@
 ---
 date: 2026-05-10
 owner: Hoshi (Lead Researcher)
-status: ready_for_phase_1 (5/10 19:42 jun GO + 5/10 21:25 Zen finalize、 competitor monitoring ritual + audience-facing positioning narrative reify は 5/13+ carry)
+status: drift_correction_2026-05-10 (5/10 22:50 audit baseline 経由 「broadcast-os actual code audit せず positioning narrative 起稿」 drift detect、 詳細は `nexus-lab/research/broadcast_os_actual_state_audit_2026-05-10.md` 参照)
 purpose: broadcast-os 完成度向上 reform の競合 landscape audit + positioning narrative 起稿。 Zen 集約 narrative + 前回 spawn return H1 / H2 / H4 軸 detail。
 audience: Zen / Kai / jun + 内部 reference (developer / 研究 priority)
-phase_target: 5/13+ Phase 1 期間内 reify (broadcast-os 公開 episode reference + Yuino 商品 narrative positioning 連動 + competitor monitoring ritual default 化)
+phase_target: Phase 1 期間中 (5/08-5/21) organic 着手 (「5/13+」 narrative 廃止)
+drift_note:
+  - 本 spec doc § 2.2 で broadcast-os 内部実装現況を baseline narrative 化、 但し actual repo の 30+ commit history (Phase 5c metabolic learning loop 実機 E2E 確認 commit `ef9fe27` 等) audit 未完
+  - § 7 「公開 organizational diary as program」 positioning narrative は broadcast-os actual deliverable form と整合確認必要、 5/11 朝 audit baseline で carry
+  - audience-facing positioning narrative の Yuino 商品 narrative 反映 (§ 13 step 2) は Phase 1 期間中 organic 着手 OK (nexus-lab repo 内完結 scope)
 ---
 
 # broadcast-os Competitor Landscape (2026-05-10)

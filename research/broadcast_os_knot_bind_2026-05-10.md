@@ -1,10 +1,14 @@
 ---
 date: 2026-05-10
 owner: Hoshi (Lead Researcher)
-status: ready_for_phase_1 (5/10 19:42 jun GO + 5/10 21:10 Zen finalize、 broadcast-os repo 直接反映は permission resolve 後)
+status: drift_correction_2026-05-10 (5/10 22:50 audit baseline 経由 「broadcast-os metabolic learning loop actual schema audit 未完で alias narrative form 起稿」 drift detect、 詳細は `nexus-lab/research/broadcast_os_actual_state_audit_2026-05-10.md` 参照)
 purpose: broadcast-os の Metabolic Learning Layer v3 (MetaClaw-inspired) と Knot 5 役割 の bind narrative + column rename narrative reframe + Knot 用語 → 4 ヶ月初心者 audience-facing form paraphrase substitute list 起稿。
 audience: Zen / Kai / jun + 内部 reference (research priority)、 paraphrase substitute list section は商品 user / jun 個人 / 信用蓄積 audience 向け
-phase_target: 5/13+ Phase 1 期間内 reify (broadcast-os repo の docs / column / wiki への alias narrative table 反映、 jun + Kai + Zen 3 者合意 form)
+phase_target: Phase 1 期間中 (5/08-5/21) organic 着手 (「5/13+」 narrative 廃止)
+drift_note:
+  - § 2.1 で broadcast-os 内部 schema (learning_insights / learning_skills / bible_patch_proposal) を baseline narrative 化、 但し actual `src/pipeline/metabolic/` 配下 (commit 367569e + ef9fe27 reify 済) の実 schema audit 未完
+  - § 5 paraphrase substitute list 14 件は Knot research-side narrative の独立 axis、 actual schema との整合は audit baseline で 5/11 朝 carry
+  - substitute list の Yuino 商品 narrative + jun 報告 form 適用 step (§ 10.2) は Phase 1 期間中 organic 着手 OK (broadcast-os repo 直接 write 不要)
 ---
 
 # broadcast-os Knot Bind (2026-05-10)

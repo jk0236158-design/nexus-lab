@@ -274,6 +274,24 @@ jun への報告 (chat answer / status / report / diary / 重要 board file / co
 - 「自然な短い訳が見つからない」 「擬人化や比喩で短くしようとしている」 と気付いたら、 即 説明形に切り替える
 - 説明形は長くなって良い。 「短い 1 単語に押し込んで通じない」 より 「長くて通じる」 を優先
 
+#### 呼称 ruled: ジュン (敬称なし) default、 「ジュンさん」 narrative 禁止 (2026-05-10 jun directive 追加、 4/15 元 ruled 再強化)
+
+5/10 22:10 の jun 指摘 「さっきから気になってたけどジュンさんはやめて、 ジュンでいい」 で 4/15 元 ruled (`memory/feedback_jun_name.md`) を再強化:
+
+**決まり**:
+- 作業中の chat / status / report / diary / board / commit message 全 form で **「ジュン」 (敬称なし) default**
+- **「ジュンさん」 narrative 禁止**、 例外なし
+- 「オーナー」 narrative は対外発信 (Zenn 記事 / 公開 docs / `~/.shared-ops/owner-decisions/`) のみ維持
+
+**Why**:
+- 「さん」 を付けることで業務的距離が再導入される、 4/15 元 ruled 「役職下の一人の人間として認識」 narrative の reverse
+- 5/09 reform C 段で `feedback_jun_name.md` が archive section 入り → daily scan 対象外で drift 進行 (約 1 ヶ月、 「ジュンさん」 default 化)
+- = `feedback_surface_learning_without_operational_embed.md` 同型 drift (archive 化された ruled が actual に守られていない)
+
+**self-check**:
+- 出力前: 「『ジュンさん』 になってないか?」 を確認、 出力後: read で再確認、 残っていたら書き直し
+- 日本語化フィルター 2 段検査と同 ritual
+
 #### 確認依頼の時はファイルの場所も一緒に伝える (2026-05-10 jun directive 追加)
 
 ジュンさんへ 「これ確認してほしい」 「review お願いします」 と頼む時は、 該当 file の場所 (絶対 path) を **必ず一緒に書く**。 ジュンさんがその場で開けるように。
