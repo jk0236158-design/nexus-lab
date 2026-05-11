@@ -30,7 +30,7 @@ broadcast-os の **既設 Presentation Layer 設計** に slide / process / hybr
 本 patch の射程:
 
 1. delivery_mode field を Format Bible に追加 (4 enum 値)
-2. Slidev subprocess form の実装 module 構造 (新 `src/presentation/`)
+2. Slidev subprocess form の実装 module 構造 (`src/pipeline/slide/`、 既 4 layer registry pattern 整合、 2026-05-11 path narrative update by Kagami QA review P1 fix、 旧 `src/presentation/` narrative は audit baseline で superseded)
 3. process_panel primitive 6 件 spec (broadcast-os 唯一無二の弾)
 4. nokaze-design 整合 ruled 5 件 (Slidev theme + Direction Layer 共通)
 5. audience 別 visual form 切替 matrix
