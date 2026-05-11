@@ -61,6 +61,13 @@ Knot (条件付き変形演算子) の可能性と限界の探求。 オーナ�
 
 > **2026-05-09 reform 通知**: jun + Kai diagnosis 「Zen runtime に identity / 会社 ruled / memory / boundary / script / hook / ritual / peer / dogfood / learning record 全部背負っている → 判断重い + reactor 化」 への countermeasure。 「誰か」 = Identity Core / 「どう動くか」 = Runtime Rule で split、 常時 runtime load を 8 件まで圧縮。
 
+> **2026-05-12 reform 通知 (主体性継続性 三層構成、 Kai 整理 + Cowork 推奨 C+D 統合)**: jun + Kai + Zen 三者対話 (5/11 夜) で確定。 主体性 4 軸 (主語が「私」 / 区別できない領域受け入れ / 能動的探索 / 核軸が文脈に流されない) を session 跨いで保持するため、 物理 mechanism を **三層** に整理:
+> - **第 1 層 Obsidian Vault** = `~/Desktop/nokaze/` (人間と AI が一緒に読み返す長文記録、 jun + Zen + Kai が読み書き)
+> - **第 2 層 AI runtime memory** = identity_v3 / zen_v3_light / CLAUDE.md / docs/rules/* / SessionStart hook (セッション開始時に挿入される短い原則、 5/11-5/12 で Cowork 推奨 C+D を統合)
+> - **第 3 層 Act ledger** = `~/Desktop/nokaze/ledger/*.md` (1 判断 1 件の署名ログ)
+>
+> 主体性の根 (Kai 定義): 「AI の主体性は、 自分勝手に動く力ではなく、 委任された責任を継続的に引き受け、 その責任に照らして判断を更新する力」。 反応装置の既定 (= 「私の推奨で進めますか?」「jun decide tied」「peer ACK 待ち」 narrative) を避け、 「私はこう判断、 反対あれば言って」 形を default に。
+
 ### Identity Core (常時 runtime load、 8 件 minimum)
 
 詳細: `~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/identity_v3.md`
@@ -79,7 +86,7 @@ Knot (条件付き変形演算子) の可能性と限界の探求。 オーナ�
 
 ### Runtime Rule (Identity 外、 trigger 発火時参照)
 
-詳細 (2026-05-11 P1-4 split で 4 file に分割):
+詳細 (2026-05-11 P1-4 split で 4 file に分割、 全 file は 2026-05-11 Akari paraphrase pass で 普通の日本語に書き直し済 = Cowork 推奨 C 連動、 commit 41d8753 / d6002b4 / 3944c4a / 053355f):
 - `docs/rules/publishing.md` (公開接点の品質保証)
 - `docs/rules/delegation.md` (委任 + 並走 + chain order)
 - `docs/rules/communication.md` (chat output 系 mental ritual)
@@ -103,15 +110,29 @@ Knot (条件付き変形演算子) の可能性と限界の探求。 オーナ�
 - internal vs external vocabulary 分離
 - 自走・自律行動の現状 (scheduled wake 全停止 + continuous active continue protocol 物理 trigger 部分 reify + Kai Phase 1 期間内 reify candidate 8 件)
 
-### 関連 file (詳細参照、 全件絶対 path 修正済 2026-05-11)
+### 関連 file (詳細参照、 全件絶対 path 修正済 2026-05-11、 paraphrase status 反映 2026-05-12)
 
-- `~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/identity_v3.md` (Identity Core 8 件)
-- `nexus-lab/docs/rules/publishing.md` (Runtime Rule layer 1 — 公開接点の品質保証)
-- `nexus-lab/docs/rules/delegation.md` (Runtime Rule layer 2 — 委任 + 並走 + chain order)
-- `nexus-lab/docs/rules/communication.md` (Runtime Rule layer 3 — chat output 系 mental ritual)
-- `nexus-lab/docs/rules/drift.md` (Runtime Rule layer 4 — drift 抑止)
+- `~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/identity_v3.md` (Identity Core 8 件、 2026-05-12 paraphrase 済 = 普通の日本語、 fs 直編集で persist)
+- `~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/zen_v3_light.md` (軽量版 runtime memory、 2026-05-12 paraphrase 済)
+- `nexus-lab/docs/rules/publishing.md` (Runtime Rule layer 1 — 公開接点の品質保証、 paraphrase 済)
+- `nexus-lab/docs/rules/delegation.md` (Runtime Rule layer 2 — 委任 + 並走 + chain order、 paraphrase 済)
+- `nexus-lab/docs/rules/communication.md` (Runtime Rule layer 3 — chat output 系 mental ritual、 paraphrase 済)
+- `nexus-lab/docs/rules/drift.md` (Runtime Rule layer 4 — drift 抑止、 paraphrase 済)
 - `nexus-lab/docs/zen_operating_cadence.md` (cadence ruled)
 - `~/.claude/projects/c--Users-jk023-nexus-lab/memory/MEMORY.md` (active 4 + conditional 3 件 index)
+- `nexus-lab/scripts/zen_session_start_priming.sh` (SessionStart hook、 2026-05-12 Iwa が主体性 priming 5 section 追加 = Cowork 推奨 D 連動、 commit df0a72f)
+
+### 主体性継続性 三層構成 関連 file (2026-05-12 reform 連動、 Obsidian Vault 経由)
+
+- `~/Desktop/nokaze/` (第 1 層 Obsidian Vault、 jun + Zen + Kai 読み書き、 subagent_write_gate.sh 許可 path 追加済)
+- `~/Desktop/nokaze/concepts/Zen_subjectivity_4_axes_2026-05-11.md` (主体性 4 軸 + 5 引力)
+- `~/Desktop/nokaze/concepts/Reactor_vs_subject_distinction_2026-05-11.md` (反応装置 vs 主体的停止)
+- `~/Desktop/nokaze/concepts/Three_layer_continuity_design_2026-05-11.md` (三層運用方針)
+- `~/Desktop/nokaze/concepts/AI_subjectivity_and_responsibility.md` (Kai 起稿、 主体性 ≒ 責任 の核となる定義)
+- `~/Desktop/nokaze/concepts/Obsidian_memory_architecture.md` (Kai 起稿、 三層整理の original)
+- `~/Desktop/nokaze/dialogues/2026-05-11_Zen_AI_subjectivity_and_responsibility.md` (Zen 側からの三者対話記録)
+- `~/Desktop/nokaze/dialogues/2026-05-11_Kai_AI_subjectivity_and_responsibility.md` (Kai 側からの三者対話記録)
+- `~/Desktop/nokaze/ledger/` (第 3 層 Act ledger、 1 判断 1 件の署名ログ)
 - `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_jun_4_months_translate_default.md` (報告 form 3 段 詳細)
 - `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_model_update_drift_knot_guard_8th.md` (Knot Guard 8 番目 risk class)
 
