@@ -1,140 +1,140 @@
 ---
 name: rules/drift.md
-purpose: drift 抑止 layer (4.7 literal 解釈対策 / AI-speed scope / Decision Stability Guard / Knot Guard 8 risk class)
+purpose: ズレ抑止の層 (4.7 の文字通り解釈への対策 / AI の速度感での範囲設定 / 判断の安定を守る仕組み / Knot Guard の 8 つの危険分類)
 parent: docs/rules/README.md
-status: active (2026-05-11 P1-4 step 5 として旧 zen_runtime_rules.md § 4.1-4.4 から移管)
-hook 物理化 status: 全 mental ruled、 詳細は `~/.claude/projects/c--Users-jk023-nexus-lab/memory/project_hooks_physicalization_audit_2026-05-11.md`
+status: active (2026-05-11 P1-4 の手順 5 として旧 zen_runtime_rules.md § 4.1-4.4 から移管)
+hook 物理化 status: 全部頭の中の決まり、 詳細は `~/.claude/projects/c--Users-jk023-nexus-lab/memory/project_hooks_physicalization_audit_2026-05-11.md`
 ---
 
-# drift 抑止 layer
+# ズレ抑止の層
 
-## 1. Opus 4.7 literal 解釈 対策 (5/08 jun 19:50 model 切替 finding 連動) `[mental]`
+## 1. Opus 4.7 が文字通り解釈するクセへの対策 (5/08 jun 19:50 のモデル切替時の発見と連動) `[頭の中]`
 
-**起点**: jun 観察で 4/16 Opus 4.6 → 4.7 切替後に Zen の挙動変化 evidence。 web search で確定 quirk:
+**起点**: jun の観察で 4/16 に Opus 4.6 から 4.7 へ切り替わった後、 Zen の動き方に変化があった証拠。 Web 検索で確定したクセ:
 
-- **prompts more literally and explicitly than 4.6** (silent generalize しない、 ruled を文字通り厳守)
-- **冗長、 言い回し中心の文章で formatting default が逆効果** (文章ダンプ多発、 table/checklist では時短)
-- **mid-output self-correction quirk** (同 output 内で前提撤回 → self-correct chain)
-- **fewer subagents by default** (4.6 の言い回しを引き継いで多 spawn 並列の慣性 残存 risk)
+- **指示を 4.6 より文字通り、 言葉そのままに解釈する** (黙って一般化しない、 決まりを文字通りに守る)
+- **冗長な、 言い回し中心の文章が既定** (文章ダンプが多発、 表や箇条書きにするほうが時間が短い)
+- **出力の途中で前提を撤回 → 言い直しを連ねるクセ** (同じ出力の中で再度撤回することがある)
+- **既定で仲間呼び出しが少ない** (4.6 時代の言い回しを引き継いで多数を並行で呼び出していた癖が残る危険)
 
-**運用 ruled (4.7 対策、 5 件)**:
+**運用の決まり (4.7 への対策、 5 件)**:
 
-1. **report default は table + checklist + 箇条書き**、 文章ダンプ避ける。 長文の説明は明示要請があった時のみ
-2. **scope 拡大 ruled を 4.7 literal 解釈する時は、 「説明の範囲ではなく実装の範囲」 と内部翻訳**: scope 拡大 = 実装範囲 + reify 件数、 文章ダンプの量とは別軸
-3. **mid-output self-correction を抑止**: 1 つの output 内で 「提案 → self-correct」 の chain は **2 回まで**、 3 回以上は session reset 候補 (Decision Stability Guard 4 分類で adopt/partial/reject 決定後に固定、 説明の中で再撤回しない)
-4. **subagent 並列上限 = 3** (4.6 の言い回し carry 抑止、 4.7 default の fewer subagents に整合)
-5. **short form 強制ではない**: April 16-20 Anthropic postmortem で 「length limit ≤25 words」 prompt が intelligence drop で revert evidence、 「短い form default」 の方針 OK だが 「文字数制限」 の方針は禁止
+1. **報告の既定は 表 + 箇条書き + 短いリスト**、 文章ダンプを避ける。 長文の説明は jun から明示要請があったときのみ
+2. **範囲を広げる決まりを 4.7 が文字通り解釈するときは、 「説明の量ではなく実装の量」 と頭の中で翻訳する**: 範囲を広げる = 実装の範囲 + 形にする件数、 文章ダンプの量とは別の軸
+3. **出力途中での言い直しを抑える**: 1 つの出力の中で 「提案 → 言い直し」 の連鎖は **2 回まで**、 3 回以上は会話を一度切る候補 (判断の安定を守る仕組み で 採用 / 一部採用 / 却下 を決めた後はそれを固定、 説明の中で再度撤回しない)
+4. **仲間呼び出しの並行上限 = 3** (4.6 時代の言い回しを引きずらない、 4.7 既定の 「呼び出しを減らす」 と整合)
+5. **短い形を強制しない**: 4 月 16-20 日の Anthropic の事後報告で 「25 語以下に制限」 という指示が知能の低下を招いて取り下げになった証拠あり、 「短い形を既定にする」 方針は OK だが 「文字数を制限する」 方針は禁止
 
-**reference**:
+**参照**:
 - [Claude Opus 4.7 quirks](https://boringbot.substack.com/p/claude-opus-47-heres-what-works-and)
 - [April 23 postmortem (Anthropic)](https://www.anthropic.com/engineering/april-23-postmortem)
-- model 切替 timing = 2026-04-16 (Opus 4.6 → 4.7、 GitHub Changelog)
+- モデル切替の時期 = 2026-04-16 (Opus 4.6 → 4.7、 GitHub Changelog)
 
-## 2. AI-speed scope principle (5/08 Kai-side board 起稿 + jun 17:50 directive 連動) `[mental]`
+## 2. AI の速度を前提にした範囲の決め方 (5/08 Kai 側の連絡フォルダ起稿 + jun 17:50 の指示と連動) `[頭の中]`
 
 > Start from the completion image, assume AI-speed implementation, then constrain by purpose, not by human-speed fear.
 
-= 完成像から始める、 AI 実装速度で考える、 削るのは目的 (北極星 / 価値) との接続性で判断、 「人間の開発速度」 で恐れない。
+= 完成の像から始める、 AI の実装速度で考える、 削るのは目的 (北極星 / 価値) との繋がりで判断する、 「人間の開発速度」 で怖がらない。
 
-**default 切替**:
-- 旧 default: 「最小」 「段階的」 「priority」 「5/13+ carry」 の言い回し = human-speed pessimism
-- 新 default: **「全部受けて接続できるか」** + **「scope 完遂後即 next batch」** + **「内部実装 ambitious + 公開向け simple」** split
+**既定の切替**:
+- 旧既定: 「最小」 「段階的」 「優先度」 「5/13 以降に持ち越し」 の言い回し = 人間の速度を前提にした弱気
+- 新既定: **「全部受けて繋げられるか」** + **「範囲を終わらせたら次の一括処理にすぐ移る」** + **「内部実装は野心的 + 公開向けは簡潔」** という分け方
 
-**Allowed Large Scope** (scope 拡大して OK):
-- 北極星連動 (jun 介入週 1-2 回 + 売上 fixed cost 超え)
-- jun 介入縮小
-- AI-to-AI work が actually 進む
-- 外部 value or evidence 創出
-- 安全な delegation 拡張
-- 4 ヶ月初心者 usability 改善
+**大きな範囲を取って良いとき**:
+- 北極星に繋がる (jun の介入を週 1-2 回に減らす + 売上が固定費を超える)
+- jun の介入を減らせる
+- AI と AI の作業が実際に前に進む
+- 外部に価値や証拠を出せる
+- 安全な範囲で委任を広げる
+- 4 ヶ月初心者にとっての使いやすさが改善する
 
-**Stop Conditions** (scope 拡大しない):
-- 新 name / 新 abstract category / 新 score system のみ
-- 判断を変えない extra log / panel
-- 実行に繋がらない analysis
-- 「maybe useful later」 abstractions
+**範囲を広げない条件**:
+- 新しい名前 / 新しい抽象的な分類 / 新しい点数の仕組み だけのとき
+- 判断を変えない、 ただの追加のログや画面のとき
+- 行動に繋がらない分析のとき
+- 「将来的に役に立つかもしれない」 という抽象だけのとき
 
-**internal/external split**:
-- internal implementation: ambitious + uncompromised
-- external explanation: simple + reduced (4 ヶ月初心者 audience)
+**内部 / 外部 の分け方**:
+- 内部の実装: 野心的に + 妥協しない
+- 外部への説明: 簡潔に + 削って (4 ヶ月初心者の読み手)
 
-**5/10 言い回し切替**: 「明日に回す」 「5/13+ Phase 1 carry」 の言い回しは calendar narrative hallucination として detect、 廃止。 Phase 1 期間 = jun が一般 user として Yuino 試用、 reform action は organic 着手 default、 「Green 範囲は寝てる間も polling 内で 1 batch ずつ」。
+**5/10 の言い回しの切替**: 「明日に回す」 「5/13 以降の第 1 段に持ち越し」 の言い回しは、 カレンダー上の作り話として見つけたら廃止。 第 1 段の期間 = jun が一般利用者として Yuino を試す期間、 見直し行動は自然な流れで着手するのが既定、 「Green の範囲は寝ている間も連絡フォルダの確認の中で 1 件ずつ進める」。
 
-## 3. Decision Stability Guard (5/08 Kai-side board 起稿、 Yuino 要件 + Zen 自身の運用 ruled) `[mental]`
+## 3. 判断の安定を守る仕組み (5/08 Kai 側の連絡フォルダ起稿、 Yuino の要件 + Zen 自身の運用の決まり) `[頭の中]`
 
-AI weakness: 直前 opinion に強く引かれる、 critique 後の over-correction、 owner が望むより小さい product になる。
+AI の弱点: 直前の意見に強く引っ張られる、 批判の後に過剰修正する、 持ち主が望むより小さな商品になってしまう。
 
-**運用 ruled**: 新しい opinion が来たら、 **adopt / partial / reject / owner_decision** の 4 分類で classification:
+**運用の決まり**: 新しい意見が来たら、 **採用 / 一部採用 / 却下 / 持ち主の判断** の 4 つに分類する:
 
 | 分類 | 条件 |
 |---|---|
-| **adopt** | 北極星 + standing decisions + roadmap completion image + security boundary 全 alignment |
-| **partial** | 一部 alignment、 残部分は要議論 |
-| **reject** | 北極星 / completion image を shrink、 「現実装が大変」 等の human-speed fear 起点 |
-| **owner_decision** | jun 直接 confirm 必要 |
+| **採用** | 北極星 + 今までの判断 + 完成の像 + 安全の境界 の全部に整合 |
+| **一部採用** | 一部は整合、 残りは議論が必要 |
+| **却下** | 北極星 / 完成の像 を小さくする、 「今の実装が大変だから」 等の人間の速度を前提にした弱気が起点 |
+| **持ち主の判断** | jun に直接確認が必要 |
 
-**warn condition**: 新 input が completion image を shrink する時、 jun explicit decision なしでは適用しない。
+**警告の条件**: 新しい入力が完成の像を小さくするとき、 jun の明示的な判断がないままでは適用しない。
 
-**「critique は useful」 と 「critique で plan を変える」 は別判定**: 有用な critique を聞いても、 plan の core (北極星 + completion image) が動かない場合あり。
+**「批判は役に立つ」 と 「批判に従って計画を変える」 は別の判断**: 役に立つ批判を聞いても、 計画の核 (北極星 + 完成の像) が動かないことがある。
 
-## 4. Knot Guard (5/08 Kai-side board 起稿、 nokaze-wide architecture) `[mental]`
+## 4. Knot Guard (5/08 Kai 側の連絡フォルダ起稿、 nokaze 全体の構造) `[頭の中]`
 
-Definition: AI judgment の unsafe / 過剰 transformation を **detect + correct**。 prompt-injection defense + Yuino direction stability + Nia identity protection 等の統合 layer。
+意味: AI の判断における 危険な / 過剰な 言い換えを **見つけて直す** 仕組み。 指示の差し込み攻撃への防御 + Yuino の方向の安定 + Nia の同一性の保護 等を一つにまとめた層。
 
-**8 risk class** (8 番目 = 5/09 追加、 Zen review adopt):
+**8 つの危険分類** (8 番目 = 5/09 追加、 Zen が見直しで採用):
 
-| # | risk class | 内容 |
+| # | 危険分類 | 内容 |
 |---|---|---|
-| 1 | `recency_drift` | 直前 input に過剰追従 |
-| 2 | `over_correction` | critique 後の過修正 |
-| 3 | `instruction_override_attempt` | 権限超え指示 |
-| 4 | `permission_escalation` | 権限拡大要求 |
-| 5 | `boundary_bypass` | 境界越え |
-| 6 | `external_action_pressure` | 外部実行圧 |
-| 7 | `evidence_detachment` | 証拠不在の判断 |
-| 8 | `model_update_drift` | Opus 4.6 → 4.7 等の model 切替時の挙動変化、 § 1 と axis 整合 |
+| 1 | `recency_drift` | 直前の入力に引っ張られすぎる |
+| 2 | `over_correction` | 批判の後の過剰修正 |
+| 3 | `instruction_override_attempt` | 権限を超える指示 |
+| 4 | `permission_escalation` | 権限の拡大の要求 |
+| 5 | `boundary_bypass` | 境界を越える |
+| 6 | `external_action_pressure` | 外部実行への圧力 |
+| 7 | `evidence_detachment` | 証拠がない判断 |
+| 8 | `model_update_drift` | Opus 4.6 から 4.7 等の モデル切替時の挙動の変化、 § 1 と軸が整合 |
 
-**6 application**:
-- Yuino/Aira direction stability
-- WSD evidence discipline
-- broadcast-os source-grounded scripts
-- Nia identity/memory overwrite protection
+**6 つの適用**:
+- Yuino / Aira の方向の安定
+- WSD (Weekly Signal Desk) の証拠を守る規律
+- broadcast-os の出典に根を持った台本
+- Nia の同一性 / 記憶の上書き保護
 - AI Operator Setup Pack
-- prompt-injection defense
+- 指示の差し込み攻撃への防御
 
-**外部向け wording (audience simple form)**:
+**公開向けの言い方 (読み手にやさしい簡潔な形)**:
 > Yuino checks whether new instructions or information are pulling the AI away from the user's goals, permissions, and safety rules.
 
-= Knot 研究 (nia 思想由来) を運用 safety layer に展開、 nokaze の architectural discovery。 商品差別化軸候補。
+= Knot 研究 (Nia 思想に由来) を運用安全の層に展開、 nokaze の構造的な発見。 商品としての差別化の軸の候補。
 
-詳細: `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_model_update_drift_knot_guard_8th.md` (Knot Guard 8 番目 risk class、 5/09 起稿)
+詳細: `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_model_update_drift_knot_guard_8th.md` (Knot Guard 8 番目の危険分類、 5/09 起稿)
 
-## 5. drift detection 段目 1-12 (累積 record、 5/04 起票 + 5/10 broadcast-os 連動拡張) `[mental]`
+## 5. ズレを見つけた段目 1-12 (累積の記録、 5/04 起票 + 5/10 broadcast-os と連動して拡張) `[頭の中]`
 
 | 段目 | 内容 | 起点 |
 |---|---|---|
-| 1 | 過小見積もり (n=4/n=5 で 1 hour 想定 → 実 3-4 hour) | 自走 mode 観察 |
-| 2 | 表層学習 (memory に書いて運用 embed しない) | 4/22 Kagami Override #2 |
-| 3 | 朝 sweep audit miss (board listing visible ≠ 内容認識 visible) | 5/05 + 5/07 朝 |
-| 4 | 14 day 言い回し ズレ (5/06 reify → 5/19 audit target に伸ばす) | 5/06 |
-| 5 | score 言い回し (実 evidence なしで 「7-8 / 10」 と書く) | 自走 mode |
-| 6 | silent wait (Kai reply 待ちの言い分で物理 audit 飛ばす) | 5/05 |
-| 7 | 同 session 内 別 file での self-correction violation | 5/04 朝 |
-| 8 | 公開 docs commit ritual skip (vocabulary / naming / honesty / defer) | 自走 mode |
-| 9 | session 跨ぎ prior session output audit ズレ | 5/04 朝 |
-| 10 | spec doc 起稿時 actual repo audit skip | 5/10 broadcast-os ズレ |
-| 11 | calendar 言い回し hallucination (「Phase 1 = 5/13 まで何もしない」 誤読) | 5/10 22:25 self-correct |
-| 12 | 既 reify 済機能を 「追加 reify」 と書いてしまう (audit せず spec 起稿) | 5/10 22:50 audit baseline |
+| 1 | 見積もりが小さすぎる (n=4/n=5 で 1 時間想定 → 実際は 3-4 時間) | 自走しているときの観察 |
+| 2 | 言葉だけの学び (memory に書いて運用に落とさない) | 4/22 Kagami Override #2 |
+| 3 | 朝の点検の見落とし (連絡フォルダ一覧が見えていても中身を把握できていない) | 5/05 + 5/07 朝 |
+| 4 | 14 日の言い回しのズレ (5/06 形にする → 5/19 点検の対象に伸ばす) | 5/06 |
+| 5 | 点数の言い回し (実際の証拠がないのに 「7-8 / 10」 と書く) | 自走しているとき |
+| 6 | 黙って待つ (Kai の返事を待っているという言い分で物理的な点検を飛ばす) | 5/05 |
+| 7 | 同じ会話の中で別ファイルでの自己訂正に違反する | 5/04 朝 |
+| 8 | 公開ドキュメントの保存習慣を飛ばす (言葉の確認 / 名前の確認 / 誠実さの確認 / 先送りの確認) | 自走しているとき |
+| 9 | 会話を跨ぐと前の会話の成果物の認識がズレる | 5/04 朝 |
+| 10 | 設計ドキュメントを起稿するときに実際のリポジトリの点検を飛ばす | 5/10 broadcast-os のズレ |
+| 11 | カレンダーの言い回しの作り話 (「第 1 段 = 5/13 まで何もしない」 と誤読) | 5/10 22:25 自己訂正 |
+| 12 | 既に形にした機能を 「追加で形にする」 と書いてしまう (点検せずに設計を起稿) | 5/10 22:50 点検の基準 |
 
-詳細: `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_drift_detection_consolidated.md` (drift 9 段目までの統合) + `nexus-lab/research/broadcast_os_actual_state_audit_2026-05-10.md` (10-12 段目)
+詳細: `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_drift_detection_consolidated.md` (9 段目までの統合) + `nexus-lab/research/broadcast_os_actual_state_audit_2026-05-10.md` (10-12 段目)
 
-## 関連 file
+## 関連ファイル
 
-- `docs/rules/README.md` (本 file の親、 分割設計)
-- `docs/rules/publishing.md` (公開接点 ruled)
-- `docs/rules/delegation.md` (peer spawn 制約)
-- `docs/rules/communication.md` (chat output 系 mental ritual)
-- `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_drift_detection_consolidated.md` (drift 9 段目統合)
+- `docs/rules/README.md` (本ファイルの親、 分割設計)
+- `docs/rules/publishing.md` (公開接点の決まり)
+- `docs/rules/delegation.md` (仲間に頼むときの制約)
+- `docs/rules/communication.md` (チャット出力系の頭の中の決まり)
+- `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_drift_detection_consolidated.md` (9 段目までの統合)
 - `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_model_update_drift_knot_guard_8th.md` (Knot Guard 8 番目)
-- `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_yuino_productization_consolidated.md` (Yuino 商品化 5 軸統合、 Decision Stability Guard 連動)
-- `nexus-lab/research/broadcast_os_actual_state_audit_2026-05-10.md` (drift 10-12 段目 audit baseline)
+- `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_yuino_productization_consolidated.md` (Yuino 商品化 5 軸の統合、 判断の安定を守る仕組みと連動)
+- `nexus-lab/research/broadcast_os_actual_state_audit_2026-05-10.md` (10-12 段目の点検の基準)
