@@ -53,6 +53,54 @@
           }
         ]
       }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -lc 'export HOME=/c/Users/jk023; bash /c/Users/jk023/nexus-lab/scripts/zen_stop_hook.sh'",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -lc 'export HOME=/c/Users/jk023; bash /c/Users/jk023/nexus-lab/scripts/zen_posttooluse_outcome.sh'",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "FileChanged": [
+      {
+        "matcher": ".shared-ops/board/",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -lc 'export HOME=/c/Users/jk023; bash /c/Users/jk023/nexus-lab/scripts/zen_board_filechanged.sh'",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -lc 'export HOME=/c/Users/jk023; bash /c/Users/jk023/nexus-lab/scripts/zen_precompact_snapshot.sh'",
+            "timeout": 10
+          }
+        ]
+      }
     ]
   }
 }

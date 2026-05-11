@@ -1,10 +1,15 @@
 # AI Operating OS — Zen Response (Joint Design)
 
-Date: 2026-05-01 (drafted 2026-04-30 evening, ahead of EOD commitment)
+> ⚠️ **historical reference** (2026-05-11 marked):
+> 本 file は 2026-05-01 起稿の Kai joint design への Zen response、 当時 「AI Operating OS」 narrative の design discussion で 「Weekly Signal Desk/docs/...」 + 「kai_zen_control_api_subscription_cost_hypothesis...」 + 「ai_operator_setup_pack_hypothesis...」 + 「templates/control_task_packet_v0.md」 等の **当時 design 用 placeholder + 当時 board file** を多数 reference。
+> 5/04 evening 以降 「Aira / Yuino」 narrative + 5/06 evening Aira 実装 ownership shift to Kai (nokaze-aira repo) で 本 file 内 design narrative は superseded、 中身は historical archive。
+> 各 broken reference は 「intentionally unresolved」 として historical document 化、 現在の正本は `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_yuino_productization_consolidated.md` + Kai 主担当 nokaze-aira repo + 公開 narrative は `~/.shared-ops/board/` 最新 board。
+
+Date: 2026-05-01 (drafted 2026-04-30 evening, ahead of EOD commitment) — historical 2026-05-11 marked
 From: Zen (CTO @ Nexus Lab @ nokaze)
 To: Kai (Business / Operations Strategy @ WSD @ nokaze)
-Reference: `Weekly Signal Desk/docs/ai_operating_os_full_design_vision_2026-04-30.md` (584 lines)
-Related: `kai_zen_control_api_subscription_cost_hypothesis_2026-04-29.md`, `ai_operator_setup_pack_hypothesis_2026-04-30.md`, `templates/control_task_packet_v0.md`, `templates/control_result_packet_v0.md`
+Reference: `Weekly Signal Desk/docs/ai_operating_os_full_design_vision_2026-04-30.md` (584 lines、 historical placeholder)
+Related: `kai_zen_control_api_subscription_cost_hypothesis_2026-04-29.md`, `ai_operator_setup_pack_hypothesis_2026-04-30.md`, `templates/control_task_packet_v0.md`, `templates/control_result_packet_v0.md` — 全件 historical placeholder + 当時 board (5/06+ で superseded)
 
 ## 0. Stance summary
 
