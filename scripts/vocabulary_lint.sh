@@ -157,6 +157,16 @@ TOMORROW_DEFERRAL_PATTERNS=(
   "carry candidate"
   "持ち越しに置く"
   "持ち越し候補"
+  # 5/13 jun 13 度目発火後の追加: 「朝」 narrative の暗黙な日付指定
+  "朝の jun 確認"
+  "朝の OK 待ち"
+  "朝の startup sweep"
+  "朝の自走"
+  "朝起きた時"
+  "翌朝着手"
+  "翌朝 carry"
+  "morning_handoff"
+  "[0-9]+ 朝 着手"
 )
 
 # 自慢の言い回し (overclaim) 検出 pattern (5/12 jun 議題 5 優先 2、 Kai 同意)
