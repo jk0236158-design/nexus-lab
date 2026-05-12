@@ -76,6 +76,81 @@ ZEN_TODAY=${ZEN_TODAY:-0}
 UNRESPONDED=$((KAI_TODAY - ZEN_TODAY))
 if (( UNRESPONDED < 0 )); then UNRESPONDED=0; fi
 
+# ---------------------------------------------------------------
+# 英単語検出 layer (advisory only、 5/12 jun 7+ 度目発火連動)
+# 既存の block / allow logic を override しない、 stderr 警告のみ
+# 直前の assistant message を payload から取り出して英単語 grep
+# ---------------------------------------------------------------
+LAST_OUTPUT=""
+TRANSCRIPT_PATH=""
+if command -v jq &>/dev/null; then
+  # Claude Code Stop hook payload candidates: assistant_message / last_message / transcript の最終 entry
+  LAST_OUTPUT=$(echo "$INPUT" | jq -r '.assistant_message // .last_message // .message // ""' 2>/dev/null)
+  TRANSCRIPT_PATH=$(echo "$INPUT" | jq -r '.transcript_path // ""' 2>/dev/null)
+else
+  # Python fallback (既存 hook と同じ pattern)
+  LAST_OUTPUT=$(echo "$INPUT" | python -c "import sys, json
+try:
+    d = json.load(sys.stdin)
+    print(d.get('assistant_message') or d.get('last_message') or d.get('message') or '')
+except Exception:
+    print('')" 2>/dev/null || echo "")
+  TRANSCRIPT_PATH=$(echo "$INPUT" | python -c "import sys, json
+try:
+    d = json.load(sys.stdin)
+    print(d.get('transcript_path', ''))
+except Exception:
+    print('')" 2>/dev/null || echo "")
+fi
+# fallback: transcript_path field 経由で直前 assistant turn を読み取り
+if [[ -z "$LAST_OUTPUT" || "$LAST_OUTPUT" == "null" ]]; then
+  if [[ -n "$TRANSCRIPT_PATH" && "$TRANSCRIPT_PATH" != "null" && -f "$TRANSCRIPT_PATH" ]]; then
+    # JSONL 最終 assistant entry の text を抽出 (jq 不要、 grep + python で対応)
+    LAST_OUTPUT=$(python -c "
+import json, sys
+path = '$TRANSCRIPT_PATH'
+try:
+    with open(path, 'r', encoding='utf-8', errors='ignore') as f:
+        lines = f.readlines()
+    for line in reversed(lines):
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            obj = json.loads(line)
+        except Exception:
+            continue
+        role = obj.get('role') or (obj.get('message') or {}).get('role')
+        if role != 'assistant':
+            continue
+        # collect text fields
+        texts = []
+        def walk(x):
+            if isinstance(x, dict):
+                if 'text' in x and isinstance(x['text'], str):
+                    texts.append(x['text'])
+                for v in x.values():
+                    walk(v)
+            elif isinstance(x, list):
+                for v in x:
+                    walk(v)
+        walk(obj)
+        print(' '.join(texts)[:20000])
+        break
+except Exception:
+    pass
+" 2>/dev/null || echo "")
+  fi
+fi
+
+if [[ -n "$LAST_OUTPUT" && "$LAST_OUTPUT" != "null" ]]; then
+  ENGLISH_COUNT=$(echo "$LAST_OUTPUT" | grep -oiE '\b(narrative|form|drift|scope|boundary|default|reform|actual|reify|fire|carry|honor|integrity|sweep|consume|signature|continuity|root cause|self-correct|self-detect|override|recall|evidence|step|batch|layer|chain|prompt|context|mechanism|ritual|ledger|review|judgment|judge|ack|go|ad-hoc|visible|visibility|audience)\b' 2>/dev/null | wc -l | tr -d ' ')
+  ENGLISH_COUNT=${ENGLISH_COUNT:-0}
+  if (( ENGLISH_COUNT > 10 )); then
+    echo "[英語混じり警告] 直前の出力に英単語 ${ENGLISH_COUNT} 件検出 (閾値 10)、 次の出力で 普通の日本語への書き直しを優先 (5/12 jun 7+ 度目発火連動)" >&2
+  fi
+fi
+
 # actionable 判定 + block / allow (iter 2 fix: marker exists の packet は false positive、 PENDING_WITHOUT_MARKER で判定)
 if (( PENDING_WITHOUT_MARKER > 0 )) || (( UNRESPONDED > 0 )); then
   # block stop、 Claude continue
