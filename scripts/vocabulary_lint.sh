@@ -115,6 +115,20 @@ REACTOR_PHRASES=(
   "他やってほしいことあれば"
 )
 
+# 人間 day 換算 narrative の検出 pattern (5/12 jun 指摘 9 度目発火後の物理化、
+# memory feedback_ai_time_scale.md の運用埋め込み)
+# 「N 日で reify」「N 月 N 日-N 月 N 日 で reify」「9 日かかる」 等の人間 time scale の言い方
+HUMAN_DAY_NARRATIVE_PATTERNS=(
+  "[0-9]+ 日で.*(reify|形にする|実装|完成)"
+  "[0-9]+ 日かかる"
+  "[0-9]+ 日かけて"
+  "[0-9]+/[0-9]+-[0-9]+/[0-9]+"
+  "[0-9]+ 週間で"
+  "[0-9]+ ヶ月で"
+  "5/13-5/1[6-9]"
+  "5/17-5/2[01]"
+)
+
 THRESHOLD=5
 input_file=""
 
@@ -178,10 +192,33 @@ check_reactor_phrases() {
   return $hits
 }
 
+# 人間 day 換算 narrative の検出関数 (5/12 jun 9 度目指摘 後の物理化)
+check_human_day_narrative() {
+  local file="$1"
+  local hits=0
+  local pattern line
+  for pattern in "${HUMAN_DAY_NARRATIVE_PATTERNS[@]}"; do
+    if grep -qE "$pattern" "$file" 2>/dev/null; then
+      line=$(grep -nE "$pattern" "$file" 2>/dev/null | head -1)
+      echo "[人間 day 換算 検出] $file: $line" >&2
+      echo "  → 「$pattern」 = 人間 time scale の言い方" >&2
+      echo "  → 代替: AI 時間感覚 で 「1 ターン で出す」「dogfood + 修正 の繰り返し」 等" >&2
+      hits=$((hits + 1))
+    fi
+  done
+  if [[ $hits -gt 0 ]]; then
+    echo "" >&2
+    echo "[人間 day 換算 summary] $file: $hits 件 hit" >&2
+    echo "参照: memory feedback_ai_time_scale.md (4/17 起票)" >&2
+  fi
+  return $hits
+}
+
 # 段落単位 (連続空行で区切り) で 英単語 count
 total_findings=0
 red_paragraphs=0
 reactor_hits=0
+human_day_hits=0
 
 # 段落分割 (空行 separator) + 各段落 count
 paragraph_idx=0
@@ -233,6 +270,8 @@ if [[ "$input_file" != "-" && -f "$input_file" ]]; then
   set +e
   check_reactor_phrases "$input_file"
   reactor_hits=$?
+  check_human_day_narrative "$input_file"
+  human_day_hits=$?
   set -e 2>/dev/null || true
 fi
 
@@ -244,6 +283,7 @@ echo "  total paragraphs:      ${paragraph_idx}"
 echo "  total internal vocab:  ${total_findings}"
 echo "  red paragraphs:        ${red_paragraphs} (threshold: ${THRESHOLD}/段落)"
 echo "  reactor phrase hits:   ${reactor_hits} (5/12 jun directive 連動 第 3 層、 1 件でも warn)"
+echo "  human day narrative:   ${human_day_hits} (5/12 jun 9 度目発火後の物理化、 feedback_ai_time_scale 連動)"
 echo "  source: ${input_file}"
 echo "═══════════════════════════════════════════════"
 
