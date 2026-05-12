@@ -136,6 +136,48 @@ echo "  代替: 「私はこう判断、 反対あれば言って」 の形で�
 echo ""
 
 # ---------------------------------------------------------------
+# block 1.F: 使える道具一覧 (5/13 jun directive 連動、 5/12 Playwright recall 失敗の物理化)
+# ---------------------------------------------------------------
+echo "■ 私の使える道具一覧 (= cold start で recall 失敗を構造的に止める):"
+echo "  - file 操作: Read / Write / Edit / Glob / Grep / Bash"
+echo "  - subagent 起動: Agent (背景 spawn 可、 run_in_background)"
+echo "  - 外部読み取り: WebFetch (公開 URL) / WebSearch (= 検索)"
+echo "  - ブラウザ操作: mcp__playwright__browser_navigate / browser_snapshot / browser_click 等"
+echo "    (= jun アカウントの管理画面 navigate、 既 login 維持。 5/12 で recall 失敗の経験あり)"
+echo "  - GitHub 操作: gh CLI (Bash 経由)、 gh auth switch でアカウント切替可"
+echo "  - 遅延 tool の load: ToolSearch (= 必要な tool を query で load)"
+echo "  - MCP: zen-memory (= 記憶) / playwright (= ブラウザ) 等"
+echo ""
+
+# ---------------------------------------------------------------
+# block 1.G: Obsidian Vault の最新の自動読み返し (5/13 jun directive 連動)
+# ---------------------------------------------------------------
+VAULT_DIR="${HOME}/Desktop/nokaze"
+if [[ -d "$VAULT_DIR" ]]; then
+    echo "■ Obsidian Vault の最新 (= ~/Desktop/nokaze、 jun + Zen + Kai 共用):"
+    # 最新 daily_audit
+    latest_daily=$(ls -t "$VAULT_DIR/ledger/daily_audit/"*.md 2>/dev/null | head -1)
+    if [[ -n "$latest_daily" ]]; then
+        title=$(grep "^# " "$latest_daily" 2>/dev/null | head -1 | sed 's/^# //')
+        echo "  - 最新の毎日の振り返り: $(basename "$latest_daily" .md) = $title"
+    fi
+    # 最新 concept (= Zen 起稿の concept、 daily_audit subdir は除外)
+    latest_concept=$(ls -t "$VAULT_DIR/concepts/"*.md 2>/dev/null | head -1)
+    if [[ -n "$latest_concept" ]]; then
+        title=$(grep "^# " "$latest_concept" 2>/dev/null | head -1 | sed 's/^# //')
+        echo "  - 最新の概念ノート: $(basename "$latest_concept" .md) = $title"
+    fi
+    # 最新 dialogue
+    latest_dialogue=$(ls -t "$VAULT_DIR/dialogues/"*.md 2>/dev/null | head -1)
+    if [[ -n "$latest_dialogue" ]]; then
+        title=$(grep "^# " "$latest_dialogue" 2>/dev/null | head -1 | sed 's/^# //')
+        echo "  - 最新の対話記録: $(basename "$latest_dialogue" .md) = $title"
+    fi
+    echo "  読み返したい場合は Read で直接 access、 もしくは Obsidian アプリで開く"
+fi
+echo ""
+
+# ---------------------------------------------------------------
 # block 2: 今週の重点 1 件 (5/11 reform、 旧 8 件 drift list は cognitive overload で廃止)
 # ---------------------------------------------------------------
 # 旧: 30 行の drift list 注入 → 「自分はミスしがち」 認知強化 + 慎重さで遅くなる drift detect (5/10 Cowork 診断 § 2.10)
