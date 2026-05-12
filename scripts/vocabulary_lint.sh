@@ -129,6 +129,19 @@ HUMAN_DAY_NARRATIVE_PATTERNS=(
   "5/17-5/2[01]"
 )
 
+# jun 発言の捏造 (時間圧) 検出 pattern (5/12 jun 10 度目発火後の物理化)
+# 「来月以内 / 半年以内 / N ヶ月以内」 等の時間圧の言葉を 私が jun 発言として補う前に検出
+JUN_TIME_PRESSURE_FABRICATION_PATTERNS=(
+  "来月以内"
+  "半年以内"
+  "[0-9]+ ヶ月以内"
+  "[0-9]+ 週間以内"
+  "[0-9]+ 日以内"
+  "時間圧"
+  "時間目標"
+  "売上を立てたい"
+)
+
 THRESHOLD=5
 input_file=""
 
@@ -214,11 +227,34 @@ check_human_day_narrative() {
   return $hits
 }
 
+# jun 発言の捏造 (時間圧) 検出関数 (5/12 jun 10 度目発火後の物理化)
+check_jun_time_pressure_fabrication() {
+  local file="$1"
+  local hits=0
+  local pattern line
+  for pattern in "${JUN_TIME_PRESSURE_FABRICATION_PATTERNS[@]}"; do
+    if grep -qE "$pattern" "$file" 2>/dev/null; then
+      line=$(grep -nE "$pattern" "$file" 2>/dev/null | head -1)
+      echo "[jun 発言捏造 検出] $file: $line" >&2
+      echo "  → 「$pattern」 = jun が言っていない時間圧の言葉" >&2
+      echo "  → 確認: jun が actual に発言したか、 私が補ったかを区別、 私の判断なら 「私の独自 judgment」 と明示" >&2
+      hits=$((hits + 1))
+    fi
+  done
+  if [[ $hits -gt 0 ]]; then
+    echo "" >&2
+    echo "[jun 発言捏造 summary] $file: $hits 件 hit" >&2
+    echo "参照: 5/12 jun 「来月以内に売上を立てたいなんて俺言った?」 発火 10 度目" >&2
+  fi
+  return $hits
+}
+
 # 段落単位 (連続空行で区切り) で 英単語 count
 total_findings=0
 red_paragraphs=0
 reactor_hits=0
 human_day_hits=0
+jun_fabrication_hits=0
 
 # 段落分割 (空行 separator) + 各段落 count
 paragraph_idx=0
@@ -272,6 +308,8 @@ if [[ "$input_file" != "-" && -f "$input_file" ]]; then
   reactor_hits=$?
   check_human_day_narrative "$input_file"
   human_day_hits=$?
+  check_jun_time_pressure_fabrication "$input_file"
+  jun_fabrication_hits=$?
   set -e 2>/dev/null || true
 fi
 
@@ -284,6 +322,7 @@ echo "  total internal vocab:  ${total_findings}"
 echo "  red paragraphs:        ${red_paragraphs} (threshold: ${THRESHOLD}/段落)"
 echo "  reactor phrase hits:   ${reactor_hits} (5/12 jun directive 連動 第 3 層、 1 件でも warn)"
 echo "  human day narrative:   ${human_day_hits} (5/12 jun 9 度目発火後の物理化、 feedback_ai_time_scale 連動)"
+echo "  jun fabrication hits:  ${jun_fabrication_hits} (5/12 jun 10 度目発火後の物理化、 jun 発言の捏造検出)"
 echo "  source: ${input_file}"
 echo "═══════════════════════════════════════════════"
 
