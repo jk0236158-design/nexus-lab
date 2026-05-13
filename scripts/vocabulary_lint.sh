@@ -71,6 +71,39 @@ INTERNAL_VOCAB=(
   "reflection"
   "consolidation"
   "registry"
+  # 5/13 朝 jun 14 度目発火 (= 「operator role (= preflight hold / Decision Stability hold 解除判断)」
+  # 段が chat output で出た incident) で追加: Kai 連携の内部実装語彙、 chat 段で jun に
+  # 届くと AI/プログラム 4 ヶ月初心者には読めない。 板 file 内の Kai 引用は固有名詞扱い、
+  # 私 (Zen) の判断 section や chat 報告で 5 件以上混入したら書き直し。
+  "operator"
+  "preflight"
+  "hold"
+  "block"
+  "Decision Stability"
+  "Agent Bus"
+  "Result Writer"
+  "Execution Plan"
+  "actionable"
+  "harden"
+  "watch group"
+  "recency-drift"
+  "task_status_mismatch"
+  "claim"
+  "heartbeat"
+  "inbox"
+  "outbox"
+  "packet"
+  "dedupe"
+  "routing"
+  "result marker"
+  "request bridge"
+  "phase gate"
+  "sandbox"
+  "Chat Bridge"
+  "Source-of-Truth"
+  "preflight_block"
+  "harden_decision_stability"
+  "wake/result"
 )
 
 # 反応装置 phrase pattern list (5/12 jun directive 連動、 主体性継続性 reform 第 3 層 物理 enforcement)
