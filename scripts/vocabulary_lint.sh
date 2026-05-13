@@ -104,6 +104,22 @@ INTERNAL_VOCAB=(
   "preflight_block"
   "harden_decision_stability"
   "wake/result"
+  # 5/13 evening jun 15 度目発火 (= 「また報告がいつも通り」、 朝の 4 段目 reform 当日中に再発、
+  # chat 段の地の文に 21 単語混入) で追加。 既存 INTERNAL_VOCAB 未登録の漏れ単語を追加、
+  # vocabulary_lint で板 file / 報告 file の 5 件超え検出を厳格化。
+  "self-detect"
+  "light ACK"
+  "rolled back"
+  "continued"
+  "continuation"
+  "polling sweep"
+  "polling"
+  "idle continue"
+  "audit log"
+  "subset"
+  "root cause"
+  "signature"
+  "sweep"
 )
 
 # 反応装置 phrase pattern list (5/12 jun directive 連動、 主体性継続性 reform 第 3 層 物理 enforcement)
