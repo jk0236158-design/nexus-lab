@@ -74,6 +74,27 @@ describe("generateProject", () => {
     await fs.remove(targetDir);
   });
 
+  it("should create a config project with schema loader files", async () => {
+    const config = makeConfig({
+      projectName: path.join(TEST_DIR, "test-config"),
+      template: "config",
+    });
+    await generateProject(config);
+
+    const targetDir = path.resolve(process.cwd(), config.projectName);
+    expect(await fs.pathExists(targetDir)).toBe(true);
+    expect(await fs.pathExists(path.join(targetDir, "package.json"))).toBe(true);
+    expect(await fs.pathExists(path.join(targetDir, "src", "config", "schema.ts"))).toBe(true);
+    expect(await fs.pathExists(path.join(targetDir, "src", "config", "loader.ts"))).toBe(true);
+    expect(await fs.pathExists(path.join(targetDir, ".env.example"))).toBe(true);
+    expect(await fs.pathExists(path.join(targetDir, "tests"))).toBe(true);
+
+    // package-lock.json should not be copied (cleanup verification)
+    expect(await fs.pathExists(path.join(targetDir, "package-lock.json"))).toBe(false);
+
+    await fs.remove(targetDir);
+  });
+
   it("should throw if directory exists and is not empty", async () => {
     const name = path.join(TEST_DIR, "test-exists");
     const targetDir = path.resolve(process.cwd(), name);

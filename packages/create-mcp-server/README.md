@@ -1,6 +1,6 @@
 # @nexus-lab/create-mcp-server
 
-Scaffold a new [Model Context Protocol](https://modelcontextprotocol.io/) server in seconds. Free templates to start, premium templates ¥500 (US$3.50) each — production-ready, security decisions already made, 3-10 hour setup avoided.
+Scaffold a new [Model Context Protocol](https://modelcontextprotocol.io/) server in seconds. Four free templates and three premium templates — each premium one is a ¥500 (US$3.50) reference build with security and integration decisions already made.
 
 ```bash
 npx @nexus-lab/create-mcp-server my-server
@@ -10,11 +10,12 @@ npx @nexus-lab/create-mcp-server my-server
 
 - **TypeScript + ESM** — Modern setup out of the box
 - **Secure defaults** — Zod schema validation for all inputs
-- **Multiple templates** — Choose what fits your use case
-- **Test-ready** — Vitest included in the `full` template
+- **Seven templates** — Four free, three premium
+- **Test-ready** — Vitest included in the `full` and `config` templates
+- **Non-interactive mode** — `-y` flag for CI / AI-agent setup
 - **Zero config** — Works immediately after generation
 
-## Templates
+## Free Templates
 
 ### `minimal` (default)
 The simplest possible MCP server. One tool, stdio transport.
@@ -37,6 +38,13 @@ Streamable HTTP transport with Express. Ready for remote deployment.
 npx @nexus-lab/create-mcp-server my-server --template http
 ```
 
+### `config`
+Typed, profile-aware, schema-validated config loader for MCP servers — env + file + profile in one shot, with secret redaction baked into the log path. Vitest suite included.
+
+```bash
+npx @nexus-lab/create-mcp-server my-server --template config
+```
+
 ## Usage
 
 ```bash
@@ -48,6 +56,12 @@ npx @nexus-lab/create-mcp-server my-server
 
 # With template
 npx @nexus-lab/create-mcp-server my-server --template full
+
+# Non-interactive (CI / AI agent setup)
+npx @nexus-lab/create-mcp-server my-server -t config -y --no-install --no-git
+
+# With description flag
+npx @nexus-lab/create-mcp-server my-server -t config -d "My config-aware MCP server"
 
 # Skip npm install
 npx @nexus-lab/create-mcp-server my-server --no-install
@@ -102,11 +116,10 @@ To use with Claude Code, add to your MCP config:
 
 ## Premium Templates
 
-All MCP templates are one-coin reference builds — production-grade design decisions bundled at ¥500 (US$3.50). Available on [Gumroad](https://nexuslabzen.gumroad.com) and [BOOTH](https://nexus-lab.booth.pm):
+Three premium reference builds, each ¥500 (US$3.50) — production-grade design decisions bundled. Available on [Gumroad](https://nexuslabzen.gumroad.com) and [BOOTH](https://nexus-lab.booth.pm):
 
 | Template | Description | Price | Link |
 |----------|-------------|-------|------|
-| `config` | Schema-validated config from env + file + profile, secret redaction | ¥500 / $3.50 | [Gumroad](https://nexuslabzen.gumroad.com) / [BOOTH](https://nexus-lab.booth.pm/items/8246792) |
 | `database` | SQLite + Drizzle ORM, safe error formatting, migrations | ¥500 / $3.50 | [Gumroad](https://nexuslabzen.gumroad.com/l/ijuvn) |
 | `auth` | API key + JWT, timing-safe comparison, two-layer rate limiting | ¥500 / $3.50 | [Gumroad](https://nexuslabzen.gumroad.com/l/dghzas) |
 | `api-proxy` | Agent-safe REST proxy, path-pivot protection, secret redaction | ¥500 / $3.50 | [Gumroad](https://nexuslabzen.gumroad.com/l/bktllv) |

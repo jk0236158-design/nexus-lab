@@ -10,9 +10,15 @@ const program = new Command();
 program
   .name("create-mcp-server")
   .description("Scaffold a new MCP server project with TypeScript and secure defaults")
-  .version("0.3.0")
+  .version("0.5.1")
   .argument("[project-name]", "Name of the project to create")
-  .option("-t, --template <template>", "Template to use (minimal, full, http)", "minimal")
+  .option(
+    "-t, --template <template>",
+    "Template to use (free: minimal, full, http, config / premium: database, auth, api-proxy)",
+    "minimal"
+  )
+  .option("-d, --description <description>", "Project description")
+  .option("-y, --yes", "Skip all prompts, use defaults / provided flags only")
   .option("--no-install", "Skip npm install")
   .option("--no-git", "Skip git init")
   .action(async (projectName: string | undefined, options) => {

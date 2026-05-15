@@ -2,7 +2,7 @@
 
 Typed, profile-aware, schema-validated config for MCP servers — env / file / profile in one shot, with secret redaction baked into the log path.
 
-Built on `@nexus-lab/mcp-toolkit`. ¥1,000 / $7. MIT-licensed.
+Built on `@nexus-lab/mcp-toolkit`. Free template, MIT-licensed.
 
 ---
 

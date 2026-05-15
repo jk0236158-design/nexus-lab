@@ -10,7 +10,8 @@
     "dist",
     "templates/minimal",
     "templates/full",
-    "templates/http"
+    "templates/http",
+    "templates/config"
   ],
   "scripts": {
     "build": "tsc",

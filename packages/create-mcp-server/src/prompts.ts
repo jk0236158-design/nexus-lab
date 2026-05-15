@@ -4,7 +4,7 @@ import chalk from "chalk";
 export interface ProjectConfig {
   projectName: string;
   description: string;
-  template: "minimal" | "full" | "http" | "database" | "auth" | "api-proxy";
+  template: "minimal" | "full" | "http" | "config" | "database" | "auth" | "api-proxy";
   install: boolean;
   git: boolean;
 }
@@ -23,6 +23,10 @@ const TEMPLATES = [
     value: "http",
   },
   {
+    title: `${chalk.bold("config")} ${chalk.dim("— Zod-validated config from env + file + profile, secret redaction")}`,
+    value: "config",
+  },
+  {
     title: `${chalk.bold.yellow("database")} ${chalk.dim("— SQLite + Drizzle ORM + CRUD")} ${chalk.yellow("★ Premium")}`,
     value: "database",
   },
@@ -38,11 +42,17 @@ const TEMPLATES = [
 
 export async function runPrompts(
   projectName: string | undefined,
-  options: { template?: string; install?: boolean; git?: boolean }
+  options: {
+    template?: string;
+    install?: boolean;
+    git?: boolean;
+    description?: string;
+    yes?: boolean;
+  }
 ): Promise<ProjectConfig> {
   const questions: prompts.PromptObject[] = [];
 
-  if (!projectName) {
+  if (!projectName && !options.yes) {
     questions.push({
       type: "text",
       name: "projectName",
@@ -53,7 +63,7 @@ export async function runPrompts(
     });
   }
 
-  if (!options.template) {
+  if (!options.template && !options.yes) {
     questions.push({
       type: "select",
       name: "template",
@@ -62,22 +72,24 @@ export async function runPrompts(
     });
   }
 
-  questions.push({
-    type: "text",
-    name: "description",
-    message: "Description:",
-    initial: "A Model Context Protocol server",
-  });
+  if (!options.description && !options.yes) {
+    questions.push({
+      type: "text",
+      name: "description",
+      message: "Description:",
+      initial: "A Model Context Protocol server",
+    });
+  }
 
   const onCancel = () => {
     throw new Error("cancelled");
   };
 
-  const answers = await prompts(questions, { onCancel });
+  const answers = questions.length > 0 ? await prompts(questions, { onCancel }) : {};
 
   return {
-    projectName: projectName || answers.projectName,
-    description: answers.description || "A Model Context Protocol server",
+    projectName: projectName || answers.projectName || "my-mcp-server",
+    description: options.description || answers.description || "A Model Context Protocol server",
     template: (options.template as ProjectConfig["template"]) || answers.template || "minimal",
     install: options.install !== false,
     git: options.git !== false,
