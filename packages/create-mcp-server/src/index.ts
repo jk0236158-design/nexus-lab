@@ -29,7 +29,14 @@ program
 
     try {
       const config = await runPrompts(projectName, options);
-      await generateProject(config);
+      const result = await generateProject(config);
+
+      // Premium templates redirect to the purchase page and never create a
+      // project directory — skip the "Project created successfully!" trailer
+      // so the output is not misleading.
+      if (result.premiumRedirect) {
+        return;
+      }
 
       console.log();
       console.log(chalk.green("  ✓ Project created successfully!"));

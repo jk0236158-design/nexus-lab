@@ -95,6 +95,26 @@ describe("generateProject", () => {
     await fs.remove(targetDir);
   });
 
+  it("should return premiumRedirect=true and not create a directory for premium templates", async () => {
+    const name = path.join(TEST_DIR, "test-premium-redirect");
+    const config = makeConfig({ projectName: name, template: "database" });
+    const result = await generateProject(config);
+
+    expect(result.premiumRedirect).toBe(true);
+    const targetDir = path.resolve(process.cwd(), config.projectName);
+    expect(await fs.pathExists(targetDir)).toBe(false);
+  });
+
+  it("should return premiumRedirect=false for free templates", async () => {
+    const config = makeConfig({ projectName: path.join(TEST_DIR, "test-free-redirect-flag") });
+    const result = await generateProject(config);
+
+    expect(result.premiumRedirect).toBe(false);
+
+    const targetDir = path.resolve(process.cwd(), config.projectName);
+    await fs.remove(targetDir);
+  });
+
   it("should throw if directory exists and is not empty", async () => {
     const name = path.join(TEST_DIR, "test-exists");
     const targetDir = path.resolve(process.cwd(), name);

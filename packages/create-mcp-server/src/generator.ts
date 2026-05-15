@@ -15,7 +15,13 @@ function getTemplatesDir(): string {
   return fs.existsSync(devPath) ? devPath : srcPath;
 }
 
-export async function generateProject(config: ProjectConfig): Promise<void> {
+export interface GenerateResult {
+  /** True when the run completed by redirecting to a Premium purchase page
+   *  (no project directory was created). */
+  premiumRedirect: boolean;
+}
+
+export async function generateProject(config: ProjectConfig): Promise<GenerateResult> {
   // Premium templates are not bundled — redirect to purchase page
   const premiumUrl = getPremiumUrl(config.template);
   if (premiumUrl) {
@@ -26,7 +32,7 @@ export async function generateProject(config: ProjectConfig): Promise<void> {
     console.log();
     console.log(`  ${chalk.cyan("Get it here:")} ${premiumUrl}`);
     console.log();
-    return;
+    return { premiumRedirect: true };
   }
 
   const targetDir = path.resolve(process.cwd(), config.projectName);
@@ -101,4 +107,6 @@ export async function generateProject(config: ProjectConfig): Promise<void> {
       console.log(chalk.yellow("  Could not install dependencies. Run 'npm install' manually."));
     }
   }
+
+  return { premiumRedirect: false };
 }
