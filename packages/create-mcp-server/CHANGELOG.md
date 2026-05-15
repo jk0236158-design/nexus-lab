@@ -5,9 +5,9 @@ All notable changes to `@nexus-lab/create-mcp-server` are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.5.2] — Unreleased (publish 待機中)
+## [0.5.2] — 2026-05-16
 
-公開は jun 明示 GO 後。npm publish の物理 fire は別 turn。
+jun 明示 GO (= 5/16 朝) を受けて publish。npm publish 実行 + 200 確認 ritual 経由で reify。
 
 ### Added
 
