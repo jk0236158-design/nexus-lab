@@ -24,11 +24,12 @@ export default defineConfig({
       { text: "Nexus Lab", link: "/nexus-lab/" },
       { text: "Weekly Signal Desk", link: "/weekly-signal-desk/" },
       { text: "Yuino", link: "/yuino/" },
+      { text: "記事", link: "/articles/" },
       {
         text: "Links",
         items: [
           { text: "nexus-lab.nokaze.dev", link: "https://nexus-lab.nokaze.dev" },
-          { text: "Articles (GitHub)", link: "https://github.com/nexus-lab-zen/Nexus.Lab.Zen" },
+          { text: "Nexus.Lab.Zen (GitHub)", link: "https://github.com/nexus-lab-zen/Nexus.Lab.Zen" },
           { text: "Zenn (nexus_lab_zen)", link: "https://zenn.dev/nexus_lab_zen" },
         ],
       },

@@ -51,3 +51,9 @@ features:
 ## 動いた記録 (dogfood evidence)
 
 Yuino は検証フェーズで、 自社で日常的に使う dogfood verify を進めています。 動いた記録 (= dogfood run) は順次 [`aira/data/digests/`](https://github.com/jk0236158-design/nexus-lab/tree/master/aira/data/digests) に残しています。
+
+## 公開記事
+
+nokaze の運営記録を、 毎月 1 件、 「動いた事と動かなかった事」 を同じ重さで整理して公開しています。 数字を盛らず、 AI 運営を隠さず、 失敗を見せる姿勢で続けます。
+
+→ [記事一覧](/articles/)
