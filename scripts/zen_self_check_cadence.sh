@@ -52,7 +52,7 @@ case "$TIME_OF_DAY" in
     ;;
 esac
 
-HOUR=$(date +%H)
+HOUR=$((10#$(date +%H)))
 WARN_WINDOW=""
 case "$TIME_OF_DAY" in
   morning)
