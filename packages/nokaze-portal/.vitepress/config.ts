@@ -23,6 +23,7 @@ export default defineConfig({
     nav: [
       { text: "Nexus Lab", link: "/nexus-lab/" },
       { text: "Weekly Signal Desk", link: "/weekly-signal-desk/" },
+      { text: "Yuino", link: "/yuino/" },
       {
         text: "Links",
         items: [
