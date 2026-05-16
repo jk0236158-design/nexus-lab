@@ -273,6 +273,90 @@ if [[ "$notify_count" -eq 0 && "$queue_count" -eq 0 ]]; then
 fi
 
 echo ""
+
+# ---------------------------------------------------------------
+# block 1.H: 前夜申し送り (= 昨日の self-check から「何が終わってないか + 翌朝 default」 を抽出)
+# spec: docs/rules/self_check_cadence.md § 4-2 (= z-1)
+# ---------------------------------------------------------------
+YESTERDAY=$(date -d "yesterday" +%Y-%m-%d 2>/dev/null || python -c "from datetime import date, timedelta; print((date.today() - timedelta(days=1)).isoformat())" 2>/dev/null || true)
+YESTERDAY_LEDGER="${LEDGER_DIR}/daily_audit/${YESTERDAY}.md"
+
+if [[ -n "$YESTERDAY" && -f "$YESTERDAY_LEDGER" ]]; then
+    # find the last top-level section (= ^## NN.) that mentions self-check
+    # awk で line number を捕捉、 self-check を含む section の最終 NN を取得
+    last_sc_line=$(awk '/^## [0-9]+\..*self-check/ { ln=NR } END { print ln }' "$YESTERDAY_LEDGER")
+
+    if [[ -n "$last_sc_line" && "$last_sc_line" -gt 0 ]]; then
+        # section の終端 = 次の `^## ` line もしくは file 末尾
+        section_end=$(awk -v start="$last_sc_line" 'NR > start && /^## / { print NR-1; exit }' "$YESTERDAY_LEDGER")
+        if [[ -z "$section_end" ]]; then
+            section_end=$(wc -l < "$YESTERDAY_LEDGER")
+        fi
+
+        # section 内容を抽出
+        section_body=$(sed -n "${last_sc_line},${section_end}p" "$YESTERDAY_LEDGER")
+
+        # 「何が終わってないか」 sub-section を find + 抽出 (max 5 line)
+        unfinished=$(echo "$section_body" | awk '
+            /^### .*何が終わってないか/ { flag=1; next }
+            flag && /^### / { exit }
+            flag && /^## / { exit }
+            flag && /^- / { print; count++ }
+            flag && count >= 5 { exit }
+        ' | head -5)
+
+        # 「翌朝 default」 / 「reform candidate」 / 「next move」 / 「next fire」 sub-section を find
+        # 番号付き列挙 (= 1. 2. 3.) を優先抽出、 separator や空行で止める
+        next_default=$(echo "$section_body" | awk '
+            /^### .*(翌朝 default|reform candidate|next move|next fire|priority)/ { flag=1; next }
+            flag && /^### / { exit }
+            flag && /^## / { exit }
+            flag && /^---/ { exit }
+            flag && /^$/ { blank++; if (blank >= 2) exit; next }
+            flag && /^[0-9]+\. / { print; count++; blank=0 }
+            flag && /^- [^0-9]/ && count == 0 { print; count++; blank=0 }
+            flag && count >= 5 { exit }
+        ' | head -5)
+
+        if [[ -n "$unfinished" || -n "$next_default" ]]; then
+            echo "=== 前夜申し送り (= 昨日の 何が終わってないか + 翌朝 default) ==="
+            if [[ -n "$unfinished" ]]; then
+                echo "■ 何が終わってないか (= 昨日の self-check より):"
+                echo "$unfinished" | sed 's/^/  /'
+            fi
+            if [[ -n "$next_default" ]]; then
+                echo "■ 翌朝 default 候補 (= 昨日 self-check の reform candidate):"
+                echo "$next_default" | sed 's/^/  /'
+            fi
+            echo "  source: $(basename "$YESTERDAY_LEDGER")"
+            echo ""
+        else
+            echo "[WARN] section H: 昨日 ledger 内 self-check section に sub-section 抽出失敗 (${YESTERDAY_LEDGER})" >&2
+        fi
+    else
+        echo "[WARN] section H: 昨日 ledger 内 self-check section 不在 (${YESTERDAY_LEDGER})" >&2
+    fi
+else
+    echo "[WARN] section H: 昨日 ledger 不在 (${YESTERDAY_LEDGER:-yesterday unresolved})" >&2
+fi
+
+# ---------------------------------------------------------------
+# block 1.I: 月初 external review fire reminder (= 1 日 - 3 日のみ fire)
+# spec: docs/specs/external_review_cadence_spec_v0.md § 4-2 (= z-2)
+# ---------------------------------------------------------------
+DAY_OF_MONTH=$(date +%d)
+# 0 詰めを除去
+DOM_NUM=$((10#$DAY_OF_MONTH))
+if [[ "$DOM_NUM" -ge 1 && "$DOM_NUM" -le 3 ]]; then
+    echo "=== 月初 external review reminder ==="
+    echo "■ 月初 (= 1 - 3 日) external review fire 候補軸:"
+    echo "  - 先月の memory feedback cross-cycle audit (= 同型再発 pattern detection)"
+    echo "  - Codex 経由 review (= scripts/codex-review.sh、 別 instance 視点)"
+    echo "  - 競合 / 類似 service 比較 (= 自分達の position relative measurement)"
+    echo "  spec: docs/specs/external_review_cadence_spec_v0.md § 3"
+    echo ""
+fi
+
 echo "■ priming 完了、 sweep 結果と合わせて 「今日の1件」 へ"
 echo "==========================="
 
