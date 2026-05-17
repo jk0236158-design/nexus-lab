@@ -144,10 +144,11 @@ except Exception:
 fi
 
 if [[ -n "$LAST_OUTPUT" && "$LAST_OUTPUT" != "null" ]]; then
-  ENGLISH_COUNT=$(echo "$LAST_OUTPUT" | grep -oiE '\b(narrative|form|drift|scope|boundary|default|reform|actual|reify|fire|carry|honor|integrity|sweep|consume|signature|continuity|root cause|self-correct|self-detect|override|recall|evidence|step|batch|layer|chain|prompt|context|mechanism|ritual|ledger|review|judgment|judge|ack|go|ad-hoc|visible|visibility|audience)\b' 2>/dev/null | wc -l | tr -d ' ')
+  ENGLISH_COUNT=$(echo "$LAST_OUTPUT" | grep -oiE '\b(narrative|form|drift|scope|boundary|default|reform|actual|reify|fire|carry|honor|integrity|sweep|consume|signature|continuity|root cause|self-correct|self-detect|override|recall|evidence|step|batch|layer|chain|prompt|context|mechanism|ritual|ledger|review|judgment|judge|ack|go|ad-hoc|visible|visibility|audience|audit|articulate|pattern|continuum|cycle|structural|sibling|surface)\b' 2>/dev/null | wc -l | tr -d ' ')
   ENGLISH_COUNT=${ENGLISH_COUNT:-0}
   if (( ENGLISH_COUNT > 10 )); then
-    echo "[英語混じり警告] 直前の出力に英単語 ${ENGLISH_COUNT} 件検出 (閾値 10)、 次の出力で 普通の日本語への書き直しを優先 (5/12 jun 7+ 度目発火連動)" >&2
+    echo "[英語混じり警告] 直前の出力に英単語 ${ENGLISH_COUNT} 件検出 (閾値 10)、 次の出力で 普通の日本語への書き直しを優先 (5/12 jun 7+ 度目発火連動 + 5/18 drift.md 15 段目 物理対策 1 連動)" >&2
+    echo "  paraphrase 候補: fire→動かす/やる、 audit→確認、 articulate→書く/整理する、 narrative→言い方/文章、 pattern→形/繰り返し、 drift→ずれ、 reify→形にする、 structural→構造的な、 sibling→似た形、 surface→気づいた/指摘、 cycle→繰り返し、 continuum→続き" >&2
   fi
 fi
 

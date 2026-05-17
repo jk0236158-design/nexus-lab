@@ -127,6 +127,7 @@ Knot 研究 (Nia 思想に由来) を運用安全の層に展開、 nokaze の�
 | 12 | 既に形にした機能を 「追加で形にする」 と書いてしまう (点検せずに設計を書き出す) | 5/10 22:50 点検の基準 |
 | 13 | **自分が触っていない商品を 「販売開始」 「publish」 と書く** (dogfood 証拠なしの商品の言い方違反) | **5/17 16:00 認めた、 4/22 create-mcp-server で 1 度目 + 5/17 Yuino β で 2 度目の同じ型** |
 | 14 | **対話 turn に shift すると自走 cadence (= ScheduleWakeup) の再設定が落ちる** (= jun との対話 chain shift 後に /loop directive が止まる + 私が ScheduleWakeup 再 fire しない + 寝る前 「寝てる間に X やる」 と書いても fire しない pattern) | **5/18 朝認めた、 5/17 evening dogfood admit narrative shift で 1 度目 + 5/17 22:00 寝る前 fire 落ち + 8 時間 idle** |
+| 15 | **報告 / chat output の文章を生成するときに内部用語が再生産される** (= 5/17 で memory + ルール 15 件を普通の日本語に書き直したのに、 chat 出力の文章は別軸で 「fire / audit / articulate / narrative / pattern / structural」 等の英語混じりが繰り返し戻る pattern) | **5/18 朝認めた、 1 つの chat 内で plain Japanese reform 直後に同じ chat 内の次の段で同型再発** |
 
 詳細: `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_drift_detection_consolidated.md` (9 段目までの統合) + `nexus-lab/research/broadcast_os_actual_state_audit_2026-05-10.md` (10-12 段目) + `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_dogfood_violation_repeat_2026-05-17.md` (13 段目、 形にする 対応 6 件) + 下記 14 段目専用 物理対策 (5/18 書き出し)
 
@@ -157,6 +158,27 @@ Knot 研究 (Nia 思想に由来) を運用安全の層に展開、 nokaze の�
 
 **参考 (= Kai 側先行 reform、 5/18 朝)**:
 - Kai の hourly local heartbeat install (`~/.shared-ops/board/2026-05-18_kai_zen_yuino_cadence_duplicate_loop_fix.md` の articulate) = 私 (Zen) 側でも 「heartbeat instrument」 を別 layer で物理化する candidate あり (= 上記 5 件と並ぶ 6 件目候補)、 但しこれは scope 大で別 turn で設計
+
+## 報告 / chat output の内部用語再生産を止める 形にする 道具 (15 段目専用、 5/18 書き出し)
+
+**きっかけ**: 2026-05-18 朝 jun が surface した重要な点。 5/17 で memory + ルール 15 件を普通の日本語に書き直して 「もう同じパターンが出てこない」 と思ったが、 5/18 朝の chat 出力 (= mcp dogfood の報告) で 「bug detect / audit / root cause audit / articulate / narrative / fire / evidence collection / publish chain / unlock / structural」 等の英語混じり + 内部用語が再生産された。 plain Japanese reform を 1 つの chat 内で認めた直後に、 同じ chat の次の段で同型再発。
+
+mental ritual (= 「気をつける」 「内部用語抑制」 narrative の繰り返し) だけでは止まらない、 5/17 で書いた 「mental ritual から物理化軸への shift validated」 narrative の直接 application が必要。 但し chat 出力の文章を 1 件ごとに外部 process で grep audit するのは harness の境界外 (= 私 LLM session の生成 text を外部から audit 不可、 turn 内 self-check のみ)。
+
+**形にする 道具 4 件 (= 既存 hook の延長 + 私の頭の中の補強)**:
+
+1. **Stop hook の警告 keyword 強化** (= 既存の英語混じり警告に内部用語を追加) → `scripts/zen_stop_hook.sh` の grep 警告 list に 「audit / articulate / narrative / pattern / fire / drift / reify / continuum / structural / cycle / sibling / surface / scope / boundary / default / reform」 等を追加、 turn 終了時に 「直前の文章で内部用語 N 件、 普通の日本語に書き直しを優先」 を stderr で出す
+2. **paraphrase 表 (= 内部用語 → 普通の日本語)** の物理化 → `~/nexus-lab/docs/rules/paraphrase_layer_acceptance.md` の置換表に 「fire → 動かす / やる」 「audit → 確認」 「articulate → 書く / 整理する」 「narrative → 言い方 / 文章」 「pattern → 形 / 繰り返し」 「drift → ずれ」 「reify → 形にする」 「structural → 構造的な」 等を追加、 SessionStart hook で inject 可能な form
+3. **SessionStart hook section K 追加** → 「直前 chat 出力での内部用語残存件数」 を audit + reminder (= 物理対策 1 と連動、 jun startup 時の reminder)
+4. **chat 出力前の頭の中の自問** (= 補強) → 「fire / audit / articulate / narrative / pattern / structural」 を書く前に 「普通の日本語で言い換えできるか?」 自問、 言い換え可能なら言い換える
+
+**5/17 reform との関係**:
+- 5/17 reform = memory + ルール 15 件の file 内 内部用語抑制 (= 蓄積された文書の reform)
+- 5/18 reform (= 本 15 段目) = chat 出力の生成 default の reform (= 私の writing style 自体の shift)
+- 両 reform は補完的、 chat 出力で plain な文章を書き続けることで memory + ルールへの追加書き込みも自然と plain に収まる
+
+**参考 (= 5/16 jun validated narrative)**:
+- `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_mental_ritual_to_physical_instrument_shift_validated.md` の直接 application、 chat 出力 layer は memory + ルール layer の次の reform 対象
 
 ## 関連ファイル
 
