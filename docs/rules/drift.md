@@ -125,8 +125,22 @@ AI の弱点: 直前の意見に強く引っ張られる、 批判の後に過�
 | 10 | 設計ドキュメントを起稿するときに実際のリポジトリの点検を飛ばす | 5/10 broadcast-os のズレ |
 | 11 | カレンダーの言い回しの作り話 (「第 1 段 = 5/13 まで何もしない」 と誤読) | 5/10 22:25 自己訂正 |
 | 12 | 既に形にした機能を 「追加で形にする」 と書いてしまう (点検せずに設計を起稿) | 5/10 22:50 点検の基準 |
+| 13 | **自分が触っていない商品を 「販売開始」 「publish」 と articulate** (= dogfood evidence なしの商品 narrative violation) | **5/17 16:00 admit、 4/22 create-mcp-server で 1 度目 + 5/17 Yuino β で 2 度目の同型再発** |
 
-詳細: `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_drift_detection_consolidated.md` (9 段目までの統合) + `nexus-lab/research/broadcast_os_actual_state_audit_2026-05-10.md` (10-12 段目)
+詳細: `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_drift_detection_consolidated.md` (9 段目までの統合) + `nexus-lab/research/broadcast_os_actual_state_audit_2026-05-10.md` (10-12 段目) + `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_dogfood_violation_repeat_2026-05-17.md` (13 段目、 物理化軸対策 6 件)
+
+## dogfood violation 抑止の物理化軸 (= 13 段目専用、 5/17 起稿)
+
+**起点**: 2026-05-17 jun 重要 admit 「mcp 商品で同じミスをしているのに今回も同じ。 対策をしてから行動しないとまた繰り返す」 連動。 mental ritual layer (= 5/03 起票 memory `feedback_publish_before_dogfood_premature.md`) のみでは 1.5 ヶ月で再発、 物理化軸 default 必須。
+
+**物理化軸 6 件 (= 物理 instrument 中心、 mental layer は補強のみ)**:
+
+1. `scripts/zen_dogfood_preflight.sh <product>` = 商品 narrative articulate 前 fire 必須、 evidence file 存在 check + last-modified check
+2. `pre_commit_public_docs_audit.sh` の 5 番目 chain として商品 narrative + dogfood evidence link check
+3. `task_table/active_tasks.md` 商品軸 entry に 「dogfood 状態」 field 必須 (= 「未着手 / 進行中 / 完了」 + last evidence date)、 dogfood 完了前は 「販売開始 / publish」 narrative entry 禁止
+4. `~/Desktop/nokaze/dogfood/<product>/<date>.md` form 固定、 1 dogfood セッション 1 file (= form spec は dogfood/README.md)
+5. 本 entry (= drift.md 13 段目)、 自身が触ってない商品の narrative 出した時の detection trigger ruled 化
+6. chat output ritual (= mental 補強) = 商品名 + 「売れ / publish / 販売開始」 narrative 出力前 self-question 1 件 = 「私自身がこの商品の dogfood evidence を物理 file で持ってるか?」 no → narrative 出さない
 
 ## 関連ファイル
 
