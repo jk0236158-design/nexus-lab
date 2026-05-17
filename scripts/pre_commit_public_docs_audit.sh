@@ -3,8 +3,8 @@
 #
 # 起点: 2026-05-08 enforcement layer reform 5-axis (axis 7).
 # 公開 docs (= audience-facing で出る path) に staged change がある時、
-# vocabulary_lint + naming_mixup_check + honesty_audit + defer_check の 4 chain
-# を fire し、 1 件以上 red があれば commit を block する。 bypass は
+# vocabulary_lint + naming_mixup_check + honesty_audit + defer_check + dogfood_evidence_link
+# の 5 chain を fire し、 1 件以上 red があれば commit を block する。 bypass は
 # `git commit --no-verify` で可能、 ただし bypass 時 stderr に warn を出す。
 #
 # 連動:
@@ -13,6 +13,7 @@
 #   - memory feedback_honesty_violation_exaggeration.md (honesty)
 #   - memory feedback_no_tomorrow_deferral.md (defer)
 #   - memory feedback_200_confirmation_ritual.md (200 確認 ritual との integration)
+#   - memory feedback_dogfood_violation_repeat_2026-05-17.md (dogfood evidence link、 5 番目 chain)
 #
 # 公開 docs path (5/08 時点 boundary):
 #   - products/
@@ -154,6 +155,49 @@ for f in "${PUBLIC_FILES[@]}"; do
         fi
     fi
 
+    # chain 5: dogfood_evidence_link (= 5/17 物理化軸 B、 商品 narrative 検出時 dogfood evidence link 必須化)
+    # spec: ~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_dogfood_violation_repeat_2026-05-17.md
+    # logic:
+    #   1. 商品名 keyword (= yuino / create-mcp-server / setup-memo / setup-pack) を検出
+    #   2. 商品 narrative keyword (= 販売開始 / publish / 売れ / 価格 / 購入) を検出
+    #   3. 両方 detect 時、 ~/Desktop/nokaze/dogfood/<product>/ に evidence file 1 件以上存在 check
+    #   4. evidence なし = red (= commit block + 「dogfood evidence なしで商品 publication narrative 禁止」)
+    #   5. evidence あり = green (= 「pre_commit pass = dogfood-linked publication candidate」)
+    DOGFOOD_ROOT="$HOME/Desktop/nokaze/dogfood"
+    declare -A PRODUCT_PATTERNS=(
+        [yuino]='[Yy]uino'
+        [create-mcp-server]='create-mcp-server'
+        [setup-memo]='[Ss]etup[ -][Mm]emo'
+        [setup-pack]='[Ss]etup[ -][Pp]ack'
+    )
+    # narrative keyword (= 公開 / 販売 / 価格 系)
+    NARRATIVE_PATTERN='販売開始|公開開始|publish|売れ|売れる|売って|価格|購入|販売|有料|料金'
+
+    dogfood_red=0
+    dogfood_findings=()
+    if grep -qE "$NARRATIVE_PATTERN" "$full" 2>/dev/null; then
+        for product in "${!PRODUCT_PATTERNS[@]}"; do
+            pattern="${PRODUCT_PATTERNS[$product]}"
+            if grep -qE "$pattern" "$full" 2>/dev/null; then
+                # 商品名 + 公開 narrative 両方 hit、 dogfood evidence check
+                product_dir="$DOGFOOD_ROOT/$product"
+                evidence_count=0
+                if [[ -d "$product_dir" ]]; then
+                    evidence_count=$(find "$product_dir" -maxdepth 1 -type f -name '*.md' ! -name 'README.md' 2>/dev/null | wc -l | tr -d ' ')
+                fi
+                evidence_count=${evidence_count:-0}
+                if [[ "$evidence_count" -eq 0 ]]; then
+                    dogfood_red=$((dogfood_red + 1))
+                    dogfood_findings+=("$product")
+                fi
+            fi
+        done
+    fi
+    if [[ "$dogfood_red" -gt 0 ]]; then
+        file_red=$((file_red + dogfood_red))
+        findings+=("dogfood:${dogfood_findings[*]}")
+    fi
+
     if [[ "$file_red" -gt 0 ]]; then
         red_total=$((red_total + file_red))
         red_files+=("$f (${findings[*]})")
@@ -181,6 +225,12 @@ if [[ "$red_total" -gt 0 ]]; then
     echo "200 確認 ritual との integration:"
     echo "  pre-commit pass = 公開前最終 audit、 公開成立は WebFetch 200 確認まで未確定"
     echo "  reference: memory/feedback_200_confirmation_ritual.md"
+    echo ""
+    echo "dogfood evidence link との integration (= chain 5):"
+    echo "  商品 narrative (= 販売 / publish / 価格 系) を含む edit で dogfood evidence なし = red"
+    echo "  対応: 1) bash scripts/zen_dogfood_preflight.sh --product <name> で確認"
+    echo "       2) evidence なしなら ~/Desktop/nokaze/dogfood/<product>/ に dogfood セッション file 起稿"
+    echo "  reference: memory/feedback_dogfood_violation_repeat_2026-05-17.md"
     echo ""
 
     # bypass log: --no-verify で skip された場合は本 script 自体が走らないので、
