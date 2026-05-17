@@ -32,3 +32,50 @@ jobs:
       - name: Test
         working-directory: packages/create-mcp-server
         run: npm test
+
+  templates-build-verify:
+    # 4 free template (minimal / full / http / config) を scaffold して
+    # 「npm install + npm run build」 が pass するかを自動で確かめる。
+    # 2026-05-18 の dogfood で minimal の build fail が見つかった件 (v0.5.3 で修正) の
+    # 物理的な再発防止。 失敗したら CI を fail させる。
+    runs-on: ubuntu-latest
+    needs: test
+    strategy:
+      fail-fast: false
+      matrix:
+        template: [minimal, full, http, config]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install create-mcp-server CLI deps
+        working-directory: packages/create-mcp-server
+        run: npm install
+
+      - name: Build create-mcp-server CLI
+        working-directory: packages/create-mcp-server
+        run: npm run build
+
+      - name: Scaffold project from "${{ matrix.template }}" template
+        run: |
+          mkdir -p /tmp/template-verify
+          cd /tmp/template-verify
+          node "$GITHUB_WORKSPACE/packages/create-mcp-server/dist/index.js" \
+            verify-${{ matrix.template }} \
+            -y \
+            --template ${{ matrix.template }} \
+            --no-install \
+            --no-git
+
+      - name: Install scaffolded project deps
+        working-directory: /tmp/template-verify/verify-${{ matrix.template }}
+        run: npm install
+
+      - name: Build scaffolded project (= "Zero config + npm install + npm run build" pass の物理確認)
+        working-directory: /tmp/template-verify/verify-${{ matrix.template }}
+        run: npm run build

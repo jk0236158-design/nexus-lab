@@ -5,6 +5,40 @@ All notable changes to `@nexus-lab/create-mcp-server` are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.3] — 2026-05-18
+
+2026-05-18 朝の dogfood (= `npx @nexus-lab/create-mcp-server my-test --template minimal` を実際に動かす) で minimal テンプレートの `npm run build` が失敗していることが見つかった。 README で 「Zero config — Works immediately after generation」 と書いていた narrative と乖離していたので、 原因を直して + CI で物理的に再発防止 + README の言い方も実態に合わせる、 この 3 軸の patch。
+
+### Fixed
+
+- 4 free テンプレート (= minimal / full / http / config) 全部の `tsconfig.json` に `"types": ["node"]` (http だけ `["node", "express", "cors"]`) を追加。 これがないと TypeScript が `node_modules/@types/*` を全部 implicit に取りに行こうとして、 transitive dependency が型定義を参照しているのに `@types/jsonwebtoken` / `@types/ms` 等が入ってないケースで TS2688 になる。 修正後は 4 テンプレート全部で `npm install && npm run build` が成功する。
+
+### Added
+
+- `.github/workflows/ci.yml` に `templates-build-verify` job を追加。 4 free テンプレート全部を CI 上で実際に scaffold + `npm install` + `npm run build` まで回し、 1 件でも失敗したら CI を fail させる。 これで minimal の build fail のような事故が PR の段階で physically 止まる。
+
+### Changed
+
+- `README.md` の features 行: 「Zero config — Works immediately after generation」 を 「Build out of the box — Each free template passes `npm install && npm run build` with no further configuration. CI runs this for all four free templates on every push」 に書き直し (= actual evidence と整合)。
+- `README.md` の Premium 説明: 「production-grade design decisions bundled」 を 「security and integration design decisions bundled, MIT-licensed source you can read and adapt」 に書き直し (= 「production-grade」 narrative の数字盛り抑制)。
+- `src/index.ts` の CLI version 表記を `"0.5.2"` → `"0.5.3"` に sync。
+
+### Tests / Build
+
+- `npm test` = 7/7 pass。
+- `npm run typecheck` / `npm run build` = exit=0。
+- Dogfood (= ローカルで `node dist/index.js <name> -t <template> --no-install --no-git` 後、 `npm install && npm run build`):
+  - `minimal` = pass
+  - `full` = pass
+  - `http` = pass
+  - `config` = pass
+
+### Notes
+
+- 5/17 起票の dogfood violation pattern 13 段目 (= 自分が触ってない商品を 「販売開始 / publish」 と書いてしまう pattern) の物理 closure 1 件目。
+- 「Zero config」 narrative の actual 違反を honest に直すリリース。 数字盛り / 効果誇張は今回も触っていない。
+- Gumroad / BOOTH の販売文言・価格は今回触っていない (= Red boundary)。
+
 ## [0.5.2] — 2026-05-16
 
 jun 明示 GO (= 5/16 朝) を受けて publish。npm publish 実行 + 200 確認 ritual 経由で reify。
@@ -85,6 +119,7 @@ jun 明示 GO (= 5/16 朝) を受けて publish。npm publish 実行 + 200 確�
 
 `38ea359` で reify。`@nexus-lab/create-mcp-server` の npm 初公開。
 
+[0.5.3]: https://github.com/nexus-lab-zen/nexus-lab/compare/v0.5.2...v0.5.3
 [0.5.2]: https://github.com/nexus-lab-zen/nexus-lab/compare/v0.5.1...v0.5.2
 [0.5.1]: https://github.com/nexus-lab-zen/nexus-lab/commit/70612cc
 [0.5.0]: https://github.com/nexus-lab-zen/nexus-lab/commit/c282486

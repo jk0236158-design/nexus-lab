@@ -13,7 +13,7 @@ npx @nexus-lab/create-mcp-server my-server
 - **Seven templates** — Four free, three premium
 - **Test-ready** — Vitest included in the `full` and `config` templates
 - **Non-interactive mode** — `-y` flag for CI / AI-agent setup
-- **Zero config** — Works immediately after generation
+- **Build out of the box** — Each free template passes `npm install && npm run build` with no further configuration. CI runs this for all four free templates on every push (see `.github/workflows/ci.yml`).
 
 ## Free Templates
 
@@ -116,7 +116,7 @@ To use with Claude Code, add to your MCP config:
 
 ## Premium Templates
 
-Three premium reference builds, each ¥500 (US$3.50) — production-grade design decisions bundled. Available on [Gumroad](https://nexuslabzen.gumroad.com) and [BOOTH](https://nexus-lab.booth.pm):
+Three premium reference builds, each ¥500 (US$3.50) — security and integration design decisions bundled, MIT-licensed source you can read and adapt. Available on [Gumroad](https://nexuslabzen.gumroad.com) and [BOOTH](https://nexus-lab.booth.pm):
 
 | Template | Description | Price | Link |
 |----------|-------------|-------|------|
