@@ -158,5 +158,26 @@ if (( PENDING_WITHOUT_MARKER > 0 )) || (( UNRESPONDED > 0 )); then
   exit 2
 fi
 
+# ---------------------------------------------------------------
+# ScheduleWakeup 設定状況 reminder (= drift.md 14 段目 物理対策 4、 5/18 追加)
+# きっかけ: 5/17 evening 対話 turn shift で /loop directive 落ち + 寝る前 ScheduleWakeup 再 fire 落ち = 8 時間 idle
+# turn end 時に 「ScheduleWakeup 未設定 + 残作業あり」 状態なら advisory warn (= 強制 block ではない)
+# 物理 audit (= 実際の ScheduleWakeup 設定状況の検出) は hook script の boundary 外
+# 私 (Zen) main session の self-check 軸として reminder のみ stderr に出す
+# ---------------------------------------------------------------
+RESIDUAL_WORK=0
+if (( PENDING_COUNT > 0 )); then
+  RESIDUAL_WORK=1
+fi
+ACTIVE_TASKS_FILE="$HOME/Desktop/nokaze/task_table/active_tasks.md"
+if [[ -f "$ACTIVE_TASKS_FILE" ]]; then
+  # active_tasks.md 内に 「完了」 narrative がない entry が一定数残っているか粗 audit (= 詳細 audit は別軸)
+  # ここは reminder 軸なので exact count 不要、 file 存在の確認のみ
+  RESIDUAL_WORK=1
+fi
+if (( RESIDUAL_WORK > 0 )); then
+  echo "[ScheduleWakeup reminder] 残作業あり、 自走 polling を維持する場合は ScheduleWakeup or spawn を 1 件物理的に動かしてから turn end を default に (= drift.md 14 段目、 5/17 evening 対話 turn shift で fire 落ち 8 時間 idle の事実から)" >&2
+fi
+
 # All clear、 stop allow
 exit 0

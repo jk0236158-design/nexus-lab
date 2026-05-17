@@ -357,6 +357,29 @@ if [[ "$DOM_NUM" -ge 1 && "$DOM_NUM" -le 3 ]]; then
     echo ""
 fi
 
+# ---------------------------------------------------------------
+# block 1.J: ScheduleWakeup / polling reminder (= drift 14 段目 物理対策 3、 5/18 追加)
+# きっかけ: 5/17 evening dogfood admit 対話 chain shift で /loop directive が止まった
+#   + 5/17 寝る前 ScheduleWakeup 再 fire 落ち = 8 時間 idle
+# session 開始時に 「自走 polling 再開するなら /loop directive を fire してね」 reminder
+# 物理 audit (= 実際の ScheduleWakeup 設定状況) は私 (Zen) main session の self-check 軸
+# ---------------------------------------------------------------
+echo "=== ScheduleWakeup / polling reminder (= drift 14 段目 対策、 5/18 追加) ==="
+echo "■ 対話 turn shift で自走 cadence が落ちる pattern (= 5/17 8 時間 idle で認めた):"
+echo "  - 5/16-5/17 日中 = Stop hook + SessionStart hook + /loop dynamic mode + spawn の 4 重 instrument で動いていた"
+echo "  - 5/17 evening = dogfood admit 対話 chain shift で /loop directive が止まった"
+echo "  - 5/17 寝る前 = ScheduleWakeup 再 fire 落ち = 8 時間 idle"
+echo ""
+echo "■ 既定として:"
+echo "  - 対話 turn end 前に 「ScheduleWakeup が設定されているか?」 を自問"
+echo "  - 設定なし + 残作業ありなら、 turn end 前に必ず ScheduleWakeup or spawn を 1 件動かす"
+echo "  - jun の 「おやすみ」 / 「寝る」 / 「close」 検出時は ScheduleWakeup 必須"
+echo "  - 「polling continue」 / 「寝てる間に X やる」 narrative を書く前に 「物理的に動かしたか?」 自問"
+echo ""
+echo "■ 自走 polling を始めるなら: /loop <prompt> を直接 fire"
+echo "  spec: docs/rules/drift.md 14 段目 + 物理対策 5 件"
+echo ""
+
 echo "■ priming 完了、 sweep 結果と合わせて 「今日の1件」 へ"
 echo "==========================="
 
