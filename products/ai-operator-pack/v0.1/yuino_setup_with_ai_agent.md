@@ -30,8 +30,8 @@ AI エージェントに、 下の prompt をコピペして送ってくださ�
 
 2. clone したフォルダで `npm install` を実行してください
 
-3. `npm run yuino:first-run:local` を実行して、 first-run check を通してください
-   (Node 20+ / git / write 権限 等の確認)
+3. `npm run yuino:first-run:local` を実行して、 初回起動の確認を通してください
+   (Node 20+ / git / 書き込み権限 等の確認)
 
 4. `npm run yuino:dashboard:serve` で dashboard を起動してください
    (http://127.0.0.1:4327/ にブラウザでアクセス、 「OK」 か 「needs attention」 が出ます)
@@ -71,13 +71,13 @@ AI エージェントに **やらせて大丈夫**:
 ブラウザで http://127.0.0.1:4327/ が開いて、 **Setup Doctor panel に `pass 11 / warning 0 / blocked 0`** が表示されれば setup OK。
 
 Setup Doctor は 11 項目を自動診断:
-- Node.js / npm / リポジトリ・パス
-- ローカル状態フォルダ + 書き込み権限 + 監査ログ書き込み
-- Yuino dashboard 起動 + board file watcher 動作
-- Startup folder fallback + 夜間サイクル task
-- 重複 watcher プロセス + API キー設定 (秘密値は表示せず)
+- Node.js / npm / リポジトリの場所
+- ローカル状態フォルダ + 書き込み権限 + 動作の記録の書き込み
+- Yuino dashboard 起動 + 板の監視動作
+- 起動フォルダの予備経路 + 夜間の繰り返しの作業
+- 重複した監視プロセス + API キー設定 (秘密値は表示せず)
 
-もし 「needs attention」 が出ていたら、 表示された check name を AI エージェントに 「これを直してください」 と頼んでください。 1 つずつ確認しながら直します。
+もし 「needs attention」 が出ていたら、 表示された確認項目の名前を AI エージェントに 「これを直してください」 と頼んでください。 1 つずつ確認しながら直します。
 
 ## 困ったとき
 
@@ -95,7 +95,7 @@ Setup Doctor は 11 項目を自動診断:
 ## なぜこの form なのか
 
 - AI を使い始めて 4 ヶ月くらいの方は、 ターミナル不慣れなことが多い
-- 一方、 Cursor や Claude Code は既に使っている人が多い
+- 一方で、 Cursor や Claude Code は既に使っている人が多い
 - 「自分でコマンドを 1 行ずつ打つ」 より、 **「AI エージェントに頼む」 方が 4 ヶ月初心者には楽で安全**
 - Yuino は AI と一緒に運営する道具なので、 setup 自体も AI と一緒に進めるのが自然
 

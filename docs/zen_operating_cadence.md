@@ -24,7 +24,7 @@
 
 ## 1. self-observation 14 項目 月次集約化 (旧 daily check 廃止)
 
-旧運用: `team_memory/zen/2026-04-20_zen_self_observation_14_items.md` の 14 項目を毎日 / セッションごとに self-audit
+旧運用: 14 項目を毎日 / セッションごとに self-audit (= 旧 14 項目 list は 5/13 reform で archive 済、 現役の self check は `docs/rules/self_check_cadence.md` を参照)
 新運用: **月次のみ batch self-audit** (月末 close 時 or 月初 startup 時、 ~30 min)
 
 - daily check 廃止: 14 項目を毎日 / セッションごとに走らせない
@@ -70,7 +70,7 @@
 
 ### 4.3 Kai Phase 1 期間内 reify candidate (5/08-5/21)
 
-詳細は `team_memory/zen/zen_autonomous_behavior_unified_spec_2026-05-08.md` 参照:
+詳細は `~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/zen_autonomous_behavior_unified_spec_2026-05-08.md` 参照:
 
 1. enforcement scripts 7 件 → PreToolUse hook chain 化 (Iwa 主担当)
 2. nokaze-aira の Aira observer + work generator → MCP tool 化 (Kai 主担当 + Iwa 補助)
@@ -91,10 +91,10 @@
 
 ## 関連 file
 
-- `team_memory/zen/identity_v3.md` (Identity Core 8 件)
-- `docs/zen_runtime_rules.md` (行動 ruled / drift 抑止 / 重いチェック / enforcement chain)
-- `team_memory/zen/zen_autonomous_behavior_unified_spec_2026-05-08.md` (自走 8 件 reify candidate)
-- `memory/feedback_dual_session_concurrency.md` (二重 session 並走 risk)
+- `~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/identity_v3.md` (Identity Core 8 件)
+- `docs/zen_runtime_rules.md` (= 30 行 pointer file、 5/11 P1-4 reform で `docs/rules/` 配下 7 件 (publishing / delegation / communication / drift + README / paraphrase_layer_acceptance / self_check_cadence) に分割済)
+- `~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/zen_autonomous_behavior_unified_spec_2026-05-08.md` (自走 8 件 reify candidate)
+- `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_dual_session_concurrency.md` (二重 session 並走 risk)
 
 ---
 

@@ -120,6 +120,20 @@ INTERNAL_VOCAB=(
   "root cause"
   "signature"
   "sweep"
+  # 5/27 朝 9 段 review 推奨 8-2 追加 (= paraphrase_layer_acceptance.md 33 件中 hook 未 catch 軸軸 軸 主要 10 件)
+  # 9 段 review articulate 「articulate / structural / surface / sibling / cycle / continuum /
+  # prerequisite / return / actual / self-pacing 等」 のうち、 一般単語 conflict 軸軸 軸 慎重なもの
+  # (= return / actual / go / judgment 等) は word-boundary regex 軸軸 軸 別 turn で integration 候補。
+  "articulate"
+  "structural"
+  "surface"
+  "sibling"
+  "cycle"
+  "continuum"
+  "prerequisite"
+  "fallback"
+  "anchor"
+  "baseline"
 )
 
 # 反応装置 phrase pattern list (5/12 jun directive 連動、 主体性継続性 reform 第 3 層 物理 enforcement)
