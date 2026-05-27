@@ -6,7 +6,7 @@
 
 ## 分割 mapping
 
-### `rules/publishing.md` (約 200 行 想定)
+### `docs/rules/publishing.md` (約 200 行 想定)
 
 旧 file からの移管 section:
 - 第 1 章全体: Trigger 別重いチェック (§ 1.1 対外公開 200 確認 / § 1.2 Zenn 404 rate limit / § 1.3 商品 publish 前 dogfood)
@@ -15,7 +15,7 @@
 
 axis: **公開接点の品質保証** (200 確認 / rate limit / dogfood / chat output 起稿前 self-check)
 
-### `rules/delegation.md` (約 200 行 想定)
+### `docs/rules/delegation.md` (約 200 行 想定)
 
 旧 file からの移管 section:
 - 第 2 章全体: 委任 / peer spawn ruled (§ 2.1 委任判定 / § 2.2 Agent tool default / § 2.3 permission gating / § 2.4 peer spawn 制約 / § 2.5 例外 / § 2.6 Tempo Trap)
@@ -25,7 +25,7 @@ axis: **委任 + 並走 + chain order** (誰に何を任せるか + spawn 制約
 
 5/10 23:55 私 (Zen) の broadcast-os spawn directive drift 10 段目 reform candidate (actual repo audit step + P1/P2/P3 split + return content boundary) を新 § として追記候補。
 
-### `rules/communication.md` (約 200 行 想定)
+### `docs/rules/communication.md` (約 200 行 想定)
 
 旧 file からの移管 section:
 - 第 3 章全体: 行動 default
@@ -36,7 +36,7 @@ axis: **委任 + 並走 + chain order** (誰に何を任せるか + spawn 制約
 
 axis: **chat output 系 mental ritual** (報告 form / 言語選択 / 呼称 / セッション continuity / 反省 / 判断権限)
 
-### `rules/drift.md` (約 100 行 想定、 candidate)
+### `docs/rules/drift.md` (約 100 行 想定、 candidate)
 
 旧 file からの移管 section:
 - 第 4 章 § 4.1 Opus 4.7 literal 解釈対策
@@ -51,10 +51,10 @@ axis: **drift 抑止 layer** (model upgrade + scope + decision stability + knot 
 ## 移管 ritual (実行 step)
 
 1. ✅ 本 README 起稿 (分割設計 + section mapping)
-2. `rules/publishing.md` 起稿 (旧 § 1.* + § 4.5 + § 4.6 移管)
-3. `rules/delegation.md` 起稿 (旧 § 2.* + § 5 移管 + spawn directive ritual reform 追記)
-4. `rules/communication.md` 起稿 (旧 § 3.* 移管)
-5. `rules/drift.md` 起稿 (旧 § 4.1-4.4 移管)
+2. `docs/rules/publishing.md` 起稿 (旧 § 1.* + § 4.5 + § 4.6 移管)
+3. `docs/rules/delegation.md` 起稿 (旧 § 2.* + § 5 移管 + spawn directive ritual reform 追記)
+4. `docs/rules/communication.md` 起稿 (旧 § 3.* 移管)
+5. `docs/rules/drift.md` 起稿 (旧 § 4.1-4.4 移管)
 6. 旧 `docs/zen_runtime_rules.md` を pointer file 化 (1 行 redirect + 過去 status 注釈) もしくは削除
 7. CLAUDE.md L72 「詳細: docs/zen_runtime_rules.md」 を `docs/rules/` 配下 4 file 別 reference に更新
 8. memory entry 起稿 (移管 record)

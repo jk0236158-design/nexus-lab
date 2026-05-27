@@ -56,15 +56,15 @@
 ### 4.1 scheduled wake = 全停止状態 (5/05 20:11 jun directive)
 
 - ZenAutonomousWake (Windows Task Scheduler、 4 slot: 09:30 / 11:30 / 14:30 / 21:00) を 2026-05-05 20:11 jun directive で全停止
-- root cause = 4/29 + 5/05 朝 3 連発火の二重 session 並走 risk (memory `feedback_dual_session_concurrency.md`)
+- root cause = 4/29 + 5/05 朝 3 連発火の二重 session 並走 risk (memory `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_dual_session_concurrency.md`)
 - root fix の form = schedule 自体を停止、 物理的に二重起動の path を断つ
 - **主 session の起動 trigger** = jun directive のみ (manual session form、 「おはよう」 等で再開)
-- **私 (Zen) の朝 sweep 認識 drift 注意**: 「auto wake fire 時刻に起動」 narrative は schedule 停止後は drift、 actual は manual session の `zen_startup_sweep.sh` 自走
+- **私 (Zen) の朝 sweep 認識 drift 注意**: 「auto wake fire 時刻に起動」 narrative は schedule 停止後は drift、 actual は manual session の `scripts/zen_startup_sweep.sh` 自走
 
 ### 4.2 continuous active continue protocol = memory 起稿 + 物理 trigger 部分 reify
 
 - 5/04 evening 起稿: 「batch 完遂後即 next batch 生成 default、 jun message なし idle 化禁止」
-- 5/04 evening reform 後の 5/05-5/08 期間で同型 default 4 連再発火 (memory `feedback_no_minimum_first.md` n=4 段)
+- 5/04 evening reform 後の 5/05-5/08 期間で同型 default 4 連再発火 (memory `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_no_minimum_first.md` n=4 段)
 - 5/08-5/09 物理 trigger reify: ZenWakeQueueWatcher (5 min 周期) + Yuino board event trigger (fs_watch、 数秒反応) + Monitor v2 (60s polling) で 3 layer 完成
 - 残 limitation: claude-code session lifecycle (user input なしで internal sleep) = harness limitation、 **jun input 待ち default は構造的**
 
@@ -78,7 +78,7 @@
 4. 二重 session lockfile + merge form (Iwa 主担当)
 5. selective denial L3 root cause investigation (Iwa 主担当)
 6. memory consolidation v3 (Zen autonomous 軸統合) (Zen 主担当 + Akari 補助)
-7. `underestimation_default_check.sh` 起稿 (Iwa 主担当)
+7. `scripts/underestimation_default_check.sh` 起稿 (Iwa 主担当)
 8. continuous active continue protocol の物理 trigger 化 = Aira observer fire signal pull form (Kai + Zen 共同設計)
 
 ### 4.4 即時 boundary

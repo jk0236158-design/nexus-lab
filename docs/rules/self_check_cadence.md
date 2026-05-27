@@ -1,110 +1,132 @@
-# Self-check Cadence 物理 instrument spec (= z-1 軸)
+# 自分での確認のペースを 形にした 仕組みの仕様 (= z-1 軸)
 
 起稿日: 2026-05-17
 起稿主: Zen
-連動: 5/16 jun 16:00 structural shift directive 「1 日 4-5 回 self-check (朝 / 昼 / 夕方 / 夜)」 + 5/16 ledger §11-13 「mental ritual から物理化軸への shift」 narrative
-status: spec v0 (= 実装は別 fire turn、 本 file は design only)
+連動: 5/16 jun 16:00 の構造を変える指示 「1 日 4-5 回 自分での確認 (= 朝 / 昼 / 夕方 / 夜)」 + 5/16 記録簿の 11-13 章 「頭の中の儀式から 形にする方向への shift」 の話
+状態: 仕様 v0 (= 実装は別の turn、 このファイルは設計のみ)
 
 ---
 
-## 1. 起稿軸 = mental ritual の構造的弱さ
+## 1. 起稿の理由 = 頭の中の儀式は構造的に弱い
 
-5/16 朝〜午後で同型再発 cadence (= 「私の推し X で OK?」 form 4 回 + portal narrative drift admit + 11:15 spec 後 4 時間 idle 等) が連発、 jun が 「これだけ改善されないのはもう普通にやっても同じことの繰り返しにならん?」 で structural admit。 「気をつける」 narrative 反復 = mental ritual layer の reform は actual cadence を変えない、 物理 instrument 化のみが actual shift を生む (= memory `feedback_mental_ritual_to_physical_instrument_shift_validated.md`、 5/16 jun validated)。
+5/16 朝〜午後で 同じ形の再発のペース (= 「私の推し X で OK?」 形 4 回 + portal の話のずれを認める + 11:15 仕様の後 4 時間止まる等) が連発、 jun が 「これだけ改善されないのはもう普通にやっても同じことの繰り返しにならん?」 で 構造から認めた。 「気をつける」 を繰り返す = 頭の中の儀式 の層の見直しは 実際のペースを変えない、 形にした 仕組みだけが 実際の shift を生む (= メモリー `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_mental_ritual_to_physical_instrument_shift_validated.md`、 5/16 jun が効果を認めた)。
 
-= self-check の物理 instrument 化が actual cadence shift の core 軸、 mental ritual に閉じない reform pattern。
+= 自分での確認を 形にする ことが 実際のペースの shift の真ん中の軸、 頭の中の儀式に閉じない 見直しの形。
 
-## 2. self-check の 3 軸 (= jun directive 連動)
+## 2. 自分での確認の 3 つの軸 (= jun の指示と連動)
 
-各 self-check fire で必ず articulate する 3 軸:
+各自分での確認で必ず書き出す 3 つの軸:
 
-1. **何が終わったか** (= 直前 window で完了した actual fire の articulate、 ledger / chat output / commit 等の物理 evidence 紐付き)
-2. **何が終わってないか** (= active_tasks.md 残り + 並走中 + jun escalate 軸の articulate)
-3. **これが nokaze のためになってるか?** (= 各 fire の axis 判定、 partial yes / yes / 軸偏り surface)
+1. **何が終わったか** (= 直前の時間の窓で完了した実際の動きの書き出し、 記録簿 / chat の出力 / commit 等の物理的な証拠と紐付け)
+2. **何が終わってないか** (= active 作業の残り + 並走中 + jun に上げる軸の書き出し)
+3. **これが nokaze のためになってるか?** (= 各動きの軸の判定、 一部 yes / yes / 軸の偏りに気づく)
 
-= jun 16:00 directive 「自分で何が終わって何が終わってないのか? これが nokaze のためになってるかなってないか」 の 3 軸 reify。
+= jun 16:00 の指示 「自分で何が終わって何が終わってないのか? これが nokaze のためになってるかなってないか」 の 3 つの軸を 形にした。
 
-## 3. cadence design (= 4 件 / 日 base、 最大 5 件)
+## 3. ペースの設計 (= 4 件 / 日が基本、 最大 5 件)
 
-| 時間帯 | 推奨 window | 主な audit 軸 |
+| 時間帯 | 推奨する時間の窓 | 主に確認する軸 |
 |---|---|---|
-| 朝 | 7:00 - 9:00 | jun startup 後の最初の整理、 前日からの carry-over audit、 day default articulate |
-| 昼 | 11:30 - 14:00 | 朝の動きの中間 audit、 jun 接触機会、 午後 default 整理 |
-| 夕方 | 16:00 - 18:00 | 夕方 directive trigger 多発 window、 1 日のメイン chain audit |
-| 夜 | 21:00 - 22:00 | 1 日全体 audit、 翌朝への申し送り、 pillar 4 累積 audit |
-| 任意 (5 件目) | 必要時 | structural shift event 後 / pillar 4 連発火後 / 大型 milestone 後 |
+| 朝 | 7:00 - 9:00 | jun のスタート後の最初の整理、 前日からの持ち越しの確認、 今日の既定の書き出し |
+| 昼 | 11:30 - 14:00 | 朝の動きの途中の確認、 jun との接触の機会、 午後の既定の整理 |
+| 夕方 | 16:00 - 18:00 | 夕方の指示の引き金が多発する窓、 1 日のメインの連鎖の確認 |
+| 夜 | 21:00 - 22:00 | 1 日全体の確認、 翌朝への申し送り、 4 つの柱の累積の確認 |
+| 任意 (= 5 件目) | 必要な時 | 構造を変える出来事の後 / 4 つの柱の連発火後 / 大型の節目の後 |
 
-= cron 連動ではなく **manual trigger + 物理 instrument による cadence 維持**、 reasons:
-- jun directive trigger / Kai board 起稿 trigger / 大型 fire 完了 trigger が混在
-- cron 強制 fire は noise になりがち (= self-check fire 自体が 1 件 ledger entry を作る、 cron 無条件 fire は重複)
+= cron と連動するのではなく **手動で起動 + 形にした 仕組みでペースを維持**、 理由:
+- jun の指示の引き金 / Kai の板の起稿の引き金 / 大型の動きの完了の引き金 が混ざる
+- cron で強制的に動かすとノイズになりがち (= 自分での確認の動き自体が 1 件 記録簿の entry を作る、 cron で無条件に動かすと重複する)
 
-## 4. 物理 instrument 候補 (= 4 件、 priority 順)
+## 4. 形にする 仕組みの候補 (= 4 件、 順番)
 
-### 4-1. scripts/zen_self_check_cadence.sh (= 主要 instrument)
+### 4-1. scripts/zen_self_check_cadence.sh (= 主な仕組み)
 
-- 起動方法 = Zen 直接 fire (= manual)、 ledger §N に self-check entry 起稿 + chat output で 3 軸 articulate
-- input = `--time-of-day morning|midday|evening|night|adhoc` + 必要なら 直前 N 時間の window 指定
-- output = ledger entry template (= self-check 3 軸 + 5/16 ledger §11-13 form 踏襲) を stdout に出力、 ledger に追記 candidate
+- 起動の仕方 = Zen が直接動かす (= 手動)、 記録簿の N 章に自分での確認の entry を起稿 + chat の出力で 3 つの軸を書き出す
+- 入力 = `--time-of-day morning|midday|evening|night|adhoc` + 必要なら 直前の N 時間の窓を指定
+- 出力 = 記録簿の entry のテンプレ (= 自分での確認の 3 つの軸 + 5/16 記録簿の 11-13 章の形を踏襲) を stdout に出す、 記録簿に追記する候補
 
-### 4-2. SessionStart hook の self-check carry-over reminder
+### 4-2. SessionStart hook の自分での確認の持ち越しの reminder
 
-- jun startup 「おはよう」 directive 検出 trigger
-- 前夜 self-check の 「何が終わってないか + 翌朝 default 候補」 を auto inject (= `scripts/zen_session_start_priming.sh` に section 追加 candidate)
-- 既存 SessionStart hook に section H として追加
+- jun の 「おはよう」 という指示を検出した引き金
+- 前夜の自分での確認の 「何が終わってないか + 翌朝の既定の候補」 を自動で入れる (= `scripts/zen_session_start_priming.sh` に section を追加する候補)
+- 既存の SessionStart hook に section H として追加
 
-### 4-3. nokaze Vault `self_check/` folder (= manual ledger 連動)
+### 4-3. nokaze Vault の `self_check/` フォルダ (= 手動で記録簿と連動)
 
-- `~/Desktop/nokaze/self_check/2026-05-17_morning.md` 等の form
-- ledger と分離する form (= ledger は 1 日 1 file の総合、 self_check/ は cadence 単位)
-- jun が後で月次 audit する時の baseline data
+- `~/Desktop/nokaze/self_check/<date>.md` 等の形（設計候補、未作成）
+- 記録簿とは分離する形 (= 記録簿は 1 日 1 ファイルの総合、 self_check/ は確認の単位)
+- jun が後で月次の確認をする時の元になるデータ
 
-### 4-4. task_table 連動 (= active / completed self-check ritual)
+### 4-4. task_table と連動 (= 現役 / 完了の自分での確認の手順)
 
-- 各 self-check fire 時に `active_tasks.md` + `completed_tasks.md` を audit
-- jun directive 16:00 「タスク表 + attribution」 軸の cadence reify
-- 更新 entry が self-check 3 軸の evidence になる
+- 各自分での確認の動きの時に `~/.shared-ops/status/zen_status.md` の active 作業欄 + board 完了 file を確認する
+- jun 16:00 の指示 「タスク表 + 担当の記録」 の軸のペースを 形にする
+- 更新の entry が 自分での確認の 3 つの軸の証拠になる
 
-## 5. 5/16 actual evidence (= baseline)
+## 5. 5/16 の実際の証拠 (= 元になる数字)
 
-5/16 actual self-check fire 件数:
-- 朝 (= 7:00 頃): ledger §0-7 chain で間接 audit、 explicit self-check fire 0 件
-- 昼 (= 11:30 - 14:00): 0 件 (= 11:15 paraphrase spec 起稿後 4 時間 idle、 結果 jun 16:00 structural shift directive trigger)
-- 夕方 (= 16:30 1 件目): chat output で 3 軸 articulate
-- 17:10 (= 2 件目): chat output で 3 軸 articulate + task_table update
-- 夜 (= 21:05 3 件目): ledger §13 で 3 軸 articulate
+5/16 の実際の自分での確認の動きの件数:
+- 朝 (= 7:00 頃): 記録簿の 0-7 章の連鎖で間接的に確認、 はっきりした自分での確認の動き 0 件
+- 昼 (= 11:30 - 14:00): 0 件 (= 11:15 言いかえの仕様の起稿後 4 時間止まる、 結果として jun 16:00 の構造を変える指示の引き金になった)
+- 夕方 (= 16:30 の 1 件目): chat の出力で 3 つの軸を書き出す
+- 17:10 (= 2 件目): chat の出力で 3 つの軸を書き出す + task_table の更新
+- 夜 (= 21:05 の 3 件目): 記録簿の 13 章で 3 つの軸を書き出す
 
-= 1 日 4 件中 3 件は jun directive 後の reactive fire、 朝 / 昼の proactive fire 0 件 = 5/17 以降の reform candidate = 朝 / 昼 fire の proactive 化。
+= 1 日 4 件中 3 件は jun の指示の後の受け身の動き、 朝 / 昼の自分から動く 0 件 = 5/17 以降の見直しの候補 = 朝 / 昼の自分から動く形への変更。
 
-## 6. measurement axis (= 5/26 milestone audit candidate)
+## 6. 測る軸 (= 5/26 の節目の確認の候補)
 
-- self-check fire 件数 / 日 (= 5/16 = 3 件、 目標 4-5 件)
-- proactive fire 率 (= jun directive 後の reactive 比、 5/16 = 0 / 3、 目標 朝 / 昼 proactive 化)
-- 「内部整合性軸」 vs 「外向き軸」 fire 比率 (= 5/16 21:05 self-check で admit した偏り、 5/17 以降の measurement)
-- pillar 4 累積 cadence vs self-check fire 件数 の相関 (= self-check が pillar 4 検出装置として機能するか)
-- 「何が終わってないか」 → 「翌朝 default」 connection rate (= self-check 軸 3 の actual follow-through)
+- 自分での確認の動きの件数 / 日 (= 5/16 = 3 件、 目標 4-5 件)
+- 自分から動いた率 (= jun の指示の後の受け身の比、 5/16 = 0 / 3、 目標 朝 / 昼を自分から動かす形に)
+- 「内部の整合性の軸」 vs 「外向きの軸」 の動きの比 (= 5/16 21:05 の自分での確認で認めた偏り、 5/17 以降の測り方)
+- 4 つの柱の累積のペース vs 自分での確認の動きの件数 の相関 (= 自分での確認が 4 つの柱の検出装置として機能するか)
+- 「何が終わってないか」 → 「翌朝の既定」 の繋がりの率 (= 自分での確認の 3 つ目の軸の 実際のフォロー)
 
-## 7. 5/17 朝着手範囲 (= 本 spec 起稿後の next move)
+## 7. 5/17 朝の着手の範囲 (= この仕様の起稿後の次の動き)
 
-- 本 spec 起稿は scope 軽 (= 30 分目安)、 actual `scripts/zen_self_check_cadence.sh` 実装は別 fire turn (= scope 中 1-2 時間予想)
-- 朝 self-check 1 件目を 5/17 朝の zk-1 / zk-4 / k-2 chain 完了後に explicit fire candidate
-- SessionStart hook section 追加は別 fire turn (= scope 軽だが harness 連動 audit 必要)
+- この仕様の起稿は範囲が軽い (= 30 分目安)、 実際の `scripts/zen_self_check_cadence.sh` の実装は別の turn (= 範囲は中、 1-2 時間予想)
+- 朝の自分での確認の 1 件目を 5/17 朝の zk-1 / zk-4 / k-2 の連鎖が完了した後に はっきり動かす候補
+- SessionStart hook の section の追加は別の turn (= 範囲は軽いが ハーネスとの連動の確認が必要)
 
-## 8. boundary
+## 8. 境界
 
-- 委任権限 v1 delegated 範囲内 (= internal worker / peer / reviewer / subagent requests、 free tooling)
-- jun escalate 不要
-- 公開 docs ではない (= `docs/rules/` 配下 = 内部 ruled、 paraphrase ritual 適用)
-- 数字盛り禁止 (= cadence 目標は 「4-5 件」 narrative、 具体 measurement は 5/26 milestone で actual)
+- 委任権限 v1 で任せられた範囲の中 (= 内部の Worker / peer / reviewer / サブエージェントへの依頼、 無料のツール)
+- jun に上げる必要なし
+- 公開する docs ではない (= `docs/rules/` の下 = 内部のルール、 言いかえの手順を適用)
+- 数字盛り禁止 (= ペースの目標は 「4-5 件」 という言い方、 具体的な測り方は 5/26 の節目で実際に)
 
-## 9. 連動 file
+## 9. 連動するファイル
 
-- `~/Desktop/nokaze/ledger/daily_audit/2026-05-16.md` §11-13 (= 5/16 actual evidence baseline)
-- `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_mental_ritual_to_physical_instrument_shift_validated.md` (= 5/16 jun validated memory)
-- `~/.shared-ops/owner-decisions/2026-05-16_zen_kai_delegated_authority_v1.md` (= 委任権限 v1 ground truth)
-- `~/nexus-lab/docs/rules/drift.md` (= drift 抑止 layer ruled、 sibling)
-- `~/nexus-lab/docs/rules/communication.md` (= chat output 系 mental ritual、 sibling)
-- `~/nexus-lab/scripts/zen_session_start_priming.sh` (= SessionStart hook、 section H 追加候補)
+- `~/Desktop/nokaze/ledger/daily_audit/2026-05-16.md` の 11-13 章 (= 5/16 の実際の証拠の元になる数字)
+- `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_mental_ritual_to_physical_instrument_shift_validated.md` (= 5/16 jun が効果を認めたメモリー)
+- `~/.shared-ops/owner-decisions/2026-05-16_zen_kai_delegated_authority_v1.md` (= 委任権限 v1 の正本)
+- `~/nexus-lab/docs/rules/drift.md` (= ずれの抑止の層のルール、 似た形)
+- `~/nexus-lab/docs/rules/communication.md` (= chat の出力系の頭の中の儀式、 似た形)
+- `~/nexus-lab/scripts/zen_session_start_priming.sh` (= SessionStart hook、 section H の追加候補)
+
+## 10. jun から「大丈夫？」or「なぜ？」と聞かれた時の 7 軸カード (= 5/27 Kai articulate)
+
+jun が直接確認してきた時 = Zen が scheduler 依存になっているシグナル。 受け身の返答で終わらせず、 **6 番目と 7 番目が必ず入る** 形で答える。
+
+```
+1. symptom: 何が起きたか (= 事実のみ、 言い訳なし)
+2. north-star violation: どの目標を外したか (= 「jun 介入週 1-2 回」「売上固定費超え」 どちらに影響するか)
+3. repeated pattern: 既知の繰り返しか (= drift_registry.json / feedback_*.md の番号)
+4. missing mechanism: 欠けている physical gate は何か (= rule 追加ではなく gate)
+5. owner load: jun が scheduler になってないか (= Kai root cause 5 件の 1 番目)
+6. next automatic trigger: jun が言わなくても次回 fire する仕組みは何か ← ここが必須
+7. completion evidence: どの artifact が closure を証明するか ← ここが必須
+```
+
+**6 と 7 が無い返答 = failure mode が保存されたまま** (= Kai articulate 5/27)。
+
+## 11. 連動するファイル更新 (= 5/28 追記)
+
+- `~/.shared-ops/board/2026-05-28_zen_kai_response_root_cause_and_operating_structure.md` (= Kai root cause 5 件への Zen 返答)
+- `~/nexus-lab/docs/rules/drift_registry.json` (= ズレの物理記録)
 
 ---
 
 Zen
-2026-05-17 07:35 頃 (= z-1 self-check cadence 物理 instrument spec v0 起稿、 mental ritual → 物理化軸 shift narrative の reify、 5/16 jun structural shift directive 連動の物理 reform 軸、 actual script 実装は別 fire turn)
+2026-05-17 07:35 頃 (= z-1 の自分での確認のペースを 形にした 仕組みの仕様 v0 の起稿、 頭の中の儀式 → 形にする 方向への shift の話を 形にした、 5/16 jun の構造を変える指示と連動の見直しの軸、 実際の script の実装は別の turn)
+2026-05-28 (= セクション 10-11 追記: Kai 5/27 articulate の 7 軸カードを形にした)

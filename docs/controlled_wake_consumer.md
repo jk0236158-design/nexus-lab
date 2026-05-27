@@ -133,7 +133,7 @@ result marker 不在で archive すると warning 出力 (Yuino audit が unansw
 
 ```bash
 ./scripts/zen_wake_queue_consume.sh --dry-run response-abc123   # 単 request 空転
-./scripts/zen_wake_queue_dry_run.sh                              # full dry run (sample 起稿込み)
+bash scripts/zen_wake_queue_dry_run.sh                              # full dry run (sample 起稿込み)
 ```
 
 ## End-to-End Dry Run
@@ -141,7 +141,7 @@ result marker 不在で archive すると warning 出力 (Yuino audit が unansw
 `scripts/zen_wake_queue_dry_run.sh` は sample request を起稿 -> consumer の `--dry-run` を fire -> result marker JSON validate -> cleanup の 4 step で contract § Implementation Completion Condition を空転確認。
 
 ```bash
-./scripts/zen_wake_queue_dry_run.sh
+bash scripts/zen_wake_queue_dry_run.sh
 ```
 
 PASS condition (全 step 必須):
@@ -262,4 +262,4 @@ mapping:
 6. 次回 Controlled Wake で同 request が再選定されない
 7. hidden session / duplicate session / external action / unbounded retry 全部不在
 
-`zen_wake_queue_dry_run.sh` で 1-4 + 7 を空転確認、 5-6 は Kai-side の `npm run yuino:response-results:local` で fire 後確認。
+`scripts/zen_wake_queue_dry_run.sh` で 1-4 + 7 を空転確認、 5-6 は Kai-side の `npm run yuino:response-results:local` で fire 後確認。

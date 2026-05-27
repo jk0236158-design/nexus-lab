@@ -25,12 +25,12 @@
 2. **状態把握**
    - `git status`, `git log -10` で前日までの作業状態を確認
    - CI・npm公開状態の異常がないか確認
-   - Kai側の `status/kai_status.md` を確認
+   - Kai側の `~/.shared-ops/status/kai_status.md` を確認
 
 3. **当日プラン作成**
    - Green項目（即実行）を3〜5件選定
    - Yellow項目で夜に判断を仰ぐ必要のあるものを列挙
-   - 優先順位を明示して `status/zen_status.md` に書き込む
+   - 優先順位を明示して `~/.shared-ops/status/zen_status.md` に書き込む
 
 4. **オーナー向けサマリ**（3分で読める形式）
    - 🔴 Blocker: オーナー判断がないと進めない事項
@@ -38,7 +38,7 @@
    - 🟢 Progress: 昨夜以降に進捗した事項
 
 ### アウトプット
-- `status/zen_status.md` 更新
+- `~/.shared-ops/status/zen_status.md` 更新
 - Blocker がある場合のみ `board/morning_YYYY-MM-DD.md` に優先事項を明示
 
 ## Evening Routine（夜のheartbeat）
@@ -70,12 +70,12 @@
    - `reports/YYYY-MM-DD_report.md` — 成果・メトリクス・次の課題
 
 5. **翌朝への引き継ぎ**
-   - オーナーが朝に見るべき優先事項を `status/zen_status.md` に残す
+   - オーナーが朝に見るべき優先事項を `~/.shared-ops/status/zen_status.md` に残す
    - Yellow項目（判断待ち）は明示的にフラグ
 
 ### アウトプット
 - diary/ reports/ 更新
-- `status/zen_status.md` 更新
+- `~/.shared-ops/status/zen_status.md` 更新
 - 必要に応じて board/ に Kai 宛メッセージ
 
 ## Weekly Routine（週次レビュー）

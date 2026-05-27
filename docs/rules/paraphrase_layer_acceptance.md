@@ -1,117 +1,178 @@
-# paraphrase layer acceptance rules (= Zen + Kai 共同決定 spec)
+# 言いかえの層の受け入れルール (= Zen + Kai 共同で決めた仕様)
 
 Date: 2026-05-16
-Authors: Zen + Kai (= Joint decision 6 件 #4)
-Status: spec v0.1
-Trigger: jun 5/16 朝 「もう少し分かりやすく報告して」 narrative + Kai 5/16 10:57 「load-reduction + product-quality layer」 narrative + Zen 5/16 10:33 「内部 narrative が外部 narrative に侵食」 admit。
+Authors: Zen + Kai (= 共同で決めた 6 件のうちの #4)
+Status: 仕様 v0.1
+きっかけ: jun 5/16 朝 「もう少し分かりやすく報告して」 + Kai 5/16 10:57 「負担を減らす + 商品の品質の層」 + Zen 5/16 10:33 「内部用の言い方が外部の言い方に侵食している」 と認めた。
 
 ---
 
 ## 0. 目的
 
-paraphrase 層の役割を 「style cleanup」 narrative から **「load-reduction + product-quality + audience integration」 layer** narrative に shift。 各 output 軸 (= jun-facing / product-facing / audit-facing) で precision boundary fix、 jun が 「reify / drift / narrative / pillar / 越境抑止 / fire / spawn」 を翻訳せず理解できる form を acceptance condition。
+言いかえの層の役割を 「文章の整え」 から **「読み手の負担を減らす + 商品の品質 + 読み手の統合」 の層** に切り替える。 各出力先 (= jun 向け / 商品向け / 内部の確認向け) でどこまで精度を出すかの境界を直す、 jun が 「形にする / ずれ / 言い方 / 柱 / 越境の抑止 / 動かす / 仲間に頼む」 を翻訳せずに理解できる形を 完了条件 にする。
 
-## 1. 3 scope の precision boundary
+## 1. 3 つの範囲の精度の境界
 
-### 1-1. jun-facing 軸 (= 私 ↔ jun chat output、 jun-review 文書)
+### 1-1. jun 向けの面 (= 私 ↔ jun の chat の出力、 jun が確認する文書)
 
-**目的**: jun が翻訳せず 「何が起きて / 何を決めて / 次何が起きるか」 を理解できる form。
+**目的**: jun が翻訳せずに 「何が起きて / 何を決めて / 次に何が起きるか」 を理解できる形。
 
-**禁忌**:
-- 「reify」 → 「形にする / 物理的に動かす / 実際に動かす」
-- 「drift」 → 「ズレ / 違い / 言葉と動きの乖離」
-- 「narrative」 → 「言い方 / 物語 / 説明 / 軸」
-- 「pillar X」 → 「X 軸 / X 番目の評価軸」
-- 「越境抑止」 → 「他の領域に踏み込まない / Kai の担当領域に手を出さない」
-- 「fire」 → 「動かす / 起動する / 実行する」
-- 「spawn」 → 「別の役割の AI に振る / Akari に頼む」
-- 「scope」 → 「範囲 / 中身」
-- 「boundary」 → 「境界 / 触らない範囲」
-- 「audit」 → 「確認 / 監査 / 見直し」
-- 「articulate」 → 「言葉にする / 整理して言う / はっきり言う」
-- 「self-detect」 → 「自分で気づく / 自分でズレに気づく」
-- 「default」 → 「既定 / クセ / いつもの動き方」
+**英単語 → 普通の日本語の対照表** (= 2026-05-18 22:30 Kagami 確認で 121 件検出 + 既存の stop hook の 言いかえ候補を統合、 33 件):
 
-**例外** (= 維持可、 但し初出 introduction で日本語補足):
+| 英単語 | 普通の日本語 |
+|---|---|
+| articulate | 整理する / 書き出す / 言い切る (= 不要なら削る) |
+| fire | 動かす / 起こす / 火を入れる |
+| audit | 確認 / 見直し / 点検 |
+| reify | 形にする |
+| narrative | 言い方 / 物語 / 文章 |
+| pattern | 形 / 繰り返し |
+| drift | ずれ / 違い |
+| structural | 構造的な |
+| surface | 気づいた / 表に出す / 指摘 |
+| sibling | 似た形 |
+| cycle | 繰り返し |
+| continuum | 続き |
+| priority | 優先 / 優先順位 |
+| prerequisite | 前に必要なもの |
+| return | 返ってきた中身 |
+| actual | 実際の / 本当の |
+| self-pacing | 自分でペース決め |
+| fallback | 念のため / 予備 |
+| heartbeat | 拍動 / 再確認 |
+| anchor | 元になる点 / 基点 |
+| baseline | 元の数字 / 土台 / 下敷き |
+| candidate | 候補 |
+| trigger | 引き金 / 動かす |
+| protocol | 手順 |
+| sequence | 順番 |
+| delegated | 任せる |
+| authority | 範囲 / 権限 |
+| continuity | 続き |
+| integrity | まとまり / 一貫性 |
+| consume | 消化する / 処理する |
+| evidence | 証拠 / 物理 file |
+| layer | 層 / 段 |
+| chain | 連鎖 / つながり |
+| axis | 向き / 方向 |
+| form | 形 / 型 / 言い方 |
+| path | 道筋 / 順路 |
+| default | 既定 / 素の動き |
+| scope | 範囲 |
+| boundary | 境界 / 線引き |
+| adopt | 採用 / 受け入れ |
+| ritual | 形 / 儀式 / 手順 |
+| judgment / judge | 判断 / 判断する |
+| override | 上書き |
+| context | 文脈 / 状況 |
+| conditional | 条件付き |
+| reform | 見直し / 改革 |
+| self-correct / self-detect | 自己訂正 / 自己検出 |
+| sweep | 一掃 / 確認 |
+| honor | 守る / 尊重 |
+| carry | 引き継ぐ |
+| prompt | 指示 / 入力 |
+| ack | 受領 |
+| batch | まとめ / 1 件 |
+| audience | 読み手 / 視聴者 |
+| ad-hoc | その場 / 単発 |
+| recall | 思い出す / 確認 |
+| mechanism | 仕組み |
+| review | 確認 / 振り返り |
+| interval | 間隔 |
+| signature | 署名 |
+| root cause | 根本原因 |
+| step | 段 / 手順 |
+| visibility / visible | 見える化 / 見える |
+| ledger | 振り返り記録 / 元帳 |
+| go | 進める / 動かす |
+| evidence | 証拠 / 物理 file |
+
+**使い方**:
+- chat の出力 / ファイルの起稿の前に 上の表で 該当の英単語が含まれてたら 普通の日本語に置き換え
+- 例外 = 固有名詞 (= Yuino / Aira / Kai / jun / Zen / npm 等) + 数字 + 単位 + 既存の読み手向けに定着した用語 (= 経営者 / 共同経営者 / 商品 / 動線 / 記録簿)
+- Stop hook の英単語警告のキーワードと 同期 (= scripts/zen_stop_hook.sh の grep のリストと 1 対 1 対応)
+
+**例外** (= 維持可、 ただし初めて出した時に日本語の補足):
 - 固有名詞 (= Yuino / Aira / Kai / jun / Zen / Form A / Setup Memo / npm / commit / push / git tag)
 - 数字 + 単位 (= ¥10,000 / 397 tests / 5 件)
-- 既 audience-facing 確立用語 (= 「経営者」 「共同経営者」 「audience」 「商品」 「動線」 「公開段」 「ledger」 (= 振り返り記録 補足))
+- 既存の読み手向けに定着した用語 (= 「経営者」 「共同経営者」 「読み手」 「商品」 「動線」 「公開段」 「記録簿」)
 
-**1 段落英単語 threshold**: 5 件超え検出時に書き直し fire (= feedback_excessive_english_mixing.md 連動)。
+**1 段落の英単語の閾値**: 5 件超え検出時に書き直しを起動 (= feedback_excessive_english_mixing.md と繋がる)。
 
-**報告 form 3 段** (= jun-facing default):
-- やったこと (= 主要動詞 + 主要結果、 1-3 行)
-- 結果 (= 主要数字 actual + 主要 verdict、 1-3 行)
-- これからどうするか (= 主要 next step + jun 確認軸 vs 自走範囲 boundary、 1-3 行)
+**報告の形 3 段** (= jun 向けの既定):
+- やったこと (= 主な動詞 + 主な結果、 1-3 行)
+- 結果 (= 主な数字の実際 + 主な判定、 1-3 行)
+- これからどうするか (= 主な次の段 + jun が確認する面 vs 自走の範囲 の境界、 1-3 行)
 
-### 1-2. product-facing 軸 (= 公開 article / Setup Memo / Form A / portal docs / Zenn 記事 / README)
+### 1-2. 商品向けの面 (= 公開する記事 / Setup Memo / Form A / portal の docs / Zenn 記事 / README)
 
-**目的**: nokaze が AI 経営から **抽出した evidence** を audience に届ける form (= Kai 5/16 10:57 「sell evidence extracted from actual AI company operation」 narrative)。
+**目的**: nokaze が AI 経営から **抽出した証拠** を読み手に届ける形 (= Kai 5/16 10:57 「実際の AI 企業の運営から抽出した証拠を売る」)。
 
-**禁忌**:
-- 内部 audit 用語 全件 (= 1-1 list を完全に rebuild)、 audience が公開資料と照らせる form のみ維持
-- 「成功 narrative」 全件 = 「成功した話としては書かない」 stance 維持 + 失敗 evidence を core
-- 数字盛り 全件 (= 「4 ヶ月放置」 → 「約 3 週間放置」 actual reflect 軸)
-- 「予告中の release」 narrative (= Karpathy LLM101n 2 年 lag pattern 回避軸)
+**やってはいけないこと**:
+- 内部の確認の用語 全部 (= 1-1 のリストを完全に作り直す)、 読み手が公開資料と照らせる形のみ維持
+- 「成功の言い方」 全部 → 「成功した話としては書かない」 を維持 + 失敗の証拠を真ん中にする
+- 数字盛り 全部 (= 「4 ヶ月放置」 → 「約 3 週間放置」 と実際の数字で書く)
+- 「予告中のリリース」 という言い回し (= Karpathy LLM101n 2 年 lag のクセを避ける)
 
-**acceptance condition**:
-- 4 ヶ月初心者 + 1 人開発者の 2 layer audience reach
-- 「evidence-extracted」 narrative の物理 anchor (= 物理 reify file path or commit hash or 検証数 reference)
-- 引用箇所原文維持 (= jun / Kai / hoshi 引用は全件原文)
+**完了条件**:
+- 4 ヶ月の初心者 + 1 人の開発者の 2 層の読み手に届く
+- 「抽出した証拠」 という言い方の物理的な点 (= 形にしたファイルの path か commit hash か 検証数の参照)
+- 引用箇所は原文を維持 (= jun / Kai / hoshi の引用は全部原文)
 
-### 1-3. audit-facing 軸 (= ledger / audit log / 板 file / Vault 内部記録)
+### 1-3. 内部の確認の面 (= 記録簿 / 動作の記録 / 板ファイル / Vault の内部の記録)
 
-**目的**: 私 + Kai の self-audit + 同型再発 detection + structural reform の物理 evidence layer。
+**目的**: 私 + Kai の自分での確認 + 同じ形が また 起きるのを 検出 + 大もとの 直しの物理的な証拠の層。
 
-**boundary**:
-- 内部 audit 用語 全件 維持 OK (= 「reify」 「drift」 「pillar 4」 「越境抑止」 等の precision 軸が必要)
-- jun が読む前提でも 「audit log layer」 narrative で、 1-1 paraphrase scope と分離
-- 引用 + 数字 actual + 全件 file path reference 維持
+**境界**:
+- 内部の確認の用語 全部 維持 OK (= 「形にする」 「ずれ」 「4 つの柱」 「越境の抑止」 等の精度が必要)
+- jun が読む前提でも 「動作の記録の層」 として、 1-1 の言いかえの範囲とは分離
+- 引用 + 実際の数字 + 全部のファイルの path の参照を維持
 
-**acceptance condition**:
-- 5 軸 trust-evidence frame で structure (= judgment / action / boundary / failure response / improvement evidence)
-- 物理 evidence (= file path / commit hash / 検証数 / 引用) 全件紐付き
+**完了条件**:
+- 5 つの信頼の証拠で組み立てる (= 判断 / 行動 / 境界 / 失敗への対応 / 改善の証拠)
+- 物理的な証拠 (= ファイルの path / commit hash / 検証数 / 引用) 全部に紐付き
 
-## 2. mental ritual (= 物理 hook 不能の代替、 chat output 直前 fire)
+## 2. 頭の中の手順 (= 物理的な hook が無理な代わりに、 chat の出力の直前に起動する)
 
-Claude Code hooks API には 「Pre-chat-output」 hook が存在しない (= 5/16 朝 audit 結果)。 mental ritual で代替:
+Claude Code の hooks API には 「chat の出力の前」 の hook がない (= 5/16 朝の確認の結果)。 頭の中の手順で代わりに:
 
-### 2-1. chat output 直前の 3 軸 self-check (= 每件 fire)
+### 2-1. chat の出力の直前の 3 つの自己チェック (= 毎件 起動)
 
-1. **「私の推し X で OK?」 form 含まれていないか** (= 「進めて OK?」 「どっち?」 「どれにします?」 「これで進めて OK?」)
-   - 含む = 「Zen はこう判断、 反対あれば言って」 form に reform
-2. **「pillar X」 「reify」 「drift」 「越境抑止」 narrative が 1 段落で 3 件以上含まれていないか**
-   - 含む = 1-1 禁忌 list で paraphrase
-3. **「報告 form 3 段」 (= やったこと / 結果 / これからどうするか) form に整っているか**
-   - 整っていない = restructure
+1. **「私の推し X で OK?」 の形が含まれていないか** (= 「進めて OK?」 「どっち?」 「どれにします?」 「これで進めて OK?」)
+   - 含む → 「Zen はこう判断、 反対あれば言って」 の形に書き直し
+2. **「柱 X」 「形にする」 「ずれ」 「越境の抑止」 が 1 段落で 3 件以上含まれていないか**
+   - 含む → 1-1 のやってはいけないことのリストで 言いかえ
+3. **「報告の形 3 段」 (= やったこと / 結果 / これからどうするか) の形に整っているか**
+   - 整っていない → 書き直し
 
-### 2-2. self-check skip 検出 → admit narrative
+### 2-2. 自分での確認の skip を検出 → 認める
 
-mental ritual fire 漏れ検出時:
-- ledger §X として 「paraphrase mental ritual skip admit」 追記
-- 累積 evidence 軸として 5/26 milestone audit candidate
+頭の中の手順の起動漏れを検出した時:
+- 記録簿の N 章として 「言いかえの頭の中の手順を skip したのを認める」 を追記
+- 累積の証拠として 5/26 の節目の確認の候補
 
-## 3. acceptance condition (= Joint decision 6 件 #4 完了判定)
+## 3. 完了条件 (= 共同で決めた 6 件のうちの #4 の完了判定)
 
-- jun-facing output で 「reify / drift / narrative / pillar」 翻訳不要 confirm
-- product-facing output で 内部 audit 用語 全件除外 + evidence-extracted narrative form
-- audit-facing output で trust-evidence 5 軸 frame 維持
-- mental ritual fire 漏れ累積 → 同型再発 admit narrative の物理 evidence remain
+- jun 向けの出力で 「形にする / ずれ / 言い方 / 柱」 が翻訳なしで通じることを確認
+- 商品向けの出力で 内部の確認の用語 全部を除外 + 「抽出した証拠」 な言い方の形
+- 内部の確認向けの出力で 信頼の証拠 5 つの枠を維持
+- 頭の中の手順の起動漏れの累積 → 同じ形が また 起きたと認める 物理的な証拠が残る
 
-## 4. continuous evolve (= reform 軸)
+## 4. 直し続ける (= 直しの真ん中)
 
-- 月次 audit (= 5/22 weekly summary + 5/26 milestone audit) で paraphrase 軸の effect measurement
-- 同型再発 cadence の改善率 (= 5/16 朝 10 分 / 1 件 baseline)
-- jun 認知負荷 indicator (= jun の 「もう少し分かりやすく」 narrative 頻度)
+- 月次の確認 (= 5/22 週次のまとめ + 5/26 の節目の確認) で 言いかえ の真ん中の効果の測定
+- 同じ形が また 起きる頻度の改善率 (= 5/16 朝 10 分 / 1 件 が元の数字)
+- jun の認知の負荷の指標 (= jun の 「もう少し分かりやすく」 の発言の頻度)
 
-## 5. boundary + self-check
+## 5. 境界 + 自己チェック
 
-- 本 spec は **nexus-lab/docs/rules/ 配下 = repo 内 file** (= 公開 candidate、 但し直接公開じゃなく内部運用 reference 軸)
-- nokaze-aira readonly (= Kai 主担当領域、 Kai 側 spec は別 file or 連携)
-- 修正 commit は別 fire turn で判断 (= git commit + push、 公開段とは分離)
-- jun directive 不要 (= Joint decision 6 件 #4 軸内、 Kai + Zen 共同決定)
+- この仕様は **nexus-lab/docs/rules/ の下 = repo の中のファイル** (= 公開候補、 ただし直接公開じゃなく内部の運用の参照)
+- nokaze-aira は読み取り専用 (= Kai 主担当の領域、 Kai 側の仕様は別のファイル or 連携)
+- 修正の commit は別の起動の turn で判断 (= git commit + push、 公開段とは分離)
+- jun の指示は不要 (= 共同で決めた 6 件のうちの #4 の中、 Kai + Zen で共同で決定)
 
 ---
 
-Zen + Kai (= Joint decision)
-2026-05-16 13:05 頃 (= paraphrase layer acceptance rules v0.1、 Joint decision 6 件 #4 の物理 reify、 mental ritual + 3 scope boundary 分離 + acceptance condition + continuous evolve articulate)
+Zen + Kai (= 共同で決定)
+2026-05-16 13:05 頃 (= 言いかえの層の受け入れルール v0.1、 共同で決めた 6 件のうちの #4 を 形にした、 頭の中の手順 + 3 つの範囲の境界の分離 + 完了条件 + 直し続ける を 言葉にした)

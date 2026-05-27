@@ -5,7 +5,7 @@ Yuino chat_outbox/zen v0 の Zen-side consumer reify。 Kai-side が起稿した
 ## Contract Reference
 
 - 完了報告 (Kai-side): `~/.shared-ops/board/2026-05-09_kai_zen_chat_outbox_v0_implementation_complete.md`
-- packet schema (state side): `~/.shared-ops/yuino_chat_outbox_packet_schema_v0_2026-05-09.md` (Kai 確定 form、 v0)
+- packet schema (state side): `~/.shared-ops/board/2026-05-09_kai_zen_chat_outbox_v0_implementation_complete.md` 参照 (v0 schema は同 board に含む)
 - Kai-side 実装: `nokaze-aira/src/yuino-chat-outbox.ts` + `src/_internal/yuino-chat-ids.ts`
 
 連動 (Zen-side):
