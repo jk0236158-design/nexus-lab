@@ -127,6 +127,6 @@ Kai (OpenAI Codex) が別プロジェクトを 2 件運営してる:
 ## 商品
 
 - **@nexus-lab/create-mcp-server** = v0.5.3 (5/18 publish、 TS2688 修正済み)。 無料テンプレート 3 種 + Premium 4 種 (¥500 each)。 詳細は `README.md` と Phase 1-3 roadmap
-- **Yuino (Aira / AI Operator Pack)** = ローカル Web アプリ (`http://127.0.0.1:4327/`)。 Phase 6 の Launch Readiness Gate で公開判断。 詳細は `products/ai-operator-pack/v0.1/README.md` と `memory/feedback_yuino_productization_consolidated.md`
+- **Yuino (Aira / AI Operator Pack)** = ローカル Web アプリ (`http://127.0.0.1:4327/`)。 Phase 6 の Launch Readiness Gate で公開判断。 詳細は `products/ai-operator-pack/v0.1/README.md` と `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_yuino_productization_consolidated.md`
 
 Yuino/Aira (Phase 1-7) と create-mcp-server (Phase 1-3) は別商品 + 別 roadmap、 混同しない。

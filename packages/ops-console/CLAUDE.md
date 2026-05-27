@@ -77,7 +77,7 @@ npm run test:watch # Vitest watch mode
 
 ## audit ritual (UI 変更時)
 
-UI / frontend 変更後は **dev server 起動 + ブラウザで feature 動作確認** 必須 (5/07 PM `feedback_ui_visual_verify_skip_drift.md` 由来):
+UI / frontend 変更後は **dev server 起動 + ブラウザで feature 動作確認** 必須 (5/07 PM `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_ui_visual_verify_skip_drift.md` 由来):
 1. baseline (変更前) で dev server 200 確認
 2. 変更
 3. dev server restart + 全 route HTTP 200 確認
