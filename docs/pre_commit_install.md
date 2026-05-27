@@ -11,7 +11,7 @@
   ruled」 を script layer で enforce する。
 - 限界: `git commit --no-verify` で bypass 可能 (bypass 時は warn を残す)。
   pre-commit は手元 commit 直前のみ、 push 後の CI/CD level では別途 audit。
-- 連動: 200 確認 ritual (memory `feedback_200_confirmation_ritual.md`) と組
+- 連動: 200 確認 ritual (memory `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_200_confirmation_ritual.md`) と組
   で運用。 pre-commit = 公開前最終 audit、 200 確認 = 公開成立確認、 役割違い。
 
 ## 公開 docs path (5/08 時点 boundary)
@@ -101,7 +101,7 @@ script 本体 (`scripts/pre_commit_public_docs_audit.sh`) は repo に残す
 
 ## 4. 整合 / 注意
 
-- 既存 PreToolUse hook (`zen_semantic_check_hook.sh` / `subagent_write_gate.sh`)
+- 既存 PreToolUse hook (`scripts/zen_semantic_check_hook.sh` / `scripts/subagent_write_gate.sh`)
   と独立。 PreToolUse = Write/Edit fire 直前 advisory、 pre-commit = git
   commit 直前 block、 fire timing が違う。
 - 1 件 commit 当たり script 全体で 1-3 sec (file 数 / 内容 size に依存)。

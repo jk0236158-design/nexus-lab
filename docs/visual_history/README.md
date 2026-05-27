@@ -14,7 +14,7 @@ Historical visual evidence (screenshots) を date 別 dir に保管。 nexus-lab
 | dir | 内容 | 件数 |
 |---|---|---|
 | `2026-04-22/` | BOOTH api proxy live + config live 確認時の visual record | 2 |
-| `2026-05-07/` | dashboard / dogfood / yuino-preview の 5/07 PM step 2a/b/c CSS incident + Akari paraphrase pass 周辺 visual evidence (memory `feedback_nokaze_design_skill_skip_drift.md` 連動) | 11 |
+| `2026-05-07/` | dashboard / dogfood / yuino-preview の 5/07 PM step 2a/b/c CSS incident + Akari paraphrase pass 周辺 visual evidence (memory `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_nokaze_design_skill_skip_drift.md` 連動) | 11 |
 
 ## 用途
 
@@ -29,5 +29,5 @@ Historical visual evidence (screenshots) を date 別 dir に保管。 nexus-lab
 
 ## 関連
 
-- `memory/feedback_nokaze_design_skill_skip_drift.md` (5/07 PM step 2a/b/c CSS incident 連動)
-- `memory/feedback_ui_visual_verify_skip_drift.md` (UI / frontend 変更時の dev server visual verify ritual、 5/07 PM 2 連発火)
+- `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_nokaze_design_skill_skip_drift.md` (5/07 PM step 2a/b/c CSS incident 連動)
+- `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_ui_visual_verify_skip_drift.md` (UI / frontend 変更時の dev server visual verify ritual、 5/07 PM 2 連発火)

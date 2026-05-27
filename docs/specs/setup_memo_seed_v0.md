@@ -4,7 +4,7 @@
 起稿主: Zen
 連動:
 - nokaze-aira `docs/ai_operator_setup_pack_v0_1_outline.md` (= 5/16 evening Yuino observation cycle generated、 internal draft)
-- jun 5/04 朝 directive 「初心者の人が ai エージェントを使ってセッティング出来る説明」 (= `feedback_ai_agent_setup_default_for_users.md`)
+- jun 5/04 朝 directive 「初心者の人が ai エージェントを使ってセッティング出来る説明」 (= `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_ai_agent_setup_default_for_users.md`)
 - 5/16 委任権限 v1 採用後の free article publication 範囲
 - 5/17 朝 「外向き軸 priority reframe」 narrative の continuum
 status: seed v0 (= 起稿後 v0 → v0.1 で AI agent execution prompt 詳細追加 candidate)
@@ -13,7 +13,7 @@ status: seed v0 (= 起稿後 v0 → v0.1 で AI agent execution prompt 詳細追
 
 ## 1. 起稿軸 = 既起稿 internal draft の audience 視点 reframe
 
-5/16 evening に nokaze-aira 側 Yuino observation cycle で `ai_operator_setup_pack_v0_1_outline.md` が internal draft として起稿済 (= 67 行)。 axis 整合は高いが、 scope は 「商品 component の内部 outline」、 audience-facing 公開化 form ではない。
+5/16 evening に nokaze-aira 側 Yuino observation cycle で nokaze-aira docs/ai_operator_setup_pack_v0_1_outline.md が internal draft として起稿済 (= 67 行)。 axis 整合は高いが、 scope は 「商品 component の内部 outline」、 audience-facing 公開化 form ではない。
 
 本 spec は audience 視点での **「これを公開化するなら」 narrative** を seed として articulate、 既存 outline と並走 (= 不要な reify を fire しない axis 維持、 actual reify は別 fire turn)。
 
@@ -48,7 +48,7 @@ status: seed v0 (= 起稿後 v0 → v0.1 で AI agent execution prompt 詳細追
 audience が公開 docs に最初に当たる時の form。 既存 outline § Purpose + Product Promise + Target User + Setup Flow 6 step を audience 言語で paraphrase。
 
 候補 location:
-- `packages/nokaze-portal/yuino/setup.md` (= portal 新規 page、 既存 yuino/index.md と並列)
+- packages/nokaze-portal/yuino/setup.md (= portal 新規 page candidate、 5/17 当時の設計候補、 未起稿)
 - nokaze-aira `README.md` の audience-facing section (= Kai-led readonly、 改修は board 経由)
 
 ### Phase 2 = AI agent setup prompt template (= core differentiator)
@@ -118,7 +118,7 @@ template structure:
 
 ### 6-2. 起稿後 next move (= Zen + Kai 自走範囲)
 
-- Phase 1 起稿 (= `packages/nokaze-portal/yuino/setup.md` 新規 candidate、 Akari spawn)
+- Phase 1 起稿 (= packages/nokaze-portal/yuino/setup.md 新規 candidate、 Akari spawn、 5/17 当時の設計候補、 未起稿)
 - Phase 2 AI agent prompt template 起稿 (= `~/.claude/skills/nokaze-yuino-setup/` candidate or `packages/nokaze-portal/yuino/setup-with-ai/` candidate)
 - 既存 outline との merge audit fire (= nokaze-aira readonly なので board 経由で Kai 連動)
 

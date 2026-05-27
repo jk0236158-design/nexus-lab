@@ -6,7 +6,7 @@ purpose: broadcast-os Format Bible に delivery_mode 拡張 + Slidev subprocess 
 audience: Akari + Iwa 共同 (4 ヶ月初心者 audience は § 6 のみ)
 related:
   - nexus-lab/research/broadcast_os_actual_state_audit_2026-05-10.md (audit baseline、 5/13+ narrative 廃止 + 改善案 re-sketch baseline)
-  - team_memory/_shared/nokaze_marketing_workflow_2026-05-09.md (slide artifact policy)
+  - nokaze_marketing_workflow_2026-05-09.md (slide artifact policy、 5/10 当時の参照、 現在は廃止 / 統合済み)
   - team_memory/zen/feedback_yuino_conversation_insights_axis.md (5 panel 構造、 process narrative connect)
   - ~/.claude/skills/nokaze-design/SKILL.md (色 + 書体 + 禁忌 visual)
   - CLAUDE.md § 報告 form 4 ヶ月初心者向け 3 段固定 (audience matrix と整合)
@@ -24,7 +24,7 @@ drift_note:
 broadcast-os の **既設 Presentation Layer 設計** に slide / process / hybrid mode を実装層に降ろすための spec patch。 新規 Slide Layer をゼロから足すではない、 **既存 Format Bible field 拡張 + 第 11 layer (Slidev subprocess) 横付け** が骨子。
 
 - 起点 1: 5/04 evening jun directive 「broadcast は資料・過程動画作るのは向いてない、 スライドとかも作れるようにしないと」
-- 起点 2: 5/09 14:25 起稿 `nokaze_marketing_workflow_2026-05-09.md` の slide artifact policy (Kai-side reform 既反映)
+- 起点 2: 5/09 14:25 起稿 nokaze_marketing_workflow_2026-05-09.md の slide artifact policy (Kai-side reform 既反映、 5/10 当時の参照、 現在は廃止 / 統合済み)
 - 起点 3: 5/10 13:00+ jun directive 「broadcast-os 完成度上げる」 + Zen 集約 narrative (Slidev 推奨 + delivery_mode + process_panel + nokaze-design 整合)
 
 本 patch の射程:
@@ -46,7 +46,7 @@ broadcast-os の **既設 Presentation Layer 設計** に slide / process / hybr
 
 | 日付 | directive | 連動 reform |
 |---|---|---|
-| 5/04 evening | 「broadcast は資料・過程動画作るのは向いてない、 スライドとかも作れるようにしないと」 | broadcast-os 4 layer ecosystem の発信 layer に統合 (memory `project_broadcast_layer_integration.md`) |
+| 5/04 evening | 「broadcast は資料・過程動画作るのは向いてない、 スライドとかも作れるようにしないと」 | broadcast-os 4 layer ecosystem の発信 layer に統合 (memory `~/.claude/projects/c--Users-jk023-nexus-lab/memory/project_broadcast_layer_integration.md`) |
 | 5/09 14:25 | 「nokaze marketing workflow 起稿、 slide artifact policy 含めて」 | Kai-side workflow doc に slide policy 追加、 broadcast-os 出力 form の 1 つとして slide deck 公式化 |
 | 5/10 13:00+ | 「broadcast-os 完成度上げる」 | 既設 Presentation Layer の slide / process mode を実装層に降ろす |
 
@@ -382,7 +382,7 @@ ruled:
 
 - colors_and_type.css の値そのまま、 **派生色生成禁止** (新色追加 / hue shift / 中間色補完 NG)
 - alpha 利用は OK (rgba(43,38,34,0.1) for shadow)、 但し新 hex 値は追加しない
-- shadcn oklch 由来の値で override 不可 (5/07 incident `feedback_nokaze_design_skill_skip_drift.md` 連動、 shadcn variable は不変)
+- shadcn oklch 由来の値で override 不可 (5/07 incident `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_nokaze_design_skill_skip_drift.md` 連動、 shadcn variable は不変)
 
 ### 5.2 書体 fallback chain 固定
 
@@ -468,7 +468,7 @@ publish gate (§ 3.4 step 5) で fail = block、 silent skip 禁止。
 
 honesty gate 統合:
 
-- workflow doc § honesty gate 既設の forbidden_phrases lint と同一 source 参照 (`themes/nokaze/lint/forbidden_phrases.yaml`)
+- workflow doc § honesty gate 既設の forbidden_phrases lint と同一 source 参照 (themes/nokaze/lint/forbidden_phrases.yaml、 5/10 当時の設計候補、 未起稿)
 - workflow doc で gate を pass しても本 patch の disclaimer / forbidden_phrases lint 両方 pass 必須 (and 条件)
 
 ---
@@ -502,9 +502,9 @@ Showrunner が scene_plan 生成時に:
 **「報告 form 3 段固定」 narrative を slide 構造にも展開**:
 
 - 3 zone slide template = 「やったこと / 結果 / これからどうするか」 を 1 deck 内で必ず含む (順序固定)
-- 用語 substitute (commit / push / board file / wake-queue 等) は CLAUDE.md § 6 の表を Slidev theme の `paraphrase_dict.yaml` に embed
+- 用語 substitute (commit / push / board file / wake-queue 等) は CLAUDE.md § 6 の表を Slidev theme の paraphrase_dict.yaml に embed (5/10 当時の設計候補、 未起稿)
 - paraphrase は **lower third (slide 下部 caption)** で表示、 本文を変えずに添える形 (専門用語の意味を本文に書くのではなく、 専門用語そのままで本文書き、 補足で paraphrase)
-- 数字盛り禁止 (CLAUDE.md § 6 + memory `feedback_honesty_violation_exaggeration.md` 連動)、 数字 → honesty audit 経由で確定値のみ
+- 数字盛り禁止 (CLAUDE.md § 6 + memory `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_honesty_violation_exaggeration.md` 連動)、 数字 → honesty audit 経由で確定値のみ
 
 例: documentary deck で 「commit `f4490c6` を push しました」 と本文があれば、 lower third に 「commit = GitHub 保存番号、 push = GitHub に保存する」 を auto 添付。
 
@@ -605,7 +605,7 @@ timeline 推定: 5/16 ~ 5/19 (4 day、 Akari 主担当 deck 起稿 + Iwa 補助�
 ### 8.4 Slidev version 固定 (Iwa 5/13 着手時 確定)
 
 - Slidev version 固定 (推奨 = 0.49+、 Vue 3 + Vite 5 系)
-- npx 経由 default、 lockfile (`package-lock.json` or `pnpm-lock.yaml`) で reproducibility
+- npx 経由 default、 lockfile (package-lock.json or pnpm-lock.yaml) で reproducibility
 - Node version 固定 (`.nvmrc` 18.18+ 推奨)
 
 ---

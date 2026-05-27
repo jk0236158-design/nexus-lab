@@ -24,7 +24,7 @@ status: spec v0 (= Kai k-2 spec 起稿の補助 reference、 actual implementati
 - `~/Desktop/nokaze-aira/src/yuino-memory-integrity.ts` (= **970 行**、 provider-neutral memory map diagnostics)
   - export type: `YuinoMemoryIntegritySeverity` (P0/P1/P2) / `YuinoMemoryIntegrityKind` (8 種: target_root_unreadable / broken_reference / double_source_of_truth / agent_definition_mismatch / generic_agent_definition / rule_self_contradiction / stale_context / duplicate_worktree_context)
   - schema: `YuinoMemoryIntegrityFindingV1` / `YuinoMemoryIntegrityRepairGroupV1`
-  - 依存: `yuino-source-of-truth.js` (= `YuinoParticipantId` / `YuinoPermissionLevel`) + `yuino-state-audit.js` (= `writeYuinoAuditedFile`)
+  - 依存: nokaze-aira 内の `src/yuino-source-of-truth.ts` (= `YuinoParticipantId` / `YuinoPermissionLevel`) + `src/yuino-state-audit.ts` (= `writeYuinoAuditedFile`)
 
 ### 2-2. test file
 
@@ -32,11 +32,11 @@ status: spec v0 (= Kai k-2 spec 起稿の補助 reference、 actual implementati
 
 ### 2-3. integration touch points (= grep 経由 5 件)
 
-- `yuino-audit-replay.ts` (= audit replay 経由の連動)
-- `yuino-dashboard-renderer.ts` (= dashboard 表示)
-- `yuino-dashboard-server.ts` (= dashboard API)
-- `yuino-idle-work-loop.ts` (= idle work で memory integrity scan auto fire)
-- `yuino-module-boundary.ts` (= module 境界 audit)
+- nokaze-aira `src/yuino-audit-replay.ts` (= audit replay 経由の連動)
+- nokaze-aira `src/yuino-dashboard-renderer.ts` (= dashboard 表示)
+- nokaze-aira `src/yuino-dashboard-server.ts` (= dashboard API)
+- nokaze-aira `src/yuino-idle-work-loop.ts` (= idle work で memory integrity scan auto fire)
+- nokaze-aira `src/yuino-module-boundary.ts` (= module 境界 audit)
 
 = core src 1 file + test 1 file + integration touch 5 file = **計 7 file** が Memory Integrity 関連の actual nokaze-aira 側 file。
 

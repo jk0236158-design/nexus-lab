@@ -3,8 +3,8 @@ date: 2026-05-08 0:20
 owner: zen (spec) → kagami (template 反映) + iwa (honesty_audit.sh 拡張) 共同
 status: spec for review
 related:
-  - memory/feedback_design_doc_qa_review_required.md (4/30 起票)
-  - memory/feedback_surface_learning_without_operational_embed.md (Kagami Override #2)
+  - ~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_design_doc_qa_review_required.md (4/30 起票)
+  - ~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_surface_learning_without_operational_embed.md (Kagami Override #2)
   - scripts/honesty_audit.sh (5/07 PM 起稿)
   - 30 案集約 board file Cluster X.10 (Kagami #5)
 ---
@@ -13,7 +13,7 @@ related:
 
 ## 起点
 
-Kagami #5 提案 (5/07 PM peer spawn): peer spawn return content path で Kagami QA review 判断は機能するが、 Zen が return content を repo に反映する過程で 「条件付き pass を無条件 pass に drift」 する risk が構造的に残る。 4/30 起票 `feedback_design_doc_qa_review_required.md` の運用層が Zen 代筆 path に弱い。
+Kagami #5 提案 (5/07 PM peer spawn): peer spawn return content path で Kagami QA review 判断は機能するが、 Zen が return content を repo に反映する過程で 「条件付き pass を無条件 pass に drift」 する risk が構造的に残る。 4/30 起票 `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_design_doc_qa_review_required.md` の運用層が Zen 代筆 path に弱い。
 
 5/08 0:11 jun + Kai GO、 Cluster X (今すぐ 90 点に効く) 内 immediate 着手 5 件のうちの 1 つ。
 
@@ -120,7 +120,7 @@ fi
 ### Zen 主導 (5/08 0:20 起稿、 本 spec 反映)
 
 1. ✅ 本 spec file 起稿 (`docs/kagami_qa_review_hash_spec_2026-05-08.md`)
-2. Kagami spawn template に frontmatter 追加 (`team_memory/kagami/templates/qa_review_template.md` 候補、 5/13+ Akari paraphrase pass batch 内で同時起稿)
+2. Kagami spawn template に frontmatter 追加 (team_memory/kagami/templates/qa_review_template.md 候補、 5/08 当時の設計候補、 未起稿)
 
 ### Iwa 主導 (Lead Engineer)
 

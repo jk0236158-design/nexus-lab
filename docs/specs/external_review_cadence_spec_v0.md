@@ -61,7 +61,7 @@ jun directive 16:00 narrative:
 
 ### 4-3. nokaze Vault `external_review/` folder
 
-- `~/Desktop/nokaze/external_review/2026-06-01_monthly_v0.md` 等の form
+- `~/Desktop/nokaze/external_review/<YYYY-MM-DD>_monthly_v0.md` 等の form (= 設計候補、 未起稿)
 - 月次 audit result の archive、 cross-cycle trend detection の baseline data
 
 ### 4-4. broadcast-os learning_insights テーブル集計 (= h-3 連動)
@@ -80,7 +80,7 @@ jun directive 16:00 narrative:
 
 ## 6. 5/17 朝着手範囲 (= 本 spec 起稿後の next move)
 
-- 本 spec 起稿は scope 軽 (= 30 分目安)、 actual `scripts/zen_external_review_fire.sh` 実装は別 fire turn (= scope 中 1-2 時間予想)
+- 本 spec 起稿は scope 軽 (= 30 分目安)、 actual scripts/zen_external_review_fire.sh 実装は別 fire turn (= scope 中 1-2 時間予想、 5/17 当時の設計候補、 未起稿)
 - 6/01 月次 fire の reminder 設定は別 fire turn (= SessionStart hook section I 追加)
 - 5/26 milestone audit fire は本 spec の measurement candidate 6 件起票連動
 
