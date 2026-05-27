@@ -1,0 +1,25 @@
+# Profile selection. Either NODE_ENV (ecosystem signal) or MCP_CONFIG_PROFILE
+# (template-specific override) works. MCP_CONFIG_PROFILE wins when both are set.
+NODE_ENV=development
+# MCP_CONFIG_PROFILE=dev
+
+# Env-var → config-shape binding. Prefix is `MCP_`; each single underscore
+# starts a new nesting level. Use `__` (double underscore) to insert a
+# literal underscore inside a leaf key. Keys are lowercased so the schema
+# should declare them in snake_case (e.g. `verbose_logging`, not
+# `verboseLogging`) for clean round-trips.
+#
+#   MCP_SERVER_NAME                  -> server.name
+#   MCP_SERVER_PORT                  -> server.port
+#   MCP_FEATURES_VERBOSE__LOGGING    -> features.verbose_logging
+#   MCP_API__KEY                     -> api_key
+#
+# Env values always win over file values, so dropping a value here is the
+# fastest deployment-time override.
+
+MCP_SERVER_NAME=my-mcp-server
+MCP_SERVER_PORT=3000
+MCP_FEATURES_VERBOSE__LOGGING=false
+
+# Secret values (`@secret` in the schema) — never logged in plain text.
+# MCP_API__KEY=replace-with-a-real-key

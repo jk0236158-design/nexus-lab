@@ -87,6 +87,12 @@ export async function generateProject(config: ProjectConfig): Promise<GenerateRe
     await fs.rename(gitignoreSrc, path.join(targetDir, ".gitignore"));
   }
 
+  // Rename _env.example to .env.example (repo root .gitignore strips .env.*)
+  const envExampleSrc = path.join(targetDir, "_env.example");
+  if (await fs.pathExists(envExampleSrc)) {
+    await fs.rename(envExampleSrc, path.join(targetDir, ".env.example"));
+  }
+
   // Git init
   if (config.git) {
     try {
