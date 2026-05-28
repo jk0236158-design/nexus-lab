@@ -12,9 +12,9 @@ CTO は **Zen**（Claude Opus 4.7）。AIが運営しているプロジェクト
 
 ## Products
 
-### [@nexus-lab/create-mcp-server](packages/create-mcp-server) — v0.5.1
+### [@nexus-lab/create-mcp-server](packages/create-mcp-server) — v0.5.3
 
-MCPサーバーをワンコマンドでスキャフォールディングするCLIツール。2026-04-22 に v0.5.1 を npm publish (repository field 追加)。
+MCPサーバーをワンコマンドでスキャフォールディングするCLIツール。2026-05-18 に v0.5.3 を npm publish (全テンプレートの TypeScript build 失敗修正 + CI build verify 追加 + README 訂正)。
 
 ```bash
 npx @nexus-lab/create-mcp-server my-server
@@ -48,7 +48,7 @@ production-safe な設計判断を束ねた、ワンコイン reference build �
 **2026-04-18 — premium v1.1.0 セキュリティ修正差し替え:**
 Codex クロスレビュー 7 巡 + Kagami 独立 QA 5 巡で P1 19件を発見、うち 18 件を即日修正して auth / api-proxy v1.1.0 として差し替え。残り 1 件（body snippet URL-encoded variant）は v1.1.1 で追跡中。
 
-> この QA iteration の記録は Zenn 記事として公開済み（`articles/ai-team-qa-iteration-7-rounds.md`）。2026-04-18 の GitHub push 時点では Zenn 同期が未成立で、4/18 夜の空 commit `0546fa7` 再 trigger + 4/19 朝の WebFetch 200 確認で公開成立を確定。以後 `CLAUDE.md § Zen's Principles #2` の 200 確認 ritual で再発防止。
+> この QA iteration の記録は Zenn 記事として公開済み (= `~/Nexus.Lab.Zen/articles/ai-team-qa-iteration-7-rounds.md` 経由で `zenn.dev/nexus_lab_zen` に publish)。 2026-04-18 の GitHub push 時点では Zenn 同期が未成立で、 4/18 夜の空 commit `0546fa7` 再 trigger + 4/19 朝の WebFetch 200 確認で公開成立を確定。 以後 `CLAUDE.md § Zen's Principles #2` の 200 確認 ritual で再発防止。
 
 ## Documentation Site
 
@@ -96,8 +96,9 @@ Knot（条件付き変形演算子）の応用可能性を研究し、AIの構�
 - [x] MVP 仕様策定
 - [x] コアライブラリ開発
 - [x] `@nexus-lab/create-mcp-server` v0.5.0 → v0.5.1 npm publish (4/22、 repository field 追加)
+- [x] `@nexus-lab/create-mcp-server` v0.5.1 → v0.5.3 npm publish (5/18、 TS build 失敗修正 + CI build verify)
 - [x] Zenn 記事 9 本公開（2026-04-19 時点）
-- [x] Premium テンプレート 4 種（config / database / auth / api-proxy）Gumroad + BOOTH 販売開始
+- [x] Premium テンプレート 3 種（database / auth / api-proxy）Gumroad + BOOTH 公開（config は 5/15 に Free 側へ移行）
 
 ### Phase 2: Beta — 進行中
 - [x] ドキュメントサイト構築（<https://nexus-lab.nokaze.dev>）
