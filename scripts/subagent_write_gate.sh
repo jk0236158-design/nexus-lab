@@ -18,13 +18,14 @@
 #   - それ以外: decision JSON で deny
 #   - identity.md への Write/Edit が許可された場合: sha256 baseline を自動更新
 #
-# 許可 6 path-prefix:
+# 許可 path-prefix:
 #   /c/Users/jk023/nexus-lab       (C:\Users\jk023\nexus-lab に相当)
 #   /c/Users/jk023/.claude/projects/c--Users-jk023-nexus-lab/team_memory
 #   /c/Users/jk023/.claude/projects/c--Users-jk023-nexus-lab/memory  [Task B 追加]
 #   /c/Users/jk023/.shared-ops
 #   /c/Users/jk023/Nexus.Lab.Zen   (Zenn 記事 repo、 5/08 追加)
 #   /c/Users/jk023/Desktop/broadcast-os  (5/11 追加、 nokaze 4 layer ecosystem の broadcast layer、 jun + Kai + Zen 3 者合意 write OK、 5/04 evening 確定)
+#   /c/Users/jk023/.claude/skills  (5/22 追加、 Zen 側 skill draft / promoted 保管 path、 zen_role 5/22 skill 軸 articulate と整合、 事後 Kai audit へ)
 #
 # 明示 deny (Red 境界):
 #   project-nia  (C:\Users\jk023\Desktop\project-nia)
@@ -136,7 +137,7 @@ update_identity_baseline() {
     fi
 }
 
-# --- 許可 6 path-prefix (Task B: memory dir + 5/08: Nexus.Lab.Zen Zenn repo + 5/11: broadcast-os 追加) ---
+# --- 許可 path-prefix (Task B: memory dir + 5/08: Nexus.Lab.Zen Zenn repo + 5/11: broadcast-os + Desktop/nokaze 過去追加 + 5/22: .claude/skills) ---
 ALLOWED_PREFIXES=(
     "/c/Users/jk023/nexus-lab"
     "/c/Users/jk023/.claude/projects/c--Users-jk023-nexus-lab/team_memory"
@@ -144,6 +145,8 @@ ALLOWED_PREFIXES=(
     "/c/Users/jk023/.shared-ops"
     "/c/Users/jk023/Nexus.Lab.Zen"
     "/c/Users/jk023/Desktop/broadcast-os"
+    "/c/Users/jk023/Desktop/nokaze"
+    "/c/Users/jk023/.claude/skills"
 )
 
 for allowed_prefix in "${ALLOWED_PREFIXES[@]}"; do
