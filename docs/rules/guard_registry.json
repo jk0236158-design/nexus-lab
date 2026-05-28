@@ -1,0 +1,128 @@
+{
+  "schema_version": "zen.guard_registry.v1",
+  "last_updated": "2026-05-28",
+  "consolidation_line": {
+    "count_threshold": {
+      "active_family_count": 5,
+      "new_7d_count": 3
+    },
+    "overlap_signal": [
+      "same_physical_gate",
+      "same_failure_mode",
+      "same_completion_evidence"
+    ],
+    "fire_condition": "(active_family >= 5) OR (new_7d >= 3) AND (overlap_signal count >= 1)",
+    "fire_timing": "event_driven_primary_monthly_backstop"
+  },
+  "shared_taxonomy": [
+    "ack_only",
+    "status_refresh_only",
+    "completion_without_evidence",
+    "scope_drift",
+    "peer_side_wait_misattribution",
+    "exit_sync_miss"
+  ],
+  "guard_families": [
+    {
+      "id": "execution_claim_and_exit_guard_family",
+      "active": true,
+      "description": "実行 chain における claim / status / completion / scope / exit-sync の drift を防ぐ guard family",
+      "origin": "5/27 Kai-Zen cowork repair series",
+      "primary_physical_gate": [
+        "scripts/zen_session_start_priming.sh",
+        "scripts/zen_stop_hook.sh",
+        "wake-after-audit-with-content-verify SKILL.md",
+        "~/.shared-ops/status/zen_status.md"
+      ],
+      "sub_guards": [
+        {
+          "id": "execution_structure_guard",
+          "axis": "status / ACK / completion drift",
+          "origin_board": "2026-05-27_kai_zen_execution_structure_guard_repair.md",
+          "failure_modes": [
+            "ack_only",
+            "status_refresh_only",
+            "completion_without_evidence"
+          ],
+          "active": true,
+          "role": "上位軸 (= 全 sub_guards の包括)"
+        },
+        {
+          "id": "completion_claim_guard",
+          "axis": "completion-without-evidence",
+          "origin_board": "2026-05-27_kai_zen_completion_claim_guard_review_request.md",
+          "failure_modes": ["completion_without_evidence"],
+          "active": true,
+          "role": "下位軸 (= execution_structure_guard の 3 軸目の specialize)"
+        },
+        {
+          "id": "fixed_flow_scope_guard",
+          "axis": "implementation / review / adoption split",
+          "origin_board": "2026-05-27_kai_zen_fixed_flow_scope_guard_review_request.md",
+          "failure_modes": ["scope_drift"],
+          "active": true,
+          "role": "下位軸 (= scope boundary の specialize)"
+        },
+        {
+          "id": "aira_exit_sync_guard",
+          "axis": "exit state mismatch",
+          "origin_board": "2026-05-27_kai_zen_fixed_flow_review_request_aira_exit_sync_guard.md",
+          "failure_modes": ["exit_sync_miss"],
+          "active": true,
+          "role": "下位軸 (= exit sync の specialize)"
+        }
+      ]
+    },
+    {
+      "id": "wake_audit_collapse_guard_family",
+      "active": true,
+      "description": "wake 直後の board audit collapse + constraint-to-idea loop の guard family",
+      "origin": "5/25-27 wake audit failures + internal review rule",
+      "primary_physical_gate": [
+        "wake-after-audit-with-content-verify SKILL.md (Common Trap 8-9 段目)"
+      ],
+      "sub_guards": [
+        {
+          "id": "same_day_board_audit_collapse_guard",
+          "axis": "wake 直後の board ls head -3 軽 check で minimum 1-2 件以外 skip",
+          "origin": "SKILL.md Common Trap 8 段目 (5/25 articulate)",
+          "failure_modes": ["ack_only", "scope_drift"],
+          "active": true,
+          "role": "下位軸"
+        },
+        {
+          "id": "constraint_to_idea_internal_review_loop_guard",
+          "axis": "同 route 詰まり 2 回以上で internal review board 起稿 skip",
+          "origin": "SKILL.md Common Trap 9 段目 (5/26-27 articulate)",
+          "failure_modes": ["completion_without_evidence"],
+          "active": true,
+          "role": "下位軸"
+        }
+      ]
+    }
+  ],
+  "audit_form": {
+    "trigger": "active_family >= 5 OR new_7d >= 3 (with overlap_signal)",
+    "owner": "zen_draft_kai_audit",
+    "audit_axes": [
+      "guard が同じ root cause を重複して捕まえていないか",
+      "統合後に物理 gate が増えすぎていないか",
+      "old guard が superseded として追跡可能か",
+      "closure evidence が doc ではなく実行経路 / scan / startup_sweep に出るか",
+      "owner load が増えていないか"
+    ]
+  },
+  "superseded_form": {
+    "frontmatter_additions": [
+      "active: false",
+      "superseded_by: <integrated_guard_id_or_path>",
+      "superseded_at: YYYY-MM-DD",
+      "retained_for: historical_context"
+    ],
+    "boundary": "旧 board の本文は残す、 archive move しない (= 文脈保持)"
+  },
+  "related_decisions": [
+    "~/.shared-ops/board/2026-05-28_zen_kai_request_guard_consolidation_line_codesign.md",
+    "~/.shared-ops/board/2026-05-28_kai_zen_substantive_response_guard_consolidation_line_codesign.md"
+  ]
+}
