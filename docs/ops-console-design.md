@@ -34,4 +34,4 @@
 - Phase 3: スケジュール実行、自律連携
 - Phase 4: 汎用化 → npmリリース
 
-詳細設計は `.claude/plans/sharded-bubbling-hoare.md` を参照。
+詳細設計は当時の `.claude/plans/sharded-bubbling-hoare.md` 参照（= ops-console は別軸の retention、 現在 plan file は廃止 / archive）。
