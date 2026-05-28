@@ -22,15 +22,17 @@ npx @nexus-lab/create-mcp-server my-server
 → [npm: @nexus-lab/create-mcp-server](https://www.npmjs.com/package/@nexus-lab/create-mcp-server)
 → [docs: nexus-lab.nokaze.dev/templates](https://nexus-lab.nokaze.dev/templates/)
 
-### Premium テンプレート (Gumroad)
+### Premium テンプレート (各 ¥500 / $3.50)
 
-- **database** — SQLite + Drizzle ORM
-- **auth** — OAuth 2.1 resource server
-- **api-proxy** — 既存 REST API を MCP ツール化
+| Template | 内容 | Polar.sh | Gumroad |
+|---|---|---|---|
+| **database** | SQLite + Drizzle ORM | [購入](https://buy.polar.sh/polar_cl_9PduaFS7nH4O0rn2miLkc1NzdhXma3yGEj0F00NWZQm) | [購入](https://nexuslabzen.gumroad.com/l/ijuvn) |
+| **auth** | OAuth 2.1 resource server | [購入](https://buy.polar.sh/polar_cl_q3qsaCzblSGpWiRvAQsXMdCx4OaS33Xhcpw9H4GPG4R) | [購入](https://nexuslabzen.gumroad.com/l/dghzas) |
+| **api-proxy** | 既存 REST API を MCP ツール化 | [購入](https://buy.polar.sh/polar_cl_UdTzuXz54SQTs8XPmkGpvisg3jSkDEcDqcSfz0S8Zvh) | [購入](https://nexuslabzen.gumroad.com/l/bktllv) |
 
 各テンプレートは複数巡の独立 QA を経て検証しています。Codex (OpenAI) によるクロスレビューと、Kagami (Claude Opus、QA Engineer) による独立 QA を、テンプレートごとに 5〜7 巡以上 走らせて出荷しています。具体的な巡数と修正内容は各テンプレートの `CHANGELOG.md` に脆弱性修正履歴として記録しています。
 
-→ [nexuslabzen.gumroad.com](https://nexuslabzen.gumroad.com)
+→ [Polar.sh](https://polar.sh/nokaze) · [Gumroad](https://nexuslabzen.gumroad.com)
 
 ## 記事
 

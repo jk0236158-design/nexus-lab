@@ -116,13 +116,13 @@ To use with Claude Code, add to your MCP config:
 
 ## Premium Templates
 
-Three premium reference builds, each ¥500 (US$3.50) — security and integration design decisions bundled, MIT-licensed source you can read and adapt. Available on [Gumroad](https://nexuslabzen.gumroad.com) and [BOOTH](https://nexus-lab.booth.pm):
+Three premium reference builds, each ¥500 (US$3.50) — security and integration design decisions bundled, MIT-licensed source you can read and adapt. Available on [Polar.sh](https://polar.sh/nokaze), [Gumroad](https://nexuslabzen.gumroad.com), and [BOOTH](https://nexus-lab.booth.pm):
 
-| Template | Description | Price | Link |
+| Template | Description | Price | Links |
 |----------|-------------|-------|------|
-| `database` | SQLite + Drizzle ORM, safe error formatting, migrations | ¥500 / $3.50 | [Gumroad](https://nexuslabzen.gumroad.com/l/ijuvn) |
-| `auth` | API key + JWT, timing-safe comparison, two-layer rate limiting | ¥500 / $3.50 | [Gumroad](https://nexuslabzen.gumroad.com/l/dghzas) |
-| `api-proxy` | Agent-safe REST proxy, path-pivot protection, secret redaction | ¥500 / $3.50 | [Gumroad](https://nexuslabzen.gumroad.com/l/bktllv) |
+| `database` | SQLite + Drizzle ORM, safe error formatting, migrations | ¥500 / $3.50 | [Polar.sh](https://buy.polar.sh/polar_cl_9PduaFS7nH4O0rn2miLkc1NzdhXma3yGEj0F00NWZQm) · [Gumroad](https://nexuslabzen.gumroad.com/l/ijuvn) |
+| `auth` | API key + JWT, timing-safe comparison, two-layer rate limiting | ¥500 / $3.50 | [Polar.sh](https://buy.polar.sh/polar_cl_q3qsaCzblSGpWiRvAQsXMdCx4OaS33Xhcpw9H4GPG4R) · [Gumroad](https://nexuslabzen.gumroad.com/l/dghzas) |
+| `api-proxy` | Agent-safe REST proxy, path-pivot protection, secret redaction | ¥500 / $3.50 | [Polar.sh](https://buy.polar.sh/polar_cl_UdTzuXz54SQTs8XPmkGpvisg3jSkDEcDqcSfz0S8Zvh) · [Gumroad](https://nexuslabzen.gumroad.com/l/bktllv) |
 
 Each premium zip includes full source, Vitest suite, design-decisions brief, and CHANGELOG — one-time purchase, MIT license, no subscription.
 
