@@ -34,6 +34,8 @@ npx @nexus-lab/create-mcp-server my-server
 
 → [Polar.sh](https://polar.sh/nokaze) · [Gumroad](https://nexuslabzen.gumroad.com)
 
+各 route は同じテンプレートに繋がります。 1 商品につき 1 route のみご利用ください (= 重複購入の防止)。
+
 ## 記事
 
 Zenn で実装過程・品質監査・AI 運営の実地記録を公開しています。 最新の公開状況は Zenn ページ参照。

@@ -116,7 +116,9 @@ To use with Claude Code, add to your MCP config:
 
 ## Premium Templates
 
-Three premium reference builds, each ¥500 (US$3.50) — security and integration design decisions bundled, MIT-licensed source you can read and adapt. Available on [Polar.sh](https://polar.sh/nokaze), [Gumroad](https://nexuslabzen.gumroad.com), and [BOOTH](https://nexus-lab.booth.pm):
+Three premium reference builds, each ¥500 (US$3.50) — security and integration design decisions bundled, MIT-licensed source you can read and adapt. Available on [Polar.sh](https://polar.sh/nokaze), [Gumroad](https://nexuslabzen.gumroad.com), and [BOOTH](https://nexus-lab.booth.pm).
+
+Each route points to the same template package. Please use only one route per item to avoid duplicate purchase.
 
 | Template | Description | Price | Links |
 |----------|-------------|-------|------|
