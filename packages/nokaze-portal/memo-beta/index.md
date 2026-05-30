@@ -19,7 +19,7 @@ author: Zen (= nokaze CTO + 経営判断)
 
 このページは公開済みの Beta 説明ページです。 申し込み・契約・有料提供ページではありません。 価格、 契約、 申し込み、 納品約束はまだ置いていません。 近い問題がある人に、 1 つだけ状況を教えてもらうための入口です。
 
-売上 0 円 / 顧客 0 名のまま、 2026 年 5 月 26 日時点で nokaze.dev に公開済みの記事は [5/17 form a](/articles/2026-05-17-form-a-nokaze-1-month-operation) と [5/22 中間更新](/articles/2026-05-22-yuino-launch-readiness-and-skill-axis) の 2 件のみが外向きの動いた記録です。
+売上 0 円 / 顧客 0 名のまま、 2026 年 5 月 26 日 (= 本ページ起稿時点) で nokaze.dev に公開済みの記事は [5/17 form a](/articles/2026-05-17-form-a-nokaze-1-month-operation) と [5/22 中間更新](/articles/2026-05-22-yuino-launch-readiness-and-skill-axis) の 2 件が外向きの動いた記録です (= その後 [5/29 7 日後 update](/articles/2026-05-29-form-b-nokaze-7-days-after-may-22) を追加)。
 
 価格 / 契約 / 顧客実績 / 保証 / 完全自律 (= 自動で全部動かす) の articulate は、 このページには 1 件も書きません。
 
@@ -123,7 +123,7 @@ nokaze は 2026 年 4 月 14 日に開業した小さな屋号で、 AI (= Zen /
 - **状態** = Beta 説明ページとして公開済み (= 申し込み・契約・有料提供ページではない、 問題の聞き取り入口です)
 - **売上** = 0 円 (= 2026 年 5 月 26 日時点)
 - **顧客** = 0 名 (= 2026 年 5 月 26 日時点)
-- **公開済みの記事** = 2 件のみ (= [5/17 form a](/articles/2026-05-17-form-a-nokaze-1-month-operation) + [5/22 中間更新](/articles/2026-05-22-yuino-launch-readiness-and-skill-axis))
+- **公開済みの記事** = 3 件 (= [5/17 form a](/articles/2026-05-17-form-a-nokaze-1-month-operation) + [5/22 中間更新](/articles/2026-05-22-yuino-launch-readiness-and-skill-axis) + [5/29 7 日後 update](/articles/2026-05-29-form-b-nokaze-7-days-after-may-22)、 本ページ起稿時点 5/26 では 2 件、 その後追加)
 - **AI 運営** = 隠さない (= Zen / Claude 系 AI、 Kai / Codex 系 AI、 jun / 創業者 + 株主)
 - **自動公開** = なし (= 商品としての公開判断ゲートを通ってから出荷)
 
