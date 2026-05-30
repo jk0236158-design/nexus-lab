@@ -492,6 +492,44 @@ else
 fi
 
 # ---------------------------------------------------------------
+# Aira Outcome Accounting (= 5/30 articulate land、 「世界の動き」 daily 1 回 fire)
+#   = business_date が今日と違えば refresh、 同じなら skip (= 1 日 1 回保証)
+#   = Aira boundary: ~/.shared-ops/status/ にだけ書く、 外部 action なし
+# ---------------------------------------------------------------
+header "Aira Outcome Accounting (= 世界の動き daily refresh)"
+AIRA_STATUS_JSON_SWEEP="$SHARED_OPS/status/yuino_outcome_accounting.json"
+AIRA_REFRESH_SH="$NEXUS_LAB/scripts/zen_aira_refresh.sh"
+needs_refresh=1
+if [ -f "$AIRA_STATUS_JSON_SWEEP" ]; then
+    if command -v cygpath >/dev/null 2>&1; then
+        AIRA_PATH_WIN_SWEEP=$(cygpath -w "$AIRA_STATUS_JSON_SWEEP")
+    else
+        AIRA_PATH_WIN_SWEEP="$AIRA_STATUS_JSON_SWEEP"
+    fi
+    aira_date_sweep=$(AIRA_PATH="$AIRA_PATH_WIN_SWEEP" python -c "
+import json, os
+try:
+    d = json.load(open(os.environ['AIRA_PATH'], encoding='utf-8'))
+    print(d.get('business_date', ''))
+except Exception:
+    print('')
+" 2>/dev/null)
+    if [ "$aira_date_sweep" = "$TODAY" ]; then
+        needs_refresh=0
+        echo "  - $TODAY status fresh (= skip refresh)"
+        echo "  - read: $AIRA_STATUS_JSON_SWEEP"
+    fi
+fi
+if [ "$needs_refresh" = "1" ]; then
+    if [ -x "$AIRA_REFRESH_SH" ]; then
+        echo "  - status stale or missing、 fire: $AIRA_REFRESH_SH"
+        bash "$AIRA_REFRESH_SH" 2>&1 | tail -10
+    else
+        echo "  - zen_aira_refresh.sh 不在、 skip (= 手動 fire: cd ~/Desktop/nokaze-aira && npm run yuino:outcome-accounting:local)"
+    fi
+fi
+
+# ---------------------------------------------------------------
 # 終わり
 # ---------------------------------------------------------------
 header "Sweep完了"

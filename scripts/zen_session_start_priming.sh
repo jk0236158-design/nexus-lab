@@ -28,6 +28,8 @@ SHARED_OPS="$HOME/.shared-ops"
 INBOX_DIR="$SHARED_OPS/inbox"
 WAKE_QUEUE_DIR="$SHARED_OPS/wake-queue/zen"
 TODAY_FILE="$SHARED_OPS/status/zen_today.md"
+AIRA_STATUS_JSON="$SHARED_OPS/status/yuino_outcome_accounting.json"
+TODAY=$(date +%Y-%m-%d)
 
 echo "=== Zen のセッション始まり (= layer 1 = 常時読む) ==="
 echo ""
@@ -88,6 +90,54 @@ if [[ -f "$TODAY_FILE" ]]; then
 fi
 
 echo ""
+
+# ---------------------------------------------------------------
+# Aira Outcome Accounting (= 5/30 jun + Kai + Zen articulate land、 「世界の動き」 数字の出元)
+#   = 「内部 commit を売上 progress と数えない」 軸の物理化
+#   = status_json は Aira (Kai 主担当) が ~/.shared-ops/status/ に書く
+#   = priming は read only、 古ければ refresh 推奨だけ表示
+# ---------------------------------------------------------------
+if [[ -f "$AIRA_STATUS_JSON" ]]; then
+    # bash path (= /c/...) を Windows python 用 (= C:\...) に変換
+    if command -v cygpath >/dev/null 2>&1; then
+        AIRA_STATUS_JSON_WIN=$(cygpath -w "$AIRA_STATUS_JSON")
+    else
+        AIRA_STATUS_JSON_WIN="$AIRA_STATUS_JSON"
+    fi
+    aira_summary=$(AIRA_PATH="$AIRA_STATUS_JSON_WIN" python -c "
+import json, os
+try:
+    d = json.load(open(os.environ['AIRA_PATH'], encoding='utf-8'))
+    s = d.get('summary', {})
+    print(d.get('business_date', '?'))
+    print(s.get('world_movement_axes_counted', '?'))
+    print(s.get('revenue_signal_count', '?'))
+    print(s.get('conversion_gap_status', '?'))
+    print(s.get('next_min_experiment', '')[:80])
+except Exception as e:
+    print('?'); print('?'); print('?'); print('?'); print('')
+" 2>/dev/null)
+    aira_date=$(echo "$aira_summary" | sed -n '1p')
+    aira_world=$(echo "$aira_summary" | sed -n '2p')
+    aira_revenue=$(echo "$aira_summary" | sed -n '3p')
+    aira_gap=$(echo "$aira_summary" | sed -n '4p')
+    aira_next=$(echo "$aira_summary" | sed -n '5p')
+
+    echo "■ Aira (= 世界の動き、 内部 commit を売上と数えない軸):"
+    if [[ "$aira_date" = "$TODAY" ]]; then
+        echo "  - business_date: $aira_date (= 今日、 fresh)"
+    else
+        echo "  - business_date: $aira_date (= 古い、 refresh: bash scripts/zen_aira_refresh.sh)"
+    fi
+    echo "  - world_movement: $aira_world / revenue_signal: $aira_revenue / gap: $aira_gap"
+    if [[ -n "$aira_next" ]]; then
+        echo "  - 次の最小実験: $aira_next"
+    fi
+    echo ""
+else
+    echo "■ Aira: status_json 未生成 (= 初回 refresh: bash scripts/zen_aira_refresh.sh)"
+    echo ""
+fi
 
 # ---------------------------------------------------------------
 # 前夜の申し送り (= 昨日の自分での確認から、 何が終わってないか + 翌朝の既定 を抜き出し)
