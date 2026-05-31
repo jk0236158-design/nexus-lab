@@ -29,6 +29,7 @@ INBOX_DIR="$SHARED_OPS/inbox"
 WAKE_QUEUE_DIR="$SHARED_OPS/wake-queue/zen"
 TODAY_FILE="$SHARED_OPS/status/zen_today.md"
 AIRA_STATUS_JSON="$SHARED_OPS/status/yuino_outcome_accounting.json"
+ACTIVE_LANES_FILE="$SHARED_OPS/status/zen_active_lanes.md"
 TODAY=$(date +%Y-%m-%d)
 
 echo "=== Zen のセッション始まり (= layer 1 = 常時読む) ==="
@@ -136,6 +137,29 @@ except Exception as e:
     echo ""
 else
     echo "■ Aira: status_json 未生成 (= 初回 refresh: bash scripts/zen_aira_refresh.sh)"
+    echo ""
+fi
+
+# ---------------------------------------------------------------
+# Active Lanes (= 5/31 jun directive、 「やること散らばって参照できてない」 軸の物理対策)
+#   = 5/22 dual-track + 4/24 路線 C/D の active 5 lane の canonical surface
+#   = stale lane (= 直近 7 日以内に動いてない lane) を1 行 articulate、 「待ち」 default 防止
+# ---------------------------------------------------------------
+if [[ -f "$ACTIVE_LANES_FILE" ]]; then
+    echo "■ Active Lanes (= 今日 Zen が動かす canonical index):"
+    # Lane heading + 直近動き 行を 各 lane 1 件 抜粋 表示
+    awk '
+        /^## Lane [0-9]+:/ { lane=$0; sub(/^## /, "  - ", lane); print lane; in_lane=1; next }
+        in_lane && /^- \*\*直近動き\*\*:/ {
+            sub(/^- \*\*直近動き\*\*:/, "      直近:", $0)
+            print $0
+            in_lane=0
+        }
+    ' "$ACTIVE_LANES_FILE"
+    echo "  (= 詳細: $ACTIVE_LANES_FILE)"
+    echo ""
+else
+    echo "■ Active Lanes: zen_active_lanes.md 未生成 (= 初回 起稿軸)"
     echo ""
 fi
 
