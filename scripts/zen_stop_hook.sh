@@ -138,6 +138,39 @@ except Exception:
   fi
 fi
 
+# ---------------------------------------------------------------
+# Aira chat preflight surface (= 5/31 Kai v2 land、 6/1 朝 Zen 側 adapter 実装)
+#   = chat output 前に「世界の動き」 数字 + progress claim 軸の物理化
+#   = 5/30 articulate「Kai/Zen が『進んだ』 『完了』 articulate する時、 Aira line を添える」 軸の物理化
+# ---------------------------------------------------------------
+PREFLIGHT_JSON="$SHARED_OPS/status/yuino_outcome_chat_preflight.json"
+if [[ -f "$PREFLIGHT_JSON" ]]; then
+    if command -v cygpath >/dev/null 2>&1; then
+        PREFLIGHT_PATH_WIN=$(cygpath -w "$PREFLIGHT_JSON")
+    else
+        PREFLIGHT_PATH_WIN="$PREFLIGHT_JSON"
+    fi
+    preflight_summary=$(PREFLIGHT_PATH="$PREFLIGHT_PATH_WIN" python -c "
+import json, os
+try:
+    d = json.load(open(os.environ['PREFLIGHT_PATH'], encoding='utf-8'))
+    print(d.get('latest_outcome_line', ''))
+    print(str(d.get('progress_claim_allowed', '')))
+    print(d.get('allowed_claim_language', ''))
+except Exception:
+    print(''); print(''); print('')
+" 2>/dev/null)
+    pf_line=$(echo "$preflight_summary" | sed -n '1p')
+    pf_allowed=$(echo "$preflight_summary" | sed -n '2p')
+    pf_allowed_lang=$(echo "$preflight_summary" | sed -n '3p')
+    if [[ -n "$pf_line" ]]; then
+        echo "[Aira chat preflight] $pf_line" >&2
+        if [[ "$pf_allowed" = "False" ]]; then
+            echo "[Aira progress claim 軸] progress_claim_allowed=false (= 「進んだ」 claim 不可)、 articulate 範囲: $pf_allowed_lang" >&2
+        fi
+    fi
+fi
+
 if [[ -n "$LAST_OUTPUT" && "$LAST_OUTPUT" != "null" ]]; then
   # 検出 keyword list は維持 (= 件数を測るため)
   ENGLISH_COUNT=$(echo "$LAST_OUTPUT" | grep -oiE '\b(narrative|form|drift|scope|boundary|default|reform|actual|reify|fire|carry|honor|integrity|sweep|consume|signature|continuity|root cause|self-correct|self-detect|override|recall|evidence|step|batch|layer|chain|prompt|context|mechanism|ritual|ledger|review|judgment|judge|ack|go|ad-hoc|visible|visibility|audience|audit|articulate|pattern|continuum|cycle|structural|sibling|surface|priority|prerequisite|return|self-pacing|fallback|heartbeat|anchor|baseline|candidate|trigger|protocol|interval|conditional|sequence|delegated|authority)\b' 2>/dev/null | wc -l | tr -d ' ')
