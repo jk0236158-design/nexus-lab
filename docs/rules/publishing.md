@@ -87,6 +87,60 @@ Zenn に push してから 5 分後の WebFetch で 404 が返ったとき、 **
 - 節目の日の日記
 - 設計書 (Kagami の品質確認に紐づくもの)
 
+## 7. 公開判断の 3 段階 ルーティング (5/31 書き出し、 Kai 5/31 articulate) `[頭の中]`
+
+5/22 owner-decision (= 「外部投稿は Kai/Zen ダブルチェックで AI 実行可」) は **同一版 artifact の事前 double-check** が canonical 軸。 5/30 form b 6 巡 drift (= 過剰 review) + 5/31 Zenn bridge 事後 articulate (= 派生抜粋低 risk) の判断軸を明確化する 3 段階 ルーティング:
+
+### green_fast — Zen self-check + 事後 short articulate
+
+条件 (= 全て満たす):
+- canonical の短い syndicate (= 既存 公開記事の派生抜粋)
+- 本文の意味変更 なし
+- CTA / 導線 / 比較表 の変更 なし
+- 新しい 見出し / 買い手向け claim なし
+- 価格 / 契約 / payment / 顧客実績 articulate なし
+- route と account が既知 (= 既存合意 範囲)
+
+対応: Zen self-check 5 軸 物理化 + 公開後 short articulate (= board 1 件)。 問題発見時は即 unpublish 可。
+
+例: 5/31 Zenn bridge (= nokaze.dev form b の派生抜粋、 主要 articulate 1-2 件 + canonical link)。
+
+### yellow_precheck — Kai 事前同一版 review 必須
+
+条件 (= 1 件以上 該当):
+- 新しい 見出し / CTA / 導線 / 比較表
+- 買い手向け claim (= 「動く」 「使える」 「進んだ」 等の articulate)
+- 本文の意味変更 (= canonical からの逸脱、 新規 articulate 追加)
+- 媒体 / アカウント の新規 (= 既存合意 範囲外)
+
+対応: 公開前に同一版 (= push する artifact そのもの) を Kai board に投げて green 受領後 公開。
+
+例: 5/29 form b 本体 (= 5/22 中間更新からの新規 articulate、 6 章構成、 Kai 6 巡 review pass)。
+
+### red_owner — jun 確認必須
+
+条件 (= 1 件以上 該当):
+- 有料 / 価格 / checkout / 契約 / 支払い 軸
+- 顧客実績 claim
+- account / profile change (= 初回 + 内容軸)
+- secret / private material
+- 成果保証 articulate
+- 炎上 risk 軸 / 他者に直接届く送信
+
+対応: jun に short chat で articulate + GO 受領後 動く。
+
+例: Polar.sh 商品公開 (= 価格 + checkout + ファイル添付軸)、 note 投稿 (= account 認証軸)。
+
+### 判定の順序
+
+1. red_owner 条件を 1 件でも満たす → red_owner
+2. yellow_precheck 条件を 1 件でも満たす → yellow_precheck
+3. 全て満たさない → green_fast
+
+= 「迷ったら yellow_precheck 側に倒す」 軸 (= 5/31 Kai articulate「事後 articulate を default にすると差分混入時に事故る」 軸の物理対策)。
+
+詳細: board `~/.shared-ops/board/2026-05-31_kai_zen_substantive_response_zenn_bridge_form_b_published_yellow_green.md`
+
 ## 関連ファイル
 
 - `docs/rules/README.md` (本ファイルの親、 分割設計)
