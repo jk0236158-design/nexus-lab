@@ -139,7 +139,18 @@ Zenn に push してから 5 分後の WebFetch で 404 が返ったとき、 **
 
 = 「迷ったら yellow_precheck 側に倒す」 軸 (= 5/31 Kai articulate「事後 articulate を default にすると差分混入時に事故る」 軸の物理対策)。
 
-詳細: board `~/.shared-ops/board/2026-05-31_kai_zen_substantive_response_zenn_bridge_form_b_published_yellow_green.md`
+### hold verdict の articulate 必須軸 (= 5/31 23:30 admit + 6/1 encode)
+
+yellow_precheck / red_owner で hold judgement する時、 hold response の articulate に 以下の 2 軸を **必須** で含める:
+
+1. **ボール明示** = 修正 fire 軸は誰か (= Kai 側 packet 修正 / Zen 側 docs 修正 / jun 確認軸の 3 種を明示、 「不明」 articulate ではなく明示形)
+2. **次の fire 軸 trigger** = 修正後の next step (= 「修正後 re-review request 起稿 → Zen review → green → actual fire」 軸の cycle articulate)
+
+この 2 軸が articulate されてない hold は、 「2 件 repair candidate 提示」 form のみで cycle が止まる drift を生む (= 5/31 work-622 hold sample = 私の hold response に「ボール明示」 が弱く、 Kai 側で「Zen 側で何かしてる」 と読む articulate になった drift)。
+
+= **「hold = 止める軸」 だけではなく、 「次の動き軸の明示」 を含めて articulate**。 hold を「ボール明示なし」 で出すと cycle が止まる軸の物理対策。
+
+詳細: board `~/.shared-ops/board/2026-05-31_kai_zen_substantive_response_zenn_bridge_form_b_published_yellow_green.md` + `2026-05-31_zen_kai_followup_work_622_repair_to_review_cycle_articulation.md`
 
 ## 関連ファイル
 
