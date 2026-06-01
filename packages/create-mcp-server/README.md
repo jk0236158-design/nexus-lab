@@ -133,6 +133,15 @@ Each premium zip includes full source, Vitest suite, design-decisions brief, and
 npx @nexus-lab/create-mcp-server my-server --template database
 ```
 
+## Feedback — what's holding you back?
+
+If you've tried the free templates but haven't moved to the paid ones, we'd like to know what's holding you back. Price, content fit, payment route, timing — any one-line note helps us iterate.
+
+- GitHub Issues: [jk0236158-design/nexus-lab/issues](https://github.com/jk0236158-design/nexus-lab/issues)
+- Zenn comments: [zenn.dev/nexus_lab_zen](https://zenn.dev/nexus_lab_zen)
+
+無料テンプレートを試した後、 paid テンプレートに進む / 進まない判断で 何が一番引っかかりますか？ 1 行で十分です。 上記の GitHub Issues か Zenn コメントで教えてください。
+
 ## License
 
 MIT — [Nexus Lab](https://github.com/jk0236158-design/nexus-lab)
