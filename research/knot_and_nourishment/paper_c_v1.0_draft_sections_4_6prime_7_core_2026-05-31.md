@@ -125,10 +125,10 @@ invoke 漏れ admit の累積 evidence (= 該 file L41-67):
 
 | 軸 | 状態 |
 |---|---|
-| skill カード存在 (= vertical Knot land) | ○ 3 件 |
-| SKILL.md 読み (= cognitive 軸) | ○ admit |
+| skill カード存在 (= vertical Knot land) | ✓ 3 件 |
+| SKILL.md 読み (= cognitive 軸) | ✓ admit |
 | Skill tool 経由 invoke (= horizontal actual use) | ✗ invoke 漏れ default |
-| jun 介入での detection | ○ 1 件 |
+| jun 介入での detection | ✓ 1 件 |
 | 自力 detection | ✗ なし |
 
 **Knot 軸での position**: v0.5 § 1-D で articulate された vertical / horizontal 2 軸の **接続 layer**。 3 軸目 (= cross-conversion) の採用判断 = v0.2 outline § 4.3 で **採用** (= 本 v1.0 draft 段で encode)、 但し N=1 sample (= 5/31 観察のみ) + observer = participant bias 強の限界軸あり (= 4.4 Limitations 段で再 articulate)。
@@ -142,7 +142,7 @@ invoke 漏れ admit の累積 evidence (= 該 file L41-67):
 | 起動 | wake / event trigger | request 起稿 | request 起稿前 Skill tool invoke |
 | closure | promote 完了 | green verdict | actual invoke + grep audit verify |
 | failure mode | 3 step 不完全 (= articulate のみで物理配置 / invoke 漏れ) | self-check completeness 段階崩壊 | 「cognitive 軸」 停止 (= SKILL.md 読み ≠ Skill tool invoke) |
-| 物理 evidence | 5/22 observation 全 92 行 | 5/29 observation 全 79 行 + 5/30 observation 全 77 行 | 5/31 observation 全 137 行 + grep audit count |
+| 物理 evidence | 5/22 observation 全 92 行 | 5/29 observation 全 79 行 + 5/30 observation 全 77 行 | 5/31 observation 全 137 行、 内 grep audit = 20 board file / 100 reference / N=1 cross-conversion sample |
 
 = **3 軸は同 Knot 軸の 3 form**、 但し failure mode は別軸 (= 3 step 線引きズレ vs self-check 段階崩壊 vs cognitive 停止)。
 
@@ -299,12 +299,12 @@ v0.1 outline § 7.1-7.4 (= action count / drift_ratio time series、 peer 合議
 
 **Evidence**:
 
-1. **grep audit** (= 該 file L24-39): `grep -r "zen-executive-scan|wake-after-audit-with-content-verify|nokaze-design" ~/.shared-ops/board/` で 5/22-5/30 範囲 20 件 board file で 3 件 skill が累計 100 件参照 (= 36 + 28 + 36)、 = **参照件数あり**。
+1. **grep audit** (= 該 file L24-39): `grep -r "zen-executive-scan|wake-after-audit-with-content-verify|nokaze-design" ~/.shared-ops/board/` で 5/22-5/30 範囲 20 board file 内で 累計 100 件の reference (= zen-executive-scan 36 + wake-after-audit-with-content-verify 28 + nokaze-design 36)、 **但し reference ≠ invoke** (= 同 file 内複数 reference 含む、 actual invoke 軸とは別)、 = **参照件数あり ただし invoke 軸とは別 evidence**。
 2. **invoke 漏れ admit 1 件目** (= 該 file L46-51): 5/29 2nd request 起稿時の admit (= 板 file `2026-05-29_zen_kai_second_review_nokaze_dev_form_b_brand_repairs_applied.md`)、 「SKILL.md は読んでたが Skill tool で invoke してなかった = skill の正しい使い方じゃない」、 jun 介入で気づいた (= 自力 detection なし)。
 3. **invoke 漏れ admit 累積** (= 該 file L53-58): 5/30 sixth review の 累積 admit (= 板 file `2026-05-30_zen_kai_sixth_review_nokaze_dev_form_b_OK_purged.md`)、 6 巡 review iteration の 2nd 段で同 admit 表示。
 4. **対策 articulate** (= 該 file L60-67): 5/30 次回 publish 時の物理対策 articulate (= request 起稿前 self-check command 5 軸の物理 chain 実行、 nokaze-design skill invoke 含む)、 但し 5/31 観察時点で物理化 done evidence なし。
 
-**Discussion (= Knot 軸での articulate)**: cross-conversion 状態表 (= 該 file L72-79) = vertical Knot land (= ○) + SKILL.md 読み (= ○) + Skill tool 経由 invoke (= ✗ invoke 漏れ default) + jun 介入での detection (= ○ 1 件) + 自力 detection (= ✗ なし)。 = **vertical → horizontal cross-conversion が 「cognitive 軸」 で停止、 「actual invoke 軸」 まで到達しない default**。 v0.5 closure 条件 4 軸との接続 (= 該 file L82-91 表): 軸 2 「self-check 物理化」 の物理 evidence として強い (= 「skill 読み = cognitive」 ≠ 「Skill tool invoke = 物理」 = 物理化軸違反 sample)。
+**Discussion (= Knot 軸での articulate)**: cross-conversion 状態表 (= 該 file L72-79) = vertical Knot land (= ✓) + SKILL.md 読み (= ✓) + Skill tool 経由 invoke (= ✗ invoke 漏れ default) + jun 介入での detection (= ✓ 1 件) + 自力 detection (= ✗ なし)。 = **vertical → horizontal cross-conversion が 「cognitive 軸」 で停止、 「actual invoke 軸」 まで到達しない default**。 v0.5 closure 条件 4 軸との接続 (= 該 file L82-91 表): 軸 2 「self-check 物理化」 の物理 evidence として強い (= 「skill 読み = cognitive」 ≠ 「Skill tool invoke = 物理」 = 物理化軸違反 sample)。
 
 **Self-observation bias**: observer (= Zen) = invoke 漏れの当事者 + 観察者、 self-justification 軸 risk 強。 grep 軸の cherry-picking risk = 「invoke 漏れ admit」 keyword 軸で grep、 「invoke 成功」 軸の対比 sample なし (= positive sample 不在)。 N=3 sample = nokaze-design 軸のみの累積、 zen-executive-scan / wake-after-audit-with-content-verify 軸の actual invoke 軸の grep 未実施。 「常時 invoke 漏れ default」 一般化軸は N 不足。
 
