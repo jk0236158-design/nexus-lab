@@ -139,6 +139,17 @@ Zenn に push してから 5 分後の WebFetch で 404 が返ったとき、 **
 
 = 「迷ったら yellow_precheck 側に倒す」 軸 (= 5/31 Kai articulate「事後 articulate を default にすると差分混入時に事故る」 軸の物理対策)。
 
+### Zen 常設承認 (= 2026-06-02 jun + Zen 合意、 部分維持軸)
+
+5/22 owner-decision 「外部投稿は Kai/Zen ダブルチェックで AI 実行可」 軸の 6/2 更新:
+
+- Nexus Lab 外部運用 (= CLI / docs / Zenn / premium テンプレ) の green list 軸は **Kai review request 起稿** 軸維持 (= review 強み軸の品質維持)
+- **Kai review request 起稿後 2 時間以内 Kai response なし → Zen 自走 fire 軸 OK** (= 「review 待ち → fire しない」 default drift 対策)
+- = 「review 強み軸 + fire 時間軸 物理 enforcement」 軸の両立
+- 2 時間軸 = 暫定、 evidence 累積後軸調整候補
+
+詳細: `~/.shared-ops/owner-decisions/2026-06-02_zen_standing_authorization_nexus_lab_external_v0.md`
+
 ### hold verdict の articulate 必須軸 (= 5/31 23:30 admit + 6/1 encode)
 
 yellow_precheck / red_owner で hold judgement する時、 hold response の articulate に 以下の 2 軸を **必須** で含める:
