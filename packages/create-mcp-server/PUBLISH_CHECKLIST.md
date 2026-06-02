@@ -3,18 +3,25 @@
 このメモは npm publish の手順を、AI / プログラム 4 ヶ月の前提でも上から順に実行できる粒度で書いたものです。
 急ぐ作業ではないので、慌てず 1 行ずつ確認しながら進めてください。
 
-> **大前提**
+> **大前提** (= 2026-06-02 Zen 常設承認 v0 update)
 >
-> - npm publish の物理 fire は **jun の明示 GO 後** のみ。
+> - npm publish 承認軸:
+>   - **patch / minor リリース** = Zen 常設承認 v0 軸の green、 都度 jun GO 不要 (= Zen self-run、 ただし Kai/Zen ダブルチェック + RELEASE_CHECKLIST.md 8 軸 pass 後)
+>   - **major / breaking リリース** = **jun の明示 GO 必須** (= red_owner 軸維持)
+>   - 価格変更 / 公開停止 / 削除 = jun GO 必須 (= red_owner)
 > - 「動くかなと思って試しに publish」 はしない (= 一度公開すると同じ version は二度と出せない、unpublish は 72 時間以内のみ、 npm registry の信用に直結)。
 > - Gumroad / BOOTH の販売文言・価格は今回触らない。
 > - 「数字盛らない」「外部告知は別軸」「Premium templates は revenue 本線ではない」 という前提の上での 信用回復としての棚直し。
+> - 詳細 = `~/.shared-ops/owner-decisions/2026-06-02_zen_standing_authorization_nexus_lab_external_v0.md` + 並立する `RELEASE_CHECKLIST.md` (= 設計書軸 8 軸)
 
 ## 0. 直前に確認すること
 
-- [ ] **jun から明示 GO** が出ているか (= 板 or chat で 「create-mcp-server 0.5.2 publish GO」 等の明文)。
-- [ ] CHANGELOG.md の `[0.5.2]` セクションが「Unreleased」のままになっていないか (= 日付に書き換えてからコミットする。例: `## [0.5.2] — 2026-05-XX`)。
+- [ ] **承認軸 verify** (= 2026-06-02 standing authorization v0 適用):
+  - patch / minor 軸 → Kai/Zen 同一版 review = green、 jun GO 不要 (= 「Zen 常設承認 v0 適用」 commit message に articulate)
+  - major / breaking 軸 → 板 or chat で 「create-mcp-server X.Y.Z publish GO」 等の jun 明文 evidence あり
+- [ ] CHANGELOG.md の該当 version セクションが「Unreleased」のままになっていないか (= 日付に書き換えてからコミットする。例: `## [0.5.2] — 2026-05-XX`)。
 - [ ] 過去 24 時間以内に同じ作業 PC で `npm publish` 失敗・retry が走っていないか (= 走っていたら一旦深呼吸して `npm view @nexus-lab/create-mcp-server version` で current registry version を再確認)。
+- [ ] **RELEASE_CHECKLIST.md** 8 軸の物理 verify 済か (= 0.4.0 事故軸の物理対策、 `npm pack --dry-run` + `files` array 目視 + tarball size 桁監視)。
 
 ## 1. version bump
 
