@@ -36,10 +36,10 @@ npm package に **含めるべきでない file**:
 
 ## 2. 商品と販売 route の整合性
 
-premium テンプレート 3 件は それぞれ 3 つの販売 route (= Polar.sh / Gumroad / BOOTH) に存在します。 リリース時に変更がある場合のみ確認:
+premium テンプレート 3 件は 2 item-level route (= Polar.sh × 3 + Gumroad × 3 = 計 6 件) + 1 storefront route (= BOOTH = storefront 全体、 個別 item link なし) で並列販売。 リリース時に変更がある場合のみ確認:
 
-- premium 3 件 = それぞれ 3 route 全部で 公開済か (= 価格 ¥500 / $3.50、 商品名と URL の整合)
-- README 上の販売 link 6 件 (= Polar.sh × 3 + Gumroad × 3) の HTTP 200 確認 (= リリース直前に 1 巡)
+- premium 3 件 = Polar.sh 3 件 + Gumroad 3 件 + BOOTH storefront に存在 (= 価格 ¥500 / $3.50、 商品名と URL の整合)
+- README 上の **item link 6 件** (= Polar.sh × 3 + Gumroad × 3) の HTTP 200 確認 + **BOOTH storefront 1 件** の到達確認 = リリース直前に 1 巡 (= 計 7 確認軸)
 - 価格の変更や 公開停止 = **赤 (= jun 確認必須)** — 自走しない
 
 価格や route を触らないリリースなら、 この軸は「変更なし」 と書いて飛ばして構いません。
@@ -49,7 +49,7 @@ premium テンプレート 3 件は それぞれ 3 つの販売 route (= Polar.s
 - [ ] `npm test` 全 pass (= Vitest 軸の green)
 - [ ] `npm run build` exit=0 (= `dist/index.js` 生成)
 - [ ] `npm run typecheck` exit=0 (= strict)
-- [ ] ESLint / Prettier の lint pass (= CI 側で止まる、 ローカルでも確認)
+- [ ] lint check (= **本 package には local `lint` script なし** = `packages/create-mcp-server/package.json` の scripts に存在せず、 root `~/nexus-lab/package.json` にも lint script なし。 editor / CI 側の lint で止まれば pass、 ローカル個別 fire 軸はなし、 = 「configured lint passes via editor / CI、 no local command」 と articulate)
 - [ ] **自社使用** = 自分達で空きディレクトリに install + 起動 + 無料テンプレ 4 件と premium 3 件の表示を 1 巡確認 (= 5/17 「自分達で使う約束を破った」 件の物理化、 「販売開始」 と書く前に必ず自分で触る)
 
 自社使用の手順は `PUBLISH_CHECKLIST.md` § 2.8 に書いてあります。 そちらの dogfood block を踏襲。
@@ -83,7 +83,7 @@ premium テンプレート 3 件は それぞれ 3 つの販売 route (= Polar.s
 - [ ] ブラウザで https://www.npmjs.com/package/@nexus-lab/create-mcp-server を開いて 期待 version 表示
 - [ ] 空きディレクトリで `npx -y @nexus-lab/create-mcp-server@<version> <name> -t config -y --no-install --no-git` を実行して 実際にプロジェクト生成成立
 - [ ] premium テンプレート 1 件で `--template database` を試行 → redirect (= 購入 URL 表示) のみ、 ディレクトリは生成されない (= 0.4.0 事故の再発確認)
-- [ ] README 上の販売 link 6 件 (= Polar.sh × 3 + Gumroad × 3) の HTTP 200 確認
+- [ ] README 上の **item link 6 件** (= Polar.sh × 3 + Gumroad × 3) の HTTP 200 確認 + **BOOTH storefront 1 件** の到達確認 (= 計 7 確認軸)
 
 「`npm publish` が exit=0 で終わった」 = 公開成立、 ではない。 上の 6 件が全部取れて初めて成立。
 
