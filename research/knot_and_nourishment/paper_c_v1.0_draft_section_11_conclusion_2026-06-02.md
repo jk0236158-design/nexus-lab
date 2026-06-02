@@ -45,13 +45,13 @@ boundary:
 
 # v1.0 Draft — Section 11. Conclusion
 
-> 本 draft = v0.2 outline (= 5/31 land) § 1 Section 11 spec 「300 words、 v0.1 維持 + update」 + 「3 軸 + closure 条件 4 軸 + falsification 軸 articulate を core contribution として明示」 の実体化。 v1.0 final ではない、 Kagami peer review + Kai independent review pending。 構成 = 11.1 main contributions 再 articulate (= 150 words) / 11.2 future work (= 100 words、 Section 9 § 9.9 bridge から) / 11.3 closing (= 50 words、 self-observation bias 三重性 + 4 ヶ月 trajectory)。 各 articulate は既存 section + observation file への reference を併記。 本 paper position = 内部 R&D draft、 外部投稿軸ではない (= v1.0 final form 後の jun 確認 gate 軸)。
+> 本 draft = v0.2 outline (= 5/31 land) § 1 Section 11 spec 「300 words、 v0.1 維持 + update」 + 「3 軸 + closure 条件 4 軸 + falsification 軸 articulate を core contribution として明示」 の実体化。 v1.0 final ではない、 Kagami peer review + Kai independent review pending。 構成 = 11.1 main contributions 再 articulate (= 180 words、 6/2 Kagami QA report F1+F2 統合修正で 5 件 → 6 件 articulate 拡張後) / 11.2 future work (= 100 words、 Section 9 § 9.9 bridge から) / 11.3 closing (= 50 words、 self-observation bias 三重性 + 4 ヶ月 trajectory)。 各 articulate は既存 section + observation file への reference を併記。 本 paper position = 内部 R&D draft、 外部投稿軸ではない (= v1.0 final form 後の jun 確認 gate 軸)。 6/2 18:55 Kagami QA report (= CONDITIONAL_PASS) の P1 修正 F1 + F2 統合 (= Option A2): § 11.1 contributions = 6 件 articulate (= a/b/c/d/e/f、 Abstract + Section 1.3 と統一、 (f) RQ list + ITS design encode 新規 land)。
 
 ---
 
 ## 11.1 Main contributions
 
-本 paper の core contributions は 5 件、 各々が post hoc 観察 record と理論統合の組み合わせ:
+本 paper の core contributions は 6 件 (= 6/2 Kagami QA report 後の F1 + F2 統合修正で 5 件 → 6 件 articulate に拡張、 Abstract + Section 1.3 と統一)、 各々が post hoc 観察 record と理論統合の組み合わせ:
 
 **(a) 4 ヶ月 cross-vendor peer organization の long-term empirical record** (= Section 1 + 2 + 3 + 7)。 3 runtime (= Anthropic Claude / OpenAI Codex / Google Gemini) + 6 peer + 1 human の固定 set 軸 nokaze の 2026-02-2026-05 運営 record、 既存 agent 研究軸 (= Reflexion / Constitutional AI / Voyager 等、 v0.3-v0.4 audit 9 件) で射程外の cross-vendor multi-agent 4 ヶ月軸を articulate。
 
@@ -62,6 +62,8 @@ boundary:
 **(d) Override + Growth ledger の 4 層 articulate** (= Section 5)。 Override #1-#3 (= 4/21-4/25 land) + #4 候補 (= 5/31 cross-conversion 失敗 mode、 4 層化判断 deferred)。
 
 **(e) self-observation bias 三重性 の academic disclosure form** (= Section 8.5 + 9.9)。 著者 = 当事者 + observer + paper 起稿者 の三重性を limitations 軸として encode、 「limitations articulate completeness」 軸の axiomatic limit を明示。
+
+**(f) RQ list articulate + ITS design encode** (= Section 6)。 Wave 0-3 timeline + treatment matrix + RQ-1〜RQ-5 の 5 軸 articulate、 nokaze 内部 research instrument design の物理化 form (= 観察軸の post hoc 1 次 record から、 設計軸を pre-registered form で articulate する bridge layer)。
 
 ## 11.2 Future work
 

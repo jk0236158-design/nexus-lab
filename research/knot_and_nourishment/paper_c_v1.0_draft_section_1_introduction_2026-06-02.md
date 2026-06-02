@@ -39,7 +39,7 @@ boundary:
 
 # v1.0 Draft — Section 1. Introduction
 
-> 本 draft = v0.2 outline (= 5/31 land) § 1 Section 1 spec 「600 words、 v0.1 維持 + update」 の実体化。 v1.0 final ではない、 Kagami peer review + Kai independent review pending。 構成 = 1.1 Problem statement / 1.2 Approach / 1.3 Contributions / 1.4 Paper outline / 1.5 self-observation bias 三重性。 references は文中で 1-2 件 articulate (= Reflexion / Constitutional AI / Voyager 軸、 v0.3-v0.4 baseline)、 詳細 9 件 comparison は Section 10 で展開。
+> 本 draft = v0.2 outline (= 5/31 land) § 1 Section 1 spec 「600 words、 v0.1 維持 + update」 の実体化。 v1.0 final ではない、 Kagami peer review + Kai independent review pending。 構成 = 1.1 Problem statement / 1.2 Approach / 1.3 Contributions / 1.4 Paper outline / 1.5 self-observation bias 三重性。 references は文中で 1-2 件 articulate (= Reflexion / Constitutional AI / Voyager 軸、 v0.3-v0.4 baseline)、 詳細 9 件 comparison は Section 10 で展開。 6/2 18:55 Kagami QA report (= CONDITIONAL_PASS) の P1 修正 F1 + F2 統合 (= Option A2): § 1.3 contributions = 6 件 articulate (= a/b/c/d/e/f、 Abstract + Section 11 と統一)。
 
 ---
 
@@ -63,12 +63,14 @@ self-observation bias は **設計段階から明示** (= 著者 = nokaze 内部
 
 ## 1.3 Contributions
 
-本 paper の contribution = 4 件:
+本 paper の contribution = 6 件 (= Abstract / Section 11 と統一、 6/2 Kagami QA report 後の F1 + F2 統合修正):
 
-1. **Knot 3 軸 articulate** (= Section 4): vertical (= 単独 AI 内 skill カード / hook) + horizontal (= AI peer 同士 shared-ops board) + cross-conversion (= vertical → horizontal 起動 gap) の 3 軸物理 evidence。 4 件 case study (= 5/22 / 5/29 / 5/30 / 5/31 観察) で encode。
-2. **peer iteration closure 条件 4 軸** (= Section 6′): 5/29 成功 sample 2 件 + 5/30 失敗 sample 1 件からの post hoc 抽出。 (a) 1 巡 Kai 検出件数 ≤ 3 件、 (b) request 起稿前 self-check の物理化、 (c) 「やった風」 default 連続発火 0 件、 (d) yellow 連続 ≤ 2 回。
-3. **Override + Growth ledger 4 層 articulate** (= Section 5): Override 3 層 (#1 構造ガード / #2 memory→runtime 埋込み欠落 / #3 pre_emptive_override) + #4 候補 (= cross-conversion 失敗 mode、 判定 deferred)。 Growth ledger 13 件累積 + positive pattern N=2 軸。
-4. **self-observation bias の academic form 明示** (= Section 9): post hoc record + N=4 sample + 著者 = 当事者 + observer 二重性 + ラベル本人視点依存の 4 軸を limitations に encode。
+1. **(a) 4 ヶ月 cross-vendor peer organization の long-term empirical record** (= Section 1 + 2 + 3 + 7): 3 runtime (= Anthropic Claude / OpenAI Codex / Google Gemini) + 6 peer + 1 human の固定 set 軸 nokaze の 2026-02-2026-05 運営 record、 既存 agent 研究軸で射程外の cross-vendor multi-agent 4 ヶ月軸を articulate。
+2. **(b) Knot 3 軸 articulate** (= Section 4): vertical (= 単独 AI 内 skill カード / hook) + horizontal (= AI peer 同士 shared-ops board) + cross-conversion (= vertical → horizontal 起動 gap) の 3 軸物理 evidence。 4 件 case study (= 5/22 / 5/29 / 5/30 / 5/31 観察) で encode。
+3. **(c) peer iteration closure 条件 4 軸 + 4 件 case study** (= Section 6′ + 7): 5/29 成功 sample 2 件 + 5/30 失敗 sample 1 件からの post hoc 抽出。 (a) 1 巡 Kai 検出件数 ≤ 3 件、 (b) request 起稿前 self-check の物理化、 (c) 「やった風」 default 連続発火 0 件、 (d) yellow 連続 ≤ 2 回。
+4. **(d) Override + Growth ledger 4 層 articulate** (= Section 5): Override 3 層 (#1 構造ガード / #2 memory→runtime 埋込み欠落 / #3 pre_emptive_override) + #4 候補 (= cross-conversion 失敗 mode、 判定 deferred)。 Growth ledger 13 件累積 + positive pattern N=2 軸。
+5. **(e) self-observation bias の academic disclosure form 明示** (= Section 8.5 + 9): post hoc record + N=4 sample + 著者 = 当事者 + observer + paper 起稿者 の三重性 + ラベル本人視点依存の 4 軸を limitations に encode。
+6. **(f) RQ list articulate + ITS design encode** (= Section 6): Wave 0-3 timeline + treatment matrix + RQ-1〜RQ-5 の 5 軸 articulate、 nokaze 内部 research instrument design の物理化 form。
 
 ---
 
@@ -107,7 +109,7 @@ limitations 3 軸 (= § 9 で expand):
 
 ## 文字数 (= 本 v1.0 draft Section 1 段)
 
-本文 (= § 1.1 + § 1.2 + § 1.3 + § 1.4 + § 1.5) = 約 650 words。 outline v0.2 § 1 Section 1 target = 600 words、 +50 words 範囲内 (= ±150 words OK 軸内)。
+本文 (= § 1.1 + § 1.2 + § 1.3 + § 1.4 + § 1.5) = 約 780 words (= 6/2 P1 修正 F1+F2 統合後、 § 1.3 contributions を 4 件 → 6 件 articulate に拡張、 +130 words)。 outline v0.2 § 1 Section 1 target = 600 words、 +180 words 範囲内 (= ±150 words OK 軸を僅か超過、 P1 修正必須軸 + 6 件 articulate 整合性 > 600 words 厳守の trade-off で受容、 v1.0 final form 軸で再凝縮候補)。
 
 ---
 

@@ -47,7 +47,7 @@ boundary:
 
 # v1.0 Draft — Abstract
 
-> 本 draft = v0.2 outline (= 5/31 land) § 1 Abstract spec 「250 words、 v0.1 維持 + update」 の実体化。 v1.0 final ではない、 Kagami peer review + Kai independent review pending。 構成 = problem (= 50 words) + approach (= 50 words) + observations (= 70 words) + main contributions (= 50 words) + limitations + future work (= 30 words) の 5 段凝縮、 self-observation bias 1 sentence 明示。 既存 references は section 内 articulate 済 (= Section 10)、 Abstract では reference 省略。 v1.0 draft 全 13 unit land complete 軸 = 本 unit。
+> 本 draft = v0.2 outline (= 5/31 land) § 1 Abstract spec 「250 words、 v0.1 維持 + update」 の実体化。 v1.0 final ではない、 Kagami peer review + Kai independent review pending。 構成 = problem (= 50 words) + approach (= 50 words) + observations (= 70 words) + main contributions (= 50 words) + limitations + future work (= 30 words) の 5 段凝縮、 self-observation bias 1 sentence 明示。 既存 references は section 内 articulate 済 (= Section 10)、 Abstract では reference 省略。 v1.0 draft 全 13 unit land complete 軸 = 本 unit。 6/2 18:55 Kagami QA report (= CONDITIONAL_PASS) の P1 修正 F1 + F2 統合 (= Option A2): main contributions = 6 件 articulate (= a/b/c/d/e/f、 全 unit 統一)。
 
 ---
 
@@ -59,7 +59,7 @@ This paper presents a four-month operational record (2026-02 to 2026-05) of noka
 
 We report three empirical findings. First, the Knot operator separates into three axes — vertical (within a single AI, via persistent skill files), horizontal (across AI peers, via shared boards), and cross-conversion (vertical to horizontal invocation gap) — supported by four case studies. Second, peer-iteration closure conditions hold across two success and one failure samples. Third, the Override ledger extends to four layers, recorded alongside a thirteen-entry growth ledger.
 
-Main contributions are: (a) a long-term cross-vendor empirical record, (b) the three-axis Knot articulation including the cross-conversion axis, and (c) an academic disclosure form for triple self-observation bias (author as participant, observer, and paper writer).
+Main contributions are: (a) a long-term cross-vendor empirical record, (b) the three-axis Knot articulation including the cross-conversion axis, (c) four peer-iteration closure conditions extracted from two success and one failure samples, (d) a four-layer Override and Growth ledger record, (e) an academic disclosure form for triple self-observation bias (author as participant, observer, and paper writer), and (f) an articulation of the research question list and ITS design as a physical instrument internal to nokaze (Section 6).
 
 Limitations include post hoc recording, an N=4 case study count, and observer-as-participant bias. Hypothesis-testing form, cross-organization replication, and cross-vendor extension are out of scope and marked as future work.
 
@@ -67,13 +67,13 @@ Limitations include post hoc recording, an N=4 case study count, and observer-as
 
 ## 文字数 (= 本 v1.0 draft Abstract 段)
 
-本文 (= Abstract 5 段 = problem + approach + observations + contributions + limitations + future work) = 約 268 words。 outline v0.2 § 1 Abstract target = 250 words、 +18 words 範囲内 (= ±50 words 範囲内)。
+本文 (= Abstract 5 段 = problem + approach + observations + contributions + limitations + future work) = 約 305 words (= 6/2 P1 修正 F1+F2 統合後、 contributions 6 件 articulate に拡張)。 outline v0.2 § 1 Abstract target = 250 words、 +55 words 範囲内 (= ±50 words 軸を僅か超過、 P1 修正必須軸 + 6 件 articulate 整合性 > 250 words 厳守の trade-off で受容、 v1.0 final form 軸で再凝縮候補)。
 
 内訳:
 - problem: 約 45 words (= 目安 50 ±)
 - approach: 約 60 words (= 目安 50 +)
 - observations: 約 80 words (= 目安 70 +)
-- contributions: 約 50 words (= 目安 50 =)
+- contributions: 約 85 words (= 目安 50 から 6 件 articulate 拡張で +35 words、 P1 修正 F1+F2 統合後)
 - limitations + future work: 約 35 words (= 目安 30 +)
 
 ---

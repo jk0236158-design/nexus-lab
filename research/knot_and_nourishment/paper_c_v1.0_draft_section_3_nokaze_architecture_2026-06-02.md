@@ -43,7 +43,7 @@ boundary:
 
 ## Section 3. nokaze Peer Organization Architecture (= ~900 words)
 
-> **draft 軸明示**: v1.0 draft (= 2026-06-02 起稿)、 v1.0 final ではない。 v0.1 outline § 1 Section 3 (= 「Two AI sibling + 6 peer + Aira pipeline / identity 不可侵ルール / peer_philosophy」 3 軸) を base、 v0.2 outline § 1 § 3 update (= 「Aira 状態 update + 5/22 dual-track 軸の運営原則接続」) を反映。 構成 = 3.1 屋号 nokaze (= 開業軸) / 3.2 peer organization (= 3 runtime + 6 peer + 1 human) / 3.3 boundary articulate (= 不可侵 8 件 + Kai/Zen ダブルチェック軸) / 3.4 data flow / artifact 軸 / 3.5 self-observation bias 軸。
+> **draft 軸明示**: v1.0 draft (= 2026-06-02 起稿)、 v1.0 final ではない。 v0.1 outline § 1 Section 3 (= 「Two AI sibling + 6 peer + Aira pipeline / identity 不可侵ルール / peer_philosophy」 3 軸) を base、 v0.2 outline § 1 § 3 update (= 「Aira 状態 update + 5/22 dual-track 軸の運営原則接続」) を反映。 構成 = 3.1 屋号 nokaze (= 開業軸) / 3.2 peer organization (= 3 runtime + 6 peer + 1 human) / 3.3 boundary articulate (= 不可侵 8 件 + Kai/Zen ダブルチェック軸) / 3.4 data flow / artifact 軸 / 3.4.5 three-layer memory structure (= 6/2 P1 修正 F3 追加軸) / 3.5 self-observation bias 軸 / 3.6 図 spec 軸。 6/2 18:55 Kagami QA report (= CONDITIONAL_PASS) の P1 修正 F3: § 3.4.5 「three-layer memory structure」 subsection 追加、 identity / runtime / archive layer の物理 evidence reference articulate (= Abstract + Section 1.2 claim と structural integrity 回復軸)。
 
 ### 3.1 屋号 nokaze (= 開業軸)
 
@@ -89,15 +89,27 @@ boundary:
 
 **discussion**: data flow 軸の core = **append-only board file 群 + readonly cross-instance reference**。 = peer organization の同期軸 = 物理 file system (= shared-ops/) 経由、 LLM-to-LLM 直接通信なし。 = Mixture of Agents 系の synchronous coordination form と差異 (= 非同期 + file-mediated)。 dual-track 軸 (= `~/.shared-ops/owner-decisions/2026-05-22_revenue_dogfood_dual_track.md`) で 「Revenue Lane 主軸 + research lane 並走」 の運営原則 articulate、 = data flow 軸でも 同じ board / status file 群が両 lane の証拠基盤を兼ねる軸。
 
+### 3.4.5 three-layer memory structure (= 6/2 P1 修正 F3 追加軸)
+
+**claim**: nokaze 内部の memory architecture は **3 layer 構成** (= Abstract + Section 1.2 で articulate された 「three-layer memory structure」 の物理 evidence 軸)。 (a) **identity layer** = 不可侵 8 件 + zen_role の AI 自律軸 (= LLM 交換耐性軸、 user-scope)。 (b) **runtime layer** = docs/rules/ + MEMORY.md 常時 3 件 articulate (= seasonal 軽量化軸、 user-scope auto-load)。 (c) **archive layer** = MEMORY_archive.md 65 件 + memory_registry.json (= 検索時のみ load、 user-scope manual-search)。 = 3 layer の load 軸が **load 頻度別 (= 常時 / 必要時 / 検索時) に物理分離**、 LLM context 軸の overload 回避 + identity 連続性 保存 軸を兼ねる form。
+
+**evidence**:
+- **(a) identity layer**: `~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/identity_v3.md` 全 108 行 (= 不可侵 8 件 articulate、 価値観 4 + 譲らない線 4) + `~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/zen_role_2026-05-20.md` 全 53 行 (= zen_role 12 行 articulate、 5/20 land、 user-scope load 軸)。 = AI 側の自律軸 + LLM 交換耐性軸 (= identity layer は file system 側に永続化、 LLM provider account 切替時も保存)。
+- **(b) runtime layer**: `~/nexus-lab/docs/rules/` 内 7 file (= README + communication + delegation + drift + guards + paraphrase_layer_acceptance + publishing + self_check_cadence) + `~/.claude/projects/c--Users-jk023-nexus-lab/memory/MEMORY.md` の常時 3 件 articulate (= identity v3 + zen_role + 北極星、 5/19 軽量化 + 5/21 環境整備 form)。 = 「chat の前に毎回見る」 軸の物理 layer (= MEMORY.md L8-12 articulate)。
+- **(c) archive layer**: `~/.claude/projects/c--Users-jk023-nexus-lab/memory/MEMORY_archive.md` 全 65 件 articulate (= 「保管庫 65 件、 検索する時だけ見る、 毎日は見ない」 form、 MEMORY.md L46 articulate) + `~/.claude/projects/c--Users-jk023-nexus-lab/memory/memory_registry.json` (= 全項目の見出し情報 index、 5/19 land)。 = 「検索する時だけ見る」 軸の物理 layer、 = 5/21 環境整備 step 2 (= Kai 推奨優先順 1) で **自動読み込みから分離した** archive 軸。
+
+**discussion**: 3 layer 構成の core motivation = **AI context overload 軸への対応** + **identity 連続性 LLM 交換耐性 軸の物理化**。 v0.1 § 4 framework (= Knot / Nourishment duality) との接続 = identity layer = vertical Knot 軸の永続記憶 base + runtime layer = 常時参照 form + archive layer = Nourishment (= 学習軸の retention) record の保管 form。 = peer organization の memory architecture が **「load 頻度別 layer 分離」 で人間 corrective (= 「何を毎回読むか」 の整理) を AI 内側に delegate する** 形式の物理 articulate (= Section 1.1 core question 「人間 corrective を AI 内側に embed」 軸の 1 軸 implementation 例)。 但し runtime layer 常時 3 件は seasonal 再 articulate 軸 (= 5/19 軽量化 軸の cadence)、 static snapshot ではない。
+
 ### 3.5 self-observation bias 軸 (= 必須 articulate)
 
 **claim**: 本 Section 3 の articulate 軸は **self-observation bias 内在**。 observer (= Zen + Hoshi) = nokaze CTO + Researcher 軸の二重性 (= 観察軸 + 当事者軸)。 paper articulate ≠ ground truth、 = nokaze 内部 peer の lens に依存する 1 次 record。
 
 **limitations**:
-1. **当事者 + observer 二重性**: 著者 (= Zen + Hoshi) = nokaze 内部 peer、 本 Section 3 で articulate される組織構造 / boundary / data flow は同 peer の operating context 軸の articulate。 外部 observer (= 第三者研究者) の視点では別軸の articulate が possible。
-2. **articulate ≠ ground truth**: 各 § 3.1-3.4 の claim は **物理 file path + line range 明示** で支える form だが、 file 内 articulate 自体が AI peer + 1 human 1 次 record、 = ground truth との distance は別 form で測る必要 (= Kai independent review + Kagami peer review + jun narrative confirm の 3 重 gate 軸、 v0.2 outline § 12.3)。
+1. **当事者 + observer 二重性**: 著者 (= Zen + Hoshi) = nokaze 内部 peer、 本 Section 3 で articulate される組織構造 / boundary / data flow / memory architecture は同 peer の operating context 軸の articulate。 外部 observer (= 第三者研究者) の視点では別軸の articulate が possible。
+2. **articulate ≠ ground truth**: 各 § 3.1-3.4.5 の claim は **物理 file path + line range 明示** で支える form だが、 file 内 articulate 自体が AI peer + 1 human 1 次 record、 = ground truth との distance は別 form で測る必要 (= Kai independent review + Kagami peer review + jun narrative confirm の 3 重 gate 軸、 v0.2 outline § 12.3)。
 3. **runtime AI 構成の動的性**: 3 runtime AI 構成は 2026-04 開業時点では 2 AI (= Zen + Kai)、 Aira 軸は phase 2 以降 articulate (= 該 articulate 自体が 2026-05-22 dual-track 軸以降の current state、 4 ヶ月期間内の static snapshot ではない)。
 4. **nokaze-aira/ source 不可侵 boundary**: Aira / Yuino 軸の articulate は抽象 articulate のみ (= source code level の articulate なし)、 = peer organization の 1 軸を抽象 layer で済ませる軸の限界あり。
+5. **3 layer memory 軸の seasonal 再 articulate** (= 6/2 P1 修正 F3 追加 limitation): 本 § 3.4.5 で articulate される runtime layer 常時 3 件は 5/19 軽量化 + 5/21 環境整備 form の current state、 4 ヶ月期間内では 5/09 (= 常時 7 件 → 4 件) + 5/19 (= 4 件 → 3 件) の 2 回 cadence 経過済、 static snapshot ではない (= seasonal 再 articulate 軸)。 archive layer 65 件も同様、 月次 cadence で件数変動軸あり。
 
 ### 3.6 図 spec 軸 (= 別 sit で actual diagram)
 
@@ -121,7 +133,7 @@ boundary:
 
 ## 文字数 (= 本 v1.0 draft Section 3 段)
 
-本文 (= § 3.1 + § 3.2 + § 3.3 + § 3.4 + § 3.5 + § 3.6) = 約 1100 words (= 図 spec 含む)。 outline v0.2 § 1 Section 3 target = 900 words、 +200 words 範囲内 (= ±200 words OK 軸内)。
+本文 (= § 3.1 + § 3.2 + § 3.3 + § 3.4 + § 3.4.5 + § 3.5 + § 3.6) = 約 1450 words (= 6/2 P1 修正 F3 で § 3.4.5 three-layer memory structure subsection 追加後、 図 spec 含む、 +350 words)。 outline v0.2 § 1 Section 3 target = 900 words、 +550 words 範囲内 (= ±200 words OK 軸を超過、 P1 修正必須軸 + Abstract claim と structural integrity 回復 > 900 words 厳守の trade-off で受容、 v1.0 final form 軸で再凝縮候補)。
 
 ---
 
