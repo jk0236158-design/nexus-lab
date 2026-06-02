@@ -59,7 +59,7 @@ This paper presents a four-month operational record (2026-02 to 2026-05) of noka
 
 We report three empirical findings. First, the Knot operator separates into three axes — vertical (within a single AI, via persistent skill files), horizontal (across AI peers, via shared boards), and cross-conversion (vertical to horizontal invocation gap) — supported by four case studies. Second, peer-iteration closure conditions hold across two success and one failure samples. Third, the Override ledger extends to four layers, recorded alongside a thirteen-entry growth ledger.
 
-Main contributions are: (a) a long-term cross-vendor empirical record, (b) the three-axis Knot articulation including the cross-conversion axis, (c) four peer-iteration closure conditions extracted from two success and one failure samples, (d) a four-layer Override and Growth ledger record, (e) an academic disclosure form for triple self-observation bias (author as participant, observer, and paper writer), and (f) an articulation of the research question list and ITS design as a physical instrument internal to nokaze (Section 6).
+Main contributions are: (a) a long-term cross-vendor empirical record, (b) the three-axis Knot articulation including the cross-conversion axis, (c) four peer-iteration closure conditions extracted from two success and one failure samples, (d) a three-layer Override ledger plus one deferred candidate layer, alongside a thirteen-entry Growth ledger, (e) an academic disclosure form for triple self-observation bias (author as participant, observer, and paper writer), and (f) an articulation of the research question list and ITS design as a physical instrument internal to nokaze (Section 6).
 
 Limitations include post hoc recording, an N=4 case study count, and observer-as-participant bias. Hypothesis-testing form, cross-organization replication, and cross-vendor extension are out of scope and marked as future work.
 
@@ -67,14 +67,16 @@ Limitations include post hoc recording, an N=4 case study count, and observer-as
 
 ## 文字数 (= 本 v1.0 draft Abstract 段)
 
-本文 (= Abstract 5 段 = problem + approach + observations + contributions + limitations + future work) = 約 305 words (= 6/2 P1 修正 F1+F2 統合後、 contributions 6 件 articulate に拡張)。 outline v0.2 § 1 Abstract target = 250 words、 +55 words 範囲内 (= ±50 words 軸を僅か超過、 P1 修正必須軸 + 6 件 articulate 整合性 > 250 words 厳守の trade-off で受容、 v1.0 final form 軸で再凝縮候補)。
+本文 (= Abstract 5 段 = problem + approach + observations + contributions + limitations + future work) = 約 278 words (= 6/2 P1 修正 F1+F2 統合後 + 6/3 朝 Kai independent review 修正後、 実測 英単語ベース)。 outline v0.2 § 1 Abstract target = 250 words、 +28 words = **±50 words 範囲内**。
 
-内訳:
-- problem: 約 45 words (= 目安 50 ±)
-- approach: 約 60 words (= 目安 50 +)
-- observations: 約 80 words (= 目安 70 +)
-- contributions: 約 85 words (= 目安 50 から 6 件 articulate 拡張で +35 words、 P1 修正 F1+F2 統合後)
-- limitations + future work: 約 35 words (= 目安 30 +)
+内訳 (= 実測 概算):
+- problem: 約 45 words
+- approach: 約 60 words
+- observations: 約 80 words
+- contributions: 約 76 words (= 6 件 articulate)
+- limitations + future work: 約 17 words
+
+= 当初 self-articulate 「約 305 words / contributions 約 85 words / +55 words 超過」 軸は **過大articulate** であった (= 6/3 Kai review P2-1 指摘軸)、 ground truth 実測軸に修正済。
 
 ---
 
