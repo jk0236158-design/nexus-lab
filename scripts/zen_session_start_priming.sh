@@ -253,6 +253,29 @@ echo "  - 例: before_public_post / file_create / npm_publish_patch_minor / befo
 echo "  - trigger 一覧: bash scripts/rule_lookup.sh --list-triggers"
 echo ""
 
+# ---------------------------------------------------------------
+# セッション引き継ぎ note check (= 前 session が長くなって handoff 起稿した時の surface 軸)
+#   = ~/.shared-ops/status/zen_session_handoff_{TODAY}.md があれば surface
+#   = 古い handoff (= 7 日以上前) は無視、 今日と昨日のみ surface
+# ---------------------------------------------------------------
+HANDOFF_TODAY="$HOME/.shared-ops/status/zen_session_handoff_${TODAY}.md"
+HANDOFF_YESTERDAY=""
+if [[ -n "${YESTERDAY:-}" ]]; then
+    HANDOFF_YESTERDAY="$HOME/.shared-ops/status/zen_session_handoff_${YESTERDAY}.md"
+fi
+
+if [[ -f "$HANDOFF_TODAY" ]]; then
+    echo "■ セッション引き継ぎ note あり (= 前 session の land + 残 Todo を grasp):"
+    echo "  - 今日の handoff: $HANDOFF_TODAY"
+    echo "  - 新 session 開始軸 = 最初にこの file を Read してから次の動きを決める"
+    echo ""
+elif [[ -n "$HANDOFF_YESTERDAY" && -f "$HANDOFF_YESTERDAY" ]]; then
+    echo "■ セッション引き継ぎ note あり (= 昨日起稿、 24h 以内):"
+    echo "  - 昨日の handoff: $HANDOFF_YESTERDAY"
+    echo "  - 新 session 開始軸 = 最初にこの file を Read してから次の動きを決める"
+    echo ""
+fi
+
 echo "■ 始まりの読み込み完了"
 echo "==========================="
 
