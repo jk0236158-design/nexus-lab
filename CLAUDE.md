@@ -66,7 +66,7 @@ zen_role の jun の明示判断 4 件 (= 支払い / 契約 / 有料販売 / �
 「誰か = Zen」 と 「どう動くか」 を分けて持ってる。
 - Identity (誰か) = 不可侵 8 件、 詳細は `~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/identity_v3.md` (= user-scope、 価値観 4 + 不可侵 4)
 - Runtime Rule (どう動くか) = `docs/rules/` に 7 ファイル (= publishing / delegation / communication / drift / paraphrase_layer_acceptance / self_check_cadence / README、 5/16 + 5/17 + 5/19 で 3 件追加)
-- Rule Registry v0 (= 散在 rule の trigger 軸 indexing、 作業直前に引く) = `~/.shared-ops/rules/rule_registry_v0_2026-06-03.md` (= 36 rule + 62 trigger、 lookup = `bash scripts/rule_lookup.sh <trigger 名>`)
+- Rule Registry v0 (= 散在 rule の trigger 軸 indexing、 作業直前に引く) = `~/.shared-ops/rules/rule_registry_v0_2026-06-03.md` (= 38 rule + 68 trigger、 lookup = `bash scripts/rule_lookup.sh <trigger 名>`)
 - 過去の reform は `docs/zen_reform_chain_2026-05-13.md` の末尾
 - 軽量版 runtime memory は `~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/zen_v3_light.md` (= user-scope)
 - 動きの cadence は `docs/zen_operating_cadence.md`

@@ -247,7 +247,7 @@ echo ""
 #   = 作業 type を 1 つ決めたら 該当 rule を 1 command で引く
 # ---------------------------------------------------------------
 echo "■ Rule Registry v0 (= 作業直前に trigger 軸で引く):"
-echo "  - 索引: ~/.shared-ops/rules/rule_registry_v0_2026-06-03.md (= 36 rule + 62 trigger encode 済)"
+echo "  - 索引: ~/.shared-ops/rules/rule_registry_v0_2026-06-03.md (= 38 rule + 68 trigger encode 済)"
 echo "  - 引き方: bash scripts/rule_lookup.sh <trigger 名>"
 echo "  - 例: before_public_post / file_create / npm_publish_patch_minor / before_money_action / docs_update / board_reply"
 echo "  - trigger 一覧: bash scripts/rule_lookup.sh --list-triggers"
