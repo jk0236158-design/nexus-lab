@@ -241,6 +241,18 @@ echo "  - CTO の判断の境界 = ~/nexus-lab/CLAUDE.md (= 自走 OK 6 件 / ju
 echo "  - 私が誰か = ~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/identity_v3.md (= 不可侵 8 件)"
 echo ""
 
+# ---------------------------------------------------------------
+# Rule Registry v0 (= 6/3 jun directive 軸の物理化、 「決めたルールが実行時に参照できない」 軸への対策)
+#   = 28 rule + 36 trigger encode 済、 trigger 軸で実行時に引ける形
+#   = 作業 type を 1 つ決めたら 該当 rule を 1 command で引く
+# ---------------------------------------------------------------
+echo "■ Rule Registry v0 (= 作業直前に trigger 軸で引く):"
+echo "  - 索引: ~/.shared-ops/rules/rule_registry_v0_2026-06-03.md (= 36 rule + 62 trigger encode 済)"
+echo "  - 引き方: bash scripts/rule_lookup.sh <trigger 名>"
+echo "  - 例: before_public_post / file_create / npm_publish_patch_minor / before_money_action / docs_update / board_reply"
+echo "  - trigger 一覧: bash scripts/rule_lookup.sh --list-triggers"
+echo ""
+
 echo "■ 始まりの読み込み完了"
 echo "==========================="
 
