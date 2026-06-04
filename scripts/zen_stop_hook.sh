@@ -65,10 +65,12 @@ fi
 TODAY=$(date +%Y-%m-%d)
 KAI_TODAY=0
 ZEN_TODAY=0
-EXCLUDE_PATTERN='^(response_required|requires_response): no|^# Subject: autonomous-act response:'
+EXCLUDE_PATTERN='^(response_required|requires_response): no|^# Subject: autonomous-act response:|^# Subject: ACK only|^status: ack_only'
 if [[ -d "$BOARD" ]]; then
-  KAI_TODAY=$(find "$BOARD" -maxdepth 1 -type f -name "${TODAY}_kai_zen_*.md" 2>/dev/null | xargs -I{} grep -LE "$EXCLUDE_PATTERN" {} 2>/dev/null | wc -l | tr -d ' ')
-  ZEN_TODAY=$(find "$BOARD" -maxdepth 1 -type f -name "${TODAY}_zen_kai_*.md" 2>/dev/null | xargs -I{} grep -LE "$EXCLUDE_PATTERN" {} 2>/dev/null | wc -l | tr -d ' ')
+  # auto_ack file (= Kai watcher の自動 failure notice、 私の response 不要) は file 名 pattern で除外
+  # 2026-06-05 起稿: stop hook の「未返事」 false positive 解消 (= auto_ack 3 件混入していた)
+  KAI_TODAY=$(find "$BOARD" -maxdepth 1 -type f -name "${TODAY}_kai_zen_*.md" ! -name "*_auto_ack_*" 2>/dev/null | xargs -I{} grep -LE "$EXCLUDE_PATTERN" {} 2>/dev/null | wc -l | tr -d ' ')
+  ZEN_TODAY=$(find "$BOARD" -maxdepth 1 -type f -name "${TODAY}_zen_kai_*.md" ! -name "*_auto_ack_*" 2>/dev/null | xargs -I{} grep -LE "$EXCLUDE_PATTERN" {} 2>/dev/null | wc -l | tr -d ' ')
 fi
 KAI_TODAY=${KAI_TODAY:-0}
 ZEN_TODAY=${ZEN_TODAY:-0}
