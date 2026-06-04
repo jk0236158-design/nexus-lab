@@ -187,6 +187,26 @@ if [[ -n "$LAST_OUTPUT" && "$LAST_OUTPUT" != "null" ]]; then
 fi
 
 # ---------------------------------------------------------------
+# mode declaration 検出 (= 2026-06-05 起稿、 yuino-decision-routing.ts dogfood 軸、 試運転 1 週間)
+#   = chat output 起稿時に 5 sender mode (= ambiguity_gate / soft_binder / tripwire_hold /
+#     relay_only / executive_action) の宣言を 1 行 form で含めるクセを物理化
+#   = 6/5 Cowork 再 review「商品を作る Zen と 商品を使う Zen の分離」 への直接対策
+#   = 5/17 dogfood_violation の同型再発の最大級ケースへの解消 path
+# ---------------------------------------------------------------
+if [[ -n "$LAST_OUTPUT" && "$LAST_OUTPUT" != "null" ]]; then
+  # chat output が 200 文字超え (= short ack ではない、 substantive return) の時のみ check
+  OUTPUT_LEN=$(echo -n "$LAST_OUTPUT" | wc -c | tr -d ' ')
+  OUTPUT_LEN=${OUTPUT_LEN:-0}
+  if (( OUTPUT_LEN > 200 )); then
+    MODE_DECL_COUNT=$(echo "$LAST_OUTPUT" | grep -coE 'mode: (ambiguity_gate|soft_binder|tripwire_hold|relay_only|executive_action)' 2>/dev/null)
+    MODE_DECL_COUNT=${MODE_DECL_COUNT:-0}
+    if (( MODE_DECL_COUNT == 0 )); then
+      echo "[mode_declaration 警告] substantive chat output (= ${OUTPUT_LEN} 文字) に mode declaration form なし。 yuino-decision-routing.ts dogfood 軸の物理化、 試運転 1 週間。 form = \"mode: <ambiguity_gate|soft_binder|tripwire_hold|relay_only|executive_action> | interpreted: <X> | held: <Y> | boundary: <Z>\"。 詳細は docs/rules/communication.md § 1-1。" >&2
+    fi
+  fi
+fi
+
+# ---------------------------------------------------------------
 # 「A/B/C/D どれにする?」 form 検出 (= 5/18 z-r-5 + 5/20 layer2 + 5/28 軸の物理化、 2026-06-04 起稿)
 #   = 経営者として判断する代わりに jun に投げる form = 株主確認 default の sign
 #   = 5/21 layer 2 reference articulate「『A/B/C どれにします?』 = 判断を相手に投げてる」 軸の物理化
