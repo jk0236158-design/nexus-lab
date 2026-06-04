@@ -183,6 +183,24 @@ if [[ -n "$LAST_OUTPUT" && "$LAST_OUTPUT" != "null" ]]; then
 fi
 
 # ---------------------------------------------------------------
+# 「A/B/C/D どれにする?」 form 検出 (= 5/18 z-r-5 + 5/20 layer2 + 5/28 軸の物理化、 2026-06-04 起稿)
+#   = 経営者として判断する代わりに jun に投げる form = 株主確認 default の sign
+#   = 5/21 layer 2 reference articulate「『A/B/C どれにします?』 = 判断を相手に投げてる」 軸の物理化
+#   = 5/28 feedback_executive_mode_vs_shareholder_check_drift 軸の 6/4 朝 4 度目再発を受けて
+# ---------------------------------------------------------------
+if [[ -n "$LAST_OUTPUT" && "$LAST_OUTPUT" != "null" ]]; then
+  # form 1 = question 軸の articulate
+  CHOICE_Q_COUNT=$(echo "$LAST_OUTPUT" | grep -coiE 'どれにする\?|どれにします\?|どっち\?|どれが (form|軸|よい|いい)\?|次の候補|候補 [0-9一二三四五]+ 件' 2>/dev/null)
+  CHOICE_Q_COUNT=${CHOICE_Q_COUNT:-0}
+  # form 2 = (A) ~ (D) の連続 articulate
+  ABCD_COUNT=$(echo "$LAST_OUTPUT" | grep -coE '\([A-D]\)' 2>/dev/null)
+  ABCD_COUNT=${ABCD_COUNT:-0}
+  if (( CHOICE_Q_COUNT > 0 )) || (( ABCD_COUNT >= 3 )); then
+    echo "[choice_form 警告] 直前の出力に 「A/B/C/D どれにする?」 form 検出 (= 「どれにする?」 系: ${CHOICE_Q_COUNT} 件、 (A)/(B)/(C)/(D) 連続: ${ABCD_COUNT} 件)。 5/18 z-r-5 + 5/20 layer2 + 5/28 軸違反 form = 株主に投げる軸。 「私はこう判断、 違う意見あれば言って」 form に書き直し。" >&2
+  fi
+fi
+
+# ---------------------------------------------------------------
 # 動かす判定 + 停止 / 許可
 # ---------------------------------------------------------------
 if (( PENDING_WITHOUT_MARKER > 0 )) || (( UNRESPONDED > 0 )); then
