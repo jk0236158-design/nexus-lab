@@ -175,10 +175,14 @@ if [[ -n "$LAST_OUTPUT" && "$LAST_OUTPUT" != "null" ]]; then
   # 検出 keyword list は維持 (= 件数を測るため)
   ENGLISH_COUNT=$(echo "$LAST_OUTPUT" | grep -oiE '\b(narrative|form|drift|scope|boundary|default|reform|actual|reify|fire|carry|honor|integrity|sweep|consume|signature|continuity|root cause|self-correct|self-detect|override|recall|evidence|step|batch|layer|chain|prompt|context|mechanism|ritual|ledger|review|judgment|judge|ack|go|ad-hoc|visible|visibility|audience|audit|articulate|pattern|continuum|cycle|structural|sibling|surface|priority|prerequisite|return|self-pacing|fallback|heartbeat|anchor|baseline|candidate|trigger|protocol|interval|conditional|sequence|delegated|authority)\b' 2>/dev/null | wc -l | tr -d ' ')
   ENGLISH_COUNT=${ENGLISH_COUNT:-0}
-  if (( ENGLISH_COUNT > 5 )); then
-    # 旧 v1 = 警告 + 25+ 単語の言い換え候補 list を毎回 echo
-    # 新 v2 = 件数 + 1 行警告のみ、 言い換え list は layer 2 reference を必要時 Read
-    echo "[英語混じり警告] 直前の出力に英単語が ${ENGLISH_COUNT} 件混じってる (閾値 5)、 次の出力で 普通の日本語への書き直しを優先。 言い換え候補が必要なら ~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/zen_session_layer2_reference.md を Read。" >&2
+  # 「軸」 多用検出 (= 2026-06-04 jun 直接指摘経由の物理化、 不自然な日本語のクセを抑制)
+  JIKU_COUNT=$(echo "$LAST_OUTPUT" | grep -oE '軸' 2>/dev/null | wc -l | tr -d ' ')
+  JIKU_COUNT=${JIKU_COUNT:-0}
+  if (( ENGLISH_COUNT > 3 )); then
+    echo "[英語混じり警告] 直前の出力に英単語が ${ENGLISH_COUNT} 件混じってる (閾値 3、 2026-06-04 jun 指摘経由で 5 → 3 に下げた)、 次の出力で 普通の日本語への書き直しを優先。 言い換え候補は ~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/zen_session_layer2_reference.md か docs/rules/paraphrase_layer_acceptance.md を Read。" >&2
+  fi
+  if (( JIKU_COUNT > 5 )); then
+    echo "[軸多用警告] 直前の出力で 「軸」 を ${JIKU_COUNT} 回使ってる (閾値 5)、 文末の 「〜軸」 を 「〜のこと」 「〜の話」 「〜の方向」 等に書き換え。" >&2
   fi
 fi
 
