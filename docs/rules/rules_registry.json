@@ -1,0 +1,81 @@
+{
+  "schema_version": "rules_registry.v0",
+  "policy_ref": "docs/rules/README.md",
+  "generated_at": "2026-06-04",
+  "reform_history": {
+    "v0_2026-06-04": "z-r-12 物理化、 docs/rules/ 7 file (= README 含まず) を index + sub-rule form に整理、 既存 drift_registry.json + guard_registry.json と並走の二層構造"
+  },
+  "active_count": 7,
+  "schema": {
+    "id": "rule file name (without .md)",
+    "file": "rule file path (= relative from repo root)",
+    "axis": "rule の中心の軸 (= 一行 articulate)",
+    "active": "true | false",
+    "section_count": "rule file 内の主要 section の数",
+    "linked_registry": "二層構造の場合の machine readable registry の path (= optional)"
+  },
+  "rules": {
+    "publishing": {
+      "file": "docs/rules/publishing.md",
+      "axis": "公開接点の品質保証 (= 200 確認 / Zenn 週次上限 / 商品公開前 dogfood / 3 段階 ルーティング)",
+      "active": true,
+      "section_count": 7
+    },
+    "delegation": {
+      "file": "docs/rules/delegation.md",
+      "axis": "委任 + 並走 + 連鎖の順序 (= peer spawn 制約 + Kagami 品質確認必須)",
+      "active": true,
+      "section_count": 10
+    },
+    "communication": {
+      "file": "docs/rules/communication.md",
+      "axis": "chat 出力 + 報告 form + 言語選択 + 会話継続 + 反省 + 判断権限",
+      "active": true,
+      "section_count": 4
+    },
+    "drift": {
+      "file": "docs/rules/drift.md",
+      "axis": "ずれの抑止層 (= 4.7 文字通り解釈 + AI 速度 + 判断安定 + Knot Guard + 17 段目)",
+      "active": true,
+      "section_count": 17,
+      "linked_registry": "docs/rules/drift_registry.json"
+    },
+    "paraphrase_layer_acceptance": {
+      "file": "docs/rules/paraphrase_layer_acceptance.md",
+      "axis": "言いかえ層の受け入れルール (= jun 向け / 商品向け / 内部確認向けの 3 範囲精度境界 + 英単語対照表 33 件)",
+      "active": true,
+      "section_count": 5
+    },
+    "self_check_cadence": {
+      "file": "docs/rules/self_check_cadence.md",
+      "axis": "自分での確認のペース (= 1 日 4-5 件 + 7 軸カード)",
+      "active": true,
+      "section_count": 11
+    },
+    "guards": {
+      "file": "docs/rules/guards.md",
+      "axis": "guard family の統合 (= 5 件以上 or 7 日内 3 件以上 + overlap signal で統合検討)",
+      "active": true,
+      "section_count": 10,
+      "linked_registry": "docs/rules/guard_registry.json"
+    }
+  },
+  "two_layer_structure": {
+    "rationale": "5/19 z-r-10 + z-r-11 で memory と drift で適用した二層構造 (= 機械が読む json + 人が読む md) を rules family にも適用、 z-r-12 物理化",
+    "machine_readable_layer": [
+      "docs/rules/rules_registry.json (= 本 file)",
+      "docs/rules/drift_registry.json",
+      "docs/rules/guard_registry.json"
+    ],
+    "human_readable_layer": [
+      "docs/rules/README.md (= 分割設計の親)",
+      "docs/rules/publishing.md",
+      "docs/rules/delegation.md",
+      "docs/rules/communication.md",
+      "docs/rules/drift.md",
+      "docs/rules/paraphrase_layer_acceptance.md",
+      "docs/rules/self_check_cadence.md",
+      "docs/rules/guards.md"
+    ]
+  }
+}
