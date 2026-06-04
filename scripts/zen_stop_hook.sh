@@ -201,6 +201,32 @@ if [[ -n "$LAST_OUTPUT" && "$LAST_OUTPUT" != "null" ]]; then
 fi
 
 # ---------------------------------------------------------------
+# 「直ちに動かす?」 form 検出 (= 5/18 z-r-8 軸の物理化、 2026-06-04 起稿)
+#   = 着手前に articulate するクセ = 動く前の言い訳の段
+#   = 5/18 軸「着手 → 結果 → 1 行 の順」 違反 form
+# ---------------------------------------------------------------
+if [[ -n "$LAST_OUTPUT" && "$LAST_OUTPUT" != "null" ]]; then
+  PREACT_Q_COUNT=$(echo "$LAST_OUTPUT" | grep -coiE '直ちに動かす\?|今すぐ動かす\?|すぐ動かす\?|これから動かす\?|次動かす\?|着手しますか\?|fire しますか\?' 2>/dev/null)
+  PREACT_Q_COUNT=${PREACT_Q_COUNT:-0}
+  if (( PREACT_Q_COUNT > 0 )); then
+    echo "[preact_q 警告] 直前の出力に 「直ちに動かす?」 form 検出 (= ${PREACT_Q_COUNT} 件)。 5/18 z-r-8 違反 = 着手前の articulate。 着手 → 結果 → 1 行 の順に書き直し。" >&2
+  fi
+fi
+
+# ---------------------------------------------------------------
+# 表多用検出 (= 5/18 z-r-6 軸の物理化、 2026-06-04 起稿)
+#   = 表は比較以外で使わない、 思考の段組みとして使うクセを抑制
+#   = 「整理するから中身を浅く articulate できる」 軸の form risk
+# ---------------------------------------------------------------
+if [[ -n "$LAST_OUTPUT" && "$LAST_OUTPUT" != "null" ]]; then
+  TABLE_SEP_COUNT=$(echo "$LAST_OUTPUT" | grep -cE '^\s*\|[- :]+\|' 2>/dev/null)
+  TABLE_SEP_COUNT=${TABLE_SEP_COUNT:-0}
+  if (( TABLE_SEP_COUNT > 2 )); then
+    echo "[table_overuse 警告] 直前の出力に表が ${TABLE_SEP_COUNT} 件検出 (= 閾値 2)。 5/18 z-r-6 違反 form の可能性 = 表は比較以外で使わない、 思考の段組みとして使うクセを抑制。" >&2
+  fi
+fi
+
+# ---------------------------------------------------------------
 # 動かす判定 + 停止 / 許可
 # ---------------------------------------------------------------
 if (( PENDING_WITHOUT_MARKER > 0 )) || (( UNRESPONDED > 0 )); then
