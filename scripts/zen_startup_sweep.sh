@@ -530,6 +530,44 @@ if [ "$needs_refresh" = "1" ]; then
 fi
 
 # ---------------------------------------------------------------
+# Ambiguity Gate 7 signals self-check (= 2026-06-05 起稿、 Cowork 7-2 推奨)
+#   = chat output 前 / board 起稿前に頭の中で 7 signals を pass する習慣を物理化
+#   = 5/28 aira_ambiguity_soft_binder_design_note の 5 categories + Soft Binder 2 軸
+# ---------------------------------------------------------------
+header "Ambiguity Gate 7 signals (= 着手前の self-check)"
+cat <<'EOF'
+  jun directive 受領後の最初の return / board 起稿前に頭の中で確認:
+
+  Ambiguity Gate 5 categories (= Case A: 意味が未解決):
+  1. product audience の曖昧度 (= 誰向けか、 商品 audience の不明確さ)
+  2. expected behavior の曖昧度 (= 振る舞いの仕様、 期待動作の不明確さ)
+  3. safety level の曖昧度 (= 安全境界、 red/yellow/green の不明確さ)
+  4. implementation target の曖昧度 (= どこに implement するか)
+  5. missing "why" (= なぜそれをするか、 動機 / 価値の不明確さ)
+
+  → 5 件のうち 1 件以上「曖昧」 なら silently choose せず:
+    - 解釈を user に articulate (= mode: ambiguity_gate)
+    - 何を保留した articulate (= held: <X>)
+    - 2-3 options + recommended option (= 安全な時のみ)
+
+  Soft Binder 2 軸 (= Case B: 意味が解決、 Green path 複数):
+  6. reversibility (= 戻しやすさ、 1 つ default 選んでも cheap に reverse 可能か)
+  7. evidence confidence (= 証拠の確信度、 default 選びの根拠の強さ)
+
+  → 5 categories 全部 clear かつ Green path 複数なら:
+    - 1 つ default 選ぶ (= mode: soft_binder)
+    - 1 行で reason articulate (= reason: <X>)
+    - reversal 可能性を文末で示す (= 「違うなら言って」)
+
+  Tripwire (= Red 触れる可能性) なら → mode: tripwire_hold
+  自走範囲内で私の判断で動く時 → mode: executive_action
+  中継のみ → mode: relay_only
+
+  詳細 = docs/rules/communication.md § 1-1 (= mode declaration form)
+       + ~/Desktop/nokaze-aira/docs/aira_ambiguity_soft_binder_design_note_2026-05-28.md
+EOF
+
+# ---------------------------------------------------------------
 # 終わり
 # ---------------------------------------------------------------
 header "Sweep完了"
