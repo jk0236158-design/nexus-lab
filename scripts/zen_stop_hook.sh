@@ -292,6 +292,58 @@ if [[ -n "$AIRA_HINT" && -n "$LAST_OUTPUT" && "$LAST_OUTPUT" != "null" ]]; then
 fi
 
 # ---------------------------------------------------------------
+# skill 使用 mention check (= 6/8 admit 物理化、 件 1)
+#   = 200 字超 turn で wake-after-audit / executive-scan のどちらも mention なしなら警告。
+#     6/6 朝以降 39 時間 wake-after-audit 0 回使用の root 対策、 skill を持ってるのに
+#     使わない drift を turn output の articulate で物理化。
+# ---------------------------------------------------------------
+if [[ -n "$LAST_OUTPUT" && "$LAST_OUTPUT" != "null" ]]; then
+  OUTPUT_LEN=${#LAST_OUTPUT}
+  if (( OUTPUT_LEN > 200 )); then
+    LAST_OUTPUT_LOWER_SKILL="${LAST_OUTPUT,,}"
+    SKILL_MENTION=0
+    if [[ "$LAST_OUTPUT_LOWER_SKILL" == *"wake-after-audit"* ]] || \
+       [[ "$LAST_OUTPUT_LOWER_SKILL" == *"executive-scan"* ]] || \
+       [[ "$LAST_OUTPUT_LOWER_SKILL" == *"wake_after_audit"* ]] || \
+       [[ "$LAST_OUTPUT_LOWER_SKILL" == *"executive_scan"* ]]; then
+      SKILL_MENTION=1
+    fi
+    if (( SKILL_MENTION == 0 )); then
+      echo "[skill 未言及] 200 字超 turn (= ${OUTPUT_LEN} 字) で wake-after-audit / executive-scan のどちらも mention なし。 skill を持ってるのに使わない drift の物理対策 (= 6/6-7 で 39 時間 0 回 skip した root)。 使ったなら articulate、 使ってないなら使う判断を入れる。" >&2
+    fi
+  fi
+fi
+
+# ---------------------------------------------------------------
+# pause + Aira 未言及 = drift 兆候 (= 6/8 admit 物理化、 件 2)
+#   = 「pause」 「静か」 「待ち継続」 等を articulate してるのに、 Aira hint への mention 0 件 =
+#     6/7 終日 pause の同型再発兆候。 件 1 (= Aira surface 未言及) を pause 系で強化、
+#     pause を articulate するときは next_min_experiment にも触れる form を強制。
+# ---------------------------------------------------------------
+if [[ -n "$LAST_OUTPUT" && "$LAST_OUTPUT" != "null" ]] && (( ${MENTION_HIT:-0} == 0 )); then
+  PAUSE_COUNT=$(grep -ciE 'pause|静か|待ち継続|静かな|no-op|heartbeat' <<< "$LAST_OUTPUT" 2>/dev/null)
+  PAUSE_COUNT=${PAUSE_COUNT:-0}
+  if (( PAUSE_COUNT > 0 )); then
+    echo "[pause + Aira 未言及 = drift 兆候] turn 内に pause 系 word ${PAUSE_COUNT} 件 + Aira hint mention 0 件 = 6/7 終日 pause の同型再発兆候。 pause を articulate するなら必ず next_min_experiment にも触れる form (= 6/8 03:30 jun directive 件 2)。" >&2
+  fi
+fi
+
+# ---------------------------------------------------------------
+# Aira actionable_items 並列 articulate (= 6/8 admit 物理化、 件 3)
+#   = 「Aira が今 actionable で N 件出してる」 を毎 turn end で見える form。
+#     pending packet 件数だけでなく Aira actionable 件数も同時 surface する、
+#     「pending = backlog、 Aira actionable = 次の動き」 の見える化。
+# ---------------------------------------------------------------
+AIRA_ACTIONABLE=0
+if [[ -f "$ANTI_REACTOR_FILE" ]]; then
+  AIRA_ACTIONABLE_RAW=$(grep -E "^- actionable_items:" "$ANTI_REACTOR_FILE" 2>/dev/null | head -1 | sed -E 's/^- actionable_items: *//; s/[^0-9].*//')
+  AIRA_ACTIONABLE=${AIRA_ACTIONABLE_RAW:-0}
+fi
+if (( AIRA_ACTIONABLE > 0 )); then
+  echo "[Aira actionable] Aira が今 actionable で ${AIRA_ACTIONABLE} 件 出してる (= ~/.shared-ops/status/yuino_anti_reactor_review.md)。 pending packet ${PENDING_WITHOUT_MARKER} 件 と並列、 「pending = backlog、 Aira actionable = 次の動き」 (= 6/8 03:30 jun directive 件 3)。" >&2
+fi
+
+# ---------------------------------------------------------------
 # 動かす判定 + 停止 / 許可
 # ---------------------------------------------------------------
 if (( PENDING_WITHOUT_MARKER > 0 )) || (( UNRESPONDED > 0 )); then
