@@ -26,6 +26,13 @@ boundary:
 
 Aira hint (= 6/8 朝の next_min_experiment) = 「installer-like user / persona に paid conversion blocks を聞く」 軸の persona candidate = **「Claude Code を導入したけど、 半日で「動いてる感だけ」 に気づいて手を引いた人」**。 この persona に paid conversion を blocks する要因を聞く form は spec 確定後に jun GO 取って fire する。
 
+### umbrella 整理 (= 6/8 Kai 推奨)
+
+- 将来 umbrella = `Yuino AI Operations OS`
+- その下の first plugin / product = `AI Operator Guard`
+- 理由 = `nokaze-*` 前面 = 内輪 narrative に寄る、 `claude-*` 寄せ = 将来 Codex / Gemini / Yuino OS 方向が狭くなる
+- AI Operator Guard が単体で立つ + Yuino OS の延長で第 2 / 第 3 plugin (= Aira surface / Knot research / Operator Pack 系) を追加できる構造
+
 ## 2. install surface
 
 default = **Claude Code plugin marketplace 形** (= Kai 推奨 default)。
@@ -41,32 +48,70 @@ priority (= Kai 推奨):
 3. curated/awesome list submission
 4. Gumroad / PDF は最後
 
-## 3. included hooks/commands/templates (= v0 contents)
+## 3. included hooks/commands/templates (= v0 contents、 8 件全部 spec surface)
 
-- **Start/session sweep hook** = session 開始時に board / status / Aira surface を必ず読む form (= 6/4-6/8 で物理化済の zen_startup_sweep.sh の generalize 版)
-- **Stop/finalization hook** = turn end で「pause + Aira hint 未言及」 「skill 未言及」 「pending 件数 + actionable 件数 並列」 を警告する form (= 6/8 zen_stop_hook.sh の generalize 版)
+prototype = 8 件全部 spec に載せる、 ただし実装深度を 2 層に分ける (= 6/8 Kai 推奨)。
+
+### 3.1 Must-land physical controls (= 実装深度 = full)
+
+実コード / hook / command として動かす:
+
 - **mode declaration command** = sender mode (= ambiguity_gate / soft_binder / tripwire_hold / relay_only / executive_action) + 4 fields の自己宣言 form (= 6/5 communication.md § 1-1 物理化済)
-- **7-signal self-check** = 着手前の Ambiguity Gate 7 signals (= 5 categories + Soft Binder 2 軸) (= 6/5 startup_sweep に追加済)
+- **Stop finalization hook** = turn end で「pause + Aira hint 未言及」 「skill 未言及」 「pending 件数 + actionable 件数 並列」 を警告する form (= 6/8 zen_stop_hook.sh の generalize 版)
+- **7-signal completion check** = 着手前の Ambiguity Gate 7 signals (= 5 categories + Soft Binder 2 軸) (= 6/5 startup_sweep に追加済)
 - **completion receipt template** = 「完了」 と articulate する前に物理 evidence 5 ヶ所再生成 + 同型再発検出なしを check する form (= 5/13 reform 「直った」 新定義)
 - **handoff template** = 次セッション / 別 agent に渡す時の「何を読むか」 「何が完了 evidence か」 「どこで人間判断に戻すか」 の articulate form (= Kai 推奨「AI Handoff / Receipt Kit」 を内包)
-- **auto-ACK vs substantive response rule** = 自動 ACK file の検出 + substantive ACK との区別 form (= 6/5 zen_stop_hook の auto_ack file 除外 物理化済)
-- **overclaim / pricing / publish boundary reminder** = 「販売開始」 「公開」 「価格」 articulate 前に確認する form
 
-## 4. dogfood evidence
+### 3.2 Template / policy first (= 実装深度 = doc + rule)
 
-nokaze / Zen で actual に使ってる実装 / commit chain (= 「自分達で使ってない商品の販売開始」 違反を起こさない form):
+実コードじゃなく template / rule / docs として最初に出す:
+
+- **Start sweep template** = session 開始時に board / status / Aira surface を必ず読む form (= 6/4-6/8 物理化済の zen_startup_sweep.sh の generalize 版、 v0 では template/doc としてのみ)
+- **auto-ACK rule** = 自動 ACK file の検出 + substantive ACK との区別 rule articulate (= 6/5 zen_stop_hook の auto_ack file 除外 物理化済の policy 化)
+- **overclaim / pricing / publish boundary reminder** = 「販売開始」 「公開」 「価格」 articulate 前に確認する rule / checklist
+
+= 「Stop hook 単体」 ではなく、 「AI が作業完了と言う前後の運用 state を締める guard set」 (= 6/8 Kai 推奨) として 8 件 spec surface 一括提示。
+
+## 4. dogfood evidence (= 6/8 Kai 推奨で順序逆転、 user 問題 → guard → dogfood → limit)
+
+### 4.1 General problem (= AI agent 運用で踏む失敗の class)
+
+- AI agent が直前の指示 / 文脈に流される
+- ACK-only closure (= 自動 ACK を「完了」 と扱う、 substantive response との切り分けが消える)
+- duplicate wake (= 同じ wake が重複 fire、 stale なのに「動いてる」 と判定)
+- status-refresh-only progress (= status file の update だけで「進んだ」 と数える)
+- 完了したと articulate されたが actual に成果物がない
+- セッション再開時に状態が飛ぶ、 silent failure に気づくのが翌日
+
+### 4.2 Guard mechanism (= 上記失敗 class への AI Operator Guard の対応)
+
+- **mode declaration** = 送り手の判断 mode を明示、 受け手が「これは判断 / これは確認 / これは保留」 を区別
+- **finalization check** = turn end で「pause + 次の action 未言及」 「自動 ACK だけで terminate」 を警告で記録
+- **completion receipt** = 「完了」 articulate 前に物理 evidence 5 ヶ所再生成 + 同型再発なしを必須化
+- **handoff template** = 次 session に「読むもの / 完了 evidence / 人間判断戻り点」 を明示
+
+### 4.3 Dogfood evidence (= nokaze がこの guard を必要とした実例)
+
+nokaze / Zen で同じ失敗 class が actual に起きた、 だから物理対策として作った (= 「nokaze がすでに AI operations を解決済み」 narrative にしない、 dogfood を dogfood として disclose):
 
 - zen_startup_sweep.sh = 4/14 起稿、 6/8 朝時点で 575 行 + 11 section
 - zen_stop_hook.sh = 5/20 起稿、 6/8 朝時点で 350 行超 + 警告 4 layer
 - communication.md § 1-1 = 6/5 mode declaration form 物理化、 commit 7457a4b
-- 構造接続 4 layer (= Aira surface read + skill 言及 check + pause+Aira 警告 + actionable 並列) = 6/8 02:30-04:08 land、 commit bbf20f2 + 6e0b2ea
+- 構造接続 4 layer (= Aira surface read + skill 言及 check + pause+Aira 警告 + actionable 並列) = 6/8 02:30-04:08 land、 commit bbf20f2 + 6e0b2ea + 0755377
 
-drift 検出実績 (= 「物理対策が actual に効いた」 evidence):
+実 fire した失敗 admit (= 「物理対策が必要だった」 evidence、 完成形じゃない):
 - 5/21 7 段目 ズレ admit (= 「行数同じ + 中身 dedup」 + 「自動 ACK = 完了」 + 「並走 instance = 現在進行形」 の 3 系統)
 - 5/27 constraint-to-idea internal review loop rule 起稿 (= 同 route 詰まり 2 回検出時の board 起稿必須化)
 - 6/8 03:30 admit (= 39 時間 wake-after-audit 0 回 skip → 構造接続 4 layer 物理化)
 
-publishing 前の制約 = 「nokaze / Zen で使ってる物理対策を Claude Code plugin 形にしたもの」 articulate に留める (= 「Claude Code 一般に効く」 と言い切らない、 Kai 推奨)。
+### 4.4 Limit (= 何を proof と呼ばないか)
+
+- 本 plugin は **failure class が real であること** + **guard が local に検出 / 削減できること** を articulate
+- 「customer value を proof した」 articulate なし (= まだ customer に届けてない)
+- 「production-ready」 articulate なし
+- 「Claude Code 一般に効く」 articulate なし (= nokaze 環境固有の dogfood、 generalize は user feedback 経由)
+
+= 「This came from our own failed agent operations, not a hypothetical checklist.」 + 「Dogfood evidence is disclosed as dogfood, not customer proof.」 (= 6/8 Kai 推奨 OK 文)。
 
 ## 5. no-overclaim copy
 
