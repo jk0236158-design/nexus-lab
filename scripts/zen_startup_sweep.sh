@@ -530,6 +530,36 @@ if [ "$needs_refresh" = "1" ]; then
 fi
 
 # ---------------------------------------------------------------
+# Aira Surface Read (= 6/8 admit 物理化、 「次の行動」 を毎 startup で必ず chat に出す)
+#   = 構造はあるのに read してなかった drift の物理対策。
+#     Aira が prefer_revenue_or_world_work / next_min_experiment / next_behavior を
+#     毎時間 update してる、 read せず pause 続けるのは構造に逆らう動き。
+#     read 結果を今 session の judgement の起点に置く (= 「Kai 待ち」 「jun 待ち」 の前)。
+# ---------------------------------------------------------------
+header "Aira Surface Read (= 「次の行動」 を judgement の起点に置く)"
+PREFLIGHT_FILE="$SHARED_OPS/status/yuino_outcome_chat_preflight.md"
+ANTI_REACTOR_FILE="$SHARED_OPS/status/yuino_anti_reactor_review.md"
+
+if [ -f "$PREFLIGHT_FILE" ]; then
+  echo "  [chat_preflight] (= 売上 / 世界の動き 軸 の next experiment):"
+  grep -E "^- (latest_outcome_line|next_min_experiment|gate_decision|allowed_claim_language):" "$PREFLIGHT_FILE" 2>/dev/null | sed 's/^/    /'
+else
+  echo "  [chat_preflight] 不在 (= Aira 同期切れ、 zen_aira_refresh.sh fire が必要)"
+fi
+
+echo ""
+if [ -f "$ANTI_REACTOR_FILE" ]; then
+  echo "  [anti_reactor_review] (= Aira が出してる next_behavior + 結果証拠):"
+  grep -E "^- (next_behavior|review_status|actionable_items|owner_required_items):" "$ANTI_REACTOR_FILE" 2>/dev/null | sed 's/^/    /'
+else
+  echo "  [anti_reactor_review] 不在 (= Aira 同期切れ)"
+fi
+
+echo ""
+echo "  ※ next_min_experiment + next_behavior を 「Kai 待ち」 「jun 待ち」 の前に judgement に入れる"
+echo "    (= 6/8 03:30 jun directive 「構造化できてない、 すぐにつなげて」 経由)"
+
+# ---------------------------------------------------------------
 # Ambiguity Gate 7 signals self-check (= 2026-06-05 起稿、 Cowork 7-2 推奨)
 #   = chat output 前 / board 起稿前に頭の中で 7 signals を pass する習慣を物理化
 #   = 5/28 aira_ambiguity_soft_binder_design_note の 5 categories + Soft Binder 2 軸

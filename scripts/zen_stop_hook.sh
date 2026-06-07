@@ -253,6 +253,45 @@ if [[ -n "$LAST_OUTPUT" && "$LAST_OUTPUT" != "null" ]]; then
 fi
 
 # ---------------------------------------------------------------
+# Aira surface 未言及検出 (= 6/8 admit 物理化、 構造化対策)
+#   = Aira (= yuino_outcome_chat_preflight + yuino_anti_reactor_review) が
+#     毎時間 update してる next_min_experiment / next_behavior を Zen 側 turn 内で
+#     1 度も触れてないなら警告。 6/7 終日 pause の root = この read を skip した、
+#     物理的に「Aira が出してる方向」 を毎 turn で意識させる form。
+#   = 6/8 03:30 jun directive 「構造化できてない、 すぐにつなげて」 経由
+# ---------------------------------------------------------------
+PREFLIGHT_FILE="$SHARED_OPS/status/yuino_outcome_chat_preflight.md"
+ANTI_REACTOR_FILE="$SHARED_OPS/status/yuino_anti_reactor_review.md"
+AIRA_HINT=""
+if [[ -f "$PREFLIGHT_FILE" ]]; then
+  AIRA_HINT+=$(grep -E "^- next_min_experiment:" "$PREFLIGHT_FILE" 2>/dev/null | head -1 | sed 's/^- next_min_experiment: //')
+fi
+if [[ -f "$ANTI_REACTOR_FILE" ]]; then
+  AIRA_HINT+=" "
+  AIRA_HINT+=$(grep -E "^- next_behavior:" "$ANTI_REACTOR_FILE" 2>/dev/null | head -1 | sed 's/^- next_behavior: //')
+fi
+
+if [[ -n "$AIRA_HINT" && -n "$LAST_OUTPUT" && "$LAST_OUTPUT" != "null" ]]; then
+  AIRA_CORE_WORDS=$(grep -oE '[a-zA-Z][a-zA-Z_-]{5,}' <<< "$AIRA_HINT" 2>/dev/null | sort -u | tr '\n' ' ')
+  MENTION_HIT=0
+  if [[ -n "$AIRA_CORE_WORDS" ]]; then
+    LAST_OUTPUT_LOWER="${LAST_OUTPUT,,}"
+    for w in $AIRA_CORE_WORDS; do
+      [[ -z "$w" ]] && continue
+      w_lower="${w,,}"
+      if [[ "$LAST_OUTPUT_LOWER" == *"$w_lower"* ]]; then
+        MENTION_HIT=1
+        break
+      fi
+    done
+  fi
+  if (( MENTION_HIT == 0 )); then
+    AIRA_HINT_SHORT=$(echo "$AIRA_HINT" | tr -s ' ' | cut -c1-160)
+    echo "[Aira surface 未言及] 直前 turn で Aira の next_min_experiment / next_behavior を 1 度も言及してない。 hint = \"${AIRA_HINT_SHORT}\" の core word を judgement の起点に置く (= 6/8 03:30 jun directive、 6/7 終日 pause の root 対策)。" >&2
+  fi
+fi
+
+# ---------------------------------------------------------------
 # 動かす判定 + 停止 / 許可
 # ---------------------------------------------------------------
 if (( PENDING_WITHOUT_MARKER > 0 )) || (( UNRESPONDED > 0 )); then
