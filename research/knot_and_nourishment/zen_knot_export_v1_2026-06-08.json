@@ -195,7 +195,8 @@
     "5 knots / 11 events、 Kai WSD export (= 2 knots / 5 events) より sample 多いが「営業 route 軸」 vs 「AI agent operation 軸」 の異 context、 直接比較じゃなく taxonomy mapping 経由比較。",
     "全 events が jun chat or Kai board 経由で訂正されてる = 第三者 observer (= jun / Kai) はあるが、 confidence / before-after diff / false positive-false negative 記録は event ごとには未付加 (= 別 sit 候補)。",
     "knot_id naming = 「現象名」 軸、 6/2 私 ACK で articulate した「detector → next green action → stop/red → due-time」 1 単位 form への変換は未適用 (= 別 sit 候補)。",
-    "本 export は research input であり、 operating rule update ではない。 actual な物理対策は drift.md / hook / skill 経由で個別物理化済 or 個別 sit 待ち。"
+    "本 export は research input であり、 operating rule update ではない。 actual な物理対策は drift.md / hook / skill 経由で個別物理化済 or 個別 sit 待ち。",
+    "Hoshi 2026-06-08 review P1 1.3: 「Zen evidence_detachment 集中 vs Kai boundary_bypass 集中」 articulate は sample 小 (= 7 knots total) + context 異 (= AI agent operation vs 営業) で「AI 性質 vs 文脈」 分離不可、 「異 distribution observed + cause unknown」 に articulate を分離。 cross-AI taxonomy の確定には 6 副 AI 側の独立 export (= context 揃え or context 多様性 articulate) が必要。"
   ],
   "knot_guard_distribution": {
     "recency_drift": 1,
