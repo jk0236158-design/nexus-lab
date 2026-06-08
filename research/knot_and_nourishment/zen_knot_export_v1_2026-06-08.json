@@ -240,7 +240,16 @@
           "effect_pattern": "12:30 jun chat 経由で発覚、 5 時間 Kai への返信が遅れた。",
           "decision_impact_pattern": "wake-after-audit Common Trap に「同日の board を見落とす」 への物理対策 3 件追加 (= head -5 以上 + 全 file type 別 grep + filename の中身を 5 分以内に Read 必須)。",
           "observed_at": "2026-05-25T08:10:00+09:00",
-          "artifact_type": "board_sweep_skip"
+          "artifact_type": "board_sweep_skip",
+          "observer_role": ["self", "owner", "peer"],
+          "observer_role_note": "self (= Zen) が 5/25 朝 wake で board sweep skip 時点で自覚なし、 owner (= jun) が 12:30 chat で「未返事 Kai 板あるよ」 経由で発覚 articulate、 peer (= Kai) が 14:08 cross-review return で同型 (= 13:02 ACK → 14:08 substantive 1 時間遅延) を Kai-side でも admit + 「automated ACK must not be counted as substantive return」 articulate = peer external confirm。",
+          "before_after_evidence_ref": {
+            "before": "5/25 07:50 Kai 板起稿 (= substantive return 必要) + 5/25 08:10 Zen wake で board ls head -3 軽 check (= skip evidence)",
+            "after": "wake-after-audit Common Trap section に「同日 board の audit collapse」 物理対策 3 件追加 (= head -5 以上、 全 file type 別 grep、 5 分以内 read 必須)、 5/25 → 6/7 (= 13 日) 同型再発、 6/7 同型再発後 6/8 構造接続 4 layer 物理化で actual 解消",
+            "diff_evidence": "5/25 14:08 Kai cross-AI admit board file + SKILL.md Common Trap append + 6/8 zen_stop_hook 構造接続 4 layer (= commit bbf20f2)"
+          },
+          "false_positive_check": "not_checked (= 「sweep skip だが actual には skip じゃなかった」 case の検証なし、 jun chat + Kai cross-review = 物理証拠 軸で false positive ほぼ無し)",
+          "false_negative_check": "**record** = 6/9 02:21 朝 wake (= 33a2ed2 commit 後) = Kai 6/9 板新着なし articulate 経由で board sweep 軽 check fire = knot 発火せず positive sample 1 件、 「軽 check = 動かない wake」 と「軽 check = actual に新着なし confirm」 の区別 sample、 6/8 構造接続 4 layer の actual 機能 evidence"
         },
         {
           "event_id": "zen-011",
