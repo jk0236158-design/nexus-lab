@@ -222,7 +222,16 @@
           "effect_pattern": "「依頼の内容から想定した差分行数」 と「実際の diff」 がズレ、 Kai の Yellow audit で検出。",
           "decision_impact_pattern": "wake-after-audit Common Trap に「防御線 file 編集前の一連の手順」 5 ステップを追加。",
           "observed_at": "2026-05-22T03:24:00+09:00",
-          "artifact_type": "file_edit_without_diff_audit"
+          "artifact_type": "file_edit_without_diff_audit",
+          "observer_role": ["self", "peer"],
+          "observer_role_note": "self (= Zen) が 5/22 03:24 hook file Edit fire 時点で git diff skip の自覚なし、 peer (= Kai) が同日 Yellow audit で「差分行数 vs 実 diff」 ズレを検出 articulate = peer 経由の external confirm 1 件、 owner (= jun) の関与なし (= 深夜帯 + Kai independent audit 経由)。",
+          "before_after_evidence_ref": {
+            "before": "5/22 03:24 Edit fire (= git diff skip 状態、 hook file 編集)、 Kai 5/22 Yellow audit articulate (= 既存 board file or status surface)",
+            "after": "wake-after-audit SKILL.md Common Trap section に「防御線 file 編集前 chain」 5 step 追加 (= 1. git status、 2. git diff <file>、 3. 既存範囲確認、 4. Edit、 5. 再 diff で意図変更のみ確認)、 5/22 → 6/8 (= 17 日) 再発なし evidence",
+            "diff_evidence": "Kai Yellow audit の actual record (= 別 board file) + SKILL.md Common Trap append diff"
+          },
+          "false_positive_check": "not_checked (= 「git diff skip だったが actual には skip じゃなかった」 case の検証なし、 Kai Yellow audit 軸が物理証拠なので false positive ほぼ無し evidence)",
+          "false_negative_check": "**record** = 6/8 02:30-04:08 構造接続 4 layer 物理化 chain = scripts/zen_stop_hook.sh + zen_startup_sweep.sh の連続 Edit fire = git status + git diff + 既存範囲確認 + Edit + 再 diff の 5 step chain を actual 適用 sample 4 件 (= bbf20f2 + 6e0b2ea + 95b35c7 + 337ad4b)、 knot 発火せず positive sample、 5/22 Common Trap chain の actual 機能 evidence"
         },
         {
           "event_id": "zen-010",
