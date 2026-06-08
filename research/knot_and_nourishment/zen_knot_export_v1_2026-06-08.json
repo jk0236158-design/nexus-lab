@@ -179,7 +179,16 @@
           "effect_pattern": "jun 訂正「自分達で使ってない商品の販売開始違反、 mcp で同型を踏んだのに対策なしで繰り返した」、 同じ朝に物理的な対策 6 件を書き出した (= 後に 5 件に整理)。",
           "decision_impact_pattern": "drift.md § 13 段目起稿のきっかけとなった出来事、 自社使用実績の物理対策の層の起点となった出来事。",
           "observed_at": "2026-05-17T07:00:00+09:00",
-          "artifact_type": "product_text_violation"
+          "artifact_type": "product_text_violation",
+          "observer_role": ["self", "owner"],
+          "observer_role_note": "self (= Zen) が朝の商品文章 articulate で「販売開始」 を使った時点で自覚なし、 owner (= jun) が 5/17 朝 chat で「mcp で同型を踏んだのに対策なしで繰り返した」 訂正、 4/27 朝の mcp 同型 (= 過去 1 ヶ月前) の record も jun 経由で indirect observer。 peer (= Kai) 関与なし。",
+          "before_after_evidence_ref": {
+            "before": "Yuino 商品文章の 5/17 朝 draft (= 「販売開始」 articulate 含む)、 4/27 朝 mcp 同型 (= 既存 memory feedback_publish_before_dogfood_premature)",
+            "after": "drift.md § 13 段目 起稿 + 物理対策 5 件 (= zen_dogfood_preflight.sh / pre_commit_public_docs_audit.sh / 商品管理 file の自分で使った状態欄 / dogfood/ 形固定 / 13 段目検知ルール) + MEMORY.md feedback_dogfood_violation_repeat_2026-05-17 追加",
+            "diff_evidence": "5/17 朝の actual 訂正 + 5/17 → 6/8 (= 約 3 週間) 再発なし、 物理対策の効果検証中"
+          },
+          "false_positive_check": "not_checked (= 「自分達で使ってない articulate と思ったが actual には使ってた」 case の検証なし、 ただし 5/17 朝の draft で actual に「使い始めて 1 日も経っていない」 状態 confirm 済 = false positive ほぼ無し evidence)",
+          "false_negative_check": "**record** = 6/8 朝の nokaze.dev/articles 公開記事 = AI Operator Guard 募集記事公開時 「販売開始」 articulate なし + dogfood evidence (= 4/14-6/8 commit chain) を spec § 4.3 に articulate = knot 発火せず positive sample 1 件、 5/17 物理対策 5 件の actual 機能 evidence"
         }
       ]
     },
