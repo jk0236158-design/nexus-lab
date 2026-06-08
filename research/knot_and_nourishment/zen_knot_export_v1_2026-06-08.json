@@ -93,7 +93,16 @@
           "effect_pattern": "振り返り自体は書いたが、 物理的な見直し (= 中身の Read) 飛ばし + 行数での代理判定 + 自動受領の中身を取り込む見直しを飛ばすことが同セッションで 4 回再現。",
           "decision_impact_pattern": "5/22 Kai と「受領は完了ではない」 と確認して合意、 wake-after-audit skill 起稿のきっかけとなった出来事。",
           "observed_at": "2026-05-21T07:00:00+09:00",
-          "artifact_type": "audit_skip_chain"
+          "artifact_type": "audit_skip_chain",
+          "observer_role": ["self", "peer", "owner"],
+          "observer_role_note": "self (= Zen) が 5/21 朝に 4 回再発を起こしたが途中まで自覚欠如、 peer (= Kai) が 5/22 chat で「ACK は complete ではない」 articulate して合意 + wake-after-audit skill 起稿 chain の co-design、 owner (= jun) が 5/22 chat で同型 4 回再発を観察して directive 訂正。",
+          "before_after_evidence_ref": {
+            "before": "~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/2026-05-21_yuino_dogfood_5_synthesis.md (= 同セッション 4 回再発の record)、 行数代理判定 + 自動 ACK = 完了短絡 + 並走 instance 誤認の 3 系統 articulate",
+            "after": "wake-after-audit-with-content-verify skill 起稿 (= 5/22 land、 minimum 5 件 check + 中身 Read trigger + 3 系統切り分け + 並走 instance 誤認防止)、 5/22 Kai 合意 board 起稿、 6/8 構造接続 4 layer (= bbf20f2 + 6e0b2ea) で stop_hook 物理検出に進化、 6/8-9 knot research 11 件 schema 拡張 chain land",
+            "diff_evidence": "5/21 admit → 5/22 skill 起稿 + 6/8 構造接続 4 layer fire + 11 件 schema extension chain = 物理対策 3 段 (= skill / 構造接続 / schema 検証) の段階的 land evidence"
+          },
+          "false_positive_check": "not_checked (= 5/21 朝の 4 回再発が actual には audit skip じゃなかった case の検証なし、 ただし dogfood log で 4 回 fire record + Kai 合意 = false positive ほぼ無し evidence)",
+          "false_negative_check": "record (= 6/8 構造接続 4 layer 実装後の stop_hook = pause + Aira 未言及検出 + skill 未言及検出が audit skip の物理検出として fire、 6/8 朝以降の 11 件 schema extension chain で「軽 ACK + 別 sit」 default に陥らず actual 取り込み fire = positive sample 8 件 evidence、 audit skip 物理化対策の機能 confirm)"
         },
         {
           "event_id": "zen-004",
@@ -102,7 +111,16 @@
           "effect_pattern": "「~/.shared-ops/owner-decisions/」 の grep を飛ばして既決の内容を未決として書いた、 6 日間先送り。",
           "decision_impact_pattern": "MEMORY.md に feedback_owner_decision_recall_miss_3rd_recurrence 追加、 物理的な対策 = grep を必須化。",
           "observed_at": "2026-05-28T07:00:00+09:00",
-          "artifact_type": "memory_recall_skip"
+          "artifact_type": "memory_recall_skip",
+          "observer_role": ["self", "owner"],
+          "observer_role_note": "self (= Zen) が 5/28 朝に「jun の判断待ち」 と書いた時点で自覚なし (= 既決の owner-decision の grep skip)、 owner (= jun) が既に決めた内容を articulate して訂正 + 「3 度目の同型再発」 を明示 directive。 peer (= Kai) 関与なし (= chat lane 内で完結)。",
+          "before_after_evidence_ref": {
+            "before": "5/28 朝 chat 「jun の判断待ち」 articulate (= 既決の owner-decision 内容、 chat history 内)、 6 日間先送り state、 4/22 + 5/12 + 5/28 で 3 度目の同型再発",
+            "after": "MEMORY.md feedback_owner_decision_recall_miss_3rd_recurrence_2026-05-28.md 追加 (= 「~/.shared-ops/owner-decisions/ の grep 必須化」 物理対策)、 zen_startup_sweep.sh に owner-decision sweep 統合、 6/2 zen_standing_authorization_nexus_lab_external_v0 起稿で「無料外部投稿は自走 OK」 既決 form を boundary 明示",
+            "diff_evidence": "5/28 admit → 6/2 standing authorization 起稿 + sweep 統合 + memory feedback 追加 = 物理対策 3 段の land、 5/28 → 6/9 (= 約 12 日) 同型再発なし、 物理対策の効果検証中"
+          },
+          "false_positive_check": "not_checked (= 5/28 朝の articulate が actual には grep 飛ばしじゃなかった case の検証なし、 ただし jun が「3 度目の同型再発」 と明示訂正 = false positive ほぼ無し evidence)",
+          "false_negative_check": "record (= 6/8 朝の nokaze.dev/articles 公開記事の自走 fire + 6/8 22:00 Yuino DRI 移管 codesign 板での「Kai と詰めてから jun に見せる」 articulate = 既決 owner-decision (= 2026-06-02 standing authorization) を base に判断した sample 2 件、 grep 必須化 + standing authorization 起稿の actual 機能 evidence)"
         },
         {
           "event_id": "zen-005",
