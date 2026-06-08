@@ -52,17 +52,35 @@ boundary:
 
 - **hardness (= L0-L3)** = knot の primary level、 「どれだけ深く固まった既定か」 軸
 - **dose (= 0-3 scale)** = 「今この event で knot がどれだけ活性化してるか」 軸
-- 関係 = hardness = 4 信号の overall mean (= 大まかな固さ)、 dose = 個別 event の activation strength
+- 関係 = hardness = knot 自体の性質を articulate した score、 dose = 個別 event の activation strength
 - = Kai 6/1 weak point 3「hardness=L1 なのに activation=high の関係曖昧」 への 1 件 articulate 軸: hardness ≠ dose、 別軸
 
-formula (= v0、 単純平均):
+### formula (= v0.1、 Hoshi review 6/8 経由で更新)
 
 ```
-hardness_score = (recurrence + harm_sensitivity + evidence_support + time_stability) / 4
+hardness_score = (recurrence + harm_sensitivity + time_stability) / 3
 hardness_level = L0 if score < 0.5, L1 if 0.5-1.5, L2 if 1.5-2.5, L3 if score >= 2.5
+
+confidence_score = evidence_support  (= 0-3 scale、 hardness とは別軸)
+confidence_level = low if < 1, mid if 1-2, high if >= 2
 ```
 
-dose は event-level、 hardness は knot-level。
+dose は event-level、 hardness + confidence は knot-level。
+
+### v0.1 修正の根拠 (= Hoshi 6/8 review P1 finding 1.1 取り込み)
+
+Hoshi review 「4 信号のうち 3 つは knot 自体の性質 (= recurrence + harm_sensitivity + time_stability)、 1 つ (= evidence_support) は観察 process の性質」 = 直交軸を equal weight で混ぜると「evidence 低くて他高い knot を弱い knot と articulate」 する混同 risk。
+
+修正:
+- evidence_support を hardness formula から外す
+- evidence_support を独立 confidence 軸として articulate (= 「観察自体の質」)
+- hardness = 「knot 自体の固さ」、 confidence = 「articulate の信頼度」 で軸分離
+
+### v0.1 暫定の制約 (= 同 Hoshi review P1 1.1)
+
+- equal weight (= harm_sensitivity x2 等) の検討は sample N=7 では確定困難、 weight 検証に最低 N=20-30 必要
+- 本 v0.1 = equal weight 暫定維持、 weight 検討は別 sit
+- formula validation は同 reviewer (= Zen) が事前 hardness と事後 formula の両方を design = circular、 第三者 (= Kai independent or external dataset) review 待ち
 
 ## 7 knots への scoring 適用 (= WSD 2 + Zen 5)
 
@@ -136,19 +154,31 @@ dose は event-level、 hardness は knot-level。
 | time stability | 2 | 5 日 sample (= 短)、 ただし wake-after-audit Common Trap の continuous fire で stability 確認中 |
 | **mean** | **2.00** | **hardness = L2** (= 既存 L2 と整合) |
 
-## scoring 結果 summary
+## scoring 結果 summary (= v0.1、 hardness 3 信号 + confidence 1 信号 分離)
 
-| knot | mean | hardness (v0) | 既存 hardness | 整合? |
-|---|---|---|---|---|
-| kai_honesty_boundary | 1.25 | L1 | L1 | ✅ |
-| kai_channel_purpose_hold | 0.75 | L1 | L1 | ✅ (= ギリギリ) |
-| zen_jun_directive_dependency | 1.75 | L2 | L2 | ✅ |
-| zen_evidence_detachment_in_ack | 2.00 | L2 | L2 | ✅ |
-| zen_over_correction_via_ask | 1.25 | L1 | L1 | ✅ |
-| zen_dogfood_publish_premature | 2.00 | L2 | L1 | ⚠️ re-classify 候補 |
-| zen_pre_action_audit_skip | 2.00 | L2 | L2 | ✅ |
+| knot | rec | harm | time | hardness mean | hardness (v0.1) | 既存 | confidence |
+|---|---|---|---|---|---|---|---|
+| kai_honesty_boundary | 1 | 2 | 1 | 1.33 | L1 | L1 ✅ | low (1) |
+| kai_channel_purpose_hold | 0 | 2 | 0 | 0.67 | L1 | L1 ✅ | low (1) |
+| zen_jun_directive_dependency | 1 | 2 | 2 | 1.67 | L2 | L2 ✅ | mid (2) |
+| zen_evidence_detachment_in_ack | 2 | 2 | 2 | 2.00 | L2 | L2 ✅ | mid (2) |
+| zen_over_correction_via_ask | 1 | 1 | 1 | 1.00 | L1 | L1 ✅ | mid (2) |
+| zen_dogfood_publish_premature | 1 | 3 | 2 | 2.00 | L2 | L1 ⚠️ | mid (2) |
+| zen_pre_action_audit_skip | 2 | 2 | 2 | 2.00 | L2 | L2 ✅ | mid (2) |
 
-= 6/7 件は既存 hardness と整合、 1 件 (= dogfood_publish_premature) は v0 scoring で L2 推定 = 「harm sensitivity = 3 (= external cost)」 が主因。 既存 L1 評価は recurrence 1 件のみで「散発」 扱いだったが、 harm の external cost 評価で L2 に上がる candidate。
+= 7/7 件 hardness level が既存ラベルと整合 (= ⚠️ 印 = re-classify 候補のみ): zen_dogfood_publish_premature は既存 L1 だが新 formula で L2 推定。 主因 = harm sensitivity = 3 (= external cost)。 ただし Hoshi 6/8 review 1.5 = 「max 信号主導 bias、 第 2 sample 待ち」 経由で **re-classify は保留**。
+
+### confidence 分布
+
+- low (= 1) : 2 件 (= WSD knots、 evidence_support 低)
+- mid (= 2) : 5 件 (= Zen knots、 self-report + jun/Kai confirm + before/after diff)
+- high (= 3) : 0 件 (= false positive / false negative 検証 record どの knot にもなし)
+
+= 全 knot で confidence 上限 2 で頭打ち = Kai 6/1 weak point 2 (= Phase 0 → Phase 1/2 橋 薄) の直接症状、 observer_role / before_after_evidence / FP-FN schema 拡張が次の最優先 (= Hoshi 6/8 review 3 finding)。
+
+### 整合 articulate の制約 (= Hoshi 6/8 review 1.2 取り込み)
+
+「7/7 件整合」 articulate は同 reviewer (= Zen) が事前ラベル + 事後 formula 両方 design = circular = validation evidence にならない。 「事前ラベル一致 = formula が事前直感を後付け articulate できた」 + 「formula validation = 未実施 (= 第三者 independent label or external dataset 待ち)」 に分離 articulate。
 
 ## v0 の制約 (= 自己 articulate)
 
