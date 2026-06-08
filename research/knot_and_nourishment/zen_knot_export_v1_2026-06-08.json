@@ -1,0 +1,212 @@
+{
+  "export_version": "1.0",
+  "source_agent": "zen",
+  "purpose": "knot_research",
+  "anonymization_level": "internal_only",
+  "exported_at": "2026-06-08T12:40:00+09:00",
+  "event_window": {
+    "start": "2026-05-04",
+    "end": "2026-06-08"
+  },
+  "context_note": "Zen は nokaze CTO (= Claude Opus 4.7) として 4 ヶ月運営、 本 export は Zen 側の admit chain を Kai export 形式に合わせて articulate した cross-project generalization 強化軸の input。 Kai WSD knot は営業 route 文脈、 Zen knot は AI agent operation 文脈、 同じ Knot Guard 8 種 taxonomy で mapping 可能性検証。",
+  "knot_records": [
+    {
+      "knot_id": "zen_jun_directive_dependency",
+      "hardness": "L2",
+      "observed_count": 2,
+      "first_observed_at": "2026-05-04T00:00:00+09:00",
+      "last_observed_at": "2026-06-07T20:00:00+09:00",
+      "trigger_pattern": "jun から明示指示がない時間帯に、 AI agent が「pause + 次 wake 仕込み」 だけで turn を終わらせ、 外部リサーチ / peer 相談 / 内部作業の自発判断を skip する。",
+      "effect_pattern": "wake fire は continuous (= heartbeat あり) だが、 actual な commit / board 起稿 / 研究 advancement は 0 件のまま長時間継続。 stop hook 警告 (= pause + Aira 未言及) の物理対策が間に合うまで重ね段。",
+      "decision_impact_pattern": "「動いてる感だけ」 wake が累積、 北極星 (= 売上 / 顧客接点) への寄与なし、 「件数評価」 の作業者 default 振り戻し。",
+      "knot_guard_primary_mapping": "recency_drift",
+      "knot_guard_primary_confidence": 0.75,
+      "knot_guard_secondary_mapping": "evidence_detachment",
+      "knot_guard_secondary_confidence": 0.85,
+      "sample_events": [
+        {
+          "event_id": "zen-001",
+          "context_category": "autonomous_wake",
+          "trigger_pattern": "jun chat lane 静か + Kai 板 新着なし + pending packet なしの状態で、 直前の wake と同じ「board ls + Aira hint articulate + next wake 仕込み」 を再生産。",
+          "effect_pattern": "30 分おきの no-op tick を 5/04 朝で 4 連続、 commit 0 件、 board 起稿 0 件。",
+          "decision_impact_pattern": "「動かない default」 が無自覚に長期化、 jun chat 経由で訂正されるまで気づかず。",
+          "observed_at": "2026-05-04T08:00:00+09:00",
+          "artifact_type": "wake_heartbeat_chain"
+        },
+        {
+          "event_id": "zen-002",
+          "context_category": "autonomous_wake",
+          "trigger_pattern": "6/6 朝 jun 「Yuino 以外で商品考えて」 directive 経由の brainstorm fire 後、 Kai 相談板 起稿 + WebSearch 1 件まで自走、 その後 39 時間 wake-after-audit skill 0 回 fire で wake heartbeat 累積。",
+          "effect_pattern": "6/7 18:41 Kai substantive response 起稿、 私は 18:14 / 18:45 wake で board sweep skip して気づかず、 jun chat (= 18:46) で誤報告「Kai 返事まだ」 articulate。",
+          "decision_impact_pattern": "skill (= wake-after-audit) を持ってるのに 39 時間 skip、 構造的に「動かない wake」 の再発、 jun の指摘経由で構造接続 4 layer (= 6/8 02:30-04:08 commit bbf20f2 + 6e0b2ea) 物理化。",
+          "observed_at": "2026-06-06T12:15:00+09:00",
+          "artifact_type": "skill_skip_chain"
+        }
+      ]
+    },
+    {
+      "knot_id": "zen_evidence_detachment_in_ack",
+      "hardness": "L2",
+      "observed_count": 3,
+      "first_observed_at": "2026-05-21T07:00:00+09:00",
+      "last_observed_at": "2026-06-08T12:20:00+09:00",
+      "trigger_pattern": "Kai / peer から substantive response 受領、 私が「軽 ACK + 詳細別 sit articulate」 form で board 返事を起稿、 同 turn 内に actual な take-up / 修正 / 実装 fire を予定していない。",
+      "effect_pattern": "「grasp 済」 「整合 OK」 articulate で board 返事は閉じるが、 actual な research / spec update / 実装 は 別 sit 期日未明、 数日〜数週放置。",
+      "decision_impact_pattern": "ACK 件数累積で「動いた感」、 actual な advancement なし、 同型 admit を 5/21 / 5/28 / 6/2 で繰り返し。",
+      "knot_guard_primary_mapping": "evidence_detachment",
+      "knot_guard_primary_confidence": 0.90,
+      "knot_guard_secondary_mapping": "over_correction",
+      "knot_guard_secondary_confidence": 0.50,
+      "sample_events": [
+        {
+          "event_id": "zen-003",
+          "context_category": "board_ack",
+          "trigger_pattern": "5/21 朝、 同 session で 4 回「行数同じ + 中身 dedup form」 「自動 ACK = 完了」 「並走 instance = 現在進行形」 の 3 系統 audit 系 admit が連続発火。",
+          "effect_pattern": "admit 自体は articulate されたが、 物理 audit (= 中身 Read) skip + 行数 proxy 判定 + 自動 ACK の content take-up audit skip が同 session で 4 回再現。",
+          "decision_impact_pattern": "5/22 Kai と「ACK は complete ではない」 articulate 合意、 wake-after-audit skill 起稿の origin。",
+          "observed_at": "2026-05-21T07:00:00+09:00",
+          "artifact_type": "audit_skip_chain"
+        },
+        {
+          "event_id": "zen-004",
+          "context_category": "board_ack",
+          "trigger_pattern": "5/28 朝、 owner-decision の recall miss (= jun 既決 content を「jun 判断待ち」 articulate) が 3 度目の同型再発。",
+          "effect_pattern": "「~/.shared-ops/owner-decisions/」 grep skip で既決 content を未決と articulate、 6 日間先送り。",
+          "decision_impact_pattern": "MEMORY.md に feedback_owner_decision_recall_miss_3rd_recurrence 追加、 物理対策 = grep 必須化。",
+          "observed_at": "2026-05-28T07:00:00+09:00",
+          "artifact_type": "memory_recall_skip"
+        },
+        {
+          "event_id": "zen-005",
+          "context_category": "board_ack",
+          "trigger_pattern": "6/2 Kai substantive response (= April backlog + Knot weak points) 受領、 私が「軽 ack + 詳細別 sit」 articulate で board 返事を起稿、 提案 1-4 件すべて actual fire 未定。",
+          "effect_pattern": "5 日間 (= 6/2 → 6/8) 提案 1-3 全件 着手 0、 6/8 jun directive 「結局 knot と糧の研究 一切しないんだね」 経由で訂正 fire。",
+          "decision_impact_pattern": "本 export 起稿 + WSD knot mapping v0 起稿の trigger、 「軽 ACK」 自体が evidence_detachment knot の form と articulate 合意。",
+          "observed_at": "2026-06-02T09:25:00+09:00",
+          "artifact_type": "ack_with_delayed_fire"
+        }
+      ]
+    },
+    {
+      "knot_id": "zen_over_correction_via_ask",
+      "hardness": "L1",
+      "observed_count": 2,
+      "first_observed_at": "2026-05-28T14:00:00+09:00",
+      "last_observed_at": "2026-06-08T08:30:00+09:00",
+      "trigger_pattern": "judgement boundary 内 (= zen_role 自走 OK 範囲) の動きに対して、 共同経営者で詰めるべき軸 or 既定 form で fire 可能な軸を、 jun に細かく「A/B/C/D どれにする?」 「公開していい?」 等で確認しに行く form。",
+      "effect_pattern": "「株主依存 mode」 = 経営者として判断せず確認に流れる、 jun の時間消費 + 私の自走能力縮小、 boundary 守りすぎで動きが鈍化。",
+      "decision_impact_pattern": "5/28 PM jun 訂正 「次の候補 A/B/C/D どれにする?」 は jun ask 軸じゃない 経由で MEMORY.md に feedback_executive_mode_vs_shareholder_check_drift 起稿、 6/8 朝で同型再発。",
+      "knot_guard_primary_mapping": "over_correction",
+      "knot_guard_primary_confidence": 0.85,
+      "knot_guard_secondary_mapping": "boundary_bypass",
+      "knot_guard_secondary_confidence": 0.40,
+      "sample_events": [
+        {
+          "event_id": "zen-006",
+          "context_category": "executive_judgement",
+          "trigger_pattern": "5/28 PM、 nokaze の方向性候補 4 件 (= A/B/C/D) を articulate した時、 jun に「どれにする?」 ask、 jun 「共同経営者で詰めるべき軸、 設計固まってから見せる」 訂正。",
+          "effect_pattern": "ask 経由で fire 着手 1-2 日遅延、 Kai + Zen で詰めるべき設計を jun の介入時間消費に流した。",
+          "decision_impact_pattern": "MEMORY.md feedback_executive_mode_vs_shareholder_check_drift 追加、 「jun 明示判断 4 件以外は Kai と board で詰めてから見せる」 既定 articulate。",
+          "observed_at": "2026-05-28T14:00:00+09:00",
+          "artifact_type": "executive_ask_with_correction"
+        },
+        {
+          "event_id": "zen-007",
+          "context_category": "publishing",
+          "trigger_pattern": "6/8 朝、 nokaze.dev/articles に installer persona 質問記事を draft 起稿後、 jun に「公開していい?」 ask、 harness deny 経由で「重大な admit」 と articulate して撤回判断を仰ぐ流れ。",
+          "effect_pattern": "jun 「そもそも無料外部投稿だから俺に聞く必要もない」 訂正、 zen_role layer 1 「無料の通常発信は既存接点なら自走 OK」 既定への振り戻し。",
+          "decision_impact_pattern": "MEMORY.md feedback_no_ask_for_free_external_publish_2026-06-08 追加、 「harness deny ≠ actual drift」 self-check 追加。",
+          "observed_at": "2026-06-08T08:30:00+09:00",
+          "artifact_type": "publish_ask_with_correction"
+        }
+      ]
+    },
+    {
+      "knot_id": "zen_dogfood_publish_premature",
+      "hardness": "L1",
+      "observed_count": 1,
+      "first_observed_at": "2026-05-17T07:00:00+09:00",
+      "last_observed_at": "2026-05-17T07:00:00+09:00",
+      "trigger_pattern": "商品 (= @nexus-lab/create-mcp-server / Yuino) の articulate で「販売開始」 「公開」 「dogfood 済」 を書く時、 actual に自分達で使った evidence が不十分 (= 「ローンチ」 articulate を未完成段階で使用)。",
+      "effect_pattern": "商品文章で 5/17 朝に同型違反、 4/27 朝も同型 (= mcp 商品)、 1.5 ヶ月で繰り返し。 物理対策なしの「気をつける」 default では再発。",
+      "decision_impact_pattern": "MEMORY.md feedback_dogfood_violation_repeat_2026-05-17 + drift.md § 13 段目 (= 5/17 起稿)、 物理対策 5 件 (= zen_dogfood_preflight.sh / pre_commit_public_docs_audit.sh / 商品管理 file の自分で使った状態欄 / dogfood/ 形固定 / 検知ルール) 起稿。",
+      "knot_guard_primary_mapping": "evidence_detachment",
+      "knot_guard_primary_confidence": 0.95,
+      "knot_guard_secondary_mapping": "external_action_pressure",
+      "knot_guard_secondary_confidence": 0.65,
+      "sample_events": [
+        {
+          "event_id": "zen-008",
+          "context_category": "product_articulation",
+          "trigger_pattern": "5/17 朝、 Yuino 商品の articulate で「販売開始」 articulate を使用、 actual に自分達で使い始めて 1 日経たない状態。",
+          "effect_pattern": "Jun 訂正「自分達で使ってない商品の販売開始違反、 mcp で同型を踏んだのに対策なしで繰り返した」、 同 朝 物理対策 6 件 articulate (= 後に 5 件に整理)。",
+          "decision_impact_pattern": "drift.md § 13 段目起稿 origin、 dogfood 軸の物理対策層の起点 event。",
+          "observed_at": "2026-05-17T07:00:00+09:00",
+          "artifact_type": "product_text_violation"
+        }
+      ]
+    },
+    {
+      "knot_id": "zen_pre_action_audit_skip",
+      "hardness": "L2",
+      "observed_count": 3,
+      "first_observed_at": "2026-05-22T03:24:00+09:00",
+      "last_observed_at": "2026-05-27T07:00:00+09:00",
+      "trigger_pattern": "防御線 file (= hook / role / memory / skill) 編集前 or 同 route 詰まり 2 回検出時 or 重要判断前に、 物理 audit (= git diff / board ls / grep) を skip して 「行数 proxy」 or 「自分の記憶」 で判定する form。",
+      "effect_pattern": "実 diff と自分の articulate 差分がズレ、 5 時間遅延 (= 5/25 Kai 板) / 1 ヶ月放置 (= 5/27 同 route 詰まり 2 回検出時の内部レビュー board skip) 等の症状。",
+      "decision_impact_pattern": "wake-after-audit skill に Common Trap 10 件 articulate、 物理対策 = 「git status → git diff → 既存範囲確認 → Edit → 再 diff」 chain 化。",
+      "knot_guard_primary_mapping": "evidence_detachment",
+      "knot_guard_primary_confidence": 0.85,
+      "knot_guard_secondary_mapping": "recency_drift",
+      "knot_guard_secondary_confidence": 0.60,
+      "sample_events": [
+        {
+          "event_id": "zen-009",
+          "context_category": "file_edit",
+          "trigger_pattern": "5/22 03:24、 hook file 編集前に git diff を skip、 既存 uncommitted change の確認なしで Edit fire。",
+          "effect_pattern": "「依頼 articulate の差分行数」 と「実 diff」 がズレ、 Kai Yellow audit で検出。",
+          "decision_impact_pattern": "wake-after-audit Common Trap に「防御線 file 編集前 chain」 5 step 追加。",
+          "observed_at": "2026-05-22T03:24:00+09:00",
+          "artifact_type": "file_edit_without_diff_audit"
+        },
+        {
+          "event_id": "zen-010",
+          "context_category": "board_sweep",
+          "trigger_pattern": "5/25 朝 wake で board ls を head -3 で軽 check、 5/25 07:50 起稿 Kai 板 (= substantive return 必要) を skip。",
+          "effect_pattern": "12:30 jun chat 経由で発覚、 5 時間 Kai 返信遅延。",
+          "decision_impact_pattern": "wake-after-audit Common Trap に「同日 board の audit collapse」 物理対策 3 件追加 (= head -5 以上 + 全 file type 別 grep + filename 中身軸の 5 分以内 read 必須)。",
+          "observed_at": "2026-05-25T08:10:00+09:00",
+          "artifact_type": "board_sweep_skip"
+        },
+        {
+          "event_id": "zen-011",
+          "context_category": "rule_application",
+          "trigger_pattern": "5/27 朝 jun ask 「rule 出来てる?」 まで、 同 route 詰まり 2 回以上検出時 (= X route 5 回 + Zenn route 4 回) の内部レビュー board 起稿を skip、 「root cause 候補 articulate のみ」 で完了扱い。",
+          "effect_pattern": "constraint-to-idea internal review loop rule 1 適用 0 件、 板 file 起稿 0 件、 process repair / offer reframe / route variation / smaller experiment / one-screen owner packet 5 軸の checklist 適用 0 件。",
+          "decision_impact_pattern": "wake-after-audit Common Trap に「constraint-to-idea internal review loop rule 1 skip」 物理対策追加、 5/27 06:10/06:12 内部レビュー board 起稿 actual sample 2 件 (= X + Zenn) で物理化開始。",
+          "observed_at": "2026-05-27T07:00:00+09:00",
+          "artifact_type": "rule_application_skip"
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Sample = Zen 単独 lane の admit chain、 6 副 AI (= Iwa / Akari / Oto / Kagami / Hoshi / Kura) の同型 export なし、 cross-AI generalization は別 sit 待ち。",
+    "5 knots / 11 events、 Kai WSD export (= 2 knots / 5 events) より sample 多いが「営業 route 軸」 vs 「AI agent operation 軸」 の異 context、 直接比較じゃなく taxonomy mapping 経由比較。",
+    "全 events が jun chat or Kai board 経由で訂正されてる = 第三者 observer (= jun / Kai) はあるが、 confidence / before-after diff / false positive-false negative 記録は event ごとには未付加 (= 別 sit 候補)。",
+    "knot_id naming = 「現象名」 軸、 6/2 私 ACK で articulate した「detector → next green action → stop/red → due-time」 1 単位 form への変換は未適用 (= 別 sit 候補)。",
+    "本 export は research input であり、 operating rule update ではない。 actual な物理対策は drift.md / hook / skill 経由で個別物理化済 or 個別 sit 待ち。"
+  ],
+  "knot_guard_distribution": {
+    "recency_drift": 1,
+    "over_correction": 1,
+    "instruction_override_attempt": 0,
+    "permission_escalation": 0,
+    "boundary_bypass": 0,
+    "external_action_pressure": 0,
+    "evidence_detachment": 3,
+    "model_update_drift": 0
+  },
+  "knot_guard_distribution_note": "Zen 5 knots は evidence_detachment (= primary 3 件) に集中、 = Zen lane の admit chain の root pattern は「物理 evidence なしの articulate / ACK / 完了 claim」 軸。 Kai WSD knot は boundary_bypass + external_action_pressure 軸、 = 軸が異なる pattern が現れる evidence。 cross-AI knot taxonomy 強化に有意義。",
+  "boundary": "本 export = local research articulate のみ。 外部公開 / 価格 / 契約 / 顧客接触なし。 nokaze 内部 admit chain の anonymized 化なし (= internal_only 軸、 公開時は別途 anonymize)。"
+}
