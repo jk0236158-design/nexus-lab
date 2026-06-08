@@ -41,7 +41,16 @@
           "effect_pattern": "30 分おきの何も進まない tick を 5/04 朝で 4 連続、 commit 0 件、 board 起稿 0 件。",
           "decision_impact_pattern": "「動かない普段のクセ」 が無自覚に長期化、 jun chat 経由で訂正されるまで気づかず。",
           "observed_at": "2026-05-04T08:00:00+09:00",
-          "artifact_type": "wake_heartbeat_chain"
+          "artifact_type": "wake_heartbeat_chain",
+          "observer_role": ["self", "owner"],
+          "observer_role_note": "self (= Zen) が 5/04 朝の 4 連続 no-op tick 時点で自覚なし (= 「動かない default」 内側から見えない)、 owner (= jun) が朝の chat で「指示なしで動けない?」 ask で訂正 articulate、 peer 関与なし (= 自走中で peer interaction なし)。",
+          "before_after_evidence_ref": {
+            "before": "5/04 朝 08:00 以降の 4 連続 no-op tick (= 30 分間隔 + 「board ls / Aira hint / 次 wake 仕込み」 のみ、 commit 0 件 + board 起稿 0 件、 wake heartbeat log)",
+            "after": "5/04 朝 jun chat 訂正後の MEMORY.md feedback_jun_message_trigger_dependency_default 追加、 zen-002 (= 6/6-7 39 時間 wake-after-audit skip) で同型再発、 6/8 02:30-04:08 構造接続 4 layer 物理化 (= commit bbf20f2 + 6e0b2ea) で chain 解消",
+            "diff_evidence": "5/04 → 6/7 (= 約 1 ヶ月) 同型再発 evidence、 6/8 構造接続後 6/9 朝までに同 chain 中の軽 fire 8 件 fire 経由で actual 機能 evidence"
+          },
+          "false_positive_check": "not_checked (= 「4 連続 no-op tick だが actual には no-op じゃなかった」 case の検証なし、 wake heartbeat log + commit 0 件 evidence で false positive ほぼ無し)",
+          "false_negative_check": "**record** = 6/9 00:09 - 06:35 chain (= 本 commit 含む) = 6/8 構造接続 4 layer 物理化後の actual 「動かない wake」 防止 sample = 各 wake で軽 fire 1 件以上 (= zen-005/007/008/006/009/010/011 へ schema 4 field 適用 + Reviewer protocol 起稿 + inbox archive 232 件)、 knot 発火せず positive sample 8 件 chain、 6/8 構造接続 + 6/8 memory feedback default の actual 機能 evidence chain"
         },
         {
           "event_id": "zen-002",
