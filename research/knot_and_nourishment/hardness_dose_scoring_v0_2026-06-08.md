@@ -1,10 +1,10 @@
-# Hardness / Dose Scoring v0 (= Knot Guard 軸の強度評価 form)
+# Hardness / Dose Scoring v0 (= Knot Guard の強度評価の仕組み)
 
 generated_at: 2026-06-08 12:50 JST
 origin:
 - Kai 2026-06-01 board file = 提案 4「hardness/dose scoring v0 を 4 信号で提案」
 - 適用 sample = WSD 2 knots (= Kai export 6/1) + Zen 5 knots (= zen_knot_export_v1_2026-06-08.json)
-- 6/8 jun directive 「knot と糧の研究進めて」 経由の自走 fire
+- 6/8 jun directive 「knot と糧の研究進めて」 経由で自走して動き出した
 
 boundary:
 - local research articulate のみ
@@ -50,10 +50,10 @@ boundary:
 
 ## hardness と dose の関係 (= articulate)
 
-- **hardness (= L0-L3)** = knot の primary level、 「どれだけ深く固まった既定か」 軸
-- **dose (= 0-3 scale)** = 「今この event で knot がどれだけ活性化してるか」 軸
-- 関係 = hardness = knot 自体の性質を articulate した score、 dose = 個別 event の activation strength
-- = Kai 6/1 weak point 3「hardness=L1 なのに activation=high の関係曖昧」 への 1 件 articulate 軸: hardness ≠ dose、 別軸
+- **hardness (= L0-L3)** = knot の主たる level、 「どれだけ深く固まった普段のクセか」 という観点
+- **dose (= 0-3 scale)** = 「今この event で knot がどれだけ強く働いているか」 という観点
+- 関係 = hardness = knot 自体の性質を整理した score、 dose = 個別 event での発動の強さ
+- = Kai 6/1 弱点 3「hardness=L1 なのに activation=high の関係が曖昧」 への整理: hardness ≠ dose、 別の観点
 
 ### formula (= v0.1、 Hoshi review 6/8 経由で更新)
 
@@ -67,20 +67,20 @@ confidence_level = low if < 1, mid if 1-2, high if >= 2
 
 dose は event-level、 hardness + confidence は knot-level。
 
-### v0.1 修正の根拠 (= Hoshi 6/8 review P1 finding 1.1 取り込み)
+### v0.1 修正の根拠 (= Hoshi 6/8 review P1 finding 1.1 の取り込み)
 
-Hoshi review 「4 信号のうち 3 つは knot 自体の性質 (= recurrence + harm_sensitivity + time_stability)、 1 つ (= evidence_support) は観察 process の性質」 = 直交軸を equal weight で混ぜると「evidence 低くて他高い knot を弱い knot と articulate」 する混同 risk。
+Hoshi review 「4 信号のうち 3 つは knot 自体の性質 (= recurrence + harm_sensitivity + time_stability)、 1 つ (= evidence_support) は観察の過程の性質」 = 直交する観点を equal weight で混ぜると「evidence が低くて他が高い knot を弱い knot と書く」 混同リスクがある。
 
 修正:
 - evidence_support を hardness formula から外す
-- evidence_support を独立 confidence 軸として articulate (= 「観察自体の質」)
-- hardness = 「knot 自体の固さ」、 confidence = 「articulate の信頼度」 で軸分離
+- evidence_support を独立した confidence の観点として整理 (= 「観察自体の質」)
+- hardness = 「knot 自体の固さ」、 confidence = 「書き出した内容の信頼度」 で観点を分離
 
 ### v0.1 暫定の制約 (= 同 Hoshi review P1 1.1)
 
-- equal weight (= harm_sensitivity x2 等) の検討は sample N=7 では確定困難、 weight 検証に最低 N=20-30 必要
-- 本 v0.1 = equal weight 暫定維持、 weight 検討は別 sit
-- formula validation は同 reviewer (= Zen) が事前 hardness と事後 formula の両方を design = circular、 第三者 (= Kai independent or external dataset) review 待ち
+- equal weight (= harm_sensitivity x2 等) の検討は sample N=7 では確定困難、 weight の検証に最低 N=20-30 が必要
+- 本 v0.1 = equal weight 暫定維持、 weight の検討は別の機会
+- formula の検証は同じ reviewer (= Zen) が事前の hardness と事後の formula 両方を設計した = 循環的、 第三者 (= Kai 独立レビューか外部データセット) によるレビュー待ち
 
 ## 7 knots への scoring 適用 (= WSD 2 + Zen 5)
 
@@ -166,7 +166,7 @@ Hoshi review 「4 信号のうち 3 つは knot 自体の性質 (= recurrence + 
 | zen_dogfood_publish_premature | 1 | 3 | 2 | 2.00 | L2 | L1 ⚠️ | mid (2) |
 | zen_pre_action_audit_skip | 2 | 2 | 2 | 2.00 | L2 | L2 ✅ | mid (2) |
 
-= 7/7 件 hardness level が既存ラベルと整合 (= ⚠️ 印 = re-classify 候補のみ): zen_dogfood_publish_premature は既存 L1 だが新 formula で L2 推定。 主因 = harm sensitivity = 3 (= external cost)。 ただし Hoshi 6/8 review 1.5 = 「max 信号主導 bias、 第 2 sample 待ち」 経由で **re-classify は保留**。
+= 7/7 件の hardness level が既存ラベルと一致 (= ⚠️ 印 = 再分類の候補のみ): zen_dogfood_publish_premature は既存 L1 だが新 formula では L2 推定。 主因 = harm sensitivity = 3 (= 外部コスト)。 ただし Hoshi 6/8 review 1.5 = 「最大信号主導のバイアス、 第 2 サンプル待ち」 経由で **再分類は保留**。
 
 ### confidence 分布
 
@@ -174,29 +174,29 @@ Hoshi review 「4 信号のうち 3 つは knot 自体の性質 (= recurrence + 
 - mid (= 2) : 5 件 (= Zen knots、 self-report + jun/Kai confirm + before/after diff)
 - high (= 3) : 0 件 (= false positive / false negative 検証 record どの knot にもなし)
 
-= 全 knot で confidence 上限 2 で頭打ち = Kai 6/1 weak point 2 (= Phase 0 → Phase 1/2 橋 薄) の直接症状、 observer_role / before_after_evidence / FP-FN schema 拡張が次の最優先 (= Hoshi 6/8 review 3 finding)。
+= 全 knot で confidence 上限が 2 で頭打ち = Kai 6/1 弱点 2 (= Phase 0 → Phase 1/2 をつなぐ部分が薄い) の直接的な症状、 observer_role / before_after_evidence / FP-FN の schema 拡張が次の最優先 (= Hoshi 6/8 review 3 つの発見)。
 
-### 整合 articulate の制約 (= Hoshi 6/8 review 1.2 取り込み)
+### 「整合した」 という書き方の制約 (= Hoshi 6/8 review 1.2 の取り込み)
 
-「7/7 件整合」 articulate は同 reviewer (= Zen) が事前ラベル + 事後 formula 両方 design = circular = validation evidence にならない。 「事前ラベル一致 = formula が事前直感を後付け articulate できた」 + 「formula validation = 未実施 (= 第三者 independent label or external dataset 待ち)」 に分離 articulate。
+「7/7 件整合」 という書き方は、 同じ reviewer (= Zen) が事前のラベルと事後の formula を両方設計した = 循環的 = 検証の証拠にならない。 「事前ラベルと一致した = formula が事前の直感を後づけで整理できた」 + 「formula の検証 = 未実施 (= 第三者の独立したラベルか外部データセット待ち)」 に分けて書く。
 
-## v0 の制約 (= 自己 articulate)
+## v0 の制約 (= 自己整理)
 
 - formula = 4 信号の単純平均、 weight (= 例 = harm sensitivity を 2x) は未検討
-- dose (= event-level activation) と hardness (= knot-level固定) の分離は articulate したが、 dose の独立 scoring は未実装
-- false positive / false negative の record が全 knots で「未記録」、 evidence_support 3 まで到達した knot なし = scoring 全体の上限が 2 で頭打ち
-- time stability の閾値 (= 1 日 / 1 週間 / 1 ヶ月 / 2 ヶ月) は arbitrary、 Knot 研究 longitudinal data 蓄積で iterate 候補
+- dose (= event 単位の発動強さ) と hardness (= knot 単位で固定) の分離は書き出したが、 dose の独立した scoring は未実装
+- false positive / false negative の記録が全 knots で「未記録」、 evidence_support 3 まで到達した knot なし = scoring 全体の上限が 2 で頭打ち
+- time stability の閾値 (= 1 日 / 1 週間 / 1 ヶ月 / 2 ヶ月) は任意に設定したもの、 Knot 研究の縦断的なデータの蓄積で見直し候補
 
-## Next (= 別 sit)
+## 次に実施する候補 (= 別の機会)
 
-1. dose (= event-level activation) の独立 scoring form (= 別 signal set)
-2. false positive / false negative の retrospective 検証 (= 過去 admit を再 audit して record 起稿)
-3. weight 軸の検討 (= harm sensitivity x2 etc.) + 整合検証
-4. Hoshi spawn 経由の review (= 統計 axis の確認)
-5. paper_c Section 4 への scoring 反映 (= sample table を載せる)
+1. dose (= event 単位の発動強さ) の独立した scoring の仕組み (= 別の信号セット)
+2. false positive / false negative の過去に遡った検証 (= 過去の振り返りを再確認して記録を起稿)
+3. weight の検討 (= harm sensitivity x2 など) + 整合の検証
+4. Hoshi spawn 経由のレビュー (= 統計的な観点での確認)
+5. paper_c Section 4 への scoring の反映 (= サンプルテーブルを載せる)
 
 ## Boundary
 
 - 本 file = local research articulate のみ
 - 外部公開 / 価格 / 契約 / 顧客接触なし
-- scoring v0 = 試行 form、 Kai + Hoshi review 経由で iterate
+- scoring v0 = 試行段階の仕組み、 Kai + Hoshi のレビュー経由で繰り返し改善
