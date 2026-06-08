@@ -145,7 +145,16 @@
           "effect_pattern": "jun 「そもそも無料の外部投稿だから俺に聞く必要もない」 と訂正、 zen_role layer 1 「無料の通常発信は既存接点なら自走 OK」 という普段の取り決めに戻った。",
           "decision_impact_pattern": "MEMORY.md feedback_no_ask_for_free_external_publish_2026-06-08 追加、 「harness deny ≠ 実際のズレ」 自己確認を追加。",
           "observed_at": "2026-06-08T08:30:00+09:00",
-          "artifact_type": "publish_ask_with_correction"
+          "artifact_type": "publish_ask_with_correction",
+          "observer_role": ["self", "owner"],
+          "observer_role_note": "self (= Zen) が「公開していい?」 ask した時点で over_correction の自覚なし、 harness deny を「actual な drift」 と短絡解釈、 owner (= jun) が「俺に聞く必要もない」 1 文訂正で over_correction を articulate。 peer (= Kai) の関与なし (= chat lane 内で完結)。",
+          "before_after_evidence_ref": {
+            "before": "jun chat 「公開していい?」 ask + harness deny + Zen 「重大な admit」 articulate (= chat history 内)",
+            "after": "MEMORY.md feedback_no_ask_for_free_external_publish_2026-06-08.md 起稿 (= commit 44e7565 で paraphrase 後の form) + 私の judgement default に「無料外部投稿 = 自走 fire」 articulate 追加",
+            "diff_evidence": "1 turn 内訂正 = 即時 evidence、 5 日放置等の長期 drift じゃなく即訂正型 over_correction"
+          },
+          "false_positive_check": "**record** = 過剰 ask は jun に「該当しない場合 ask」 で over_correction knot 発火、 ただし actual には 「zen_role 4 件 (= 価格 / 個人情報含む公開 / 初回 account 変更 / 炎上 risk) のいずれにも該当しない」 = false positive sample 1 件、 「ask 軸 default」 振り戻しが actual には不要だった confirm 済",
+          "false_negative_check": "not_checked (= 「ask すべき場面で ask しなかった」 case の検証なし、 別 sit 候補、 ただし 6/8 朝の repo create では 「1 はいいよ」 → harness deny → jun 「具体的に gh repo create で fire OK」 の chain で 1 件 ask 必要だった例 = 関連 evidence)"
         }
       ]
     },
