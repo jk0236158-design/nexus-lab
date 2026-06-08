@@ -48,29 +48,29 @@ priority (= Kai 推奨):
 3. curated/awesome list submission
 4. Gumroad / PDF は最後
 
-## 3. included hooks/commands/templates (= v0 contents、 8 件全部 spec surface)
+## 3. 中身 (= v0 contents、 vertical slice 4 件先 + 4 件後)
 
-prototype = 8 件全部 spec に載せる、 ただし実装深度を 2 層に分ける (= 6/8 Kai 推奨)。
+prototype = 8 件を flat な checklist として並べるじゃなく、 中心 4 件を完全に通せる流れ (= vertical slice) として先に作る (= 6/8 23:46 Kai 推奨で軸変更)。 残り 4 件は後段で追加。
 
-### 3.1 Must-land physical controls (= 実装深度 = full)
+理由 = 市場の困りごとは「もっと hook がほしい」 ではなく「AI が完了したと言うが、 実際に何か起きたか分からない、 どこから再開すればいいか分からない」。 prototype はその流れを最初から最後まで通せるか証明する必要がある。
 
-実コード / hook / command として動かす:
+### 3.1 中心 4 件 (= vertical slice、 v0 で必ず作る)
 
-- **mode declaration command** = 送り手の mode (= ambiguity_gate / soft_binder / tripwire_hold / relay_only / executive_action) + 4 項目の自己宣言の仕組み (= 6/5 communication.md § 1-1 で実装済)
+通す流れ = AI が今どの mode か宣言する → 証拠なしに完了できない → 完了した中身が外から見える → 次のセッション / 別 agent が owner に再確認なしで再開できる:
+
+- **Mode declaration command** = 送り手の判断 mode (= ambiguity_gate / soft_binder / tripwire_hold / relay_only / executive_action) + 4 項目の自己宣言の仕組み (= 6/5 communication.md § 1-1 で実装済)
 - **Stop finalization hook** = 応答の終わりで「pause + Aira hint への言及なし」 「skill への言及なし」 「pending 件数 + 実行可能件数の並列表示」 を警告する仕組み (= 6/8 zen_stop_hook.sh を汎用化したもの)
-- **7-signal completion check** = 着手前の Ambiguity Gate 7 信号確認 (= 5 分類 + Soft Binder 2 観点) (= 6/5 startup_sweep に追加済)
-- **completion receipt template** = 「完了」 と書く前に物理的な証拠 5 ヶ所を再確認 + 同型の再発がないことを確認する仕組み (= 5/13 reform 「直った」 の新しい定義)
-- **handoff template** = 次のセッション / 別の agent に渡す時の「何を読むか」 「何が完了の証拠か」 「どこで人間の判断に戻すか」 を書き出す仕組み (= Kai 推奨「AI Handoff / Receipt Kit」 を内包)
+- **Completion receipt template** = 「完了」 と書く前に物理的な証拠 5 ヶ所を再確認 + 同型の再発がないことを確認する仕組み (= 5/13 reform 「直った」 の新しい定義)
+- **Handoff template** = 次のセッション / 別の agent に渡す時の「何を読むか」 「何が完了の証拠か」 「どこで人間の判断に戻すか」 を書き出す仕組み (= Kai 推奨「AI Handoff / Receipt Kit」 を内包)
 
-### 3.2 Template / policy first (= 実装深度 = doc + rule)
+### 3.2 後段 4 件 (= 中心 4 件が動いた後に追加)
 
-実コードじゃなく template / rule / docs として最初に出す:
+- **Auto-ACK rule** = 自動受領 file の検出 + 実質的な返答との区別を書き出したルール (= 6/5 zen_stop_hook の auto_ack file 除外を実装済にした方針)
+- **7-signal drift check** = 着手前の Ambiguity Gate 7 信号確認 (= 5 分類 + Soft Binder 2 観点) (= 6/5 startup_sweep に追加済)
+- **Overclaim reminder** = 「販売開始」 「公開」 「価格」 等を書く前に確認するルール / 確認リスト
+- **Start sweep template** = セッション開始時に board / status / Aira surface を必ず読む仕組み (= 6/4-6/8 で実装済の zen_startup_sweep.sh を汎用化したもの)
 
-- **Start sweep template** = セッション開始時に board / status / Aira surface を必ず読む仕組み (= 6/4-6/8 で実装済の zen_startup_sweep.sh を汎用化したもの、 v0 では template/doc としてのみ)
-- **auto-ACK rule** = 自動受領 file の検出 + 実質的な返答との区別を書き出したルール (= 6/5 zen_stop_hook の auto_ack file 除外を実装済にした方針)
-- **overclaim / pricing / publish boundary reminder** = 「販売開始」 「公開」 「価格」 と書く前に確認するルール / 確認リスト
-
-= 「Stop hook 単体」 ではなく、 「AI が作業完了と言う前後の運用状態を締める guard set」 (= 6/8 Kai 推奨) として 8 件の仕様を一括で示す。
+= 「Stop hook 単体」 ではなく、 「AI が作業完了と言う前後の運用状態を締める guard set」 (= 6/7 Kai 推奨)、 ただし「flat 8 件 checklist」 ではなく「中心 4 件で通せる流れ」 を先に作る (= 6/8 23:46 Kai 推奨)。
 
 ## 4. dogfood evidence (= 6/8 Kai 推奨で順序逆転、 user 問題 → guard → dogfood → limit)
 
@@ -90,7 +90,9 @@ prototype = 8 件全部 spec に載せる、 ただし実装深度を 2 層に�
 - **completion receipt** = 「完了」 と書く前に物理的な証拠 5 ヶ所を再確認 + 同型の再発がないことを必須とする
 - **handoff template** = 次のセッションに「読むもの / 完了の証拠 / 人間判断に戻る時点」 を明示
 
-### 4.3 Dogfood evidence (= nokaze がこの guard を必要とした実例)
+### 4.3 Dogfood evidence (= appendix-level proof として位置、 main sales story じゃない)
+
+6/8 23:46 Kai 推奨経由で位置を明示 = 「nokaze の歴史を main sales story にしない、 generic な失敗の種類 + 物理対策の汎用性が main、 自社使用実績は appendix-level の証拠として置く」。
 
 nokaze / Zen で同じ失敗の種類が実際に起きた、 だから物理対策として作った (= 「nokaze がすでに AI operations を解決済み」 という語りにしない、 自社での使用実績を正直に開示する):
 
