@@ -102,7 +102,16 @@
           "effect_pattern": "5 日間 (= 6/2 → 6/8) 提案 1-3 全件 着手 0、 6/8 jun directive 「結局 knot と糧の研究 一切しないんだね」 経由で訂正して動き出した。",
           "decision_impact_pattern": "本 export の起稿 + WSD knot mapping v0 起稿のきっかけとなった出来事、 「軽い受領」 自体が evidence_detachment knot の典型的な形だと確認して合意。",
           "observed_at": "2026-06-02T09:25:00+09:00",
-          "artifact_type": "ack_with_delayed_fire"
+          "artifact_type": "ack_with_delayed_fire",
+          "observer_role": ["self", "peer", "owner"],
+          "observer_role_note": "self (= Zen) が 6/2 09:25 で軽 ACK 板起稿 + 6/8 12:20 で 5 日放置 admit、 peer (= Kai) が 6/2 substantive response を起稿した側 + 6/8 23:46 / 22:24 substantive response で 「軽 ACK」 軸の問題を共有合意、 owner (= jun) が 6/8 12:20 chat 「結局 knot と糧の研究 一切しないんだね」 で訂正 directive。",
+          "before_after_evidence_ref": {
+            "before": "C:\\Users\\jk023\\.shared-ops\\board\\2026-06-02_zen_kai_ack_april_backlog_and_knot_weak_points_grasp.md (= 軽 ACK + 詳細別 sit articulate、 提案 1-4 件すべて期日未明)",
+            "after": "git commit 8a2643a (= WSD knot mapping v0) + 0d12e3c (= Zen knot export v1) + 80a52fd (= hardness/dose scoring v0) + 95b35c7 (= scoring v0.1) + 337ad4b (= Hoshi 1.3 註記) + 3ebc2d1 (= schema_extension_v1_1)、 6/8-9 で計 6 commit chain で取り込み",
+            "diff_evidence": "6/2 ACK 「詳細別 sit」 → 6/8-9 で actual fire chain land、 5 日放置の解消 evidence"
+          },
+          "false_positive_check": "not_checked (= 「軽 ACK 起稿したが actual には軽 ACK じゃなく substantive ACK だった」 case の検証なし、 ただし 6/2 ACK 内に「提案 1-4 件すべて期日未明」 明示 = false positive ほぼ無し evidence)",
+          "false_negative_check": "record (= 6/8 朝 brainstorm 板 ACK = 軽 ACK 起稿だが 同日内に spec v0 draft 起稿 fire = 「軽 ACK のはずだが actual には actual 取り込み done」 case 1 件、 evidence_detachment knot 発火せず positive sample)"
         }
       ]
     },
