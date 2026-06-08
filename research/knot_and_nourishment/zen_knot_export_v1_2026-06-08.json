@@ -9,6 +9,16 @@
     "end": "2026-06-08"
   },
   "context_note": "Zen は nokaze CTO (= Claude Opus 4.7) として 4 ヶ月運営、 本 export は Zen 側の admit chain を Kai export 形式に合わせて articulate した cross-project generalization 強化軸の input。 Kai WSD knot は営業 route 文脈、 Zen knot は AI agent operation 文脈、 同じ Knot Guard 8 種 taxonomy で mapping 可能性検証。",
+  "schema_extension_v1_1": {
+    "purpose": "Hoshi 2026-06-08 review P1 1.4 (= Phase 0 → Phase 1/2 橋 薄) への取り込み軸、 sample_events に observer_role / before_after_evidence_ref / false_positive_check / false_negative_check の 4 field を追加する schema 拡張、 confidence 上限 2 頭打ちの解消方向。",
+    "fields": {
+      "observer_role": "self (= 当事者 = Zen) / peer (= Kai / 6 副 AI) / owner (= jun) / external (= 第三者) のいずれか、 複数可。 confidence_support 1 (= self) → 2 (= peer + owner) → 3 (= external) の axis 軸。",
+      "before_after_evidence_ref": "knot 発火前後の artifact diff へのパス参照 (= git commit ref / board file ref / status file ref)。 confidence_support 2 (= diff あり) の必須 evidence。",
+      "false_positive_check": "knot 発火したが actual には該当しなかった case の record (= record / not_checked / none_found)。 confidence_support 3 の必須 evidence。",
+      "false_negative_check": "knot に該当する状況だが発火しなかった case の record (= record / not_checked / none_found)。 confidence_support 3 の必須 evidence。"
+    },
+    "application_status": "schema 設計 + zen-002 への 1 件適用済 (= 2026-06-08 21:50)、 残 10 events への適用は別 sit 候補。 適用は Hoshi 1.4 取り込み chain の continuation 軸。"
+  },
   "knot_records": [
     {
       "knot_id": "zen_jun_directive_dependency",
@@ -40,7 +50,16 @@
           "effect_pattern": "6/7 18:41 Kai substantive response 起稿、 私は 18:14 / 18:45 wake で board sweep skip して気づかず、 jun chat (= 18:46) で誤報告「Kai 返事まだ」 articulate。",
           "decision_impact_pattern": "skill (= wake-after-audit) を持ってるのに 39 時間 skip、 構造的に「動かない wake」 の再発、 jun の指摘経由で構造接続 4 layer (= 6/8 02:30-04:08 commit bbf20f2 + 6e0b2ea) 物理化。",
           "observed_at": "2026-06-06T12:15:00+09:00",
-          "artifact_type": "skill_skip_chain"
+          "artifact_type": "skill_skip_chain",
+          "observer_role": ["self", "owner"],
+          "observer_role_note": "self (= Zen) が wake heartbeat の累積を realtime で観察、 owner (= jun) が 6/8 03:30 chat で「構造化できてない、 すぐにつなげて」 confront 経由で確認。 peer (= Kai) は 6/8 03:38 runtime progress evidence upgrade 板で同型 articulate を independently land。",
+          "before_after_evidence_ref": {
+            "before": "C:\\Users\\jk023\\.shared-ops\\board\\2026-06-06_zen_kai_consult_new_product_brainstorm_yuino_external.md (= wake heartbeat 累積 39 時間前の起稿)",
+            "after": "git commit bbf20f2 + 6e0b2ea (= 構造接続 4 layer 物理化、 zen_stop_hook.sh + zen_startup_sweep.sh に Aira surface read + skill mention check + pause+Aira 警告 + actionable 並列追加)",
+            "diff_evidence": "scripts/zen_stop_hook.sh = 250+ lines (= 6/8 02:30 前) → 350+ lines (= 6/8 04:08 後)、 警告 4 layer 追加"
+          },
+          "false_positive_check": "not_checked (= 「wake heartbeat 累積したが actual には skip じゃなかった」 case の検証なし、 但し 39 時間 commit 0 件 + board 起稿 0 件 = false positive ほぼ無し evidence)",
+          "false_negative_check": "not_checked (= 「skill skip すべきじゃない場面で skill 使用が正当だった」 case の検証なし、 別 sit 候補)"
         }
       ]
     },
