@@ -136,7 +136,16 @@
           "effect_pattern": "確認しに行ったことで動き出しが 1-2 日遅れ、 Kai + Zen で詰めるべき設計を jun の介入時間の消費に流してしまった。",
           "decision_impact_pattern": "MEMORY.md feedback_executive_mode_vs_shareholder_check_drift 追加、 「jun 明示判断 4 件以外は Kai と board で詰めてから見せる」 という普段の取り決めを書き出した。",
           "observed_at": "2026-05-28T14:00:00+09:00",
-          "artifact_type": "executive_ask_with_correction"
+          "artifact_type": "executive_ask_with_correction",
+          "observer_role": ["self", "owner"],
+          "observer_role_note": "self (= Zen) が 5/28 PM A/B/C/D ask 時点で over_correction の自覚なし (= 「経営判断 = 株主に確認」 default で発火)、 owner (= jun) が「共同経営者で詰めるべき話、 設計が固まってから見せる」 訂正、 indirectly Kai = 「Kai と board で詰めて」 という形で観察者として暗黙参与。",
+          "before_after_evidence_ref": {
+            "before": "5/28 PM jun chat に A/B/C/D ask articulate (= chat history 内、 4 candidate 並列の executive_mode 既定振り戻し form)",
+            "after": "MEMORY.md feedback_executive_mode_vs_shareholder_check_drift_2026-05-28 起稿 + judgement default 修正 (= 「Kai と board で詰めてから見せる」)",
+            "diff_evidence": "1-2 日 後遅れ後の actual 訂正 + 5/28 → 6/8 (= 11 日) zen-007 同型再発 evidence、 ただし 6/8 朝以降の Yuino DRI 移管 codesign では 「jun directive → Zen consult → Kai response → jun GO」 chain で actual に修正 default 機能"
+          },
+          "false_positive_check": "**record** = 6/8 22:00 Yuino DRI 移管 consult 板 = Zen が「(2) の (a) vs (b) は jun に判断仰ぐより、 Kai と board で詰めて設計 articulate してから jun に見せる軸」 articulate fire = 5/28 修正 default の actual 適用 sample 1 件、 false positive ほぼ無し confirm",
+          "false_negative_check": "**record** = 同じ 6/8 22:00 板で「商品の DRI 移管 + Zen 別商品 path 設定 自体は jun 明示 GO 軸」 articulate fire = ask が必要な軸 (= 「jun 明示判断 4 件」 のうち「商品 strategy 全体」) を正しく articulate sample 1 件、 「ask 軸」 振り戻し vs 「Kai と詰める軸」 の境界判断 機能 evidence"
         },
         {
           "event_id": "zen-007",
