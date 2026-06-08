@@ -258,7 +258,16 @@
           "effect_pattern": "constraint-to-idea 内部レビューループ rule 1 の適用 0 件、 板 file 起稿 0 件、 process repair / offer reframe / route variation / smaller experiment / one-screen owner packet の 5 観点のチェックリスト適用 0 件。",
           "decision_impact_pattern": "wake-after-audit Common Trap に「constraint-to-idea 内部レビューループ rule 1 を飛ばす」 への物理対策を追加、 5/27 06:10/06:12 内部レビュー board 起稿の実サンプル 2 件 (= X + Zenn) で実装を開始。",
           "observed_at": "2026-05-27T07:00:00+09:00",
-          "artifact_type": "rule_application_skip"
+          "artifact_type": "rule_application_skip",
+          "observer_role": ["self", "owner", "peer"],
+          "observer_role_note": "self (= Zen) が 5/27 朝 jun ask まで rule skip の自覚なし、 owner (= jun) が「rule 出来てる?」 ask で訂正 articulate、 peer (= Kai) が 5/26 12:35 起稿 board file (= constraint-to-idea internal_review_loop rule articulate origin) 経由で indirect observer、 = 3-axis observer 揃った高 confidence sample。",
+          "before_after_evidence_ref": {
+            "before": "Kai 5/26 12:35 起稿 board file (= rule articulate origin) + X 経路 5 回 (= 5/24 + 5/26 22:10/23:14/23:21 + 朝以降) + Zenn 経路 4 回 (= 5/25 21:30 push 後 12h/24h+ 反映なし audit) の詰まり累積、 内部レビュー board 起稿 0 件 (= 5/27 朝まで)",
+            "after": "5/27 06:10 X 経路 internal review board 起稿 + 5/27 06:12 Zenn 経路 internal review board 起稿 + wake-after-audit SKILL.md Common Trap に「constraint-to-idea rule 1 skip」 + zen-executive-scan SKILL.md constraint-to-idea rule 適用判定欄 追加",
+            "diff_evidence": "5/27 06:10/06:12 board file 2 件起稿 + SKILL.md 2 件 Common Trap update + verdict 整合 (= X = secondary route reframe、 Zenn = syndicate/proof asset reframe)"
+          },
+          "false_positive_check": "not_checked (= 「同 route 詰まり 2 回 detect だが actual には rule skip じゃなかった」 case の検証なし、 ただし 5/27 朝 jun ask 経由で 「内部レビュー board 起稿 0 件」 confirm 済 = false positive ほぼ無し evidence)",
+          "false_negative_check": "**record** = 6/8-9 chain で actual な内部レビュー board 起稿適用例 = 6/8 朝 wake-after-audit skip admit + 構造接続 4 layer 物理化 (= bbf20f2 + 6e0b2ea) で「6/6-7 wake skip 2 回以上 detect → 6/8 内部レビュー fire (= 朝 jun chat 経由)」 chain = constraint-to-idea rule 1 の actual 適用 sample 1 件、 5/27 物理対策の actual 機能 evidence + 6/8 構造接続 4 layer の chain integration evidence"
         }
       ]
     }
