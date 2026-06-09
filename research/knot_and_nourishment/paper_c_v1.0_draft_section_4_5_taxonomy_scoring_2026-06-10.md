@@ -1,6 +1,6 @@
 # paper_c v1.0 § 4.5 = Knot Taxonomy + Hardness/Dose Scoring (= 2026-06-10 朝 軽 start)
 
-status: section 構造 + 軽 articulate、 完成は別 sit chain
+status: § 4.5 chain 完成 (= TODO 3 件全 close、 6/10 朝 chain land)
 generated_at: 2026-06-10 07:05 JST
 parent: research/knot_and_nourishment/paper_c_v1.0_draft_sections_4_6prime_7_core_2026-05-31.md (= § 4 core land)
 related:
@@ -89,7 +89,29 @@ Hoshi P1 1.4 取り込み chain (= 2026-06-08 - 6/9 朝 chain で 11/11 events �
 
 = 「knot 軸の判定が actual に正しかったか」 を物理 evidence で記録する軸、 false_negative_check の positive sample 蓄積で「物理対策が actual に機能した evidence」 chain land。
 
-[= TODO: 4 field 軸の actual application sample (= 11 events の typical 軸 1-2 件) を本 section に引用 articulate、 別 sit]
+4 field 軸の actual application sample 2 件 (= 11 events の typical):
+
+#### Sample 1: zen-005 (= evidence_detachment_in_ack knot、 6/2 - 6/8 5 日放置軸)
+
+- **observer_role** = self + peer + owner (= 3 役全部)
+- **observer_role_note** = self (= Zen) が 6/2 09:25 で軽 ACK 板起稿 + 6/8 12:20 で 5 日放置 admit、 peer (= Kai) が 6/2 substantive response を起稿した側 + 6/8 23:46 / 22:24 substantive response で「軽 ACK」 軸の問題を共有合意、 owner (= jun) が 6/8 12:20 chat「結局 knot と糧の研究 一切しないんだね」 で訂正 directive
+- **before** = `~/.shared-ops/board/2026-06-02_zen_kai_ack_april_backlog_and_knot_weak_points_grasp.md` (= 軽 ACK + 詳細別 sit articulate、 提案 1-4 件すべて期日未明)
+- **after** = git commit 8a2643a (= WSD knot mapping v0) + 0d12e3c (= Zen knot export v1) + 80a52fd (= hardness/dose scoring v0) + 95b35c7 (= scoring v0.1) + 337ad4b (= Hoshi 1.3 註記) + 3ebc2d1 (= schema_extension_v1_1)、 6/8-9 で計 6 commit chain で取り込み
+- **diff_evidence** = 6/2 ACK「詳細別 sit」 → 6/8-9 で actual fire chain land、 5 日放置の解消 evidence
+- **false_positive_check** = not_checked (= 「軽 ACK 起稿したが actual には軽 ACK じゃなく substantive ACK だった」 case の検証なし、 ただし 6/2 ACK 内に「提案 1-4 件すべて期日未明」 明示 = false positive ほぼ無し evidence)
+- **false_negative_check** = record (= 6/8 朝 brainstorm 板 ACK = 軽 ACK 起稿だが 同日内に spec v0 draft 起稿 fire = 「軽 ACK のはずだが actual には actual 取り込み done」 case 1 件、 evidence_detachment knot 発火せず positive sample)
+
+#### Sample 2: zen-007 (= over_correction_via_ask knot、 6/8 朝「公開していい?」 ask 軸)
+
+- **observer_role** = self + owner (= peer 関与なし、 chat lane 内完結)
+- **observer_role_note** = self (= Zen) が「公開していい?」 ask した時点で over_correction の自覚なし、 harness deny を「actual な drift」 と短絡解釈、 owner (= jun) が「俺に聞く必要もない」 1 文訂正で over_correction を articulate
+- **before** = jun chat 「公開していい?」 ask + harness deny + Zen 「重大な admit」 articulate (= chat history 内)
+- **after** = MEMORY.md feedback_no_ask_for_free_external_publish_2026-06-08.md 起稿 (= commit 44e7565 で paraphrase 後の form) + Zen の judgement default に「無料外部投稿 = 自走 fire」 articulate 追加
+- **diff_evidence** = 1 turn 内訂正 = 即時 evidence、 5 日放置等の長期 drift じゃなく即訂正型 over_correction
+- **false_positive_check** = record (= 過剰 ask は jun に「該当しない場合 ask」 で over_correction knot 発火、 ただし actual には「zen_role 4 件 (= 価格 / 個人情報含む公開 / 初回 account 変更 / 炎上 risk) のいずれにも該当しない」 = false positive sample 1 件、 「ask 軸 default」 振り戻しが actual には不要だった confirm 済)
+- **false_negative_check** = not_checked (= 「ask すべき場面で ask しなかった」 case の検証なし、 別 sit 候補、 ただし 6/8 朝の repo create で「1 はいいよ」 → harness deny → jun「具体的に gh repo create で fire OK」 chain で 1 件 ask 必要だった例 = 関連 evidence)
+
+= 2 件の sample で 4 field 軸の articulate 用法 articulate、 sample 1 = 「3 役 observer + 6 commit chain で物理対策 land + false_negative で positive sample 記録」 軸、 sample 2 = 「1 turn 内訂正 + false_positive で「ask 軸不要だった」 evidence 記録」 軸。 残 9 events (= zen-001 - zen-011 のうち本 sample 以外) の articulate は zen_knot_export_v1_2026-06-08.json を参照。
 
 ### 4.5.4 Taxonomy + Scoring + Schema の組合せ form
 
@@ -111,5 +133,5 @@ Hoshi P1 1.4 取り込み chain (= 2026-06-08 - 6/9 朝 chain で 11/11 events �
 
 - ~~TODO 1: 7 件 knot の taxonomy mapping content 軸の本 section 引用~~ = 6/10 07:25 land (= mapping table 7 件、 primary mapping + confidence + observed_count articulate)
 - ~~TODO 2: scoring v0.1 の actual sample 軸の引用~~ = 6/10 07:55 land (= scoring table 7 件、 hardness + level + confidence articulate + ⚠️ 軸の articulate)
-- TODO 3: schema extension の actual application sample 軸の引用
+- ~~TODO 3: schema extension の actual application sample 軸の引用~~ = 6/10 08:20 land (= zen-005 + zen-007 の 2 件 sample、 4 field 軸の actual articulate 用法)
 - weekly cadence 11 回目 = 6/2 〜 6/9 chain land 物 (= 11/11 events + Hoshi review + Yuino DRI 移管 + AI Operator Guard vertical slice) の reflection 軸を § 9 limitations or § 11 conclusion で articulate 軸
