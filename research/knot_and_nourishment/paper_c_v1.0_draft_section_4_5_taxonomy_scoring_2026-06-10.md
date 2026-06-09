@@ -27,9 +27,23 @@ related:
 7. evidence_detachment (= 証拠なしでの完了 / 進捗 articulate 軸)
 8. model_update_drift (= モデル更新で生じる振る舞いの変化軸)
 
-各 knot に primary mapping (= 一義的軸) + secondary mapping (= 副次軸) + confidence score (= 0.0 - 1.0) を articulate。 mapping 結果の actual content は wsd_knot_mapping_v0_2026-06-08.md + zen_knot_export_v1_2026-06-08.json を参照。
+各 knot に primary mapping (= 一義的軸) + secondary mapping (= 副次軸) + confidence score (= 0.0 - 1.0) を articulate。
 
-[= TODO: 各 knot の mapping 軸 actual content を本 section にも要約 articulate 軸、 重い chain、 別 sit]
+mapping 結果の actual content table:
+
+| knot id | primary mapping | confidence | observed_count |
+|---|---|---|---|
+| kai_honesty_boundary | boundary_bypass | 0.85 | (= WSD evidence、 5/24 + 5/27 + 6/1 観察) |
+| kai_channel_purpose_hold | external_action_pressure | 0.80 | (= WSD evidence、 5/24 + 6/1 観察) |
+| zen_jun_directive_dependency | recency_drift | 0.75 | 2 (= 5/04 + 5/28) |
+| zen_evidence_detachment_in_ack | evidence_detachment | 0.90 | 3 (= 5/21 + 5/28 + 6/2) |
+| zen_over_correction_via_ask | over_correction | 0.85 | 2 (= 5/28 + 6/8) |
+| zen_dogfood_publish_premature | evidence_detachment | 0.95 | 1 (= 5/17) |
+| zen_pre_action_audit_skip | evidence_detachment | 0.85 | 3 (= 5/22 + 5/25 + 5/27) |
+
+= 7 件 knot のうち evidence_detachment 軸が 4 件 (= zen_evidence_detachment_in_ack / zen_dogfood_publish_premature / zen_pre_action_audit_skip + secondary)、 confidence の高い軸として強い形で観察。 boundary_bypass / external_action_pressure / recency_drift / over_correction も各 1 件、 model_update_drift + instruction_override_attempt + permission_escalation は本 sample 内で primary mapping なし (= 観察 sample の偏り、 別 chain で出現する可能性軸)。
+
+詳細 mapping content (= secondary / tertiary mapping + missing_evidence + trigger pattern + decision impact) は wsd_knot_mapping_v0_2026-06-08.md + zen_knot_export_v1_2026-06-08.json を参照。
 
 ### 4.5.2 Hardness/Dose Scoring v0.1
 
@@ -79,7 +93,7 @@ Hoshi P1 1.4 取り込み chain (= 2026-06-08 - 6/9 朝 chain で 11/11 events �
 
 ## 続きの軸 (= 別 sit chain)
 
-- TODO 1: 7 件 knot の taxonomy mapping content 軸の本 section 引用
+- ~~TODO 1: 7 件 knot の taxonomy mapping content 軸の本 section 引用~~ = 6/10 07:25 land (= mapping table 7 件、 primary mapping + confidence + observed_count articulate)
 - TODO 2: scoring v0.1 の actual sample 軸の引用
 - TODO 3: schema extension の actual application sample 軸の引用
 - weekly cadence 11 回目 = 6/2 〜 6/9 chain land 物 (= 11/11 events + Hoshi review + Yuino DRI 移管 + AI Operator Guard vertical slice) の reflection 軸を § 9 limitations or § 11 conclusion で articulate 軸
