@@ -368,6 +368,41 @@ elif [[ -f "$YUINO_PROTOCOL_FILE" ]]; then
 fi
 
 # ---------------------------------------------------------------
+# Aira 改善 (= 6/10 朝 land) 新規 surface 3 件 参照軸
+#   = yuino_completion_claim_guard (= same-actor completion block) +
+#     yuino_loop_defect_evaluator (= same_shape_recurrence + ready_work) +
+#     yuino_aira_4functions_minimum (= activity_class real_progress vs maintenance)
+# ---------------------------------------------------------------
+COMPLETION_GUARD_FILE="$SHARED_OPS/status/yuino_completion_claim_guard.md"
+LOOP_DEFECT_FILE="$SHARED_OPS/status/yuino_loop_defect_evaluator.md"
+AIRA_4FUNCTIONS_FILE="$SHARED_OPS/status/yuino_aira_4functions_minimum.md"
+
+if [[ -f "$COMPLETION_GUARD_FILE" ]]; then
+  UNSAFE_CC=$(grep -E "^- unsafe_completion_claims:" "$COMPLETION_GUARD_FILE" 2>/dev/null | head -1 | sed -E 's/^- unsafe_completion_claims: *//; s/[^0-9].*//')
+  UNSAFE_CC=${UNSAFE_CC:-0}
+  if (( UNSAFE_CC > 0 )); then
+    echo "[Aira completion claim] unsafe_completion_claims ${UNSAFE_CC} 件 検出 (= same-actor implementation/evidence/adoption を 「completion」 articulate 中、 yuino_completion_claim_guard.md)。 5/13 reform 「直った」 新定義 軸 respect = AI agent 単独完了 narrative なし軸。" >&2
+  fi
+fi
+
+if [[ -f "$LOOP_DEFECT_FILE" ]]; then
+  DEFECTS_TOTAL=$(grep -E "^- defects_total:" "$LOOP_DEFECT_FILE" 2>/dev/null | head -1 | sed -E 's/^- defects_total: *//; s/[^0-9].*//')
+  DEFECTS_TOTAL=${DEFECTS_TOTAL:-0}
+  RECURRENCE_CANDIDATES=$(grep -E "^- same_shape_recurrence_candidates:" "$LOOP_DEFECT_FILE" 2>/dev/null | head -1 | sed -E 's/^- same_shape_recurrence_candidates: *//; s/[^0-9].*//')
+  RECURRENCE_CANDIDATES=${RECURRENCE_CANDIDATES:-0}
+  if (( DEFECTS_TOTAL > 0 || RECURRENCE_CANDIDATES > 0 )); then
+    echo "[Aira loop defect] defects_total ${DEFECTS_TOTAL} 件 + same_shape_recurrence ${RECURRENCE_CANDIDATES} 件 検出 (= yuino_loop_defect_evaluator.md)。 同型再発の物理 detection 軸、 constraint-to-idea rule 連動軸。" >&2
+  fi
+fi
+
+if [[ -f "$AIRA_4FUNCTIONS_FILE" ]]; then
+  ACTIVITY_CLASS=$(grep -E "^- activity_class:" "$AIRA_4FUNCTIONS_FILE" 2>/dev/null | head -1 | sed -E 's/^- activity_class: *//')
+  if [[ "$ACTIVITY_CLASS" == "maintenance" ]]; then
+    echo "[Aira activity_class] activity_class = maintenance (= 「進んだ」 claim 不可軸の 2 axis 物理化、 yuino_aira_4functions_minimum.md)。 internal control repair only、 world_movement / revenue_signal なし。" >&2
+  fi
+fi
+
+# ---------------------------------------------------------------
 # 動かす判定 + 停止 / 許可
 # ---------------------------------------------------------------
 if (( PENDING_WITHOUT_MARKER > 0 )) || (( UNRESPONDED > 0 )); then
