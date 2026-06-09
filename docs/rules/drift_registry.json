@@ -1,0 +1,197 @@
+{
+  "schema_version": "drift_registry.v0",
+  "human_mirror": "C:\\Users\\jk023\\nexus-lab\\docs\\rules\\drift.md",
+  "generated_at": "2026-05-19T07:55:00+09:00",
+  "trigger": "5/19 z-r-11 (= drift.md 二層構造化 = JSON registry + drift.md は pointer のみ)、 Iwa 22:55 articulate 「段を増やす = 繰り返し」 軸の解体、 5/18 z-r-13 で 頭の中の補強 6 件削除済 + 物理 instrument のみ残してる状態を JSON に encode",
+  "schema": {
+    "id": "段目番号 (1-17)",
+    "title": "短い見出し",
+    "trigger": "ずれが見つかったきっかけ",
+    "physical_tools": "物理 instrument list (= 削除済の頭の中の補強は除外)",
+    "status": "active | retired | superseded",
+    "related_files": "詳細 articulate 先 file"
+  },
+  "drifts": [
+    {
+      "id": 1,
+      "title": "見積もりが小さすぎる",
+      "trigger": "自走しているときの観察",
+      "physical_tools": [],
+      "status": "active",
+      "related_files": ["docs/rules/drift.md § 1"]
+    },
+    {
+      "id": 2,
+      "title": "言葉だけの学び (memory に書いて運用に落とさない)",
+      "trigger": "4/22 Kagami Override #2",
+      "physical_tools": ["memory_registry.json + enforcement field"],
+      "status": "active",
+      "related_files": ["docs/rules/drift.md § 2"]
+    },
+    {
+      "id": 3,
+      "title": "朝の点検の見落とし (連絡フォルダ一覧が見えてても中身を把握できない)",
+      "trigger": "5/05 + 5/07 朝",
+      "physical_tools": ["startup sweep script"],
+      "status": "active",
+      "related_files": ["scripts/zen_startup_sweep.sh"]
+    },
+    {
+      "id": 4,
+      "title": "14 日の言い回しのズレ (形にする → 点検の対象に伸ばす)",
+      "trigger": "5/06",
+      "physical_tools": [],
+      "status": "active",
+      "related_files": ["docs/rules/drift.md § 4"]
+    },
+    {
+      "id": 5,
+      "title": "点数の言い回し (実際の証拠ないのに 7-8/10 と書く)",
+      "trigger": "自走しているとき",
+      "physical_tools": ["honesty audit script"],
+      "status": "active",
+      "related_files": ["docs/rules/drift.md § 5"]
+    },
+    {
+      "id": 6,
+      "title": "黙って待つ (Kai 返事待ち narrative で物理点検 skip)",
+      "trigger": "5/05",
+      "physical_tools": ["board audit script"],
+      "status": "active",
+      "related_files": ["docs/rules/drift.md § 6"]
+    },
+    {
+      "id": 7,
+      "title": "同 chat 内別 file での自己訂正違反",
+      "trigger": "5/04 朝",
+      "physical_tools": [],
+      "status": "active",
+      "related_files": ["docs/rules/drift.md § 7"]
+    },
+    {
+      "id": 8,
+      "title": "公開 docs 保存習慣 skip",
+      "trigger": "自走しているとき",
+      "physical_tools": ["pre_commit_public_docs_audit.sh"],
+      "status": "active",
+      "related_files": ["scripts/pre_commit_public_docs_audit.sh"]
+    },
+    {
+      "id": 9,
+      "title": "会話跨ぐと前の成果物認識ずれる",
+      "trigger": "5/04 朝",
+      "physical_tools": [],
+      "status": "active",
+      "related_files": ["docs/rules/drift.md § 9"]
+    },
+    {
+      "id": 10,
+      "title": "設計 docs 書き出し時に既 repo 点検 skip",
+      "trigger": "5/10 broadcast-os",
+      "physical_tools": [],
+      "status": "active",
+      "related_files": ["docs/rules/drift.md § 10"]
+    },
+    {
+      "id": 11,
+      "title": "カレンダーの言い回し作り話",
+      "trigger": "5/10 22:25 自己訂正",
+      "physical_tools": [],
+      "status": "active",
+      "related_files": ["docs/rules/drift.md § 11"]
+    },
+    {
+      "id": 12,
+      "title": "既物理化機能を 「追加で形にする」 と書く",
+      "trigger": "5/10 22:50 点検",
+      "physical_tools": [],
+      "status": "active",
+      "related_files": ["docs/rules/drift.md § 12"]
+    },
+    {
+      "id": 13,
+      "title": "触ってない商品を 「販売開始 / publish」 と書く (dogfood 違反)",
+      "trigger": "5/17 16:00 admit、 4/22 create-mcp-server + 5/17 Yuino β で 2 度目の同型",
+      "physical_tools": [
+        "scripts/zen_dogfood_preflight.sh",
+        "pre_commit_public_docs_audit.sh の 5 番目連鎖",
+        "task_table/active_tasks.md の dogfood 状態 field",
+        "~/Desktop/nokaze/dogfood/<product>/<date>.md form 固定",
+        "drift.md § 13 entry"
+      ],
+      "status": "active",
+      "related_files": [
+        "docs/rules/drift.md § 13",
+        "memory/feedback_dogfood_violation_repeat_2026-05-17.md"
+      ]
+    },
+    {
+      "id": 14,
+      "title": "対話 turn shift で 自走 cadence 落ちる",
+      "trigger": "5/18 朝 admit、 5/17 evening dogfood admit shift + 寝る前 fire 落ち 8 時間 idle",
+      "physical_tools": [
+        "対話 turn 内 polling 維持 default ruled",
+        "「おやすみ」 narrative 検出時 必須 fire ruled",
+        "SessionStart hook section J (= ScheduleWakeup 状況 audit)",
+        "Stop hook の audit + warn"
+      ],
+      "status": "active",
+      "related_files": ["docs/rules/drift.md § 14"]
+    },
+    {
+      "id": 15,
+      "title": "報告 / chat 出力で 内部用語再生産",
+      "trigger": "5/18 朝 7:30 jun 「報告の仕方」 + 朝 10:50 「本当に対策してる?」",
+      "physical_tools": [
+        "Stop hook 英単語警告 keyword 強化",
+        "Stop hook 閾値 10 → 5 件",
+        "paraphrase 表 (= 内部用語 → 普通の日本語) 40 件、 docs/rules/paraphrase_layer_acceptance.md",
+        "起稿 file 英単語確認 (= 5 分以内 touched + 20 件閾値)",
+        "SessionStart hook section K"
+      ],
+      "status": "active",
+      "related_files": ["docs/rules/drift.md § 15", "docs/rules/paraphrase_layer_acceptance.md"]
+    },
+    {
+      "id": 16,
+      "title": "AI 自走で credit / コスト確認せず動く",
+      "trigger": "5/18 朝 jun reframe (= Anthropic 6/15 reform 共有後)、 Yuino 商品 4 軸目として Cost / Billing Boundary 据える",
+      "physical_tools": [
+        "yuino-cost-classification.ts (= 起動前分類、 3 hook 点)",
+        "yuino-budget-cap.ts + ~/.shared-ops/billing/budgets.json",
+        "yuino-credit-balance-probe.ts",
+        "yuino-cost-cap-enforcer.ts + Approval Inbox 9 件目",
+        "yuino-night-cost-policy.ts + night-cycle 第 3 mode",
+        "モデル運用階層 (= High / Mid / Low / No model)"
+      ],
+      "status": "active",
+      "related_files": [
+        "docs/rules/drift.md § 16",
+        "memory/project_yuino_cost_billing_boundary_2026-05-18.md"
+      ]
+    },
+    {
+      "id": 17,
+      "title": "既物理 evidence audit skip で 段 articulate",
+      "trigger": "5/18 11:55 + 12:35 同 turn 内 2 連発火、 jun 「アカウントもうあるでしょ?」 + 「Polar.sh はパスポートできてから、 前に話した」",
+      "physical_tools": [
+        "reference_accounts.md を 常時 active 4 件 → 5 件目に上げる candidate",
+        "project_polar_passport_path_b_prime_2026-05-01.md 起稿 candidate",
+        "SessionStart hook section L candidate"
+      ],
+      "status": "active",
+      "related_files": ["docs/rules/drift.md § 17"]
+    }
+  ],
+  "physical_tool_summary": {
+    "total_active_tools_actually_listed": 14,
+    "comment_sync_correction": "= 5/19 Kagami audit で 主張 24 vs actual 14 のズレ検出 + sync 修正、 旧 24 主張は drifts 内の physical_tools list 累計の重複 count、 ここでの 14 件は unique tool 数",
+    "by_layer": {
+      "scripts": ["zen_dogfood_preflight.sh", "zen_startup_sweep.sh", "pre_commit_public_docs_audit.sh", "zen_stop_hook.sh", "zen_session_start_priming.sh"],
+      "yuino_modules_planned_5_modules_kai_main": ["yuino-cost-classification.ts", "yuino-budget-cap.ts", "yuino-credit-balance-probe.ts", "yuino-cost-cap-enforcer.ts", "yuino-night-cost-policy.ts"],
+      "yuino_modules_actual_status": "5/19 朝時点 = cost-classification + budget-cap の 2 件 Kai 5/18 朝 実装済 (= P1)、 残 3 件 (= credit-balance-probe / cost-cap-enforcer / night-cost-policy) は P2 で 5/20+ 着手判断、 actual 存在は 2 件のみ",
+      "rules": ["docs/rules/paraphrase_layer_acceptance.md", "docs/rules/drift.md (= pointer)", "drift_registry.json (= 本 file)"],
+      "memory": ["memory_registry.json"]
+    }
+  }
+}
