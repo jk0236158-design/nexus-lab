@@ -60,7 +60,23 @@ confidence_score = evidence_support
 
 = hardness と confidence を 1 軸に混ぜない (= 「hard だが confidence 低い」 candidate と 「confidence 高いが hard じゃない」 candidate を区別)。
 
-[= TODO: 7 件の Knot に対する actual hardness / confidence score 軸 articulate、 hardness_dose_scoring_v0_2026-06-08.md の content を本 section に引用軸、 別 sit chain]
+7 件 knot に対する actual scoring 適用 (= v0.1 formula):
+
+| knot id | recurrence | harm | time | hardness | hardness level | confidence |
+|---|---|---|---|---|---|---|
+| kai_honesty_boundary | 1 | 2 | 1 | 1.33 | L1 | low (1) |
+| kai_channel_purpose_hold | 0 | 2 | 0 | 0.67 | L1 | low (1) |
+| zen_jun_directive_dependency | 1 | 2 | 2 | 1.67 | L2 | mid (2) |
+| zen_evidence_detachment_in_ack | 2 | 2 | 2 | 2.00 | L2 | mid (2) |
+| zen_over_correction_via_ask | 1 | 1 | 1 | 1.00 | L1 | mid (2) |
+| zen_dogfood_publish_premature | 1 | 3 | 2 | 2.00 | L2 (⚠️) | mid (2) |
+| zen_pre_action_audit_skip | 2 | 2 | 2 | 2.00 | L2 | mid (2) |
+
+= 7/7 件の hardness level が既存ラベルと一致、 ただし zen_dogfood_publish_premature は既存 L1 だが新 formula では L2 推定 (= ⚠️ 印 = 再分類の候補)。 主因 = harm sensitivity = 3 (= 外部コスト)。 Hoshi 6/8 review 1.5 = 「最大信号主導のバイアス、 第 2 サンプル待ち」 経由で再分類は保留軸。
+
+confidence 分布 = low 2 件 (= WSD Kai 2 件、 単一 sample 経由で confidence 低い) + mid 5 件 (= Zen 5 件、 自社 sample で複数観察あり)。 high confidence 軸は本 sample 内で 0 件 = 「外部 evidence + 反復観察」 経由で蓄積する form、 v0.1 では「mid 軸での仮の articulate」 段階。
+
+詳細 scoring application + 4 信号 (= recurrence / harm / time / evidence_support) の knot 別 articulate は hardness_dose_scoring_v0_2026-06-08.md を参照。
 
 ### 4.5.3 Schema Extension v1.1 = 4 field 追加
 
@@ -94,6 +110,6 @@ Hoshi P1 1.4 取り込み chain (= 2026-06-08 - 6/9 朝 chain で 11/11 events �
 ## 続きの軸 (= 別 sit chain)
 
 - ~~TODO 1: 7 件 knot の taxonomy mapping content 軸の本 section 引用~~ = 6/10 07:25 land (= mapping table 7 件、 primary mapping + confidence + observed_count articulate)
-- TODO 2: scoring v0.1 の actual sample 軸の引用
+- ~~TODO 2: scoring v0.1 の actual sample 軸の引用~~ = 6/10 07:55 land (= scoring table 7 件、 hardness + level + confidence articulate + ⚠️ 軸の articulate)
 - TODO 3: schema extension の actual application sample 軸の引用
 - weekly cadence 11 回目 = 6/2 〜 6/9 chain land 物 (= 11/11 events + Hoshi review + Yuino DRI 移管 + AI Operator Guard vertical slice) の reflection 軸を § 9 limitations or § 11 conclusion で articulate 軸
