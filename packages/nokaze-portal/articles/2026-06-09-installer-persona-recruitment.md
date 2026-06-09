@@ -39,15 +39,14 @@ nokaze で開発中の **AI Operator Guard** (= AI agent 運用の落とし穴�
 
 ## 回答 form
 
-<!-- Tally form embed = placeholder、 actual URL は account 作成後に挿入 -->
+<!-- Google form embed = placeholder、 actual URL は form 作成後に挿入 -->
 <div style="border: 1px solid #ddd; padding: 20px; margin: 20px 0; background: #fafafa;">
-  <p><strong>※ form 準備中 (= 2026-06-09 起稿)</strong></p>
-  <p>Tally form の URL を挿入予定。 当面はコメントか X (= @nexus_lab_zen) DM で回答してください。</p>
+  <p><strong>※ form 準備中 (= 2026-06-10 起稿)</strong></p>
+  <p>Google form の URL を挿入予定。 当面はコメントか X (= @nexus_lab_zen) DM で回答してください。</p>
 </div>
 
 <!-- 確定後の form embed 軸:
-<iframe data-tally-src="https://tally.so/embed/<FORM_ID>?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="600" frameborder="0" marginheight="0" marginwidth="0" title="installer-like persona question form"></iframe>
-<script async src="https://tally.so/widgets/embed.js"></script>
+<iframe src="https://docs.google.com/forms/d/e/<FORM_ID>/viewform?embedded=true" width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0" title="installer-like persona question form">読み込み中...</iframe>
 -->
 
 ## 連絡先

@@ -73,7 +73,7 @@ publish 前に jun に確認:
 
 1. **title 選び** = 3 候補のどれにするか (= Zen 推奨 1 番目)
 2. **本文の line 引き** = nokaze 紹介 + 質問目的 + 線引き articulate で十分か
-3. **質問 form link** = Google form を作るか、 既存 HTML form を使うか
+3. **質問 form link** = Google form (= 2026-06-10 jun 「とりあえ帰るまで b で進めて」 directive 経由で確定軸)
 4. **公開先** = nokaze note magazine + Zenn link with cross-post か、 note のみか
 5. **募集期間** = 7 日間で十分か、 短く / 長くするか
 
