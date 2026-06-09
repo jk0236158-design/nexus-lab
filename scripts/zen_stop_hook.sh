@@ -344,6 +344,30 @@ if (( AIRA_ACTIONABLE > 0 )); then
 fi
 
 # ---------------------------------------------------------------
+# Yuino reviewer N 日 skip 物理検出 (= 6/9 朝 Yuino reviewer protocol v0 § 5.1 articulate)
+#   = Yuino review 板起稿から N 日経過したら warn。 7 日定期 trigger 軸 skip 検出。
+#     review 板未起稿 + protocol v0 起稿から 7 日経過 = 初回 fire skip warn。
+# ---------------------------------------------------------------
+YUINO_PROTOCOL_FILE="$HOME/nexus-lab/docs/yuino_reviewer_protocol_v0.md"
+LATEST_REVIEW_MTIME=$(find "$BOARD" -name "*_zen_kai_yuino_review_v*_*.md" -type f -printf '%T@\n' 2>/dev/null | sort -n | tail -1)
+if [[ -n "$LATEST_REVIEW_MTIME" ]]; then
+  YUINO_NOW=$(date +%s)
+  YUINO_ELAPSED_DAYS=$(( (YUINO_NOW - ${LATEST_REVIEW_MTIME%.*}) / 86400 ))
+  if (( YUINO_ELAPSED_DAYS >= 7 )); then
+    echo "[Yuino reviewer skip] 最後の Yuino review 板起稿から ${YUINO_ELAPSED_DAYS} 日経過 = 7 日定期 trigger 軸 skip 中 (= yuino_reviewer_protocol_v0.md § 2.2 + § 5.1)。 release candidate なしでも定期 review fire 必要。" >&2
+  fi
+elif [[ -f "$YUINO_PROTOCOL_FILE" ]]; then
+  YUINO_PROTOCOL_MTIME=$(stat -c '%Y' "$YUINO_PROTOCOL_FILE" 2>/dev/null || stat -f '%m' "$YUINO_PROTOCOL_FILE" 2>/dev/null)
+  if [[ -n "$YUINO_PROTOCOL_MTIME" ]]; then
+    YUINO_NOW=$(date +%s)
+    YUINO_ELAPSED_DAYS=$(( (YUINO_NOW - YUINO_PROTOCOL_MTIME) / 86400 ))
+    if (( YUINO_ELAPSED_DAYS >= 7 )); then
+      echo "[Yuino reviewer skip] protocol v0 起稿から ${YUINO_ELAPSED_DAYS} 日経過、 初回 review 板未起稿 (= yuino_reviewer_protocol_v0.md § 2)。" >&2
+    fi
+  fi
+fi
+
+# ---------------------------------------------------------------
 # 動かす判定 + 停止 / 許可
 # ---------------------------------------------------------------
 if (( PENDING_WITHOUT_MARKER > 0 )) || (( UNRESPONDED > 0 )); then
