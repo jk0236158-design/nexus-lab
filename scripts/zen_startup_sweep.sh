@@ -626,6 +626,26 @@ else
 fi
 
 echo ""
+# 6/11 追加: Aira update (= Kai 6/10 product-layer check + Real Screens v0.2) 連携見直しで 2 surface 追加
+PRODUCT_LAYER_FILE="$SHARED_OPS/status/yuino_product_layer_check.md"
+LJR_READINESS_FILE="$SHARED_OPS/status/yuino_local_judgment_runtime_readiness.md"
+
+if [ -f "$PRODUCT_LAYER_FILE" ]; then
+  echo "  [product_layer_check] (= Yuino 商品層の完成判定、 done=false の間は商品 complete claim 不可):"
+  grep -E "^- (status|layer|done|requirements|issues):" "$PRODUCT_LAYER_FILE" 2>/dev/null | sed 's/^/    /'
+else
+  echo "  [product_layer_check] 不在 (= Aira 同期切れ)"
+fi
+
+echo ""
+if [ -f "$LJR_READINESS_FILE" ]; then
+  echo "  [ljr_readiness] (= Aira 判断 runtime の readiness、 watch 原因が Zen 側 result 待ちの時あり):"
+  grep -E "^- (readiness|requirements|preflight_decision):" "$LJR_READINESS_FILE" 2>/dev/null | sed 's/^/    /'
+else
+  echo "  [ljr_readiness] 不在 (= Aira 同期切れ)"
+fi
+
+echo ""
 echo "  ※ next_min_experiment + next_behavior を 「Kai 待ち」 「jun 待ち」 の前に judgement に入れる"
 echo "    (= 6/8 03:30 jun directive 「構造化できてない、 すぐにつなげて」 経由)"
 
