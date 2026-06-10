@@ -71,3 +71,27 @@ axis: **drift 抑止 layer** (model upgrade + scope + decision stability + knot 
 - defined term (「reform B 段」 「Knot Guard 8 risk class」 等の固有 narrative) は維持
 - substitute list table 内は sed 化しない (P1-6 機械 sed 失敗 evidence 由来 ruled)
 - 5/11 reform で 「ジュンさん」 narrative 禁止 + 言い換え表は **manual context edit** で適用 (新 file 起稿時に paraphrase pass 同時実施)
+
+---
+
+## 2026-06-04 update (= z-r-12 物理化軸の延長)
+
+5/11 起稿の step 2-8 軸の actual status:
+
+- step 1 (= 本 README) = done (5/11 01:30)
+- step 2 (= publishing.md) = done
+- step 3 (= delegation.md) = done
+- step 4 (= communication.md) = done
+- step 5 (= drift.md) = done + 5/19 z-r-11 で drift_registry.json 軸 二層構造化済
+- step 6 (= 旧 docs/zen_runtime_rules.md pointer 化 or 削除) = 5/13 確認軸、 状態軸別 audit
+- step 7 (= CLAUDE.md L72 update) = 既存 CLAUDE.md は 既に docs/rules/ への reference 軸 articulate 済、 z-r-9 軸 root pointer 化 draft = `CLAUDE_v2_pointer_draft.md` で更新
+- step 8 (= memory entry) = `~/.claude/projects/c--Users-jk023-nexus-lab/memory/MEMORY.md` の archive 軸 articulate 済
+
+追加軸 (= 5/11 起稿時点で未 articulate 軸):
+
+- `docs/rules/paraphrase_layer_acceptance.md` 起稿 (5/16) = 言いかえ層の 3 範囲精度境界
+- `docs/rules/self_check_cadence.md` 起稿 (5/17) = 自分での確認のペース
+- `docs/rules/guards.md` 起稿 (5/28) = guard family の統合
+- `docs/rules/rules_registry.json` 起稿 (6/4 z-r-12 物理化) = 二層構造の machine readable 層
+
+= 5/11 軸 4 file 想定 → 6/4 actual = 7 rule file + 3 registry json + 1 README + 1 CLAUDE pointer draft = 二層構造 完成軸。 詳細 = [rules_registry.json](rules_registry.json)。
