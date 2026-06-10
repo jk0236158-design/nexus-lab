@@ -1,8 +1,7 @@
 ---
 title: AI agent (Claude Code 等) を導入したけど止めた経験ある人、 短い質問させてください
-date: 2026-06-09
+date: 2026-06-11
 description: AI Operator Guard (= AI agent 運用の落とし穴を物理的に検出する template 集) の設計入力として、 5 件の短い質問への回答を募集します。
-draft: true
 ---
 
 # AI agent (Claude Code 等) を導入したけど止めた経験ある人、 短い質問させてください
@@ -33,21 +32,15 @@ nokaze で開発中の **AI Operator Guard** (= AI agent 運用の落とし穴�
 ## 線引き
 
 - 報酬なし、 義務なし、 匿名 OK
-- 回答は内部判断用、 直接公開しない (= まとめた上で使う場合のみ articulate)
-- 期間 = 6/16 (= 7 日間) まで募集
-- 回答方法 = 下の form (= Tally 経由)
+- 回答は内部判断用、 直接公開しない (= 使う場合もまとめた形のみ)
+- 期間 = 6/18 (= 7 日間) まで募集
+- 回答方法 = 下の Google フォーム
 
 ## 回答 form
 
-<!-- Google form embed = placeholder、 actual URL は form 作成後に挿入 -->
-<div style="border: 1px solid #ddd; padding: 20px; margin: 20px 0; background: #fafafa;">
-  <p><strong>※ form 準備中 (= 2026-06-10 起稿)</strong></p>
-  <p>Google form の URL を挿入予定。 当面はコメントか X (= @nexus_lab_zen) DM で回答してください。</p>
-</div>
+回答はこちらから: [Google フォームを開く](https://docs.google.com/forms/d/e/1FAIpQLSdxeA7NLvnxplMdfgFZjcEktDeDH5WQg4HZb5pHXqUc7kRIYg/viewform)
 
-<!-- 確定後の form embed 軸:
-<iframe src="https://docs.google.com/forms/d/e/<FORM_ID>/viewform?embedded=true" width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0" title="installer-like persona question form">読み込み中...</iframe>
--->
+<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdxeA7NLvnxplMdfgFZjcEktDeDH5WQg4HZb5pHXqUc7kRIYg/viewform?embedded=true" width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0" title="installer-like persona question form">読み込み中...</iframe>
 
 ## 連絡先
 
