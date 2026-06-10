@@ -162,26 +162,36 @@ OK 範囲 (= internal):
 ### 7.2 3 層構造 (= Guard を静的テンプレから成長する運用システムへ)
 
 - **Layer 1 検出** = 既存 8 件 guard (= § 3 の中心 4 + 後段 4)。 ここは現 spec のまま
-- **Layer 2 蓄積 (= Knot)** = guard が検出した失敗を knot (= 条件 + 補正 + 強度) として記録する仕組み。 同型が繰り返し検出された knot は強度を上げて validator の固定規則に沈殿させる (= Knot 研究 5 役割の 2 番目「検証構造への沈殿」 の製品化)。 どの knot が増えたかで運用のどこが弱いかが見える (= 役割 4 「弱点診断」)
+- **Layer 2 蓄積 (= Knot)** = guard が検出した失敗を knot (= 条件 + 補正 + 強度) として記録する仕組み。 同型が繰り返し検出された knot は強度を上げて validator の固定規則に沈殿させる (= Knot 研究 5 役割の 2 番目「検証構造への沈殿」 の応用)。 どの knot が増えたかで運用のどこが弱いかが見える (= 役割 4 「Discovery 層の弱点診断」 の運用全般への翻案。 RQ4 未着手なので「製品化」 でなく「応用」 と書く = Hoshi P2-1)
 - **Layer 3 取り込み (= 糧)** = 失敗・予測外れ・反対意見を「恥」 でなく「世界モデル更新の入力」 として記録する回路 3 種 (= 4/20 起稿の 売上 0 回路 / peer 反対回路 / 予測外れ回路)。 feedback file の form (= Why + How to apply) + 索引 + 見直しの cadence を template 化
 
 ### 7.3 実装の最小形 (= v0 で増やしすぎない)
 
 - zen-memory MCP の record-knot / get-knots 相当の汎用版 (= 失敗の記録と引き出し)
 - feedback file template + 索引 (= MEMORY.md form の汎用化)
-- knot 強度の昇格 rule (= 同型 N 回で hook の警告規則に昇格する手順書)
+- 再発回数による簡易昇格 rule (= 同型 N 回で hook の警告規則に昇格する手順書。 研究側 hardness v0.1 は recurrence + harm_sensitivity + time_stability の 3 信号で、 これはその簡略版であることを商品文面でも明示する = Hoshi P1-1、 「hardness」 の語をそのまま使わない)
+- 昇格の見直し経路 (= 昇格後 N 日で発火実績を確認、 誤検出 1 件で降格候補に戻す。 一方向昇格は誤検出 pattern の永久沈殿 + 警告疲れを生む = Hoshi P2-2)
 - まず手動運用で成立する form にする (= daemon 化は後段、 「全自動」 と書かない)
 
 ### 7.4 継続課金の根拠 (= 価格は jun GO 別 turn、 構造だけ書く)
 
-- 失敗辞書は使うほどその環境固有に育つ = 続ける理由が data でなく回路にある
+- 失敗辞書が環境固有に育つことを意図した設計 = 続ける理由が data でなく回路にある (= nokaze 内 7 knots で運用中、 外部環境での検証はこれから。 現在形の効果として断定しない = Hoshi P3-1)
 - pattern 集の update 配信 (= nokaze 側で蓄積した新しい失敗 class の追加) が recurring の中身候補
 
 ### 7.5 limit (= § 4.4 と同じ態度)
 
 - Knot 研究は研究中の枠組みで、 効果の一般化は未証明と明示する (= paper_c の self-observation bias 開示と同じ線)
+- 簡易昇格 rule の閾値・手順は運用上の経験則であり、 昇格プロセスの妥当性検証は研究側でも未着手 (= RQ2 Phase 3、 検証 sample 0 件) と個別に開示する (= Hoshi P1-2)
 - Nia 不可侵 (= 4/13 owner decision) は維持。 商品化対象は Knot の方法論と Guard への実装のみ、 Nia 本体には触れない
 - 「AI が自動で学習する」 とは書かない (= 記録と沈殿は運用の手順であり、 model の学習ではない)
+
+### 7.6 研究への還流 (= Hoshi 見解 6/11、 商品 data を研究に使う場合の条件 3 つ)
+
+外部利用者の knot data は paper_c § 9.2 (= observer = participant 三重性) を緩和する経路になりうるが、 条件 3 つを守る:
+
+1. 外部 cohort は nokaze 内部 data と混ぜず別 track (= external replication track) として持つ。 混ぜて「N が増えた」 と書いた瞬間に汚染になる
+2. 「Guard 採用者しか sample にならない + 我々の分類でしか記録されない」 という枠組み込みの選択バイアスを limitations に明示する
+3. 利用者 data の研究利用は opt-in 設計 + jun GO 前提 (= 顧客 data 扱い = red gate 隣接)
 
 ## 次の動き (= jun GO 取得 前)
 
