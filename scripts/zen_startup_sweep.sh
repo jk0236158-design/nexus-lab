@@ -196,13 +196,19 @@ else
   echo "  → 今日まだ返事してない: $UNREPLIED_COUNT 件"
 fi
 
-subheader "board/ : 7日以内のまだ手をつけてない分 (参考、 無視可)"
+subheader "board/ : 7日以内のまだ手をつけてない分 (= value 軸選択 + 古い順 fallback)"
 # 古い backlog はノイズになりがちなので「件数だけ」で済ませる
+# matrix v2 軸 (= 2026-06-10 land) で「古い順 FIFO」 → 「value 軸 = revenue / world signal token 優先」 に変更
+# value tokens (= revenue / world_movement / sales / signal / purchase / view / install / star / paid / customer / market / outreach / lead / inquiry / persona / payment)
+# 上記 token を含む board を先頭優先、 ない場合は古い順 fallback
+VALUE_TOKENS_RE='(revenue|world|sales|signal|purchase|install|star|paid|customer|market|outreach|lead|inquiry|persona|payment|polar|gumroad|stripe|zenn)'
+
 OLD_INCOMING=$(find "$SHARED_OPS/board" -maxdepth 1 -type f -name "*_kai_zen_*.md" \
   -mtime -7 ! -newermt "${TODAY} 00:00:00" \
   ! -name "*_response_*" 2>/dev/null | sort)
 OLD_UNREPLIED=0
 OLDEST_PENDING_BASE=""
+VALUE_PENDING_BASE=""
 if [ -n "$OLD_INCOMING" ]; then
   while IFS= read -r f; do
     base=$(basename "$f" .md)
@@ -212,17 +218,29 @@ if [ -n "$OLD_INCOMING" ]; then
     fi
     if ! is_replied "$base" "$orig_date" >/dev/null; then
       OLD_UNREPLIED=$((OLD_UNREPLIED + 1))
-      # 最も古い (sort済み先頭) をひとつ記録
+      # 最も古い (sort済み先頭) をひとつ記録 (= value 軸 fallback)
       if [ -z "$OLDEST_PENDING_BASE" ]; then
         OLDEST_PENDING_BASE="$base"
+      fi
+      # value 軸 = filename slug に value token 含むものを先頭優先
+      if [ -z "$VALUE_PENDING_BASE" ]; then
+        if echo "$base" | grep -iE "$VALUE_TOKENS_RE" >/dev/null 2>&1; then
+          VALUE_PENDING_BASE="$base"
+        fi
       fi
     fi
   done <<< "$OLD_INCOMING"
 fi
 echo "  過去7日でまだ手をつけてない分: $OLD_UNREPLIED 件 (詳細は手動で board/ を grep)"
-if [ -n "$OLDEST_PENDING_BASE" ]; then
+
+# matrix v2 軸 = revenue / world > internal、 value 軸あれば優先、 ない場合は古い順 fallback (= 別バッチで消化軸軸)
+if [ -n "$VALUE_PENDING_BASE" ]; then
+  add_candidate 2 "7日以内 value 軸 board に応答: $VALUE_PENDING_BASE" \
+    "過去7日 Kai→Zen で value token (= revenue / world / persona / sales 等) 含む board の先頭"
+elif [ -n "$OLDEST_PENDING_BASE" ]; then
+  # value 軸 なしの場合のみ古い順 fallback (= ただし matrix v2 軸軸 軸 internal 理由 1 行 articulate 軸)
   add_candidate 2 "7日以内のまだ手をつけてない分に応答: $OLDEST_PENDING_BASE" \
-    "過去7日 Kai→Zen でまだ手をつけてない $OLD_UNREPLIED 件の先頭 (古い順)"
+    "過去7日 Kai→Zen でまだ手をつけてない $OLD_UNREPLIED 件の先頭 (= value 軸 該当なし fallback)"
 fi
 
 subheader "inbox/INDEX.md : owner 判断待ちの候補"
