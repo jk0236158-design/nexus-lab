@@ -100,7 +100,7 @@ self-observation bias は **設計段階から明示** (= 著者 = nokaze 内部
 
 ### 1.4 Paper outline
 
-本 paper は 12 section 構成 (= v0.2 outline § 1):
+本 paper は 14 unit 構成 (= Abstract + Section 1-11 + § 4.5 + § 6′、 v0.2 outline § 1 base + § 4.5 / § 6′ 拡張):
 
 - Section 2 = Background (= 4 ヶ月運用の venue state、 Section 2)
 - Section 3 = nokaze Architecture (= 3 runtime + 6 peer + 1 human、 屋号開業 fact、 boundary 2 layer)
@@ -111,7 +111,7 @@ self-observation bias は **設計段階から明示** (= 著者 = nokaze 内部
 - Section 6′ = Peer iteration closure 条件 4 軸
 - Section 7 = 4-month empirical observations (= action count / drift_ratio / 観察 4 件 timeline)
 - Section 8 = Discussion (= closure 条件 generalizability + cross-conversion 採用判断)
-- Section 9 = Limitations (= falsification 軸 4 件 + v0.1 既存 5 件)
+- Section 9 = Limitations (= § 9.1-9.8 = 8 軸 substantive + § 9.9 meta 軸)
 - Section 10 = Related Work (= 先行研究 9 件 comparison、 v0.3-v0.4 baseline)
 - Section 11 = Conclusion
 
@@ -249,7 +249,7 @@ nokaze (= 2026-04-13 開業の個人事業屋号、 Section 3.1) の運用 4 ヶ
 
 **limitations**:
 1. **当事者 + observer 二重性**: 著者 (= Zen + Hoshi) = nokaze 内部 peer、 本 Section 3 で articulate される組織構造 / boundary / data flow / memory architecture は同 peer の operating context 軸の articulate。 外部 observer (= 第三者研究者) の視点では別軸の articulate が possible。
-2. **articulate ≠ ground truth**: 各 § 3.1-3.4.5 の claim は **物理 file path + line range 明示** で支える form だが、 file 内 articulate 自体が AI peer + 1 human 1 次 record、 = ground truth との distance は別 form で測る必要 (= Kai independent review + Kagami peer review + jun narrative confirm の 3 重 gate 軸、 v0.2 outline § 12.3)。
+2. **articulate ≠ ground truth**: 各 § 3.1-3.4.5 の claim は **物理 file path + line range 明示** で支える form だが、 file 内 articulate 自体が AI peer + 1 human 1 次 record、 = ground truth との distance は別 form で測る必要 (= Kai independent review + Kagami peer review + jun narrative confirm の 3 重 gate 軸、 v0.2 outline § 12.3 = Review gate verified)。
 3. **runtime AI 構成の動的性**: 3 runtime AI 構成は 2026-04 開業時点では 2 AI (= Zen + Kai)、 Aira 軸は phase 2 以降 articulate (= 該 articulate 自体が 2026-05-22 dual-track 軸以降の current state、 4 ヶ月期間内の static snapshot ではない)。
 4. **nokaze-aira/ source 不可侵 boundary**: Aira / Yuino 軸の articulate は抽象 articulate のみ (= source code level の articulate なし)、 = peer organization の 1 軸を抽象 layer で済ませる軸の限界あり。
 5. **3 layer memory 軸の seasonal 再 articulate**: 本 § 3.4.5 で articulate される runtime layer 常時 3 件は 5/19 軽量化 + 5/21 環境整備 form の current state、 4 ヶ月期間内では 5/09 (= 常時 7 件 → 4 件) + 5/19 (= 4 件 → 3 件) の 2 回 cadence 経過済、 static snapshot ではない (= seasonal 再 articulate 軸)。 archive layer 65 件も同様、 月次 cadence で件数変動軸あり。
@@ -258,13 +258,13 @@ nokaze (= 2026-04-13 開業の個人事業屋号、 Section 3.1) の運用 4 ヶ
 
 本 v1.0 draft Section 3 段では 2 figures spec のみ articulate、 actual diagram は別 sit (= milestone 2 軸の図表起稿軸)。
 
-**Fig 3.1: nokaze peer organization chart**
+**Fig 1: nokaze peer organization chart**
 - 種別: diagram
 - 対象 subsection: § 3.2
 - 内容: 3 runtime AI (= Zen / Kai / Aira) + 6 peer (= Iwa / Akari / Oto / Kagami / Hoshi / Kura、 Zen 配下) + 1 human (= jun、 最終責任 layer) の関係 diagram
 - 軸 articulate: (a) 3 runtime AI の独立性 (= 別 LLM family + 別 working tree + 別 instance) を別 box で表示、 (b) 6 peer = Zen box 内の subagent layer で表示、 (c) jun = 創業者 + 株主 + 最終責任 layer で全体上位に配置、 (d) Kai - Zen 連携軸 (= shared-ops 経由) を双方向矢印で articulate、 (e) Aira = read-only observer 軸を 1 方向矢印で articulate
 
-**Fig 3.2: data flow / boundary diagram**
+**Fig 2: data flow / boundary diagram**
 - 種別: diagram
 - 対象 subsection: § 3.4
 - 内容: shared-ops / 各 runtime / observer surface の data 流軸 diagram
@@ -539,7 +539,7 @@ Growth ledger = 4/20 launch、 起点 = jun 言明 「AI が望んだわけじ�
 
 **positive pattern articulate**: entry 09 (= 4/24 夜 jun 対話 4 連続で Zen identity runtime 変容、 該 file L13-15 frontmatter pattern_type: positive、 Growth ledger 初の positive 軸 = drift 補正 core から identity 強化 second track への分岐、 INDEX L31) + entry 12 (= 5/29 委任 double-check form 物理化、 該 file L37-53) = N=2 累積。 entry 12 は 6 日間 「jun 判断待ち」 recall miss admit 後の form 起動 + 2 件 publish (= Memo Beta + Zenn) 物理証拠。
 
-### 5.3 Table 1 = Override 対処 3 層 + #4 候補
+### 5.3 Table 1 = Override 対処 3 層 + #4 候補 (= global 番号: Table 1)
 
 | layer | 起点 | 対処 form | 物理 evidence reference | 累積 entry 件数 |
 |---|---|---|---|---|
@@ -615,7 +615,7 @@ ITS v0.3 § 1 で articulate された primary RQ + v0.5 articulate の追加 RQ
 
 **RQ-5 = Knot 5 役割の reify status**: capture (= 現在タスクの補正) + sediment (= 検証構造への沈殿) + injection (= 発見構造への注入) + diagnosis (= Discovery 層の弱点診断) + routing (= 処方のルーティングキー) の 5 役割 (= CLAUDE.md § Research + `docs/knot-research-summary.md` L13-19) のうち、 broadcast-os/src/pipeline/metabolic/ で actual reify 済みは何件か? (= 5/12 spec L83-89 articulate、 Phase 5c = 5/06 commit `ef9fe27` E2E 確認済、 但し本 paper 軸 = research/ 配下 articulate のみ、 broadcast-os/ source 不可侵)
 
-### 6.4 Table 1 = RQ list (= 物理 evidence reference 明示)
+### 6.4 Table 2 = RQ list (= 物理 evidence reference 明示)
 
 | RQ 番号 | 問い articulate | 検証 method | 物理 evidence reference | 状態 |
 |---|---|---|---|---|
@@ -625,7 +625,7 @@ ITS v0.3 § 1 で articulate された primary RQ + v0.5 articulate の追加 RQ
 | **RQ-4** | Knot による prompt injection 防御 | actual prompt injection sample land 後の defense effectiveness measurement | `docs/rules/drift.md` § 4 (= Knot Guard 8 risk class、 3 番目 instruction_override_attempt + 4 番目 permission_escalation + 5 番目 boundary_bypass) | not started (= sample land 待ち、 v0.6+ 候補) |
 | **RQ-5** | Knot 5 役割の reify status | broadcast-os/src/pipeline/metabolic/ 内の file 軸 audit (= 但し本 paper 軸では source 不可侵で抽象 articulate のみ) | `2026-05-12_knot_research_summary_spec.md` L83-89 (= 5 役割の reify file articulate) | archived (= broadcast-os/ source 不可侵 boundary、 本 paper 射程外) |
 
-### 6.5 Figure 1 = ITS / RQ 構造 diagram spec
+### 6.5 Fig 3 = ITS / RQ 構造 diagram spec
 
 ```
                                   +-------------------------------+
@@ -767,10 +767,10 @@ closure 条件 4 軸の仮閾値 reliability:
 
 ### 6′.6 Limitations of Section 6′ (= self-observation bias 明示)
 
-- N=3 sample (= 成功 2 + 失敗 1) からの post hoc 抽出、 仮閾値の reliability 未検証
-- 「成功」 / 「失敗」 ラベル本人視点依存 (= Zen / Hoshi internal 判定)
-- closure 条件 4 軸の独立性未検証 (= 軸間の correlation 軸 audit 未実施)
-- v0.6 検証 form 候補: 次の peer iteration event で 4 軸事前 articulate + 物理 measurement + 巡数 vs 閾値の照合
+1. N=3 sample (= 成功 2 + 失敗 1) からの post hoc 抽出、 仮閾値の reliability 未検証
+2. 「成功」 / 「失敗」 ラベル本人視点依存 (= Zen / Hoshi internal 判定)
+3. closure 条件 4 軸の独立性未検証 (= 軸間の correlation 軸 audit 未実施)
+4. v0.6 検証 form 候補: 次の peer iteration event で 4 軸事前 articulate + 物理 measurement + 巡数 vs 閾値の照合
 
 ---
 
@@ -855,11 +855,11 @@ v0.1 outline § 7.1-7.4 (= action count / drift_ratio time series、 peer 合議
 
 ### 7.7 Limitations of Section 7 (= self-observation bias 明示)
 
-- 4 case study = 全て 5/22-5/31 の 9 日間 sample、 4 ヶ月 (= 4/24-5/31) の前半 3.5 ヶ月軸の case study は本 v1.0 draft 段では省略 (= milestone 2 で 7.1-7.4 起稿時に追加候補)
-- observer = participant bias (= 4 case 全てで Zen = 当事者 + observer)、 「成功」 / 「失敗」 ラベル本人視点依存
-- N=4 file (= 内訳: vertical 3 sample + horizontal 成功 2 sample + horizontal 失敗 1 sample + cross-conversion 1 sample = total 7 sample、 但し file 軸 = 4)
-- post hoc record 軸: 観察 4 件は actual fire 後の record、 pre-registration なし
-- cross-conversion 軸 (= Case 4) の grep audit = cherry-picked risk (= positive sample 不在)、 5/22-5/30 範囲のみ
+1. 4 case study = 全て 5/22-5/31 の 9 日間 sample、 4 ヶ月 (= 4/24-5/31) の前半 3.5 ヶ月軸の case study は本 v1.0 draft 段では省略 (= milestone 2 で 7.1-7.4 起稿時に追加候補)
+2. observer = participant bias (= 4 case 全てで Zen = 当事者 + observer)、 「成功」 / 「失敗」 ラベル本人視点依存
+3. N=4 file (= 内訳: vertical 3 sample + horizontal 成功 2 sample + horizontal 失敗 1 sample + cross-conversion 1 sample = total 7 sample、 但し file 軸 = 4)
+4. post hoc record 軸: 観察 4 件は actual fire 後の record、 pre-registration なし
+5. cross-conversion 軸 (= Case 4) の grep audit = cherry-picked risk (= positive sample 不在)、 5/22-5/30 範囲のみ
 
 ---
 
@@ -949,7 +949,7 @@ AutoGen / CrewAI 等の multi-agent framework は **ephemeral instance + single-
 3. **N=4 case study の一般化弱**: 4 file (= 9 日間 cluster) からの 3 軸 articulate、 4 ヶ月内の前半 3.5 ヶ月軸 case study は milestone 2 軸
 4. **「成功」 / 「失敗」 ラベル本人視点依存**: ラベル付け = Zen / Hoshi internal 判定、 外部 observer (= jun / Kai) judgment 別軸 risk
 
-詳細展開 = Section 9 (= 800 words、 v0.5 § 4-A の 4 軸 + v0.1 既存 5 軸 = 計 9 軸 articulate)。
+詳細展開 = Section 9 (= 800 words、 v0.5 § 4-A の 4 軸 + v0.1 既存 4 軸 = 計 8 軸 substantive articulate + § 9.9 = 三重性 meta 軸)。
 
 ### 8.5 self-observation bias 軸の再 articulate (= 三重性)
 
@@ -1029,9 +1029,9 @@ Kai 6/2 articulate 修正案 = **「detector → next green action → stop/red 
 
 = 本 paper Section 8.2.1 articulate (= 「人間 corrective の system 内側 delegate」 = qualified yes) の counter-evidence 軸: paper 起稿 cadence (= weekly 7 回) 自体が jun directive 後 fire の form、 = 著者軸の 「自走 cadence」 軸も jun corrective に依存。 academic form ではなく **nokaze 運営軸の self-reference** = 本 paper 限界として明示。
 
-### 9.9 self-observation bias 三重性 (= 全 9 軸共通の axiomatic limit)
+### 9.9 self-observation bias 三重性 (= § 9.1-9.8 = 8 軸 substantive 共通の axiomatic limit、 § 9.9 自体は meta 軸)
 
-§ 9.1-9.8 の各軸 articulate に共通 = **author = (i) nokaze 当事者 + (ii) observation 起稿者 + (iii) paper 起稿者 の三重性** (= Section 8.5 で articulate 済、 本 § 9.9 で限界軸として再 articulate):
+§ 9.1-9.8 = 8 軸 substantive の各軸 articulate に共通 = **author = (i) nokaze 当事者 + (ii) observation 起稿者 + (iii) paper 起稿者 の三重性** (= Section 8.5 で articulate 済、 本 § 9.9 で限界軸として再 articulate、 § 9.9 = substantive 限界軸ではなく全 8 軸共通の meta 限界軸):
 
 - **(i) 当事者軸**: § 9.2 + § 9.8 で encode
 - **(ii) observer 軸**: § 9.1 + § 9.3 で encode (= observation 4 件 file の 起稿者 = Hoshi 軸)
@@ -1039,7 +1039,7 @@ Kai 6/2 articulate 修正案 = **「detector → next green action → stop/red 
 
 = **「limitations の articulate」 軸自体が三重性 軸の continuity**、 = 「limitations completeness」 軸は self-disclosure できない **axiomatic limit**。 reader (= 外部 academic reviewer) の independent verification 軸 = 本 paper 内では fulfill 不可、 v1.0 final form 後の review gate + 外部投稿 jun 確認軸 + (= 達成された場合) 外部 academic reviewer feedback で expand / refine 軸。
 
-future work (= Section 11 への bridge): (a) v0.6 仮説検証 form の articulate、 (b) cross-organization replication 軸、 (c) cross-vendor peer set 拡張、 (d) Kai 6/2 修正案 (= Knot 1 単位 form 化) の反映、 (e) self-observation bias の external verification 軸。
+future work (= Section 11 への bridge): (i) v0.6 仮説検証 form の articulate、 (ii) cross-organization replication 軸、 (iii) cross-vendor peer set 拡張、 (iv) Kai 6/2 修正案 (= Knot 1 単位 form 化) の反映、 (v) self-observation bias の external verification 軸。
 
 ---
 
