@@ -64,6 +64,11 @@ AI の判断における 危険な / 過剰な 言い換えを 見つけて直�
 **参考 (= Kai 側の先行の見直し、 5/18 朝)**:
 - Kai の hourly local heartbeat の導入 (= `~/.shared-ops/board/2026-05-18_kai_zen_yuino_cadence_duplicate_loop_fix.md` の書き出し) = 私 (= Zen) 側でも 「heartbeat 仕組み」 を別の層で 形にする 候補あり (= 上記 5 件と並ぶ 6 件目の候補)、 ただしこれは範囲が大きく別の turn で設計
 
+**6/11 同型再発 + 物理対策の強化**:
+- 再発の形: jun 「自走に入って」 directive の turn で wake を設定せず turn end、 jun 「wake は設定してある?」 で発覚 (= 道具 1 の自問が働かなかった)
+- 根本: 道具 4 の警告は出ていたが、 script はハーネス内部の cron 状態を見られないため毎回同じ文言 = 慣れて素通りする構造だった
+- 強化 (= 6/11 実装): wake を設定 / 削除する度に `~/.shared-ops/status/zen_wake_state.md` (= marker) を Zen が必ず更新する決まりを追加。 zen_stop_hook.sh は marker の鮮度 (= 24h) を物理確認して、 「残作業あり + marker 不在 or stale」 なら強い警告、 fresh なら 「session が変わってたら CronList で実在確認」 の注意に切り替える 2 段 form
+
 ## 報告 / chat の出力で 内部用語を再生産するのを止める 形にする 道具 (= 15 段目専用、 5/18 書き出し)
 
 **きっかけ**: 2026-05-18 朝 jun が気づいた重要な点。 5/17 で メモリー + ルール 15 件を 普通の日本語に書き直して 「もう同じ形が出てこない」 と思ったが、 5/18 朝の chat の出力 (= mcp で自分達で使った報告) で 「bug detect / audit / root cause audit / articulate / narrative / fire / evidence collection / publish chain / unlock / structural」 等の英語混じり + 内部用語が再生産された。 普通の日本語の見直しを 1 つの chat の中で認めた直後に、 同じ chat の次の段で 同じ形が再発。

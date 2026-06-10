@@ -429,6 +429,10 @@ fi
 
 # ---------------------------------------------------------------
 # ScheduleWakeup の reminder (= 残作業ありの時のみ)
+#   6/11 強化: wake 設定 marker (= zen_wake_state.md) の鮮度を物理確認。
+#   ハーネス内部の cron 状態は script から見えないため、 Zen が wake を
+#   設定 / 削除する度に marker を更新する決まりとセットで動く
+#   (= 6/11 jun 「定期実行の設定って記録されてない?」 → drift.md 5/18 段の同型再発の物理対策)。
 # ---------------------------------------------------------------
 RESIDUAL_WORK=0
 if (( PENDING_COUNT > 0 )); then
@@ -438,8 +442,22 @@ ACTIVE_TASKS_FILE="$HOME/Desktop/nokaze/task_table/active_tasks.md"
 if [[ -f "$ACTIVE_TASKS_FILE" ]]; then
   RESIDUAL_WORK=1
 fi
+
+WAKE_STATE_FILE="$HOME/.shared-ops/status/zen_wake_state.md"
+WAKE_STATE_FRESH=0
+if [[ -f "$WAKE_STATE_FILE" ]]; then
+  WAKE_AGE_HOURS=$(( ( $(date +%s) - $(stat -c %Y "$WAKE_STATE_FILE" 2>/dev/null || echo 0) ) / 3600 ))
+  if (( WAKE_AGE_HOURS < 24 )); then
+    WAKE_STATE_FRESH=1
+  fi
+fi
+
 if (( RESIDUAL_WORK > 0 )); then
-  echo "[ScheduleWakeup reminder] 残作業あり、 自走を続けるなら ScheduleWakeup か spawn を 1 件動かしてから turn end。 既定の間隔 = 60 分。 1 回の wake は維持作業だけだと 「会社進んだ」 扱いにしない。" >&2
+  if (( WAKE_STATE_FRESH == 0 )); then
+    echo "[wake 未設定の可能性 ⚠] 残作業あり + zen_wake_state.md が不在 or 24h 超 stale。 自走を続けるなら (1) CronCreate / ScheduleWakeup を 1 件動かす + (2) zen_wake_state.md を更新、 の 2 つをやってから turn end (= drift.md 5/18 段、 6/11 同型再発の物理対策)。" >&2
+  else
+    echo "[ScheduleWakeup reminder] 残作業あり。 wake marker は fresh ($(date -r "$WAKE_STATE_FILE" '+%m-%d %H:%M') 設定)。 session が変わってたら cron は消えてるので CronList で実在確認を。" >&2
+  fi
 fi
 
 exit 0
