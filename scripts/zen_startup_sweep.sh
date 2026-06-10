@@ -556,6 +556,58 @@ else
 fi
 
 echo ""
+# 6/10 追加: 新規 Aira surface 4 件 (= completion_claim_guard / fixed_flow_guard / loop_defect_evaluator / aira_4functions_minimum)
+COMPLETION_GUARD_FILE="$SHARED_OPS/status/yuino_completion_claim_guard.md"
+FIXED_FLOW_FILE="$SHARED_OPS/status/yuino_fixed_flow_guard.md"
+LOOP_DEFECT_FILE="$SHARED_OPS/status/yuino_loop_defect_evaluator.md"
+FOUR_FUNCTIONS_FILE="$SHARED_OPS/status/yuino_aira_4functions_minimum.md"
+
+if [ -f "$COMPLETION_GUARD_FILE" ]; then
+  echo "  [completion_claim_guard] (= same-actor completion block 軸):"
+  grep -E "^- (unsafe_completion_claims|last_checked|vision):" "$COMPLETION_GUARD_FILE" 2>/dev/null | sed 's/^/    /'
+  UNSAFE_COUNT=$(grep -E "^- unsafe_completion_claims:" "$COMPLETION_GUARD_FILE" 2>/dev/null | head -1 | grep -oE '[0-9]+' | head -1 || echo "")
+  if [ -n "$UNSAFE_COUNT" ] && [ "$UNSAFE_COUNT" -gt 0 ] 2>/dev/null; then
+    echo "    ⚠ unsafe_completion_claims = $UNSAFE_COUNT (= 「completion」 articulate を block 確認)"
+  fi
+else
+  echo "  [completion_claim_guard] 不在 (= Aira 同期切れ)"
+fi
+
+echo ""
+if [ -f "$FIXED_FLOW_FILE" ]; then
+  echo "  [fixed_flow_guard] (= 4 evidence 要求軸: implementation + test + independent review + Kai integration):"
+  grep -E "^- (evidence_count|missing_evidence|status):" "$FIXED_FLOW_FILE" 2>/dev/null | sed 's/^/    /'
+else
+  echo "  [fixed_flow_guard] 不在 (= Aira 同期切れ)"
+fi
+
+echo ""
+if [ -f "$LOOP_DEFECT_FILE" ]; then
+  echo "  [loop_defect_evaluator] (= same_shape_recurrence 検出軸):"
+  grep -E "^- (defects_total|same_shape_recurrence_candidates|last_checked):" "$LOOP_DEFECT_FILE" 2>/dev/null | sed 's/^/    /'
+  DEFECTS_TOTAL=$(grep -E "^- defects_total:" "$LOOP_DEFECT_FILE" 2>/dev/null | head -1 | grep -oE '[0-9]+' | head -1 || echo "")
+  if [ -n "$DEFECTS_TOTAL" ] && [ "$DEFECTS_TOTAL" -gt 0 ] 2>/dev/null; then
+    echo "    ⚠ defects_total = $DEFECTS_TOTAL (= loop defect 存在確認)"
+  fi
+else
+  echo "  [loop_defect_evaluator] 不在 (= Aira 同期切れ)"
+fi
+
+echo ""
+if [ -f "$FOUR_FUNCTIONS_FILE" ]; then
+  echo "  [aira_4functions_minimum] (= Observer + Implementer + Reviewer + Adopter 4 functions 軸):"
+  grep -E "^- (activity_class|progress_signals_count|last_checked):" "$FOUR_FUNCTIONS_FILE" 2>/dev/null | sed 's/^/    /'
+  ACTIVITY_CLASS=$(grep -E "^- activity_class:" "$FOUR_FUNCTIONS_FILE" 2>/dev/null | head -1 | sed -E 's/^- activity_class:[[:space:]]*//' || echo "")
+  if [ "$ACTIVITY_CLASS" = "real_progress" ]; then
+    echo "    ✓ activity_class = real_progress (= 「進んだ」 claim 可能軸)"
+  elif [ "$ACTIVITY_CLASS" = "maintenance" ]; then
+    echo "    - activity_class = maintenance (= 「進んだ」 claim 不可軸)"
+  fi
+else
+  echo "  [aira_4functions_minimum] 不在 (= Aira 同期切れ)"
+fi
+
+echo ""
 echo "  ※ next_min_experiment + next_behavior を 「Kai 待ち」 「jun 待ち」 の前に judgement に入れる"
 echo "    (= 6/8 03:30 jun directive 「構造化できてない、 すぐにつなげて」 経由)"
 
