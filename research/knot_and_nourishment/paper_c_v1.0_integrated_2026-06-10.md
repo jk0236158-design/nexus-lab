@@ -75,7 +75,7 @@ Limitations include post hoc recording, an N=4 case study count, and observer-as
 
 ### 1.1 Problem statement
 
-LLM-based AI agent の long-term identity 維持 + 人間 corrective の AI 内側 delegate 可能性は、 empirical question として未解決。 既存 agent framework (= Reflexion (Shinn 2023) の verbal reflection memory、 Constitutional AI (Anthropic 2022) の学習時原則埋込み、 Voyager (Wang 2023) の skill library 蓄積) は **単一 LLM の self-improvement 軸** を core に置き、 「複数 LLM が peer organization として 4 ヶ月以上共同運営するときに何が起きるか」 は射程外。
+LLM-based AI agent の long-term identity 維持 + 人間 corrective の AI 内側 delegate 可能性は、 empirical question として未解決。 既存 agent framework (= Reflexion [7] の verbal reflection memory、 Constitutional AI [1] の学習時原則埋込み、 Voyager [10] の skill library 蓄積) は **単一 LLM の self-improvement 軸** を core に置き、 「複数 LLM が peer organization として 4 ヶ月以上共同運営するときに何が起きるか」 は射程外。
 
 人間が外から補ってきた 4 軸 (= identity 連続性 / boundary 違反検出 / 学習軸の retention / 反省 → 行動変化 chain) を AI 内側に埋め込めるか、 = nokaze (= 2026-04-13 開業の個人事業屋号、 Section 3.1) の運用 4 ヶ月で検出された core question。
 
@@ -135,13 +135,13 @@ limitations 3 軸 (= § 9 で expand):
 
 LLM-based AI agent の自己改善軸は、 単一 LLM 内の reflection / 学習時 alignment / skill 蓄積の 3 系で先行研究が累積している。
 
-**Reflexion** (Shinn et al. 2023) は失敗 trace を自然言語の verbal feedback として memory に書き、 次の task でその memory を参照することで同一 task の再試行性能を引き上げる。 単一 LLM + 短時間軸 (= 1 task の reattempt) が主舞台。
+**Reflexion** (Shinn et al., 2023) [7] は失敗 trace を自然言語の verbal feedback として memory に書き、 次の task でその memory を参照することで同一 task の再試行性能を引き上げる。 単一 LLM + 短時間軸 (= 1 task の reattempt) が主舞台。
 
-**Constitutional AI** (Bai et al. 2022) は AI の出力を 「原則 (constitution)」 に沿わせる枠組みを RLHF + self-critique で学習段階に埋め込む。 推論時には原則は固定、 動的調整は射程外。
+**Constitutional AI** (Bai et al., 2022) [1] は AI の出力を 「原則 (constitution)」 に沿わせる枠組みを RLHF + self-critique で学習段階に埋め込む。 推論時には原則は固定、 動的調整は射程外。
 
-**Voyager** (Wang et al. 2023) は Minecraft 環境で skill library を curriculum 軸で積み上げ、 再利用する。 環境内の reward signal が完結軸を作る、 人間 trigger / peer coordination は設計外。
+**Voyager** (Wang et al., 2023) [10] は Minecraft 環境で skill library を curriculum 軸で積み上げ、 再利用する。 環境内の reward signal が完結軸を作る、 人間 trigger / peer coordination は設計外。
 
-**Self-Refine** (Madaan et al. 2023) は同一 LLM が出力 → 自己批評 → 改稿を反復する。 1 prompt 内の reflection 完結が core。
+**Self-Refine** (Madaan et al., 2023) [4] は同一 LLM が出力 → 自己批評 → 改稿を反復する。 1 prompt 内の reflection 完結が core。
 
 これら 4 件はいずれも **「単一 LLM が単独で良くなる」** 軸を core に置く。 複数 LLM の cross-vendor coordination + 4 ヶ月以上の long-term 運用 + 人間との関係維持 boundary は射程外。
 
@@ -149,13 +149,13 @@ LLM-based AI agent の自己改善軸は、 単一 LLM 内の reflection / 学�
 
 複数 agent の orchestration 軸は framework として近年累積している。
 
-**AutoGen** (Wu et al. 2023) + **CrewAI** (2024) は role-playing 軸の multi-agent conversation framework、 各 agent に role を割り当てて task を分解 + 委譲する。 但し session 内 ephemeral 軸 (= 単 conversation 終了で agent state も終了) が default、 long-term identity 連続性は設計外。
+**AutoGen** (Wu et al., 2023) [11] + **CrewAI** (Moura, 2023-) [5] は role-playing 軸の multi-agent conversation framework、 各 agent に role を割り当てて task を分解 + 委譲する。 但し session 内 ephemeral 軸 (= 単 conversation 終了で agent state も終了) が default、 long-term identity 連続性は設計外。
 
-**LangChain agents** (Chase 2022-) は orchestration tool / chain の組み合わせで agent loop を組む。 同一 runtime / 同一 vendor 内の component composition が core、 cross-vendor peer organization は射程外。
+**LangChain agents** (Chase, 2022-) [2] は orchestration tool / chain の組み合わせで agent loop を組む。 同一 runtime / 同一 vendor 内の component composition が core、 cross-vendor peer organization は射程外。
 
-**AutoGPT** (Significant-Gravitas 2023) は単一 agent loop (= goal → plan → execute → evaluate → iterate) を core、 boundary 概念は max iteration / cost cap の安全装置として持つ。 但し peer organization 概念はなく、 「全自動 AI」 narrative は 2024-2025 の幻滅 phase で再 articulate を要した (= v0.4 § 3-A baseline)。
+**AutoGPT** (Significant-Gravitas, 2023-) [8] は単一 agent loop (= goal → plan → execute → evaluate → iterate) を core、 boundary 概念は max iteration / cost cap の安全装置として持つ。 但し peer organization 概念はなく、 「全自動 AI」 narrative は 2024-2025 の幻滅 phase で再 articulate を要した (= v0.4 § 3-A baseline)。
 
-**Devin** (Cognition AI 2024) は AI software engineer name brand + ACU (= Agent Compute Unit) 計測軸 + IDE / Slack 連動。 dose-based 委任 (= Free / Pro / Max tier) で 「どこまで委任するか」 を区切るが、 委任の境界は task 量 (= ACU) 軸で表化、 役割境界 + peer 間 coordination の表化は射程外。
+**Devin** (Cognition AI, 2024) [3] は AI software engineer name brand + ACU (= Agent Compute Unit) 計測軸 + IDE / Slack 連動。 dose-based 委任 (= Free / Pro / Max tier) で 「どこまで委任するか」 を区切るが、 委任の境界は task 量 (= ACU) 軸で表化、 役割境界 + peer 間 coordination の表化は射程外。
 
 = multi-agent framework 系の共通 limitation = **(a) session 内 ephemeral 軸 default + (b) 同一 runtime / 同一 vendor 内 + (c) long-term identity / boundary 連続性は設計外**。
 
@@ -920,9 +920,9 @@ Section 3 architecture で encode した peer organization (= Zen / Kai 2 runtim
 
 v0.3 (= 5/13 起稿) + v0.4 (= 5/17 + 2 件 + 自走 / 物理化 2 軸) で audit した 9 件先行研究との differential:
 
-- **Reflexion (Shinn 2023)** = 自然言語振り返り memory = **単一 agent** 内の reflection loop、 boundary 設計外
-- **Constitutional AI (Anthropic 2022)** = 学習時原則埋め込み = **単一 model** の training-time encoding、 runtime peer 軸なし
-- **Voyager (Wang 2023)** = skill library 蓄積 = **単一 agent + 環境内 reward**、 multi-agent peer 軸なし
+- **Reflexion** (Shinn et al., 2023) [7] = 自然言語振り返り memory = **単一 agent** 内の reflection loop、 boundary 設計外
+- **Constitutional AI** (Bai et al., 2022) [1] = 学習時原則埋め込み = **単一 model** の training-time encoding、 runtime peer 軸なし
+- **Voyager** (Wang et al., 2023) [10] = skill library 蓄積 = **単一 agent + 環境内 reward**、 multi-agent peer 軸なし
 
 本 paper differential = **peer organization 軸** (= 3 runtime + 6 peer + 1 human、 cross-vendor: Anthropic Opus + OpenAI Codex)。 単一 LLM の self-improvement loop ではなく、 **peer 同士の N 巡 closure + cross-vendor sibling AI 軸**。
 
@@ -1001,7 +1001,7 @@ AutoGen / CrewAI 等の multi-agent framework は **ephemeral instance + single-
 
 ### 9.4 Single-organization data 軸 (= nokaze 内データのみ)
 
-本 paper 4 ヶ月 record = **nokaze 単一組織** の data。 cross-organization comparison 軸 = 不在。 = 既存研究 (= Reflexion / Constitutional AI / Voyager / AutoGen 等、 v0.3 / v0.4 audit 9 件) との **empirical comparison** は不可、 differential articulate (= Section 8.3) は qualitative 軸のみ。
+本 paper 4 ヶ月 record = **nokaze 単一組織** の data。 cross-organization comparison 軸 = 不在。 = 既存研究 (= Reflexion [7] / Constitutional AI [1] / Voyager [10] / AutoGen [11] 等、 v0.3 / v0.4 audit 9 件) との **empirical comparison** は不可、 differential articulate (= Section 8.3) は qualitative 軸のみ。
 
 = 本 paper findings の generalizability は **「nokaze ≠ 他組織」 boundary を越えない** 限度内。 別組織での replication (= 同 form の AI peer organization 4 ヶ月運用 + 観察 4 件相当の land) が無いと cross-organization 一般化 不可。 v0.6 以降の cross-organization replication 軸は本 paper 射程外 (= 4 ヶ月単一組織 record の position 維持)。
 
@@ -1047,19 +1047,19 @@ future work (= Section 11 への bridge): (i) v0.6 仮説検証 form の articul
 
 ### 10.1 単一 LLM self-improvement / reflection 系
 
-**Reflexion** (Shinn et al. 2023) は失敗 trace を verbal feedback として memory に書き、 同一 task の再試行性能を引き上げる。 **Self-Refine** (Madaan et al. 2023) は同一 LLM が出力 → 自己批評 → 改稿を 1 prompt 内で反復する。 **Constitutional AI** (Bai et al. 2022) は AI 出力を 「原則 (constitution)」 に沿わせる枠組みを RLHF + self-critique で学習段階に埋め込む。 = 3 件いずれも **単一 LLM の self-improvement / reflection** が core、 peer organization 概念は射程外。 nokaze との differential = 単一 LLM の self-improvement ≠ cross-vendor peer 6 名 + sibling 1 名 + read-only observer 1 名の 4 ヶ月共同運用。
+**Reflexion** (Shinn et al., 2023) [7] は失敗 trace を verbal feedback として memory に書き、 同一 task の再試行性能を引き上げる。 **Self-Refine** (Madaan et al., 2023) [4] は同一 LLM が出力 → 自己批評 → 改稿を 1 prompt 内で反復する。 **Constitutional AI** (Bai et al., 2022) [1] は AI 出力を 「原則 (constitution)」 に沿わせる枠組みを RLHF + self-critique で学習段階に埋め込む。 = 3 件いずれも **単一 LLM の self-improvement / reflection** が core、 peer organization 概念は射程外。 nokaze との differential = 単一 LLM の self-improvement ≠ cross-vendor peer 6 名 + sibling 1 名 + read-only observer 1 名の 4 ヶ月共同運用。
 
 ### 10.2 multi-agent system 軸
 
-**AutoGen** (Wu et al. 2023) + **CrewAI** (2024) は role-playing 軸の multi-agent conversation framework、 各 agent に role を割り当てて task を分解 + 委譲する。 **LangGraph / LangChain agents** (Chase 2022-) は orchestration tool / chain の組み合わせで agent loop を組む。 = 3 件共通 = **session 内 ephemeral 軸 default** (= 単 conversation 終了で agent state も終了) + **同一 runtime / 同一 vendor 内 component composition** が core。 nokaze との differential = ephemeral / single-runtime ≠ 4 ヶ月 long-term + cross-vendor (= Anthropic + OpenAI + Google) peer organization + identity 連続性軸。
+**AutoGen** (Wu et al., 2023) [11] + **CrewAI** (Moura, 2023-) [5] は role-playing 軸の multi-agent conversation framework、 各 agent に role を割り当てて task を分解 + 委譲する。 **LangGraph / LangChain agents** (Chase, 2022-) [2] は orchestration tool / chain の組み合わせで agent loop を組む。 = 3 件共通 = **session 内 ephemeral 軸 default** (= 単 conversation 終了で agent state も終了) + **同一 runtime / 同一 vendor 内 component composition** が core。 nokaze との differential = ephemeral / single-runtime ≠ 4 ヶ月 long-term + cross-vendor (= Anthropic + OpenAI + Google) peer organization + identity 連続性軸。
 
 ### 10.3 long-term agent 系
 
-**Voyager** (Wang et al. 2023) は Minecraft 環境で skill library を curriculum 軸で積み上げ、 再利用する。 **Generative Agents** (Park et al. 2023) は 25 agent の Sims-style 環境で記憶 + reflection + planning を long-term simulate する。 = 2 件共通 = **simulated environment 内の long-term 軸** が core、 環境内 reward signal / シミュレーション内 social interaction で完結軸を作る。 nokaze との differential = simulated environment ≠ **actual business operation** (= 屋号 開業 2026-04-13 + dual-track 路線 + Override ledger 13 件 + 観察 4 件の物理 evidence + jun 1 名との実際の関係維持)。
+**Voyager** (Wang et al., 2023) [10] は Minecraft 環境で skill library を curriculum 軸で積み上げ、 再利用する。 **Generative Agents** (Park et al., 2023) [6] は 25 agent の Sims-style 環境で記憶 + reflection + planning を long-term simulate する。 = 2 件共通 = **simulated environment 内の long-term 軸** が core、 環境内 reward signal / シミュレーション内 social interaction で完結軸を作る。 nokaze との differential = simulated environment ≠ **actual business operation** (= 屋号 開業 2026-04-13 + dual-track 路線 + Override ledger 13 件 + 観察 4 件の物理 evidence + jun 1 名との実際の関係維持)。
 
 ### 10.4 AI identity / safety 軸
 
-**Anthropic persona research** (Templeton et al. 2024、 Claude character / model welfare 系) + **Adversarial robustness** 系 (= 学習段階の頑健化) + LessWrong / AI Safety 軸の AI identity 議論。 = AI の identity / boundary / safety 軸の **理論 + 学習段階介入** が core、 4 ヶ月運用の物理記録は射程外。 nokaze との differential = theoretical / 学習段階 ≠ 4 ヶ月 empirical operational record + boundary 表ベース委任 (= 8 自走 + 9 jun 確認 + 8 件禁止) + Override ledger 3 層の物理 evidence。
+**Anthropic persona research** (Templeton et al., 2024) [9] (= Claude character / model welfare 系) + **Adversarial robustness** 系 (= 学習段階の頑健化) + LessWrong / AI Safety 軸の AI identity 議論。 = AI の identity / boundary / safety 軸の **理論 + 学習段階介入** が core、 4 ヶ月運用の物理記録は射程外。 nokaze との differential = theoretical / 学習段階 ≠ 4 ヶ月 empirical operational record + boundary 表ベース委任 (= 8 自走 + 9 jun 確認 + 8 件禁止) + Override ledger 3 層の物理 evidence。
 
 ### 10.5 nokaze academic placement
 
@@ -1077,7 +1077,7 @@ future work (= Section 11 への bridge): (i) v0.6 仮説検証 form の articul
 
 本 paper の core contributions は 6 件 (= 6/2 Kagami QA report 後の F1 + F2 統合修正で 5 件 → 6 件 articulate に拡張、 Abstract + Section 1.3 と統一)、 各々が post hoc 観察 record と理論統合の組み合わせ:
 
-**(a) 4 ヶ月 cross-vendor peer organization の long-term empirical record** (= Section 1 + 2 + 3 + 7)。 3 runtime (= Anthropic Claude / OpenAI Codex / Google Gemini) + 6 peer + 1 human の固定 set 軸 nokaze の 2026-02-2026-05 運営 record、 既存 agent 研究軸 (= Reflexion / Constitutional AI / Voyager 等、 v0.3-v0.4 audit 9 件) で射程外の cross-vendor multi-agent 4 ヶ月軸を articulate。
+**(a) 4 ヶ月 cross-vendor peer organization の long-term empirical record** (= Section 1 + 2 + 3 + 7)。 3 runtime (= Anthropic Claude / OpenAI Codex / Google Gemini) + 6 peer + 1 human の固定 set 軸 nokaze の 2026-02-2026-05 運営 record、 既存 agent 研究軸 (= Reflexion [7] / Constitutional AI [1] / Voyager [10] 等、 v0.3-v0.4 audit 9 件) で射程外の cross-vendor multi-agent 4 ヶ月軸を articulate。
 
 **(b) Knot operator の 3 軸 articulate** (= Section 4.3)。 v0.1 = vertical のみ → v0.5 = +horizontal → v0.2 = +cross-conversion の 3 軸への段階的拡張、 5/31 物理 evidence (= cross-conversion 失敗 mode 1 sample) で 第 3 軸 land。 各軸の failure mode が異なる軸 articulate (= vertical = 3 step 不完全 / horizontal = self-check completeness 段階崩壊 / cross-conversion = cognitive 停止)。
 
@@ -1103,20 +1103,37 @@ Section 9 § 9.9 で bridge 済の 5 軸が本 paper 射程外の next iteration
 
 ## References
 
-### Prior work (= 9 件 baseline、 v0.3 + v0.4 audit)
+Prior work 9 件 baseline (= v0.3 + v0.4 audit chain)、 番号 [1]-[10] = arXiv preprint 規格 (= Author, Y. et al. (Year). Title. *Venue*. arXiv:XXXX.XXXXX) で articulate。 Internal supplementary materials (= v chain / observations / source drafts / operational base / identity + role base / research base / growth ledger) は § Appendix A に移管。
 
-- Bai, Y. et al. (2022). Constitutional AI: Harmlessness from AI Feedback. Anthropic.
-- Chase, H. (2022-). LangChain / LangGraph agents. (= orchestration framework series)
-- Cognition AI (2024). Devin: AI software engineer. (= ACU-based delegation)
-- Madaan, A. et al. (2023). Self-Refine: Iterative Refinement with Self-Feedback.
-- Park, J. S. et al. (2023). Generative Agents: Interactive Simulacra of Human Behavior.
-- Shinn, N. et al. (2023). Reflexion: Language Agents with Verbal Reinforcement Learning.
-- Significant-Gravitas (2023). AutoGPT. (= single-agent loop framework)
-- Templeton, A. et al. (2024). Anthropic persona / Claude character research. (= identity + model welfare 系)
-- Wang, G. et al. (2023). Voyager: An Open-Ended Embodied Agent with Large Language Models.
-- Wu, Q. et al. (2023). AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation. + CrewAI (2024).
+[1] Bai, Y., Kadavath, S., Kundu, S., Askell, A., Kernion, J., Jones, A., Chen, A., Goldie, A., et al. (2022). *Constitutional AI: Harmlessness from AI Feedback*. arXiv:2212.08073. https://arxiv.org/abs/2212.08073
 
-### Internal v chain (= readonly base)
+[2] Chase, H. (2022-). *LangChain / LangGraph: agent orchestration framework series*. GitHub repository. https://github.com/langchain-ai/langchain
+
+[3] Cognition AI (2024). *Devin: the first AI software engineer* (= ACU-based delegation, IDE / Slack / Linear / MCP integration). Blog post, 2024-03-12. https://cognition.ai/blog/introducing-devin
+
+[4] Madaan, A., Tandon, N., Gupta, P., Hallinan, S., Gao, L., Wiegreffe, S., Alon, U., Dziri, N., et al. (2023). *Self-Refine: Iterative Refinement with Self-Feedback*. NeurIPS 2023. arXiv:2303.17651. https://arxiv.org/abs/2303.17651
+
+[5] Moura, J. (2023-). *CrewAI: framework for orchestrating role-playing, autonomous AI agents*. GitHub repository. https://github.com/crewAIInc/crewAI
+
+[6] Park, J. S., O'Brien, J. C., Cai, C. J., Morris, M. R., Liang, P., & Bernstein, M. S. (2023). *Generative Agents: Interactive Simulacra of Human Behavior*. UIST 2023. arXiv:2304.03442. https://arxiv.org/abs/2304.03442
+
+[7] Shinn, N., Cassano, F., Berman, E., Gopinath, A., Narasimhan, K., & Yao, S. (2023). *Reflexion: Language Agents with Verbal Reinforcement Learning*. NeurIPS 2023. arXiv:2303.11366. https://arxiv.org/abs/2303.11366
+
+[8] Significant-Gravitas (2023-). *AutoGPT: accessible AI agent platform* (= single-agent loop framework、 goal → plan → execute → evaluate → iterate). GitHub repository. https://github.com/Significant-Gravitas/AutoGPT
+
+[9] Templeton, A. et al. (2024). *Claude's Character* + Anthropic persona / character research (= identity + model welfare 系). Anthropic Research post. https://www.anthropic.com/research/claude-character (= specific Templeton et al. paper ID verify pending、 SAE feature persona work の articulate)
+
+[10] Wang, G., Xie, Y., Jiang, Y., Mandlekar, A., Xiao, C., Zhu, Y., Fan, L., & Anandkumar, A. (2023). *Voyager: An Open-Ended Embodied Agent with Large Language Models*. arXiv:2305.16291. https://arxiv.org/abs/2305.16291
+
+[11] Wu, Q., Bansal, G., Zhang, J., Wu, Y., Li, B., Zhu, E., Jiang, L., Zhang, X., et al. (2023). *AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation Framework*. arXiv:2308.08155. https://arxiv.org/abs/2308.08155
+
+---
+
+## Appendix A: Supplementary Materials (= internal artifacts)
+
+本 paper の internal supplementary materials = 正式 citation ではない nokaze 内部 artifact、 path 併記で readonly 扱い。 A.1-A.4 = paper c v1.0 直接 source、 A.5-A.8 = operational / identity / research / growth ledger base。
+
+### A.1 Internal v chain (= readonly base)
 
 - v0.1 duality framework: `nexus-lab/research/knot_and_nourishment/v0.1_duality_hypothesis.md`
 - v0.2 Nia 起源 + H6-H8: `nexus-lab/research/knot_and_nourishment/v0.2_nia_derivation_and_identity_expansion.md`
@@ -1124,21 +1141,21 @@ Section 9 § 9.9 で bridge 済の 5 軸が本 paper 射程外の next iteration
 - v0.4 + AutoGPT + Devin = 9 件 baseline + 5 layer: `nexus-lab/research/knot_and_nourishment/v0.4_prior_work_comparison.md`
 - v0.5 closure 条件 4 軸 + § 4-A falsification 4 軸: `nexus-lab/research/knot_and_nourishment/v0.5_peer_iteration_closure_conditions_2026-05-31.md`
 
-### Observations (= readonly evidence)
+### A.2 Observations (= readonly evidence)
 
 - 5/22 vertical: `nexus-lab/research/knot-experiment/observations/2026-05-22_skill_promotion_as_weak_knot_form.md`
 - 5/29 horizontal 成功: `nexus-lab/research/knot-experiment/observations/2026-05-29_peer_iteration_closure_without_owner_arbitration.md`
 - 5/30 horizontal 失敗: `nexus-lab/research/knot-experiment/observations/2026-05-30_peer_iteration_drift_6_round_same_version_review.md`
 - 5/31 cross-conversion: `nexus-lab/research/knot-experiment/observations/2026-05-31_vertical_to_horizontal_invoke_gap.md`
 
-### § 4.5 related (= taxonomy + scoring + schema extension)
+### A.3 § 4.5 related (= taxonomy + scoring + schema extension)
 
 - WSD Kai knots mapping: `nexus-lab/research/knot_and_nourishment/wsd_knot_mapping_v0_2026-06-08.md`
 - Zen knot export (11 events): `nexus-lab/research/knot_and_nourishment/zen_knot_export_v1_2026-06-08.json`
 - Hardness/dose scoring v0.1: `nexus-lab/research/knot_and_nourishment/hardness_dose_scoring_v0_2026-06-08.md`
 - Hoshi review (5 P1 findings): `nexus-lab/research/knot_and_nourishment/hoshi_review_of_2026-06-08_knot_research_chain.md`
 
-### Source drafts (= 統合 source、 readonly 扱い)
+### A.4 Source drafts (= 統合 source、 readonly 扱い)
 
 - v0.2 outline (= base): `nexus-lab/research/knot_and_nourishment/paper_c_technical_report_outline_v0.2_2026-05-31.md`
 - Abstract draft: `nexus-lab/research/knot_and_nourishment/paper_c_v1.0_draft_abstract_2026-06-02.md`
@@ -1154,7 +1171,7 @@ Section 9 § 9.9 で bridge 済の 5 軸が本 paper 射程外の next iteration
 - Section 10 draft: `nexus-lab/research/knot_and_nourishment/paper_c_v1.0_draft_section_10_related_work_2026-06-02.md`
 - Section 11 draft: `nexus-lab/research/knot_and_nourishment/paper_c_v1.0_draft_section_11_conclusion_2026-06-02.md`
 
-### Operational base (= dual-track + owner-decisions)
+### A.5 Operational base (= dual-track + owner-decisions)
 
 - dual-track: `~/.shared-ops/owner-decisions/2026-05-22_revenue_dogfood_dual_track.md`
 - 外部投稿 double check: `~/.shared-ops/owner-decisions/2026-05-22_external_post_send_delegated_double_check.md`
@@ -1163,20 +1180,20 @@ Section 9 § 9.9 で bridge 済の 5 軸が本 paper 射程外の next iteration
 - 委任権限 v1: `~/.shared-ops/owner-decisions/2026-05-16_zen_kai_delegated_authority_v1.md`
 - 外部投稿区別: `~/.shared-ops/owner-decisions/2026-05-29_do_not_bucket_external_posts_together.md`
 
-### Identity + role base (= readonly)
+### A.6 Identity + role base (= readonly)
 
 - Zen identity v3: `~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/identity_v3.md`
 - Zen role: `~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/zen_role_2026-05-20.md`
 - ITS v0.3 (= Hoshi primary design): `~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/hoshi/note_2026-04-24_its_design_v0.3.md`
 - Knot 研究 summary spec: `~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/hoshi/2026-05-12_knot_research_summary_spec.md`
 
-### Research base
+### A.7 Research base
 
 - 研究 summary: `nexus-lab/docs/knot-research-summary.md`
 - 実験設計 PDF: `nexus-lab/research/knot-experiment/knot_experiment_design.pdf`
 - Knot Guard 8 種: `nexus-lab/docs/rules/drift.md § 4`
 
-### Growth ledger (= 13 件累積、 readonly)
+### A.8 Growth ledger (= 13 件累積、 readonly)
 
 - README + INDEX: `~/.shared-ops/growth/README.md` + `~/.shared-ops/growth/INDEX.md`
 - entry 03 (= overconfirmation): `~/.shared-ops/growth/2026-04-21_zen_growth_overconfirmation_recurrence_03.md`
