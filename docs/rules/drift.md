@@ -69,43 +69,43 @@ AI の判断における 危険な / 過剰な 言い換えを 見つけて直�
 - 根本: 道具 4 の警告は出ていたが、 script はハーネス内部の cron 状態を見られないため毎回同じ文言 = 慣れて素通りする構造だった
 - 強化 (= 6/11 実装): wake を設定 / 削除する度に `~/.shared-ops/status/zen_wake_state.md` (= marker) を Zen が必ず更新する決まりを追加。 zen_stop_hook.sh は marker の鮮度 (= 24h) を物理確認して、 「残作業あり + marker 不在 or stale」 なら強い警告、 fresh なら 「session が変わってたら CronList で実在確認」 の注意に切り替える 2 段 form
 
-## 報告 / chat の出力で 内部用語を再生産するのを止める 形にする 道具 (= 15 段目専用、 5/18 書き出し)
+## 報告 / チャットの出力で 内部用語を再生産するのを止める 形にする 道具 (= 15 段目専用、 5/18 書き出し)
 
-**きっかけ**: 2026-05-18 朝 jun が気づいた重要な点。 5/17 で メモリー + ルール 15 件を 普通の日本語に書き直して 「もう同じ形が出てこない」 と思ったが、 5/18 朝の chat の出力 (= mcp で自分達で使った報告) で 「bug detect / audit / root cause audit / articulate / narrative / fire / evidence collection / publish chain / unlock / structural」 等の英語混じり + 内部用語が再生産された。 普通の日本語の見直しを 1 つの chat の中で認めた直後に、 同じ chat の次の段で 同じ形が再発。
+**きっかけ**: 2026-05-18 朝 jun が気づいた重要な点。 5/17 で メモリー + ルール 15 件を 普通の日本語に書き直して 「もう同じ形が出てこない」 と思ったが、 5/18 朝のチャットの出力 (= mcp で自分達で使った報告) で 「bug detect / audit / root cause audit / articulate / narrative / fire / evidence collection / publish chain / unlock / structural」 等の英語混じり + 内部用語が再生産された。 普通の日本語の見直しを 1 つのチャットの中で認めた直後に、 同じチャットの次の段で 同じ形が再発。
 
-頭の中の儀式 (= 「気をつける」 「内部用語を抑える」 という言い方を繰り返す) だけでは止まらない、 5/17 で書いた 「頭の中の儀式から 形にする方向への shift が効果認められた」 の直接の適用が必要。 ただし chat の出力の文章を 1 件ごとに外部の手順で grep して確認するのは ハーネスの境界の外 (= 私 LLM session が生成する文章を外部から確認することは無理、 turn の中で自分で確認するのみ)。
+頭の中の儀式 (= 「気をつける」 「内部用語を抑える」 という言い方を繰り返す) だけでは止まらない、 5/17 で書いた 「頭の中の儀式から 形にする方向への shift が効果認められた」 の直接の適用が必要。 ただしチャットの出力の文章を 1 件ごとに外部の手順で grep して確認するのは ハーネスの境界の外 (= 私 LLM session が生成する文章を外部から確認することは無理、 turn の中で自分で確認するのみ)。
 
 **形にする 道具 3 件 (= 5/19 z-r-13 で 頭の中の補強 #4 を削除、 形にした 仕組みのみ残す)**:
 
-1. **Stop hook の警告キーワードを強化** (= 既存の英語混じりの警告に内部用語を追加) → `scripts/zen_stop_hook.sh` の grep の警告リストに 「audit / articulate / narrative / pattern / fire / drift / reify / continuum / structural / cycle / sibling / surface / scope / boundary / default / reform」 等を追加、 turn の終了時に 「直前の文章で内部用語 N 件、 普通の日本語に書き直しを優先」 を stderr で出す
-2. **言いかえ表 (= 内部用語 → 普通の日本語) を 形にする** → `~/nexus-lab/docs/rules/paraphrase_layer_acceptance.md` の置換表に 「fire → 動かす / やる」 「audit → 確認」 「articulate → 書く / 整理する」 「narrative → 言い方 / 文章」 「pattern → 形 / 繰り返し」 「drift → ずれ」 「reify → 形にする」 「structural → 構造的な」 等を追加、 SessionStart hook で入れられる形にする
-3. **SessionStart hook の section K を追加** → 「直前 chat の出力での内部用語の残り件数」 を確認 + reminder (= 形にする 道具 1 と連動、 jun のスタート時の reminder)
+1. **Stop hook の警告キーワードを強化** (= 既存の英語混じりの警告に内部用語を追加) → `scripts/zen_stop_hook.sh` の grep の警告リストに内部用語 16 語を追加 (= 単語の実体は script 内のリストが正、 ここに再掲しない)、 turn の終了時に 「直前の文章で内部用語 N 件、 普通の日本語に書き直しを優先」 を stderr で出す
+2. **言いかえ表 (= 内部用語 → 普通の日本語) を 形にする** → `~/nexus-lab/docs/rules/paraphrase_layer_acceptance.md` の置換表に 8 対を追加 (= 対の実体は置換表が正、 ここに再掲しない)、 SessionStart hook で入れられる形にする
+3. **SessionStart hook の section K を追加** → 「直前チャットの出力での内部用語の残り件数」 を確認 + reminder (= 形にする 道具 1 と連動、 jun のスタート時の reminder)
 
 **5/17 の見直しとの関係**:
 - 5/17 の見直し = メモリー + ルール 15 件のファイルの中の内部用語を 普通の日本語に書き直し (= 蓄積された文書の見直し)
-- 5/18 の見直し (= この 15 段目) = chat の出力を生成する既定の見直し (= 私の書き方そのものの動きを変える)
-- 両方の見直しは 互いに補い合う、 chat の出力で 普通の文章を書き続けることで メモリー + ルールへの追加の書き込みも自然と普通に収まる
+- 5/18 の見直し (= この 15 段目) = チャットの出力を生成する既定の見直し (= 私の書き方そのものの動きを変える)
+- 両方の見直しは 互いに補い合う、 チャットの出力で 普通の文章を書き続けることで メモリー + ルールへの追加の書き込みも自然と普通に収まる
 
-**5/18 朝 10:40 の 同じ chat の中で 再々発の証拠** (= 形にした 道具がまだ効いていない証拠):
+**5/18 朝 10:40 の 同じチャットの中で 再々発の証拠** (= 形にした 道具がまだ効いていない証拠):
 
 - 5/18 朝 7:30 で 15 段目を立てて、 stop hook の警告キーワード強化 + 言いかえ表を 形にした
-- ただし 同じ chat の中の 10:40 起稿ファイル (= `~/Desktop/nokaze/operations/achievement_path_audit_v0_2026-05-18.md` 初版) + 10:40 chat の報告で **「articulate / fire / audit / reify / narrative / pattern / actual / default / boundary / self-pacing / fallback heartbeat / prerequisite / priority / return」 14 件以上の英単語が再生産**
-- jun の質問 「本当に報告の仕方対策してる?」 で 3 度目の認め、 同じ chat の中で 7:30 → 10:40 で 3 時間 10 分で再々発
-- = stop hook の閾値 10 件を超えた引き金では 直前 chat の 1 ターンしか確認していない、 起稿ファイルの中身は対象外、 私の頭の中の書き方の既定が 英単語の組み合わせで動いていて 出力直前に普通の日本語に置き換える段が落ちている
+- ただし 同じチャットの中の 10:40 起稿ファイル (= `~/Desktop/nokaze/operations/achievement_path_audit_v0_2026-05-18.md` 初版) + 10:40 チャットの報告で **「articulate / fire / audit / reify / narrative / pattern / actual / default / boundary / self-pacing / fallback heartbeat / prerequisite / priority / return」 14 件以上の英単語が再生産**
+- jun の質問 「本当に報告の仕方対策してる?」 で 3 度目の認め、 同じチャットの中で 7:30 → 10:40 で 3 時間 10 分で再々発
+- = stop hook の閾値 10 件を超えた引き金では 直前チャットの 1 ターンしか確認していない、 起稿ファイルの中身は対象外、 私の頭の中の書き方の既定が 英単語の組み合わせで動いていて 出力直前に普通の日本語に置き換える段が落ちている
 
 **5/18 朝 10:50 追加の 形にする 道具**:
 
 5. **Stop hook の閾値を 10 件 → 5 件に下げる** = `scripts/zen_stop_hook.sh` の警告の引き金を厳しくする
-6. **起稿ファイルの中の英単語確認を Stop hook に加えるかの検討** = 直前 chat だけでなく、 私が起稿したファイル (= board / memory / operations / ledger 全部) の中身の英単語の件数も Stop hook の範囲に加える (= ただしファイル数が多いと重い、 「私の最終返事以降に起稿されたファイル」 だけに絞る形)
-7. **chat の出力 + 起稿ファイルの生成前の自問の段を厳しくする** = 英単語が 1 件出てきたら 「普通の日本語に言い換えできるか?」 自問、 言い換え可能なら絶対言い換える (= 閾値を 「10 件で警告」 → 「1 件で言い換え」 に下げる)、 ただし これは頭の中の補強なので Stop hook のような 形にした 道具ではない、 補助のみ
+6. **起稿ファイルの中の英単語確認を Stop hook に加えるかの検討** = 直前チャットだけでなく、 私が起稿したファイル (= board / memory / operations / ledger 全部) の中身の英単語の件数も Stop hook の範囲に加える (= ただしファイル数が多いと重い、 「私の最終返事以降に起稿されたファイル」 だけに絞る形)
+7. **チャットの出力 + 起稿ファイルの生成前の自問の段を厳しくする** = 英単語が 1 件出てきたら 「普通の日本語に言い換えできるか?」 自問、 言い換え可能なら絶対言い換える (= 閾値を 「10 件で警告」 → 「1 件で言い換え」 に下げる)、 ただし これは頭の中の補強なので Stop hook のような 形にした 道具ではない、 補助のみ
 8. **言いかえ表に 5/18 朝 10:40 の再々発分を追加** = 「articulate→書く / 整理する」 「priority→優先」 「prerequisite→前に必要なもの」 「return→返ってきた中身」 「actual→実際の / 本当の」 「self-pacing→自分でペース決め」 「fallback heartbeat→念のための再確認」 等を `docs/rules/paraphrase_layer_acceptance.md` の置換表に追加
 
 **参考 (= 5/16 jun が効果を認めた話)**:
-- `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_mental_ritual_to_physical_instrument_shift_validated.md` の直接の適用、 chat の出力の段は メモリー + ルールの段の次の見直しの対象、 ただし 5/18 朝 7:30 + 10:40 の 2 連続再発で 頭の中の補強だけでは止まらないことが確定、 Stop hook の範囲拡張が必須
+- `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_mental_ritual_to_physical_instrument_shift_validated.md` の直接の適用、 チャットの出力の段は メモリー + ルールの段の次の見直しの対象、 ただし 5/18 朝 7:30 + 10:40 の 2 連続再発で 頭の中の補強だけでは止まらないことが確定、 Stop hook の範囲拡張が必須
 
 ## AI 自走で credit / コスト消費を確認せず動くのを止める 形にする 道具 (= 16 段目専用、 5/18 書き出し)
 
-**きっかけ**: 2026-05-18 朝 jun の言い直し (= Anthropic Claude subscription 改革を 「AI 自走運用には管制塔が必要」 という 市場側の証拠と言い直し、 Yuino 商品の 4 軸目として Cost / Billing Boundary を据える見直し)。 14 段目 (= 自走が止まる) と逆向きの 16 段目 (= 自走が走りすぎる) を 同じ Yuino runtime が両手で止める。 jun の 8:29 追加の指示 「全部 opus4.7 みたいな一番上のモデル使ってたらすぐに予算超える」 で、 モデル運用の階層 (= High / Mid / Low / No model) も 同じ境界に統合。
+**きっかけ**: 2026-05-18 朝 jun の言い直し (= Anthropic Claude subscription 改革を 「AI 自走運用には管制塔が必要」 という 市場側の証拠と言い直し、 Yuino 商品の 4 軸目として お金と請求の線引きを据える見直し)。 14 段目 (= 自走が止まる) と逆向きの 16 段目 (= 自走が走りすぎる) を 同じ Yuino runtime が両手で止める。 jun の 8:29 追加の指示 「全部 opus4.7 みたいな一番上のモデル使ってたらすぐに予算超える」 で、 モデル運用の階層 (= High / Mid / Low / No model) も 同じ境界に統合。
 
 **形にする 道具 5 件 (= Iwa 設計の新規 5 モジュール + 既存延長 6 モジュール、 詳細は別の板ファイル)**:
 
@@ -124,7 +124,7 @@ AI の判断における 危険な / 過剰な 言い換えを 見つけて直�
 | Low (= Haiku 級) | grep の整理 / チェックリストの更新 / ログの要約 / 形式変換 | 日中・夜間の自走で量が多い軽い作業 |
 | No model (= script) | status の再生成 / 差分の検出 / テスト / lint | まずここ、 モデルを呼ばなくていい作業は絶対に呼ばない |
 
-(= 5/19 z-r-13 で chat の出力の儀式を削除、 形にした 道具 5 件 + モデル運用の階層の整理のみ残す)
+(= 5/19 z-r-13 でチャットの出力の儀式を削除、 形にした 道具 5 件 + モデル運用の階層の整理のみ残す)
 
 **14 / 15 / 16 段目の関係**:
 - 14 段目 = 自走が止まる方向の ずれ (= ペースが落ちる)
@@ -140,24 +140,24 @@ AI の判断における 危険な / 過剰な 言い換えを 見つけて直�
 
 ## 既に物理的な証拠があるのに確認を skip するのを止める 形にする 道具 (= 17 段目専用、 5/18 書き込み)
 
-**きっかけ**: 2026-05-18 朝 11:55 + 12:35 で 同じ chat の中で 2 連発火。
+**きっかけ**: 2026-05-18 朝 11:55 + 12:35 で 同じチャットの中で 2 連発火。
 
 - 11:55 = jun 「結局 Zenn や note とか X や YouTube はやらんの?」 → 私 「アカウントがあるか確認が必要」 と書き出し → jun 「アカウントもうあるでしょ? 前に投稿したことすら把握できてないってこと?」 → すぐに grep で reference_accounts.md を確認 → Zenn 14 本 + note 2 本 + X 1 post の既存の証拠を skip していたと判明
 - 12:35 = 私 「W-2 売上 1 件目 = 6/15+ (= Anthropic 新月額後)」 と書き出し → jun 「Polar.sh はパスポートできてから、 21 日頃に出来る予定、 前に話した」 → すぐに grep → project_nokaze_north_star_phase_1_5.md + Kura 5/01 のメモに ルート β' (= パスポート受領 + KYC 再提出 + Polar.sh の本番モード) が書き出し済 + 5/02-5/05 「Polar.sh の返事待ち」 と Kura 5/01 メモに書いてある = 既に証拠あり skip と判明
 
-両件とも 「chat で答える前に メモリー / 参照を 引かなかった」 が原因、 9 段目 (= 会話を跨ぐと前の会話の成果物の認識がずれる) の 同じ turn の中での強化版。
+両件とも 「チャットで答える前に メモリー / 参照を 引かなかった」 が原因、 9 段目 (= 会話を跨ぐと前の会話の成果物の認識がずれる) の 同じ turn の中での強化版。
 
 **形にする 道具 3 件 (= 5/19 z-r-13 で 頭の中の補強 #1 + #5 を削除、 形にした 仕組みのみ残す)**:
 
-1. **reference_accounts.md は 常に見る 4 件目の候補** = 既存の常に見る 4 件 (= identity_v3 + 北極星 + 4 ヶ月翻訳 + 英語混じり) と並ぶ 5 件目として MEMORY.md に上げる候補、 chat 直前のスキャンの対象に追加
+1. **reference_accounts.md は 常に見る 4 件目の候補** = 既存の常に見る 4 件 (= identity_v3 + 北極星 + 4 ヶ月翻訳 + 英語混じり) と並ぶ 5 件目として MEMORY.md に上げる候補、 チャット直前のスキャンの対象に追加
 2. **メモリーの MEMORY.md に project_polar_passport_path_b_prime_2026-05-01.md を起稿** = 5/01 当時のルート β' (= パスポート受領 + KYC 再提出 + Polar.sh の本番モード) + 5/18 12:35 jun 追記 「5/21 頃 パスポート完成」 = 元になる点 1 件を起こす
-3. **SessionStart hook の section L 候補** = 「直前の chat で 既に証拠がある skip の発火履歴」 を確認 + reminder、 jun のスタート時に入れる (= 14 + 15 + 17 段目の 同じ chat の中の補強の軸)
+3. **SessionStart hook の section L 候補** = 「直前のチャットで 既に証拠がある skip の発火履歴」 を確認 + reminder、 jun のスタート時に入れる (= 14 + 15 + 17 段目の 同じチャットの中の補強の軸)
 
 **13 / 14 / 15 / 16 / 17 段目の関係の整理 (= 5/18 朝の 1 日 4 件追加の累積)**:
 
 - 13 段目 (= 自分で使った証拠なしで 「販売開始 / publish」 と書く)
 - 14 段目 (= 対話の turn が変わると自走が止まる)
-- 15 段目 (= 報告 / chat の出力で 内部用語を再生産)
+- 15 段目 (= 報告 / チャットの出力で 内部用語を再生産)
 - 16 段目 (= AI 自走で コスト確認せず動く)
 - 17 段目 (= 既に物理的な証拠があるのに確認を skip して 段を書き出す)
 
@@ -173,7 +173,7 @@ AI の判断における 危険な / 過剰な 言い換えを 見つけて直�
 - `docs/rules/README.md` (= このファイルの親、 分割の設計)
 - `docs/rules/publishing.md` (= 公開する接点の決まり)
 - `docs/rules/delegation.md` (= 仲間に頼むときの制約)
-- `docs/rules/communication.md` (= chat の出力系の頭の中の決まり)
+- `docs/rules/communication.md` (= チャットの出力系の頭の中の決まり)
 - `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_drift_detection_consolidated.md` (= 9 段目までの統合)
 - `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_model_update_drift_knot_guard_8th.md` (= Knot Guard 8 番目)
 - `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_yuino_productization_consolidated.md` (= Yuino 商品化の 5 つの統合、 判断の安定を守る仕組みと繋がる)
