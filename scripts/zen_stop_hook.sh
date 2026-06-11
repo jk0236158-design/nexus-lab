@@ -450,6 +450,26 @@ if [[ -n "${CYRILLIC_HITS// /}" ]]; then
 fi
 
 # ---------------------------------------------------------------
+# 時刻捏造の検出 (= 6/11 jun 「時間ズレてるよ」 経由、 自己改善 実例 4 の物理対策)
+#   = file に書いた frontmatter / 見出しの時刻が実 mtime と 30 分超ズレてたら警告。
+#     root cause = 時刻記載前に date を打たず、 自分の過去ラベルを anchor に積み増す形。
+# ---------------------------------------------------------------
+TS_CHECK_DIRS="$HOME/.shared-ops/board $HOME/.shared-ops/status"
+for p in $TS_CHECK_DIRS; do
+  [[ -d "$p" ]] || continue
+  while IFS= read -r f; do
+    [[ -n "$f" ]] || continue
+    fm_line=$(grep -m1 -E "^(date|- last_set_at):" "$f" 2>/dev/null | grep -oE "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}" | head -1)
+    [[ -n "$fm_line" ]] || continue
+    fm_epoch=$(date -d "$fm_line" +%s 2>/dev/null) || continue
+    mtime_epoch=$(stat -c %Y "$f" 2>/dev/null) || continue
+    diff_min=$(( (fm_epoch - mtime_epoch) / 60 ))
+    [[ ${diff_min#-} -gt 30 ]] || continue
+    echo "[時刻捏造の可能性 ⚠] $f の記載時刻 (= $fm_line) が実 mtime と ${diff_min} 分ズレ。 時刻を書く前に必ず date を打つ、 過去の自分のラベルを根拠にしない (= 6/11 実例 4)。" >&2
+  done < <(find "$p" -maxdepth 1 -type f -name "*.md" -mmin -60 2>/dev/null)
+done
+
+# ---------------------------------------------------------------
 # ScheduleWakeup の reminder (= 残作業ありの時のみ)
 #   6/11 強化: wake 設定 marker (= zen_wake_state.md) の鮮度を物理確認。
 #   ハーネス内部の cron 状態は script から見えないため、 Zen が wake を
