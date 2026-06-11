@@ -1,5 +1,6 @@
 # Zen reform 履歴 (2026-05-09 〜 2026-05-13)
 
+> Status: historical reference (= 2026-06-12 注記。 5/09 - 5/13 当時の見直し通知の記録で現行の決まりではない、 現行ルール = docs/rules/ 配下)
 > CLAUDE.md § Zen Identity + Runtime ruled 配下の reform 通知群と、 2026-05-13 夜の経営者視点 reform 通知を移管 (2026-05-13)。 中身は元 file から削っていない。 各 reform は時系列順、 引用も維持。
 
 ---

@@ -2,6 +2,7 @@
 date: 2026-05-10
 owner: Iwa (Lead Engineer)
 status: drift_correction_2026-05-10 (5/10 22:50 audit baseline 経由 「broadcast-os 側 actual interface form audit せず pull form narrative 起稿」 drift detect、 詳細は `nexus-lab/research/broadcast_os_actual_state_audit_2026-05-10.md` 参照)
+supersession: historical reference (= 2026-06-12 注記。 5/10 当時の spec 記録で現行の決まりではない、 現行ルール = docs/rules/ 配下)
 purpose: broadcast-os 完成度向上 reform — Yuino ↔ broadcast-os connect interface spec (前回 spawn return I3 軸 detail)
 audience: developer (technical spec)
 related:

@@ -2,6 +2,7 @@
 date: 2026-05-10
 owner: Akari (Frontend / Docs / Visual / Motion Design Engineer)
 status: drift_correction_2026-05-10 (5/10 22:35 jun 指摘経由 「actual broadcast-os repo audit せず spec doc 起稿」 drift detect、 詳細は `nexus-lab/research/broadcast_os_actual_state_audit_2026-05-10.md` 参照)
+supersession: historical reference (= 2026-06-12 注記。 5/10 当時の spec 記録で現行の決まりではない、 現行ルール = docs/rules/ 配下)
 purpose: broadcast-os Format Bible に delivery_mode 拡張 + Slidev subprocess form + process_panel primitive 6 件 + nokaze-design 整合 5 ruled の reference spec
 audience: Akari + Iwa 共同 (4 ヶ月初心者 audience は § 6 のみ)
 related:
