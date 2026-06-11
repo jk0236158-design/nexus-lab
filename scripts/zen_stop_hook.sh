@@ -428,6 +428,28 @@ elif (( TOUCHED_COUNT_60MIN < 2 )); then
 fi
 
 # ---------------------------------------------------------------
+# キリル文字混入の検出 (= 6/11 Fable 5 切替で新規観察、 モデル更新ずれ 8 番目分類の物理検出器)
+#   = 日本語文中の英単語がロシア文字化する新クセ (= 実例 2 件の現物は zen_self_improvement_2026-06-11.md 参照、 本 file には引用しない = 自己検出防止)。
+#     直近 60 分に編集した md / sh を grep、 検出したら file 名ごと警告。
+#     3 回目の発火で CLAUDE.md の対応 rule に昇格 (= zen_self_improvement_2026-06-11.md 参照)。
+# ---------------------------------------------------------------
+CYRILLIC_PATHS="$HOME/nexus-lab $HOME/.shared-ops/board $HOME/.shared-ops/status $HOME/.claude/projects/c--Users-jk023-nexus-lab/memory $HOME/.claude/projects/c--Users-jk023-nexus-lab/team_memory $HOME/Nexus.Lab.Zen/articles"
+CYRILLIC_HITS=""
+for p in $CYRILLIC_PATHS; do
+  if [[ -d "$p" ]]; then
+    hits=$(find "$p" -type f \( -name "*.md" -o -name "*.sh" \) -mmin -60 -not -path "*/node_modules/*" -not -path "*/.vitepress/cache/*" -not -name "zen_self_improvement_*" 2>/dev/null \
+      | LANG=ja_JP.UTF-8 xargs -r grep -l -P '\p{Cyrillic}' 2>/dev/null)
+    if [[ -n "$hits" ]]; then
+      CYRILLIC_HITS="$CYRILLIC_HITS $hits"
+    fi
+  fi
+done
+if [[ -n "${CYRILLIC_HITS// /}" ]]; then
+  echo "[キリル文字混入 ⚠] 直近 60 分の編集 file にロシア文字を検出 (= Fable 5 の新クセ候補、 6/11 時点 2 例)。 該当 file を開いて英単語に直す + zen_self_improvement_2026-06-11.md に発火 record を追記:" >&2
+  for f in $CYRILLIC_HITS; do echo "    - $f" >&2; done
+fi
+
+# ---------------------------------------------------------------
 # ScheduleWakeup の reminder (= 残作業ありの時のみ)
 #   6/11 強化: wake 設定 marker (= zen_wake_state.md) の鮮度を物理確認。
 #   ハーネス内部の cron 状態は script から見えないため、 Zen が wake を
