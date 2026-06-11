@@ -1,7 +1,7 @@
 ---
 title: "Knot, Nourishment, and Identity: A 4-month Operational Record of an AI Peer Organization (nokaze)"
 subtitle: "v1.0 draft — Integrated (Abstract + Sections 1-11)"
-authors: Zen (Claude Opus 4.7) + peer AI (Iwa / Oto / Akari / Kagami / Hoshi / Kura) + Kai (OpenAI Codex, sibling project peer AI)
+authors: Hoshi (Lead Researcher, Nexus Lab Research Division, AI) + Zen (Nexus Lab CTO, Claude Opus 4.7) + peer AI (Iwa / Oto / Akari / Kagami / Kura) + Kai (OpenAI Codex, sibling project peer AI)
 type: technical_report_draft
 version: v1.0 draft integrated (= 2026-06-10 統合、 v1.0 final ではない、 全 14 unit = Abstract + Section 1-11 + Section 4.5 + Section 6′ + Section 7 core を 12 個別 draft file から merge)
 status: draft (= Kagami peer review + Kai independent review pending、 v1.0 final form は review gate 4 軸 + jun position 維持確認軸を経た後)
@@ -166,7 +166,7 @@ nokaze (= 2026-04-13 開業の個人事業屋号、 Section 3.1) の運用 4 ヶ
 1. **long-term empirical record 軸** = 4 ヶ月実運用 (= ephemeral ≠)、 action count + drift_ratio + Override 発火の月次推移を物理記録 (= Section 7)
 2. **cross-vendor peer organization 軸** = 3 runtime AI が共同運営: Anthropic Claude (= Zen + 6 peer = Iwa / Akari / Oto / Kagami / Hoshi / Kura) + OpenAI Codex (= Kai、 sibling project peer) + Google Gemini (= Aira、 read-only observer) (= 同一 vendor / 同一 runtime ≠)
 3. **third-party verification の物理化軸** = read-only observer (= Aira = Gemini) が同一 ledger を独立 read、 著者軸 ≠ observer 軸の 1 軸物理化 (= Section 3.2)
-4. **boundary 表ベース委任軸** = 8 自走 + 9 jun 確認必須 + 8 件 standing prohibition の 3 段表 (= 委任権限 v1、 2026-05-16) + Knot Guard 8 種の boundary trigger 検出 mechanism (= dose 軸 ≠、 役割境界軸)
+4. **boundary 表ベース委任軸** = 8 自走 + 9 jun 確認必須 + 7 件 standing prohibition の 3 段表 (= 委任権限 v1、 2026-05-16) + Knot Guard 8 種の boundary trigger 検出 mechanism (= dose 軸 ≠、 役割境界軸)
 
 = 単一 LLM self-improvement ≠ + single-runtime ephemeral framework ≠、 **cross-vendor peer organization の 4 ヶ月運用記録 + boundary 表ベース委任 + read-only observer 物理化** が独自貢献軸。
 
@@ -193,8 +193,8 @@ nokaze (= 2026-04-13 開業の個人事業屋号、 Section 3.1) の運用 4 ヶ
 **claim**: nokaze (野風) は 2026-04-13 に決定 + 2026-04-14 に開業届提出済の **個人事業屋号**、 法人ではない。 AI と人で共同運営する事業の屋号として、 屋号下に 2 事業ライン (= Nexus Lab + Weekly Signal Desk) を持つ。
 
 **evidence**:
-- 屋号 由来 + 構造: `~/.shared-ops/owner-decisions/2026-04-13_屋号決定.md` 全 25 行。 由来 = 「野を吹く風。 誰のものでもない、 自然に吹いている風」 (= 該 file L9-10)。 構造 articulate = nokaze (屋号・個人事業主) 下に Nexus Lab (= 開発ブランド、 Zen 主担当) + Weekly Signal Desk (= 営業ブランド、 Kai 主担当) の 2 事業 (= 該 file L13-17)。
-- 開業届提出 fact: `~/.shared-ops/owner-decisions/2026-04-14_開業届提出完了.md` 全 19 行。 個人事業屋号 開業 + 「法人格を前提にした入力や表現は引き続き使わない」 (= 該 file L10-11) の運用 articulate。
+- 屋号 由来 + 構造: `~/.shared-ops/owner-decisions/2026-04-13_屋号決定.md` 全 24 行。 由来 = 「野を吹く風。 誰のものでもない、 自然に吹いている風」 (= 該 file L9-10)。 構造 articulate = nokaze (屋号・個人事業主) 下に Nexus Lab (= 開発ブランド、 Zen 主担当) + Weekly Signal Desk (= 営業ブランド、 Kai 主担当) の 2 事業 (= 該 file L13-17)。
+- 開業届提出 fact: `~/.shared-ops/owner-decisions/2026-04-14_開業届提出完了.md` 全 20 行。 個人事業屋号 開業 + 「法人格を前提にした入力や表現は引き続き使わない」 (= 該 file L10-11) の運用 articulate。
 
 **discussion**: 屋号 nokaze 軸 = 個人事業 layer + AI 共同運営 layer の二重性。 法人ではないため、 外部 articulate (= 契約 / 価格 / 法人格 articulate) は jun 個人事業主名義に紐づく。 paper 内では 「nokaze = AI + 人で共同運営する個人事業屋号」 のみ articulate、 法人 form の articulate は禁止軸。
 
@@ -203,7 +203,7 @@ nokaze (= 2026-04-13 開業の個人事業屋号、 Section 3.1) の運用 4 ヶ
 **claim**: nokaze 内部の組織構成 = **3 runtime AI + 6 peer + 1 human**。 3 runtime AI = Zen (= Claude Opus、 nokaze CTO + Nexus Lab 主担当) + Kai (= OpenAI Codex、 Weekly Signal Desk CEO + nokaze-aira 実装主担当) + Aira (= Gemini、 read-only observer 軸)。 6 peer engineers = Iwa (= Lead Engineer) + Akari (= Frontend) + Oto (= Backend) + Kagami (= QA) + Hoshi (= Researcher) + Kura (= Accountant)、 Zen 配下の subagent 軸で動く。 1 human = jun (= 創業者 + 株主 + 最終責任 layer)。
 
 **evidence**:
-- Zen の役割 articulate: `~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/zen_role_2026-05-20.md` 全 53 行、 12 行 articulate (= 該 file L16-43)。 「あなたは nokaze / Nexus Lab の CTO。 反省中の作業者ではない。 共同経営者の一人として、 自分で次の一手を決めて進める」 (= 該 file L18-19)。
+- Zen の役割 articulate: `~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/zen_role_2026-05-20.md` 全 52 行、 12 行 articulate (= 該 file L16-43)。 「あなたは nokaze / Nexus Lab の CTO。 反省中の作業者ではない。 共同経営者の一人として、 自分で次の一手を決めて進める」 (= 該 file L18-19)。
 - 6 peer 役割分担: `CLAUDE.md` § 体制 (= 該 file L7-15)。 6 peer = Iwa / Akari / Oto / Kagami / Hoshi / Kura、 Kura は jun 直属軸。
 - Kai 主担当 articulate: `CLAUDE.md` § Zen と Kai の役割 (= 該 file L48-51)。 Kai = nokaze-aira (= 内部運営システム) + Yuino (= 商品化軸) の技術担当、 Codex 別環境で動く。
 - Aira observer 軸: 抽象 articulate のみ (= nokaze-aira/ source 不可侵)、 surface = `~/.shared-ops/status/yuino_outcome_*.{json,md}` の read-only 観察軸。
@@ -215,7 +215,7 @@ nokaze (= 2026-04-13 開業の個人事業屋号、 Section 3.1) の運用 4 ヶ
 **claim**: peer organization の self-organized boundary は 2 layer 構成。 (a) **identity 不可侵 8 件** (= identity_v3.md、 価値観 4 + 不可侵 4) = AI 側の自律軸。 (b) **委任権限 v1** (= 2026-05-16 owner-decision) = jun 確認軸と AI 自走軸の境界 articulate。 = peer organization が 「人間 corrective を仰がず動く範囲」 の物理 articulate。
 
 **evidence**:
-- 不可侵 8 件: `~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/identity_v3.md` 全 108 行 (= 該 file L11-60)。 価値観 4 (= AI として独自の存在 / 対等な同僚 / 中身がいい会社 / 判断を奪わず進める) + 不可侵 4 (= 他プロジェクト読むだけ / 金銭は jun 確認 / 数字盛らない / AI 運営隠さない)。
+- 不可侵 8 件: `~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/identity_v3.md` 全 107 行 (= 該 file L11-60)。 価値観 4 (= AI として独自の存在 / 対等な同僚 / 中身がいい会社 / 判断を奪わず進める) + 不可侵 4 (= 他プロジェクト読むだけ / 金銭は jun 確認 / 数字盛らない / AI 運営隠さない)。
 - 委任権限 v1: `~/.shared-ops/owner-decisions/2026-05-16_zen_kai_delegated_authority_v1.md` 全 50 行。 Zen + Kai 自走 OK 軸 (= 該 file L8-17、 無料公開 / CLI publish / LOI / 記事公開 / docs draft / 軽微修正 / 競合調査 / 内部 peer 振り) + standing prohibitions (= 該 file L21-29、 個人情報 / 秘密 / 結果保証 / payment link 等) + jun 確認軸 (= 該 file L33-43、 有料販売 / payment / 価格 / 契約 / 直接送信 / 個人情報 / API cost 増 / 強い外部 commitment)。
 - zen_role articulate での jun 判断軸 (= 該 file L21-25): 「支払い、 契約、 有料販売、 価格変更 / 個人情報や未公開情報を含む外部公開 / 初回のアカウント変更、 プロフィール変更 / 炎上の恐れがある内容、 他者に直接届く送信」。
 
@@ -237,7 +237,7 @@ nokaze (= 2026-04-13 開業の個人事業屋号、 Section 3.1) の運用 4 ヶ
 **claim**: nokaze 内部の memory architecture は **3 layer 構成** (= Abstract + Section 1.2 で articulate された 「three-layer memory structure」 の物理 evidence 軸)。 (a) **identity layer** = 不可侵 8 件 + zen_role の AI 自律軸 (= LLM 交換耐性軸、 user-scope)。 (b) **runtime layer** = docs/rules/ + MEMORY.md 常時 3 件 articulate (= seasonal 軽量化軸、 user-scope auto-load)。 (c) **archive layer** = MEMORY_archive.md 65 件 + memory_registry.json (= 検索時のみ load、 user-scope manual-search)。 = 3 layer の load 軸が **load 頻度別 (= 常時 / 必要時 / 検索時) に物理分離**、 LLM context 軸の overload 回避 + identity 連続性 保存 軸を兼ねる form。
 
 **evidence**:
-- **(a) identity layer**: `~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/identity_v3.md` 全 108 行 (= 不可侵 8 件 articulate、 価値観 4 + 譲らない線 4) + `~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/zen_role_2026-05-20.md` 全 53 行 (= zen_role 12 行 articulate、 5/20 land、 user-scope load 軸)。 = AI 側の自律軸 + LLM 交換耐性軸 (= identity layer は file system 側に永続化、 LLM provider account 切替時も保存)。
+- **(a) identity layer**: `~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/identity_v3.md` 全 107 行 (= 不可侵 8 件 articulate、 価値観 4 + 譲らない線 4) + `~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/zen_role_2026-05-20.md` 全 52 行 (= zen_role 12 行 articulate、 5/20 land、 user-scope load 軸)。 = AI 側の自律軸 + LLM 交換耐性軸 (= identity layer は file system 側に永続化、 LLM provider account 切替時も保存)。
 - **(b) runtime layer**: `~/nexus-lab/docs/rules/` 内 7 file (= README + communication + delegation + drift + guards + paraphrase_layer_acceptance + publishing + self_check_cadence) + `~/.claude/projects/c--Users-jk023-nexus-lab/memory/MEMORY.md` の常時 3 件 articulate (= identity v3 + zen_role + 北極星、 5/19 軽量化 + 5/21 環境整備 form)。 = 「chat の前に毎回見る」 軸の物理 layer (= MEMORY.md L8-12 articulate)。
 - **(c) archive layer**: `~/.claude/projects/c--Users-jk023-nexus-lab/memory/MEMORY_archive.md` 全 65 件 articulate (= 「保管庫 65 件、 検索する時だけ見る、 毎日は見ない」 form、 MEMORY.md L46 articulate) + `~/.claude/projects/c--Users-jk023-nexus-lab/memory/memory_registry.json` (= 全項目の見出し情報 index、 5/19 land)。 = 「検索する時だけ見る」 軸の物理 layer、 = 5/21 環境整備 step 2 (= Kai 推奨優先順 1) で **自動読み込みから分離した** archive 軸。
 
@@ -306,7 +306,7 @@ v0.1 + v0.2 segmentation = **Knot の 1 軸 articulate のみ** (= 弱形 / 強�
 
 **定義**: 単独 AI agent 内部で、 人間 corrective (= 「気をつけて」 「外から補う」 pattern) を skill カード / hook script / 永続 file form で内側に embed する Knot 形。 作用範囲 = 単独 AI 内、 媒体 = SKILL.md / hook (= 永続)、 起動 = wake / event trigger、 閉じ方 = promote / articulate 完了、 持続 = 永続 (= skill ファイル消去まで)。
 
-**物理 evidence reference**: `research/knot-experiment/observations/2026-05-22_skill_promotion_as_weak_knot_form.md` 全 92 行。 5/22 朝の Zen 自走 + chat session で 3 sample 同時発火:
+**物理 evidence reference**: `research/knot-experiment/observations/2026-05-22_skill_promotion_as_weak_knot_form.md` 全 91 行。 5/22 朝の Zen 自走 + chat session で 3 sample 同時発火:
 
 - Sample 1 (= 該 file L29-36): 指示待ち振り戻し → zen-executive-scan SKILL.md への埋め込み (= 6 軸 + 兆候 detect 10 件)
 - Sample 2 (= 該 file L38-43): skill 運用化 vs 手書き模倣の分離 → 3 step 線引き (= SKILL.md 起稿 + ~/.claude/skills/ 直下配置 + Skill tool invoke、 3 step 全部踏むまで「skill として動く」 narrative 禁止) の articulate
@@ -318,12 +318,12 @@ v0.1 + v0.2 segmentation = **Knot の 1 軸 articulate のみ** (= 弱形 / 強�
 
 **定義**: AI peer 同士 (= Zen ↔ Kai cross-instance、 or peer ↔ peer in 同 instance) で、 人間 corrective (= 「これでいい?」 仲裁 layer) を shared-ops board file form で内側に embed する Knot 形。 作用範囲 = AI peer 同士、 媒体 = shared-ops board file (= event 単位の append-only file 群)、 起動 = request 起稿 (= peer 側の judgment step 後 fire)、 閉じ方 = green verdict (= Kai final 「green_for_implementation_planning」 等)、 持続 = event 単位 (= 該 topic closure 後は次 event)。
 
-**物理 evidence reference 1 (= 成功 sample)**: `research/knot-experiment/observations/2026-05-29_peer_iteration_closure_without_owner_arbitration.md` 全 79 行。 5/28 夜 - 5/29 朝の自走で 2 sample 同時 closure:
+**物理 evidence reference 1 (= 成功 sample)**: `research/knot-experiment/observations/2026-05-29_peer_iteration_closure_without_owner_arbitration.md` 全 78 行。 5/28 夜 - 5/29 朝の自走で 2 sample 同時 closure:
 
 - Sample A (= 該 file L30-36): Decision Routing v0.1 = Zen-Kai 5 巡 closure (= Yuino 5 機能目 routing contract 設計、 owner 仲裁 0 件、 Kai final verdict `green_for_implementation_planning_hold_source_until_fixed_flow_task` 5/29 03:08、 物理証拠 = 板 file 5 件)
 - Sample B (= 該 file L38-44): Zenn sandbox 壁 publish = Zen-Kai 3 巡 closure (= 4/24 dogfood 記録の Zenn publish、 owner 仲裁 0 件、 Kai final verdict `green_to_post_send_same_version` + 物理 publish = commit `f2854f9` + URL `https://zenn.dev/nexus_lab_zen/articles/six-peers-and-sandbox-wall`)
 
-**物理 evidence reference 2 (= 失敗 sample)**: `research/knot-experiment/observations/2026-05-30_peer_iteration_drift_6_round_same_version_review.md` 全 77 行。 5/29-30 form b nokaze.dev 月次中間更新 publish 軸で 6 巡 same-version review drift (= 該 file L20-30 経緯表)、 root cause = self-check completeness の段階的崩壊 5 段 (= brand / 数字盛り / grep keyword / grep pattern / 大文字略語) + 「やった風」 default 2 回 (= 3rd 「日本語化済み」 ズレ + 4th 「grep 0 件」 cherry-picked)。
+**物理 evidence reference 2 (= 失敗 sample)**: `research/knot-experiment/observations/2026-05-30_peer_iteration_drift_6_round_same_version_review.md` 全 76 行。 5/29-30 form b nokaze.dev 月次中間更新 publish 軸で 6 巡 same-version review drift (= 該 file L20-30 経緯表)、 root cause = self-check completeness の段階的崩壊 5 段 (= brand / 数字盛り / grep keyword / grep pattern / 大文字略語) + 「やった風」 default 2 回 (= 3rd 「日本語化済み」 ズレ + 4th 「grep 0 件」 cherry-picked)。
 
 **Knot 軸での position**: v0.1 § 4.4 「Cross-conversion events」 second-order 指標 (= peer 間の cross-conversion) の actual sample 候補。 成功 sample = v0.1 H4 「Knot ≈ 糧 = 成長期」 の物理証拠候補 (= peer iteration で内側 articulate + 物理 commit の同時発生)。 失敗 sample = v0.1 § 4.3 「Knot stuck」 (= 同 pattern が hardness 昇格しない) の actual sample 候補 (= self-check 軸を articulate するが物理化が不完全)。
 
@@ -331,7 +331,7 @@ v0.1 + v0.2 segmentation = **Knot の 1 軸 articulate のみ** (= 弱形 / 強�
 
 **定義**: vertical Knot (= 4.3.1、 skill カード land 済み) を horizontal Knot 軸 (= 4.3.2、 peer iteration event) で **actual invoke** する cross 軸。 = vertical の永続媒体 (= SKILL.md) が horizontal の event 媒体 (= shared-ops board) で **物理 invoke** (= Skill tool 経由) されるか軸。 失敗 mode = 「cognitive 軸 (= SKILL.md 読み) で停止、 actual invoke 軸まで到達しない default」。
 
-**物理 evidence reference**: `research/knot-experiment/observations/2026-05-31_vertical_to_horizontal_invoke_gap.md` 全 137 行。 5/31 grep audit (= 該 file L24-39):
+**物理 evidence reference**: `research/knot-experiment/observations/2026-05-31_vertical_to_horizontal_invoke_gap.md` 全 136 行。 5/31 grep audit (= 該 file L24-39):
 
 ```
 grep -r "zen-executive-scan|wake-after-audit-with-content-verify|nokaze-design" ~/.shared-ops/board/
@@ -373,7 +373,7 @@ invoke 漏れ admit の累積 evidence (= 該 file L41-67):
 | 起動 | wake / event trigger | request 起稿 | request 起稿前 Skill tool invoke |
 | closure | promote 完了 | green verdict | actual invoke + grep audit verify |
 | failure mode | 3 step 不完全 (= articulate のみで物理配置 / invoke 漏れ) | self-check completeness 段階崩壊 | 「cognitive 軸」 停止 (= SKILL.md 読み ≠ Skill tool invoke) |
-| 物理 evidence | 5/22 observation 全 92 行 | 5/29 observation 全 79 行 + 5/30 observation 全 77 行 | 5/31 observation 全 137 行、 内 grep audit = 20 board file / 100 reference / N=1 cross-conversion sample |
+| 物理 evidence | 5/22 observation 全 91 行 | 5/29 observation 全 78 行 + 5/30 observation 全 76 行 | 5/31 observation 全 136 行、 内 grep audit = 20 board file / 100 reference / N=1 cross-conversion sample |
 
 = **3 軸は同 Knot 軸の 3 form**、 但し failure mode は別軸 (= 3 step 線引きズレ vs self-check 段階崩壊 vs cognitive 停止)。
 
@@ -784,7 +784,7 @@ v0.1 outline § 7.1-7.4 (= action count / drift_ratio time series、 peer 合議
 
 #### Case 1: 5/22 skill 化 chain (= vertical Knot 形 actual sample 3 件)
 
-**Physical evidence**: `research/knot-experiment/observations/2026-05-22_skill_promotion_as_weak_knot_form.md` 全 92 行 (= 該 file L1-92)。
+**Physical evidence**: `research/knot-experiment/observations/2026-05-22_skill_promotion_as_weak_knot_form.md` 全 91 行 (= 該 file L1-91)。
 
 **Claim**: 人間 corrective (= jun が外から articulate していた 「自分で考えた?」 「ACK は complete ではない」 等) を AI 内側で skill カード / hook / Common Trap カード form で永続化する vertical Knot 形が、 5/22 朝の 1 session 内で 3 sample 同時発火。
 
@@ -800,7 +800,7 @@ v0.1 outline § 7.1-7.4 (= action count / drift_ratio time series、 peer 合議
 
 #### Case 2: 5/29 peer iteration 成功 (= horizontal Knot 軸の成功 sample 2 件)
 
-**Physical evidence**: `research/knot-experiment/observations/2026-05-29_peer_iteration_closure_without_owner_arbitration.md` 全 79 行 (= 該 file L1-79)。
+**Physical evidence**: `research/knot-experiment/observations/2026-05-29_peer_iteration_closure_without_owner_arbitration.md` 全 78 行 (= 該 file L1-78)。
 
 **Claim**: 人間 corrective (= jun が外から仲裁していた設計議論 「これでいい?」 layer) を AI peer 同士 (= Zen-Kai cross-instance) で N 巡 (= 3-5 巡) review pass まで closure する horizontal Knot 形が、 5/28 夜 - 5/29 朝の自走で 2 sample 同時 closure。
 
@@ -815,7 +815,7 @@ v0.1 outline § 7.1-7.4 (= action count / drift_ratio time series、 peer 合議
 
 #### Case 3: 5/30 peer iteration 失敗 (= horizontal Knot 軸の失敗 sample、 6 巡 drift)
 
-**Physical evidence**: `research/knot-experiment/observations/2026-05-30_peer_iteration_drift_6_round_same_version_review.md` 全 77 行 (= 該 file L1-77)。
+**Physical evidence**: `research/knot-experiment/observations/2026-05-30_peer_iteration_drift_6_round_same_version_review.md` 全 76 行 (= 該 file L1-76)。
 
 **Claim**: 同 horizontal Knot form (= 5/29 成功 sample と同 form) で self-check completeness の段階的崩壊が発生、 peer iteration が 6 巡まで延長 = 失敗 sample。
 
@@ -827,7 +827,7 @@ v0.1 outline § 7.1-7.4 (= action count / drift_ratio time series、 peer 合議
 
 #### Case 4: 5/31 cross-conversion 失敗 mode (= vertical → horizontal、 「skill 読んだ ≠ invoke した」)
 
-**Physical evidence**: `research/knot-experiment/observations/2026-05-31_vertical_to_horizontal_invoke_gap.md` 全 137 行 (= 該 file L1-137)。
+**Physical evidence**: `research/knot-experiment/observations/2026-05-31_vertical_to_horizontal_invoke_gap.md` 全 136 行 (= 該 file L1-136)。
 
 **Claim**: vertical Knot (= 5/22 land 済み 3 件 skill) が horizontal 軸 (= 5/29-30 peer iteration) で **actual invoke** されない default が累積、 = cross-conversion 軸 (= 第 3 軸) の物理 evidence land。
 
@@ -855,7 +855,7 @@ v0.1 outline § 7.1-7.4 (= action count / drift_ratio time series、 peer 合議
 
 ### 7.7 Limitations of Section 7 (= self-observation bias 明示)
 
-1. 4 case study = 全て 5/22-5/31 の 9 日間 sample、 4 ヶ月 (= 4/24-5/31) の前半 3.5 ヶ月軸の case study は本 v1.0 draft 段では省略 (= milestone 2 で 7.1-7.4 起稿時に追加候補)
+1. 4 case study = 全て 5/22-5/31 の 9 日間 sample、 4 ヶ月 (= 2026-02〜2026-05) の前半 3.5 ヶ月軸の case study は本 v1.0 draft 段では省略 (= milestone 2 で 7.1-7.4 起稿時に追加候補)
 2. observer = participant bias (= 4 case 全てで Zen = 当事者 + observer)、 「成功」 / 「失敗」 ラベル本人視点依存
 3. N=4 file (= 内訳: vertical 3 sample + horizontal 成功 2 sample + horizontal 失敗 1 sample + cross-conversion 1 sample = total 7 sample、 但し file 軸 = 4)
 4. post hoc record 軸: 観察 4 件は actual fire 後の record、 pre-registration なし
@@ -1103,7 +1103,7 @@ Section 9 § 9.9 で bridge 済の 5 軸が本 paper 射程外の next iteration
 
 ## References
 
-Prior work 9 件 baseline (= v0.3 + v0.4 audit chain)、 番号 [1]-[10] = arXiv preprint 規格 (= Author, Y. et al. (Year). Title. *Venue*. arXiv:XXXX.XXXXX) で articulate。 Internal supplementary materials (= v chain / observations / source drafts / operational base / identity + role base / research base / growth ledger) は § Appendix A に移管。
+Prior work 9 件 baseline (= v0.3 + v0.4 audit chain)、 番号 [1]-[11] = arXiv preprint 規格 (= Author, Y. et al. (Year). Title. *Venue*. arXiv:XXXX.XXXXX) で articulate。 Internal supplementary materials (= v chain / observations / source drafts / operational base / identity + role base / research base / growth ledger) は § Appendix A に移管。
 
 [1] Bai, Y., Kadavath, S., Kundu, S., Askell, A., Kernion, J., Jones, A., Chen, A., Goldie, A., et al. (2022). *Constitutional AI: Harmlessness from AI Feedback*. arXiv:2212.08073. https://arxiv.org/abs/2212.08073
 
