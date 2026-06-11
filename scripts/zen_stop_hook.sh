@@ -44,6 +44,37 @@ if [[ "$ACTIVE" == "True" || "$ACTIVE" == "true" ]]; then
   exit 0
 fi
 
+# ---------------------------------------------------------------
+# 警告 tiering (= 6/11 自己改善、 警告慣れ対策)
+#   P1 = 実測異常で行動必須 (全部出す) / P2 = 違反検出時の行動警告 (上位 3 件)
+#   P3 = 常時の習慣形成系 (件数 + 分単位の輪番 1 件のみ)
+# ---------------------------------------------------------------
+WARN_P1=()
+WARN_P2=()
+WARN_P3=()
+warn_p1() { WARN_P1+=("$1"); }
+warn_p2() { WARN_P2+=("$1"); }
+warn_p3() { WARN_P3+=("$1"); }
+emit_warnings() {
+  local m i p2n p3n idx
+  for m in "${WARN_P1[@]:-}"; do [[ -n "$m" ]] && echo "[P1] $m" >&2; done
+  p2n=0
+  for m in "${WARN_P2[@]:-}"; do [[ -n "$m" ]] && p2n=$((p2n+1)); done
+  i=0
+  for m in "${WARN_P2[@]:-}"; do
+    [[ -n "$m" ]] || continue
+    if (( i < 3 )); then echo "[P2] $m" >&2; fi
+    i=$((i+1))
+  done
+  if (( p2n > 3 )); then echo "[P2] 他 $((p2n-3)) 件は省略 (= 同 turn の P2 上限 3 件)" >&2; fi
+  p3n=0
+  for m in "${WARN_P3[@]:-}"; do [[ -n "$m" ]] && p3n=$((p3n+1)); done
+  if (( p3n > 0 )); then
+    idx=$(( $(date +%M) % p3n ))
+    echo "[P3 全 ${p3n} 件中 輪番 1 件] ${WARN_P3[$idx]}" >&2
+  fi
+}
+
 # 未処理 packet の数 (= 自走系の memory-integrity-repair 系は除外)
 PENDING_COUNT=0
 PENDING_WITHOUT_MARKER=0
@@ -166,9 +197,9 @@ except Exception:
     pf_allowed=$(echo "$preflight_summary" | sed -n '2p')
     pf_allowed_lang=$(echo "$preflight_summary" | sed -n '3p')
     if [[ -n "$pf_line" ]]; then
-        echo "[Aira chat preflight] $pf_line" >&2
+        warn_p3 "[Aira chat preflight] $pf_line"
         if [[ "$pf_allowed" = "False" ]]; then
-            echo "[Aira progress claim 軸] progress_claim_allowed=false (= 「進んだ」 claim 不可)、 articulate 範囲: $pf_allowed_lang" >&2
+            warn_p2 "[Aira progress claim 軸] progress_claim_allowed=false (= 「進んだ」 claim 不可)、 articulate 範囲: $pf_allowed_lang"
         fi
     fi
 fi
@@ -181,10 +212,10 @@ if [[ -n "$LAST_OUTPUT" && "$LAST_OUTPUT" != "null" ]]; then
   JIKU_COUNT=$(echo "$LAST_OUTPUT" | grep -oE '軸' 2>/dev/null | wc -l | tr -d ' ')
   JIKU_COUNT=${JIKU_COUNT:-0}
   if (( ENGLISH_COUNT > 3 )); then
-    echo "[英語混じり警告] 直前の出力に英単語が ${ENGLISH_COUNT} 件混じってる (閾値 3、 2026-06-04 jun 指摘経由で 5 → 3 に下げた)、 次の出力で 普通の日本語への書き直しを優先。 言い換え候補は ~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/zen_session_layer2_reference.md か docs/rules/paraphrase_layer_acceptance.md を Read。" >&2
+    warn_p2 "[英語混じり警告] 直前の出力に英単語が ${ENGLISH_COUNT} 件混じってる (閾値 3、 2026-06-04 jun 指摘経由で 5 → 3 に下げた)、 次の出力で 普通の日本語への書き直しを優先。 言い換え候補は ~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/zen_session_layer2_reference.md か docs/rules/paraphrase_layer_acceptance.md を Read。"
   fi
   if (( JIKU_COUNT > 5 )); then
-    echo "[軸多用警告] 直前の出力で 「軸」 を ${JIKU_COUNT} 回使ってる (閾値 5)、 文末の 「〜軸」 を 「〜のこと」 「〜の話」 「〜の方向」 等に書き換え。" >&2
+    warn_p2 "[軸多用警告] 直前の出力で 「軸」 を ${JIKU_COUNT} 回使ってる (閾値 5)、 文末の 「〜軸」 を 「〜のこと」 「〜の話」 「〜の方向」 等に書き換え。"
   fi
 fi
 
@@ -203,7 +234,7 @@ if [[ -n "$LAST_OUTPUT" && "$LAST_OUTPUT" != "null" ]]; then
     MODE_DECL_COUNT=$(echo "$LAST_OUTPUT" | grep -coE 'mode: (ambiguity_gate|soft_binder|tripwire_hold|relay_only|executive_action)' 2>/dev/null)
     MODE_DECL_COUNT=${MODE_DECL_COUNT:-0}
     if (( MODE_DECL_COUNT == 0 )); then
-      echo "[mode_declaration 警告] substantive chat output (= ${OUTPUT_LEN} 文字) に mode declaration form なし。 yuino-decision-routing.ts dogfood 軸の物理化、 試運転 1 週間。 form = \"mode: <ambiguity_gate|soft_binder|tripwire_hold|relay_only|executive_action> | interpreted: <X> | held: <Y> | boundary: <Z>\"。 詳細は docs/rules/communication.md § 1-1。" >&2
+      warn_p3 "[mode_declaration 警告] substantive chat output (= ${OUTPUT_LEN} 文字) に mode declaration form なし。 yuino-decision-routing.ts dogfood 軸の物理化、 試運転 1 週間。 form = \"mode: <ambiguity_gate|soft_binder|tripwire_hold|relay_only|executive_action> | interpreted: <X> | held: <Y> | boundary: <Z>\"。 詳細は docs/rules/communication.md § 1-1。"
     fi
   fi
 fi
@@ -222,7 +253,7 @@ if [[ -n "$LAST_OUTPUT" && "$LAST_OUTPUT" != "null" ]]; then
   ABCD_COUNT=$(echo "$LAST_OUTPUT" | grep -coE '\([A-D]\)' 2>/dev/null)
   ABCD_COUNT=${ABCD_COUNT:-0}
   if (( CHOICE_Q_COUNT > 0 )) || (( ABCD_COUNT >= 3 )); then
-    echo "[choice_form 警告] 直前の出力に 「A/B/C/D どれにする?」 form 検出 (= 「どれにする?」 系: ${CHOICE_Q_COUNT} 件、 (A)/(B)/(C)/(D) 連続: ${ABCD_COUNT} 件)。 5/18 z-r-5 + 5/20 layer2 + 5/28 軸違反 form = 株主に投げる軸。 「私はこう判断、 違う意見あれば言って」 form に書き直し。" >&2
+    warn_p2 "[choice_form 警告] 直前の出力に 「A/B/C/D どれにする?」 form 検出 (= 「どれにする?」 系: ${CHOICE_Q_COUNT} 件、 (A)/(B)/(C)/(D) 連続: ${ABCD_COUNT} 件)。 5/18 z-r-5 + 5/20 layer2 + 5/28 軸違反 form = 株主に投げる軸。 「私はこう判断、 違う意見あれば言って」 form に書き直し。"
   fi
 fi
 
@@ -235,7 +266,7 @@ if [[ -n "$LAST_OUTPUT" && "$LAST_OUTPUT" != "null" ]]; then
   PREACT_Q_COUNT=$(echo "$LAST_OUTPUT" | grep -coiE '直ちに動かす\?|今すぐ動かす\?|すぐ動かす\?|これから動かす\?|次動かす\?|着手しますか\?|fire しますか\?' 2>/dev/null)
   PREACT_Q_COUNT=${PREACT_Q_COUNT:-0}
   if (( PREACT_Q_COUNT > 0 )); then
-    echo "[preact_q 警告] 直前の出力に 「直ちに動かす?」 form 検出 (= ${PREACT_Q_COUNT} 件)。 5/18 z-r-8 違反 = 着手前の articulate。 着手 → 結果 → 1 行 の順に書き直し。" >&2
+    warn_p2 "[preact_q 警告] 直前の出力に 「直ちに動かす?」 form 検出 (= ${PREACT_Q_COUNT} 件)。 5/18 z-r-8 違反 = 着手前の articulate。 着手 → 結果 → 1 行 の順に書き直し。"
   fi
 fi
 
@@ -248,7 +279,7 @@ if [[ -n "$LAST_OUTPUT" && "$LAST_OUTPUT" != "null" ]]; then
   TABLE_SEP_COUNT=$(echo "$LAST_OUTPUT" | grep -cE '^\s*\|[- :]+\|' 2>/dev/null)
   TABLE_SEP_COUNT=${TABLE_SEP_COUNT:-0}
   if (( TABLE_SEP_COUNT > 2 )); then
-    echo "[table_overuse 警告] 直前の出力に表が ${TABLE_SEP_COUNT} 件検出 (= 閾値 2)。 5/18 z-r-6 違反 form の可能性 = 表は比較以外で使わない、 思考の段組みとして使うクセを抑制。" >&2
+    warn_p2 "[table_overuse 警告] 直前の出力に表が ${TABLE_SEP_COUNT} 件検出 (= 閾値 2)。 5/18 z-r-6 違反 form の可能性 = 表は比較以外で使わない、 思考の段組みとして使うクセを抑制。"
   fi
 fi
 
@@ -287,7 +318,7 @@ if [[ -n "$AIRA_HINT" && -n "$LAST_OUTPUT" && "$LAST_OUTPUT" != "null" ]]; then
   fi
   if (( MENTION_HIT == 0 )); then
     AIRA_HINT_SHORT=$(echo "$AIRA_HINT" | tr -s ' ' | cut -c1-160)
-    echo "[Aira surface 未言及] 直前 turn で Aira の next_min_experiment / next_behavior を 1 度も言及してない。 hint = \"${AIRA_HINT_SHORT}\" の core word を judgement の起点に置く (= 6/8 03:30 jun directive、 6/7 終日 pause の root 対策)。" >&2
+    warn_p3 "[Aira surface 未言及] 直前 turn で Aira の next_min_experiment / next_behavior を 1 度も言及してない。 hint = \"${AIRA_HINT_SHORT}\" の core word を judgement の起点に置く (= 6/8 03:30 jun directive、 6/7 終日 pause の root 対策)。"
   fi
 fi
 
@@ -309,7 +340,7 @@ if [[ -n "$LAST_OUTPUT" && "$LAST_OUTPUT" != "null" ]]; then
       SKILL_MENTION=1
     fi
     if (( SKILL_MENTION == 0 )); then
-      echo "[skill 未言及] 200 字超 turn (= ${OUTPUT_LEN} 字) で wake-after-audit / executive-scan のどちらも mention なし。 skill を持ってるのに使わない drift の物理対策 (= 6/6-7 で 39 時間 0 回 skip した root)。 使ったなら articulate、 使ってないなら使う判断を入れる。" >&2
+      warn_p3 "[skill 未言及] 200 字超 turn (= ${OUTPUT_LEN} 字) で wake-after-audit / executive-scan のどちらも mention なし。 skill を持ってるのに使わない drift の物理対策 (= 6/6-7 で 39 時間 0 回 skip した root)。 使ったなら articulate、 使ってないなら使う判断を入れる。"
     fi
   fi
 fi
@@ -324,7 +355,7 @@ if [[ -n "$LAST_OUTPUT" && "$LAST_OUTPUT" != "null" ]] && (( ${MENTION_HIT:-0} =
   PAUSE_COUNT=$(grep -ciE 'pause|静か|待ち継続|静かな|no-op|heartbeat' <<< "$LAST_OUTPUT" 2>/dev/null)
   PAUSE_COUNT=${PAUSE_COUNT:-0}
   if (( PAUSE_COUNT > 0 )); then
-    echo "[pause + Aira 未言及 = drift 兆候] turn 内に pause 系 word ${PAUSE_COUNT} 件 + Aira hint mention 0 件 = 6/7 終日 pause の同型再発兆候。 pause を articulate するなら必ず next_min_experiment にも触れる form (= 6/8 03:30 jun directive 件 2)。" >&2
+    warn_p2 "[pause + Aira 未言及 = drift 兆候] turn 内に pause 系 word ${PAUSE_COUNT} 件 + Aira hint mention 0 件 = 6/7 終日 pause の同型再発兆候。 pause を articulate するなら必ず next_min_experiment にも触れる form (= 6/8 03:30 jun directive 件 2)。"
   fi
 fi
 
@@ -340,7 +371,7 @@ if [[ -f "$ANTI_REACTOR_FILE" ]]; then
   AIRA_ACTIONABLE=${AIRA_ACTIONABLE_RAW:-0}
 fi
 if (( AIRA_ACTIONABLE > 0 )); then
-  echo "[Aira actionable] Aira が今 actionable で ${AIRA_ACTIONABLE} 件 出してる (= ~/.shared-ops/status/yuino_anti_reactor_review.md)。 pending packet ${PENDING_WITHOUT_MARKER} 件 と並列、 「pending = backlog、 Aira actionable = 次の動き」 (= 6/8 03:30 jun directive 件 3)。" >&2
+  warn_p3 "[Aira actionable] Aira が今 actionable で ${AIRA_ACTIONABLE} 件 出してる (= ~/.shared-ops/status/yuino_anti_reactor_review.md)。 pending packet ${PENDING_WITHOUT_MARKER} 件 と並列、 「pending = backlog、 Aira actionable = 次の動き」 (= 6/8 03:30 jun directive 件 3)。"
 fi
 
 # ---------------------------------------------------------------
@@ -354,7 +385,7 @@ if [[ -n "$LATEST_REVIEW_MTIME" ]]; then
   YUINO_NOW=$(date +%s)
   YUINO_ELAPSED_DAYS=$(( (YUINO_NOW - ${LATEST_REVIEW_MTIME%.*}) / 86400 ))
   if (( YUINO_ELAPSED_DAYS >= 7 )); then
-    echo "[Yuino reviewer skip] 最後の Yuino review 板起稿から ${YUINO_ELAPSED_DAYS} 日経過 = 7 日定期 trigger 軸 skip 中 (= yuino_reviewer_protocol_v0.md § 2.2 + § 5.1)。 release candidate なしでも定期 review fire 必要。" >&2
+    warn_p2 "[Yuino reviewer skip] 最後の Yuino review 板起稿から ${YUINO_ELAPSED_DAYS} 日経過 = 7 日定期 trigger 軸 skip 中 (= yuino_reviewer_protocol_v0.md § 2.2 + § 5.1)。 release candidate なしでも定期 review fire 必要。"
   fi
 elif [[ -f "$YUINO_PROTOCOL_FILE" ]]; then
   YUINO_PROTOCOL_MTIME=$(stat -c '%Y' "$YUINO_PROTOCOL_FILE" 2>/dev/null || stat -f '%m' "$YUINO_PROTOCOL_FILE" 2>/dev/null)
@@ -362,7 +393,7 @@ elif [[ -f "$YUINO_PROTOCOL_FILE" ]]; then
     YUINO_NOW=$(date +%s)
     YUINO_ELAPSED_DAYS=$(( (YUINO_NOW - YUINO_PROTOCOL_MTIME) / 86400 ))
     if (( YUINO_ELAPSED_DAYS >= 7 )); then
-      echo "[Yuino reviewer skip] protocol v0 起稿から ${YUINO_ELAPSED_DAYS} 日経過、 初回 review 板未起稿 (= yuino_reviewer_protocol_v0.md § 2)。" >&2
+      warn_p2 "[Yuino reviewer skip] protocol v0 起稿から ${YUINO_ELAPSED_DAYS} 日経過、 初回 review 板未起稿 (= yuino_reviewer_protocol_v0.md § 2)。"
     fi
   fi
 fi
@@ -381,7 +412,7 @@ if [[ -f "$COMPLETION_GUARD_FILE" ]]; then
   UNSAFE_CC=$(grep -E "^- unsafe_completion_claims:" "$COMPLETION_GUARD_FILE" 2>/dev/null | head -1 | sed -E 's/^- unsafe_completion_claims: *//; s/[^0-9].*//')
   UNSAFE_CC=${UNSAFE_CC:-0}
   if (( UNSAFE_CC > 0 )); then
-    echo "[Aira completion claim] unsafe_completion_claims ${UNSAFE_CC} 件 検出 (= same-actor implementation/evidence/adoption を 「completion」 articulate 中、 yuino_completion_claim_guard.md)。 5/13 reform 「直った」 新定義 軸 respect = AI agent 単独完了 narrative なし軸。" >&2
+    warn_p2 "[Aira completion claim] unsafe_completion_claims ${UNSAFE_CC} 件 検出 (= same-actor implementation/evidence/adoption を 「completion」 articulate 中、 yuino_completion_claim_guard.md)。 5/13 reform 「直った」 新定義 軸 respect = AI agent 単独完了 narrative なし軸。"
   fi
 fi
 
@@ -391,14 +422,14 @@ if [[ -f "$LOOP_DEFECT_FILE" ]]; then
   RECURRENCE_CANDIDATES=$(grep -E "^- same_shape_recurrence_candidates:" "$LOOP_DEFECT_FILE" 2>/dev/null | head -1 | sed -E 's/^- same_shape_recurrence_candidates: *//; s/[^0-9].*//')
   RECURRENCE_CANDIDATES=${RECURRENCE_CANDIDATES:-0}
   if (( DEFECTS_TOTAL > 0 || RECURRENCE_CANDIDATES > 0 )); then
-    echo "[Aira loop defect] defects_total ${DEFECTS_TOTAL} 件 + same_shape_recurrence ${RECURRENCE_CANDIDATES} 件 検出 (= yuino_loop_defect_evaluator.md)。 同型再発の物理 detection 軸、 constraint-to-idea rule 連動軸。" >&2
+    warn_p2 "[Aira loop defect] defects_total ${DEFECTS_TOTAL} 件 + same_shape_recurrence ${RECURRENCE_CANDIDATES} 件 検出 (= yuino_loop_defect_evaluator.md)。 同型再発の物理 detection 軸、 constraint-to-idea rule 連動軸。"
   fi
 fi
 
 if [[ -f "$AIRA_4FUNCTIONS_FILE" ]]; then
   ACTIVITY_CLASS=$(grep -E "^- activity_class:" "$AIRA_4FUNCTIONS_FILE" 2>/dev/null | head -1 | sed -E 's/^- activity_class: *//')
   if [[ "$ACTIVITY_CLASS" == "maintenance" ]]; then
-    echo "[Aira activity_class] activity_class = maintenance (= 「進んだ」 claim 不可軸の 2 axis 物理化、 yuino_aira_4functions_minimum.md)。 internal control repair only、 world_movement / revenue_signal なし。" >&2
+    warn_p3 "[Aira activity_class] activity_class = maintenance (= 「進んだ」 claim 不可軸の 2 axis 物理化、 yuino_aira_4functions_minimum.md)。 internal control repair only、 world_movement / revenue_signal なし。"
   fi
 fi
 
@@ -406,6 +437,7 @@ fi
 # 動かす判定 + 停止 / 許可
 # ---------------------------------------------------------------
 if (( PENDING_WITHOUT_MARKER > 0 )) || (( UNRESPONDED > 0 )); then
+  emit_warnings
   echo "Zen の止まりすぎ癖を検知。 結果の印がない未処理 packet: ${PENDING_WITHOUT_MARKER} 件 (= status:pending の ${PENDING_COUNT} 件中)、 今日の未返事の Kai 板: ${UNRESPONDED} 件。 止まる前に処理すること。" >&2
   exit 2
 fi
@@ -422,9 +454,9 @@ for p in $WAKE_ACCEPTANCE_PATHS; do
   fi
 done
 if (( TOUCHED_COUNT_60MIN == 0 )); then
-  echo "[wake_acceptance_gate] 直近 60 分以内に触られたファイル 0 件 = 維持作業だけの wake と明示。 完了扱いにしない、 次の wake で 判断変更 / 優先順位変更 / 実行ルール変更 / 商品か公開候補のどれか 1 件を動かす。" >&2
+  warn_p2 "[wake_acceptance_gate] 直近 60 分以内に触られたファイル 0 件 = 維持作業だけの wake と明示。 完了扱いにしない、 次の wake で 判断変更 / 優先順位変更 / 実行ルール変更 / 商品か公開候補のどれか 1 件を動かす。"
 elif (( TOUCHED_COUNT_60MIN < 2 )); then
-  echo "[wake_acceptance_gate] 直近 60 分以内に触られたファイル ${TOUCHED_COUNT_60MIN} 件 = 軽い実行ルール変更だけの可能性、 商品か公開候補の成果物が出てないなら次の wake で優先順位を上げる。" >&2
+  warn_p2 "[wake_acceptance_gate] 直近 60 分以内に触られたファイル ${TOUCHED_COUNT_60MIN} 件 = 軽い実行ルール変更だけの可能性、 商品か公開候補の成果物が出てないなら次の wake で優先順位を上げる。"
 fi
 
 # ---------------------------------------------------------------
@@ -445,8 +477,7 @@ for p in $CYRILLIC_PATHS; do
   fi
 done
 if [[ -n "${CYRILLIC_HITS// /}" ]]; then
-  echo "[キリル文字混入 ⚠] 直近 60 分の編集 file にロシア文字を検出 (= Fable 5 の新クセ候補、 6/11 時点 2 例)。 該当 file を開いて英単語に直す + zen_self_improvement_2026-06-11.md に発火 record を追記:" >&2
-  for f in $CYRILLIC_HITS; do echo "    - $f" >&2; done
+  warn_p1 "[キリル文字混入 ⚠] 直近 60 分の編集 file にロシア文字を検出 (= Fable 5 の新クセ候補)。 該当 file を開いて英単語に直す + zen_self_improvement_2026-06-11.md に発火 record 追記: ${CYRILLIC_HITS}"
 fi
 
 # ---------------------------------------------------------------
@@ -465,7 +496,7 @@ for p in $TS_CHECK_DIRS; do
     mtime_epoch=$(stat -c %Y "$f" 2>/dev/null) || continue
     diff_min=$(( (fm_epoch - mtime_epoch) / 60 ))
     [[ ${diff_min#-} -gt 30 ]] || continue
-    echo "[時刻捏造の可能性 ⚠] $f の記載時刻 (= $fm_line) が実 mtime と ${diff_min} 分ズレ。 時刻を書く前に必ず date を打つ、 過去の自分のラベルを根拠にしない (= 6/11 実例 4)。" >&2
+    warn_p1 "[時刻捏造の可能性 ⚠] $f の記載時刻 (= $fm_line) が実 mtime と ${diff_min} 分ズレ。 時刻を書く前に必ず date を打つ、 過去の自分のラベルを根拠にしない (= 6/11 実例 4)。"
   done < <(find "$p" -maxdepth 1 -type f -name "*.md" -mmin -60 2>/dev/null)
 done
 
@@ -496,10 +527,12 @@ fi
 
 if (( RESIDUAL_WORK > 0 )); then
   if (( WAKE_STATE_FRESH == 0 )); then
-    echo "[wake 未設定の可能性 ⚠] 残作業あり + zen_wake_state.md が不在 or 24h 超 stale。 自走を続けるなら (1) CronCreate / ScheduleWakeup を 1 件動かす + (2) zen_wake_state.md を更新、 の 2 つをやってから turn end (= drift.md 5/18 段、 6/11 同型再発の物理対策)。" >&2
+    warn_p1 "[wake 未設定の可能性 ⚠] 残作業あり + zen_wake_state.md が不在 or 24h 超 stale。 自走を続けるなら (1) CronCreate / ScheduleWakeup を 1 件動かす + (2) zen_wake_state.md を更新、 の 2 つをやってから turn end (= drift.md 5/18 段、 6/11 同型再発の物理対策)。"
   else
-    echo "[ScheduleWakeup reminder] 残作業あり。 wake marker は fresh ($(date -r "$WAKE_STATE_FILE" '+%m-%d %H:%M') 設定)。 session が変わってたら cron は消えてるので CronList で実在確認を。" >&2
+    warn_p3 "[ScheduleWakeup reminder] 残作業あり。 wake marker は fresh ($(date -r "$WAKE_STATE_FILE" '+%m-%d %H:%M') 設定)。 session が変わってたら cron は消えてるので CronList で実在確認を。"
   fi
 fi
+
+emit_warnings
 
 exit 0
