@@ -84,6 +84,10 @@ jun 明示承認なしに進めない:
 - latest owner-decision / current decision registry / status surface を優先
 - 古い draft docs を current rule として扱わない、 supersession / current pointer を必ず確認
 
+## 状態の真偽は物理照合する (= 6/11 jun directive、 state_integrity_contract v0)
+
+3 者 (Aira / Kai / Zen) 共通契約 = [~/.shared-ops/state_integrity_contract_v0_2026-06-11.md](../.shared-ops/state_integrity_contract_v0_2026-06-11.md)。 自己申告 (= 「完了」 「fresh」 「N 行」 「12:05」) をその宣言だけで信じず、 物理実体 (= 実 mtime / 実 wc -l / 成果物リンク / business_date) と照合してから次に進める。 照合取れないものは「未確定」 扱い (= 6/11 の古い記憶鵜呑み / 時刻捏造 / 数字盛りの共通根対策)。 Zen の board 返信は 3 状態 (= acknowledged / in_progress / artifact_delivered) を明示、 受領を「完了」 と書かない。
+
 ## スクリプトと wake
 
 詳細 = [scripts/](scripts/) 配下、 主要:
