@@ -36,7 +36,7 @@ Yuino chat_outbox/zen v0 の Zen-side consumer reify。 Kai-side が起稿した
    |
    +-- --complete <id> <path> -> [completed]    response_paths に path 記録、 result marker (status=completed)
    |
-   +-- --block <id> <reason>  -> [blocked]      外部要因 + 内部 retry candidate (failed は v0 で blocked に寄せる)
+   +-- --block <id> <reason>  -> [blocked]      外部要因 + 内部の再試行候補 (failed は v0 で blocked に寄せる)
    |
    +-- --skip <id> <reason>   -> [skipped]      意図的 skip (stale / out-of-scope / 別 path で対応済)
 ```
@@ -68,7 +68,7 @@ status 値定義:
 | status | 意味 | response_paths | duration_seconds |
 |---|---|---|---|
 | `completed` | consumer が board response 起稿 + marker write 完了 | non-empty | started -> completed の差 (sec) |
-| `blocked` | 外部要因で停止 (内部 retry candidate)、 v0 では failed もここに寄せる | empty | 計算可 (started 不在なら null) |
+| `blocked` | 外部要因で停止 (内部の再試行候補)、 v0 では failed もここに寄せる | empty | 計算可 (started 不在なら null) |
 | `skipped` | 意図的 skip (stale / closed / unsafe / out-of-scope) | empty | 同上 |
 
 `pending` / `in_progress` は packet frontmatter 上の transient state、 result marker には現れない (terminal 3 状態のみ marker write)。
@@ -112,11 +112,11 @@ packet frontmatter の `status:` を `in_progress` に rewrite + `started_at: <I
 
 response path は Windows form (`C:/...` または `C:\...`) または Unix form (`/c/...`) 両対応、 内部で Windows form (`C:/...`) に正規化。 result marker 起稿 + audit log entry append。
 
-### --block (blocked、 内部 retry candidate)
+### --block (blocked、 内部の再試行候補)
 
 ```bash
 ./scripts/zen_chat_outbox_consume.sh --block task-0ad71310 \
-  "外部 dependency (Polar.sh API) 一時 down、 30 min 待機後 retry candidate"
+  "外部 dependency (Polar.sh API) 一時 down、 30 min 待機後 再試行候補"
 ```
 
 result marker (status=blocked + notes に reason)、 packet 残置 (archive せず)、 jun / Kai が後で resume 判断。
@@ -222,7 +222,7 @@ lockfile content (`yuino.consumer_lock.v1`):
 
 ```bash
 ./scripts/zen_chat_outbox_consume.sh --block task-0ad71310 \
-  "Polar.sh API 502、 retry candidate (30 min 待機)"
+  "Polar.sh API 502、 再試行候補 (30 min 待機)"
 ./scripts/zen_chat_outbox_consume.sh --lock-release
 ```
 
@@ -256,7 +256,7 @@ Home Summary mapping:
 | consumer marker | Yuino audit 表記 |
 |---|---|
 | `completed` | `chat_outbox_completed` (open packets - 1) |
-| `blocked` | `chat_outbox_blocked` (open packets に残留、 retry candidate) |
+| `blocked` | `chat_outbox_blocked` (open packets に残留、 再試行候補) |
 | `skipped` | `chat_outbox_skipped` (skip 理由は notes field) |
 | (marker 不在 + status=in_progress) | `chat_outbox_in_progress` (lock window 内 work、 stale なら takeover) |
 | (marker 不在 + status=pending) | `chat_outbox_pending` (open packets、 actionable) |

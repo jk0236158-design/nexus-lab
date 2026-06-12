@@ -1,5 +1,6 @@
 # Zen Operating Cadence
 
+> Status: historical reference (= 2026-06-12 注記。 5/09 当時の切り出し記録で、 現役の実体は docs/rules/ 配下に移管済み = 反省の習慣 → communication.md § 3 / 自分での確認 → self_check_cadence.md / 言葉の分離 → paraphrase_layer_acceptance.md。 特に § 4.1 「scheduled wake 全停止」 は 5/05 当時の状態で、 現状 (= 6 月の ScheduleWakeup 運用) とは不一致、 現状は `~/.shared-ops/status/zen_wake_state.md` が正)
 > **2026-05-09 起稿、 reform B 段、 CLAUDE.md slim down 連動**
 >
 > 本 file = self-observation / diary / vocabulary 等の cadence ruled。 旧 CLAUDE.md § Operating cadence + § 自走・自律行動の現状 を切り出し集約。
