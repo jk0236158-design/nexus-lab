@@ -24,11 +24,19 @@ boundary:
 
 > AI 運用の「動いてる風」 を物理的に減らす template 集。
 
-= Zen 推奨 = A (= 機能起点、 短い、 nokaze tone と整合)
+### 案 D (= 6/12 追加、 Kai 6/11 実レビュー primary copy 由来。 繰り返し失敗 → 次セッションで効くチェック、 という価値の先出し)
+
+> AI が繰り返す失敗を、 次のセッションで実際に効くチェックに変える 8 件の template。
+
+英語版 (= 海外向け venue 用):
+
+> AI Operator Guard turns repeated AI workflow failures into checks your next session can actually use.
+
+= Zen 推奨 = **D** (= 6/12 変更。 旧推奨 A は検出のみの位置づけで、 「いずれ Claude 本体や他 template に追いつかれる」 軸 = § 7.1 の Claude 代替テストに弱い。 D は「繰り返し失敗の記憶」 という差分を先に出す)
 
 ## 2. short description (= 150 words 想定、 marketplace 詳細表示用)
 
-AI agent (= Claude Code / Codex / Gemini CLI 等) を 1 ヶ月以上 dogfood すると、 以下のいずれかに当たる:
+AI agent (= Claude Code / Codex / Gemini CLI 等) を 1 ヶ月以上使うと、 以下のいずれかに当たる:
 
 - 「完了しました」 と言われたが、 何が起きたか分からない
 - セッション再開時に状態が飛ぶ
@@ -80,7 +88,7 @@ cat templates/handoff_template_v0.md
 
 publish 前に jun に確認:
 
-1. **tagline 選び** = 案 A (= Zen 推奨) / B / C のどれにするか
+1. **tagline 選び** = 案 A / B / C / D (= Zen 推奨、 6/12 変更) のどれにするか
 2. **short description の line 引き** = nokaze 紹介 + 商品中身 + 由来 articulate で十分か
 3. **install + use** の確定 GitHub URL = jun GO 後の確定軸
 4. **公開先** = Claude Code plugin marketplace + GitHub + npm (= 順序)
