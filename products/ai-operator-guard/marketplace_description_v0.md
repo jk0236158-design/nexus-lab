@@ -84,6 +84,12 @@ cat templates/handoff_template_v0.md
 - nokaze 環境 (= 小チーム + AI 副 agent + Claude Code primary) 固有の自社使用実績、 一般化は利用者からのフィードバック経由
 - 「Claude Code 全ユーザーに効く」 とは主張しない
 
+### 6.1 data boundary の 1 文 (= 6/12 Kai 実レビュー回答 2 採用、 final copy 用)
+
+> The v0 package is a set of local Markdown templates; it does not include a hosted service or telemetry. Any hook or scanning behavior is configured locally by the user.
+
+(= 日本語版: v0 は ローカルで使う Markdown template 集で、 ホスティングされたサービスや利用データの送信は含まない。 hook やスキャンの動作は全部利用者が自分の環境で設定する。)
+
 ## 7. publish 前の jun 確認軸 (= 必須)
 
 publish 前に jun に確認:

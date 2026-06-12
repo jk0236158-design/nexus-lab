@@ -34,7 +34,7 @@ Claude Code / Codex / Gemini CLI 等の AI agent を 1 ヶ月以上使って、 
 | [auto_ack_rule_template_v0.md](templates/auto_ack_rule_template_v0.md) | 自動受領 file の検出 + 実質的な返答との区別 |
 | [seven_signal_drift_check_template_v0.md](templates/seven_signal_drift_check_template_v0.md) | 着手前の曖昧度 7 信号確認 (= Ambiguity Gate 5 分類 + Soft Binder 2 観点) |
 | [overclaim_reminder_template_v0.md](templates/overclaim_reminder_template_v0.md) | 「完了 / 公開 / 販売」 等を書く前の確認ルール |
-| [start_sweep_template_v0.md](templates/start_sweep_template_v0.md) | セッション開始時に board / status / Aira surface を必ず読む仕組み |
+| [start_sweep_template_v0.md](templates/start_sweep_template_v0.md) | セッション開始時に進行板 / 状態ファイル / 点検画面を必ず読む仕組み |
 
 ## 使い方
 
