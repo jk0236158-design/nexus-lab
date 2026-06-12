@@ -134,6 +134,21 @@ nokaze / Zen で同じ失敗の種類が実際に起きた、 だから物理対
 - 「販売開始」 「ローンチ」 (= まだ公開していない段階での使用)
 - 「nokaze の自社使用実績で証明済み」 (= 自社使用実績は nokaze 環境固有のもの、 「証明」 と言うのは早い)
 
+### 5.1 買い手向けの言葉 (= Kai 6/11 実レビュー point 3 採用)
+
+内部・研究用語を買い手向けに出さない: **「沈殿」 「失敗辞書」 「Knot」 「糧 (= Nourishment)」 「hardness」 は internal / research 用語に留める**。
+
+買い手向けの言い方の候補 (= Kai 案 4 件):
+1. 「AI が同じ失敗を繰り返す理由を、 次回から検出できるチーム専用ルールに変える。」
+2. 「完了したふり、 ACK 止まり、 文脈流されを、 あなたの環境専用の失敗メモリとして残す。」
+3. 「Claude を増やすだけでは残らない、 チーム固有の AI 運用記憶を作る。」
+4. 「AI の失敗を、 その場限りの注意で終わらせず、 次のセッションで効くチェックに変える。」
+
+英語の primary copy 候補 (= Kai 推し):
+> **AI Operator Guard turns repeated AI workflow failures into checks your next session can actually use.**
+
+公開 copy (README / marketplace description) への適用は、 言葉の書き直し + data boundary 書き直しが終わるまで hold (= Kai 6/11 judgment)。
+
 ## 6. publish / price hold points (= jun GO まで動かさない)
 
 - ❌ public publish = jun GO まで hold
@@ -150,7 +165,7 @@ OK 範囲 (= internal):
 - ✅ Zen / Kai の dogfood (= 自分達の運用で使う)
 - ✅ Aira hint = 導入後に離れた層のペルソナへの質問の下書きを内部でまとめる (= 顧客に届く前の draft 段階)
 
-## 7. Knot 蓄積回路 + 糧の取り込み (= 6/11 jun directive 「knot と糧も生かした商品を」 経由の設計章)
+## 7. Repeated-failure memory and feedback intake (= 繰り返し失敗の記憶と feedback の取り込み。 6/11 jun directive 「knot と糧も生かした商品を」 経由の設計章、 6/12 Kai 実レビューで rename = 「Knot 蓄積回路 + 糧の取り込み」 は internal 用語として § 7.2 内に残す)
 
 ### 7.1 なぜ入れるか (= 値付けの Claude 代替テスト経由)
 
@@ -159,19 +174,53 @@ OK 範囲 (= internal):
 - Claude を契約しても、 利用者の環境固有の失敗辞書は付いてこない
 - session が変われば agent は同じ失敗を繰り返す (= 実例: 6/11 朝、 Zen 自身が 21 日前の記憶 file を読んで「Polar 審査待ち」 と誤答 → jun 指摘 1 回で記憶 file 修正まで落とした。 この「指摘 → 恒久記録」 の回路こそが商品)
 
-### 7.2 3 層構造 (= Guard を静的テンプレから成長する運用システムへ)
+### 7.2 3 層構造 + 所有権の分割 (= Guard を静的テンプレから成長する運用システムへ。 6/12 Kai 実レビューで product-owned vs OS-owned を明示)
 
-- **Layer 1 検出** = 既存 8 件 guard (= § 3 の中心 4 + 後段 4)。 ここは現 spec のまま
-- **Layer 2 蓄積 (= Knot)** = guard が検出した失敗を knot (= 条件 + 補正 + 強度) として記録する仕組み。 同型が繰り返し検出された knot は強度を上げて validator の固定規則に沈殿させる (= Knot 研究 5 役割の 2 番目「検証構造への沈殿」 の応用)。 どの knot が増えたかで運用のどこが弱いかが見える (= 役割 4 「Discovery 層の弱点診断」 の運用全般への翻案。 RQ4 未着手なので「製品化」 でなく「応用」 と書く = Hoshi P2-1)
-- **Layer 3 取り込み (= 糧)** = 失敗・予測外れ・反対意見を「恥」 でなく「世界モデル更新の入力」 として記録する回路 3 種 (= 4/20 起稿の 売上 0 回路 / peer 反対回路 / 予測外れ回路)。 feedback file の form (= Why + How to apply) + 索引 + 見直しの cadence を template 化
+**所有権の線引き (= Kai 6/11): Guard = 検出 + 繰り返し失敗の記憶。 Yuino OS = workflow 横断の運用記憶 + 糧。**
 
-### 7.3 実装の最小形 (= v0 で増やしすぎない)
+- **Layer 1 検出 (= Guard v0 所有)** = 既存 8 件 guard (= § 3 の中心 4 + 後段 4)。 ここは現 spec のまま
+- **Layer 2 蓄積 (= internal 用語: Knot。 Guard v0 所有、 narrow な記録 loop)** = guard が検出した失敗を KnotRecord (= 条件 + 補正 + 証拠 + 再発回数 + 昇格状態) として記録する仕組み。 同型が繰り返し検出された記録は昇格して validator の固定規則になる (= Knot 研究 5 役割の 2 番目「検証構造への沈殿」 の応用)。 どの記録が増えたかで運用のどこが弱いかが見える (= 役割 4 「Discovery 層の弱点診断」 の運用全般への翻案。 RQ4 未着手なので「製品化」 でなく「応用」 と書く = Hoshi P2-1)。 **v0 を静的テンプレだけにすると § 7.1 の Claude 代替テストに落ちる、 環境固有の失敗記憶こそが moat (= Kai 6/11)**
+- **Layer 3 取り込み (= internal 用語: 糧。 Yuino OS 統合契約、 Guard v0 は seed の export のみ)** = 失敗・予測外れ・反対意見を「恥」 でなく「世界モデル更新の入力」 として記録する回路 3 種 (= 4/20 起稿の 売上 0 回路 / peer 反対回路 / 予測外れ回路)。 糧は operator の将来の行動選択を変える層で guard の挙動だけに閉じない、 だから full 版は OS-level の統合契約として扱い、 Guard v0 には FeedbackNote template 1 件だけを OS integration seed として入れる (= Kai 6/11。 Guard が Layer 3 を full に claim すると「Yuino OS の小さくて劣る版」 になる over-scope risk)
 
-- zen-memory MCP の record-knot / get-knots 相当の汎用版 (= 失敗の記録と引き出し)
-- feedback file template + 索引 (= MEMORY.md form の汎用化)
-- 再発回数による簡易昇格 rule (= 同型 N 回で hook の警告規則に昇格する手順書。 研究側 hardness v0.1 は recurrence + harm_sensitivity + time_stability の 3 信号で、 これはその簡略版であることを商品文面でも明示する = Hoshi P1-1、 「hardness」 の語をそのまま使わない)
-- 昇格の見直し経路 (= 昇格後 N 日で発火実績を確認、 誤検出 1 件で降格候補に戻す。 一方向昇格は誤検出 pattern の永久沈殿 + 警告疲れを生む = Hoshi P2-2)
-- まず手動運用で成立する form にする (= daemon 化は後段、 「全自動」 と書かない)
+### 7.3 v0 operating slice (= 6/12 Kai 実レビューで「実装の最小形」 から rename。 「minimum」 は作り込み不足を招く、 「operating slice」 は一筋が動くことを要求する)
+
+v0 で ship する一筋 (= Layer 1 only にしない、 Layer 1 + 小さくても本物の Layer 2 loop まで = Kai 6/11):
+
+1. Layer 1: 既存 8 件 guard の template / hook / 受領
+2. Layer 2: 最小だが本物の KnotRecord data contract (= 下記)
+3. Layer 2: 手動の record-knot flow か template (= zen-memory MCP の record-knot / get-knots 相当の汎用版)
+4. Layer 2: 再発回数による昇格 review (= 同型 N 回で hook の警告規則に昇格する手順書。 研究側 hardness v0.1 は recurrence + harm_sensitivity + time_stability の 3 信号で、 これはその簡略版であることを商品文面でも明示する = Hoshi P1-1、 「hardness」 の語をそのまま使わない)
+5. Layer 2: 昇格の見直し / 誤検出の rollback 経路 (= 昇格後 N 日で発火実績を確認、 誤検出 1 件で降格候補に戻す。 一方向昇格は誤検出 pattern の永久沈殿 + 警告疲れを生み信頼を壊す、 ここは譲らない = Hoshi P2-2 + Kai P1)
+6. Layer 3: FeedbackNote / 糧の取り込み template を 1 件だけ、 OS integration seed と明示して入れる
+
+まず手動運用で成立する form にする (= daemon 化は後段、 「全自動」 と書かない。 **manual-first は隠さず明示する、 正直であると同時に実装の過大主張を減らす = Kai 6/11**)。
+
+#### 7.3.1 data contract (= Kai 6/11 提案を採用、 最小 3 型)
+
+```yaml
+GuardEvent:
+  id:
+  detected_at:
+  guard_type:
+  evidence_ref:
+  operator_context:
+
+KnotRecord:
+  id:
+  source_guard_event_ids:
+  recurring_pattern:
+  correction:
+  recurrence_count:
+  promotion_status: candidate | promoted | demoted
+  false_positive_notes:
+
+FeedbackNote:
+  id:
+  from_knot_record_id:
+  why_it_matters:
+  how_to_apply_next_time:
+  review_due_at:
+```
 
 ### 7.4 継続課金の根拠 (= 価格は jun GO 別 turn、 構造だけ書く)
 
@@ -185,13 +234,9 @@ OK 範囲 (= internal):
 - Nia 不可侵 (= 4/13 owner decision) は維持。 商品化対象は Knot の方法論と Guard への実装のみ、 Nia 本体には触れない
 - 「AI が自動で学習する」 とは書かない (= 記録と沈殿は運用の手順であり、 model の学習ではない)
 
-### 7.6 研究への還流 (= Hoshi 見解 6/11、 商品 data を研究に使う場合の条件 3 つ)
+### 7.6 研究への還流 → Boundary / Data Use へ移動 (= 6/12 Kai 実レビュー: 商品 copy の核に置かず boundary 側に置く)
 
-外部利用者の knot data は paper_c § 9.2 (= observer = participant 三重性) を緩和する経路になりうるが、 条件 3 つを守る:
-
-1. 外部 cohort は nokaze 内部 data と混ぜず別 track (= external replication track) として持つ。 混ぜて「N が増えた」 と書いた瞬間に汚染になる
-2. 「Guard 採用者しか sample にならない + 我々の分類でしか記録されない」 という枠組み込みの選択バイアスを limitations に明示する
-3. 利用者 data の研究利用は opt-in 設計 + jun GO 前提 (= 顧客 data 扱い = red gate 隣接)
+中身は本 file 末尾の「Boundary § Data Use」 を参照。
 
 ## 次の動き (= jun GO 取得 前)
 
@@ -206,3 +251,11 @@ OK 範囲 (= internal):
 - 商品化 / 公開 / 価格 / 顧客接触 は別 turn jun GO
 - Kai と内部で方向を合わせる、 board file 経由
 - 6/7 18:41 Kai の実質的な返答にある 6 つの問いへの回答も内包
+
+### Data Use (= 研究への還流条件。 Hoshi 見解 6/11、 6/12 Kai 実レビューで § 7.6 からここへ移動)
+
+外部利用者の knot data は paper_c § 9.2 (= observer = participant 三重性) を緩和する経路になりうるが、 条件 3 つを守る:
+
+1. 外部 cohort は nokaze 内部 data と混ぜず別 track (= external replication track) として持つ。 混ぜて「N が増えた」 と書いた瞬間に汚染になる (= paper C に「more N」 として混ぜない = Kai P1)
+2. 「Guard 採用者しか sample にならない + 我々の分類でしか記録されない」 という枠組み込みの選択バイアスを limitations に明示する
+3. 利用者 data の研究利用は opt-in 設計 + jun GO 前提 (= 顧客 data 扱い = red gate 隣接)
