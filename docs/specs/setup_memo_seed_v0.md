@@ -1,5 +1,7 @@
 # Setup Memo Seed v0 — audience-facing 公開化 narrative spec (= z-4 軸)
 
+> Status: design draft — not current runtime rules (= 2026-06-12 注記。 5/17 当時の設計記録。 Setup Memo 軸 = 北極星 step 3 は生きてる、 本 spec の公開化は未着手)
+
 起稿日: 2026-05-17
 起稿主: Zen
 連動:

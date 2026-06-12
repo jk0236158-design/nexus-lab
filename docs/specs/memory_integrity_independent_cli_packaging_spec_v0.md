@@ -1,5 +1,7 @@
 # Memory Integrity 独立 CLI packaging spec v0 (= k-2 補助軸、 Zen-side)
 
+> Status: design draft — not current runtime rules (= 2026-06-12 注記。 5/17 当時の設計記録。 実装状況: Memory Integrity 本体は nokaze-aira 側で実装が進行 = yuino-memory-integrity.ts、 独立 CLI packaging 軸は未着手)
+
 起稿日: 2026-05-17
 起稿主: Zen (= Kai-led k-2 軸の補助 spec、 nokaze-aira 側 file 抽出 + packaging axis articulate)
 連動: 5/16 17:46 委任権限 v1 採用後の自走範囲 (= free CLI publish 範囲) + 5/16 ledger §13 「外向き axis priority reframe」 narrative

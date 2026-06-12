@@ -1,5 +1,7 @@
 # External Review Cadence spec v0 (= z-2 軸)
 
+> Status: design draft — not current runtime rules (= 2026-06-12 注記。 5/17 当時の設計記録。 実装状況: scripts/zen_external_review_fire.sh は未起稿のまま、 echo chamber 対策の実態は scripts/codex-review.sh + Kagami QA + Kai independent review の運用で部分実現)
+
 起稿日: 2026-05-17
 起稿主: Zen
 連動: 5/16 jun 16:00 structural shift directive 「定期 review (Zen/Kai じゃない視点)」 + 5/16 ledger §11 反映 + Knot 研究 v0.1 §3-B narrative
