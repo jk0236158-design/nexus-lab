@@ -1,11 +1,11 @@
 # Completion Receipt Template v0 (= AI Operator Guard vertical slice 3 件目、 既 form 汎用化)
 
 generated_at: 2026-06-09 08:33 JST
-status: internal draft、 jun GO 前
+status: v0 draft (= 公開判断は owner GO 経由)
 origin:
 - AI Operator Guard internal_spec_v0.md § 3.1 vertical slice 中心 4 件 3 件目
-- nokaze 内 form (= 5/13 reform 「直った」 新定義 = 5 ヶ所物理 evidence + 同型再発検出なし、 board file = `~/.shared-ops/board/2026-05-13_zen_jun_kai_zen_management_layer_reform_full_spec.md`) を AI agent 運用一般向けに汎用化
-- 内部 origin = 「完了 narrative を AI agent 単独で書かない」 + 「物理 evidence 5 ヶ所再生成」 = 4 月 - 5 月で 11 件再発の根本対策
+- nokaze 内 form (= 「直った」 の新定義 = 5 ヶ所物理 evidence + 同型再発検出なし) を AI agent 運用一般向けに汎用化
+- 内部 origin = 「完了 narrative を AI agent 単独で書かない」 + 「物理 evidence 5 ヶ所再生成」 = 短期間に 11 件の同型再発が出た自社実例への根本対策
 
 ## 目的
 
@@ -70,34 +70,34 @@ AI agent (= Claude Code / Codex / Gemini CLI 等) が「完了しました」 �
 
 - 完了判定 = owner / peer の独立 review 経由
 - AI agent 単独で「直った」 「完成」 「完了」 と persist することは NG
-- 自社使用実績 = 5/13 夜の 11 件再発、 AI agent 単独の「直った」 narrative が同じ form の再発を生んでいた
+- 自社使用実績 = 1 晩の見直しで 11 件の同型再発が見つかり、 AI agent 単独の「直った」 narrative が同じ form の再発を生んでいた
 
 例外 = owner が standing authorization で「自走範囲内の完了は AI agent 判定 OK」 と明示してる場合 (= 例: 軽い chain の commit + board update level)。 ただしこの場合も 5 ヶ所物理 evidence は必須。
 
-## form 例 (= 6/9 朝 vertical slice chain の actual receipt 用)
+## form 例 (= 架空の汎用例: Product X template chain の receipt)
 
 ```markdown
-# 完了 receipt: AI Operator Guard vertical slice 中心 4 件 chain
+# 完了 receipt: Product X template chain
 
 ## 5 ヶ所物理 evidence
 
-1. Source-of-Truth = internal_spec_v0.md § 3.1 vertical slice form 更新済 (= commit 72b529b)
-2. Agent Bus = `~/.shared-ops/board/2026-06-09_zen_kai_yuino_dri_handoff_jun_go_received.md` (= 06:58 起稿) + Kai 07:22 substantive response received
-3. Home = zen_status update 別 sit (= 朝 chat 戻り中、 重い update は避ける)
+1. Source-of-Truth = internal_spec_v0.md § 3.1 form 更新済 (= commit 済)
+2. Agent Bus = `~/team-ops/board/2026-01-15_agent_a_agent_b_product_x_handoff.md` (= 起稿済) + Agent B substantive response received
+3. Home = agent_a_status update 別 sit (= owner chat 戻り中、 重い update は避ける)
 4. Dashboard = 売上 0 / 内部体制変更のみ、 数字変更なし articulate
 5. board / handoff = handoff_template_v0.md の 5 段 articulate に従う form 内包済 (= 「次の 1 件」 articulate あり)
 
 ## 同型再発検出
 
-- 過去 7 日 board grep = 同型 fire 検出 = zen_over_correction_via_ask knot zen-007 (= 6/8 朝の「公開していい?」 ask、 既知 fire、 物理対策 = MEMORY.md feedback_no_ask_for_free_external_publish_2026-06-08 land 済)
+- 過去 7 日 board grep = 同型 fire 1 件検出 (= 確認過剰 ask の既知 form、 物理対策 land 済)
 - 検出 1 件、 ただし物理対策 land 済 + 同 lane の continuation じゃない (= 別 chain で発火、 反復じゃない)
 - 内部 review board 起稿不要、 ただし完了 articulate 時に該当 articulate 必須
 
 ## AI agent 単独完了 narrative なし
 
-- 本 chain の「完了判定」 = owner (= jun) の朝 chat 戻り後の判定経由
-- AI agent 単独で「vertical slice 4 件完成 + 商品化準備完了」 narrative は persist しない
-- 「中心 4 件 land done = template directory に 4 件起稿済」 articulate のみ、 「商品化準備完了」 「公開準備完了」 は jun 判定後
+- 本 chain の「完了判定」 = owner の review 経由
+- AI agent 単独で「template 4 件完成 + 商品化準備完了」 narrative は persist しない
+- 「中心 4 件 land done = template directory に 4 件起稿済」 articulate のみ、 「商品化準備完了」 「公開準備完了」 は owner 判定後
 ```
 
 ## boundary
@@ -116,7 +116,7 @@ AI agent (= Claude Code / Codex / Gemini CLI 等) が「完了しました」 �
 ## Related
 
 - AI Operator Guard internal_spec_v0.md § 3.1 vertical slice 3 件目
-- nokaze 内 form = 5/13 reform 「直った」 新定義 board file (= `~/.shared-ops/board/2026-05-13_zen_jun_kai_zen_management_layer_reform_full_spec.md` § 完了判定の固定)
+- nokaze 内 form = 「直った」 の新定義 (= 完了判定の固定、 自社運用で採用中)
 - handoff_template_v0.md = vertical slice 4 件目、 5 段の「完了の物理証拠 5 ヶ所」 と本 template の 5 ヶ所が完全互換
 - mode_declaration_template_v0.md = vertical slice 1 件目、 mode 宣言で「自走範囲内の完了」 articulate との連動軸
 - stop_finalization_template_v0.md = vertical slice 2 件目、 Layer 1-2 (= 未処理 packet / 未返事 peer) と本 template の Agent Bus 軸の連動

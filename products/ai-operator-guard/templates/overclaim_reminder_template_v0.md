@@ -1,17 +1,17 @@
 # Overclaim Reminder Template v0 (= AI Operator Guard vertical slice 後段 4 件 3 件目)
 
 generated_at: 2026-06-09 13:05 JST
-status: internal draft、 jun GO 前
+status: v0 draft (= 公開判断は owner GO 経由)
 origin:
 - AI Operator Guard internal_spec_v0.md § 3.2 後段 4 件 3 件目
-- nokaze 内 form (= nexus-lab/docs/rules/drift.md § 13 段目 「自分で使ってない商品を売ると書く違反を止める 形にする 道具」、 5/17 起稿 land、 物理対策 5 件) を AI agent 運用一般向けに汎用化
-- 内部 origin = 5/17 dogfood violation 同型 (= 4/27 mcp 商品の同型を 1.5 ヶ月で繰り返し)、 zen_dogfood_publish_premature knot zen-008 軸
+- nokaze 内 form (= 「自分で使ってない商品を売ると書く違反を止める 形にする 道具」、 物理対策 5 件) を AI agent 運用一般向けに汎用化
+- 内部 origin = 自分で使ってない商品に「販売開始」 と書く同型を 1.5 ヶ月で 2 回繰り返した自社実例
 
 ## 目的
 
 AI agent (= Claude Code / Codex / Gemini CLI 等) が商品 / 機能 / output に対して「販売開始」 「公開」 「価格」 「証明済」 「全 user に効く」 等の過大な claim articulate を持つ前に、 物理的に確認する rule / 確認 list。
 
-「未完成段階での過大な claim」 → 「事実と articulate のズレ」 → 「owner / 顧客 / 関係者の混同」 という最大の運用失敗の class への対策。 5/17 dogfood violation 同型は「気をつける」 という普段のクセでは再発する evidence (= 4/27 + 5/17 で 1.5 ヶ月で 2 回再発)、 物理対策が必須。
+「未完成段階での過大な claim」 → 「事実と articulate のズレ」 → 「owner / 顧客 / 関係者の混同」 という最大の運用失敗の class への対策。 この同型は「気をつける」 という普段のクセでは再発する evidence (= 自社で 1.5 ヶ月に 2 回再発した実例)、 物理対策が必須。
 
 ## いつ使う
 
@@ -85,8 +85,8 @@ AI agent (= Claude Code / Codex / Gemini CLI 等) が商品 / 機能 / output �
 
 ```bash
 # 概念的な実装
-zen_dogfood_preflight.sh <product>
-# = check: ~/Desktop/dogfood/<product>/*.md が ≥ 1 件あるか + 直近 N 日以内に update あるか
+dogfood_preflight.sh <product>
+# = check: <workspace>/dogfood/<product>/*.md が ≥ 1 件あるか + 直近 N 日以内に update あるか
 ```
 
 #### 対策 2: pre commit public docs audit
@@ -103,7 +103,7 @@ zen_dogfood_preflight.sh <product>
 
 #### 対策 4: dogfood/ directory form 固定
 
-- 自社使用実績の record file を固定 directory に集約 (= `~/Desktop/dogfood/<product>/<date>.md`)
+- 自社使用実績の record file を固定 directory に集約 (= `<workspace>/dogfood/<product>/<date>.md`)
 - 1 回使うごとに 1 file
 - form の articulate を README で固定
 
@@ -113,32 +113,32 @@ zen_dogfood_preflight.sh <product>
 - chat output 前 + commit 前 + board 起稿前で fire
 - 検出時 = warn + articulate dial 推奨
 
-## form 例 (= 6/9 朝 AI Operator Guard vertical slice chain land 時の self-check)
+## form 例 (= 架空の汎用例: Product X template chain land 時の self-check)
 
 ```
-過大 claim self-check (= vertical slice chain land articulate 時):
+過大 claim self-check (= Product X template chain land articulate 時):
 
 Tier 1 keyword check:
 - 「商品化完了」 articulate なし = OK
 - 「販売開始」 articulate なし = OK
-- 「公開」 articulate なし (= 「reviewable state」 + 「公開は jun 別 turn GO 軸」 articulate) = OK
+- 「公開」 articulate なし (= 「reviewable state」 + 「公開は owner 別 turn GO 軸」 articulate) = OK
 
 Tier 2 keyword check:
 - 「証明済」 articulate なし (= 「dogfood evidence は appendix-level proof」 articulate) = OK
-- 「全 user に効く」 articulate なし (= 「nokaze 環境固有の自社使用実績」 articulate) = OK
+- 「全 user に効く」 articulate なし (= 「自社環境固有の使用実績」 articulate) = OK
 
 Tier 3 keyword check:
 - 「次世代」 「革新的」 articulate なし = OK
 - 「全自動」 articulate なし (= 「警告のみ + block しない」 articulate) = OK
 
 確認 5 軸:
-1. 自分で使った証拠 = あり (= 4/14 - 6/8 nokaze 内実装 + commit chain)
-2. 検証期間 = ≥ 2 ヶ月 (= 4/14 起稿 - 6/9)
+1. 自分で使った証拠 = あり (= 約 2 ヶ月の内部実装 + commit chain)
+2. 検証期間 = ≥ 2 ヶ月
 3. 外部 user 検証 = なし (= 内部使用実績のみ articulate 済、 Tier 1 keyword 出してない)
-4. 物理的な公開先 = なし (= private repo + nexus-lab internal、 jun GO 待ち)
-5. owner / peer 独立確認 = 進行中 (= Kai 22:24 codesign + jun 朝 GO + Yuino reviewer protocol 起稿、 vertical slice review はこれから)
+4. 物理的な公開先 = なし (= private repo のみ、 owner GO 待ち)
+5. owner / peer 独立確認 = 進行中 (= peer agent の codesign + owner GO、 template review はこれから)
 
-判定 = articulate 「reviewable state + appendix-level proof + jun GO 待ち」 form = 過大 claim なし、 OK
+判定 = articulate 「reviewable state + appendix-level proof + owner GO 待ち」 form = 過大 claim なし、 OK
 ```
 
 ## boundary
@@ -157,8 +157,8 @@ Tier 3 keyword check:
 ## Related
 
 - AI Operator Guard internal_spec_v0.md § 3.2 後段 4 件 3 件目
-- nokaze 内実装 form = nexus-lab/docs/rules/drift.md § 13 段目 (= 5/17 起稿 land、 物理対策 5 件)
-- nokaze 内 memory = `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_dogfood_violation_repeat_2026-05-17.md`
+- nokaze 内実装 form = 内部 rule 文書の dogfood 違反対策の段 (= 物理対策 5 件、 自社運用で採用中)
+- nokaze 内 memory = dogfood 違反の振り返り記録 (= 内部 memory file、 本 package には含めない)
 - mode_declaration_template_v0.md = vertical slice 1 件目、 「mode: tripwire_hold」 = 過大 claim 触れる可能性ある時の articulate なし軸との連動
 - completion_receipt_template_v0.md = vertical slice 3 件目、 「AI agent 単独完了 narrative なし」 軸と本 template の確認軸 5 の連動
-- zen_dogfood_publish_premature knot (= zen knot export zen-008)、 本 rule の knot 原因軸
+- 自社の再発記録 (= 「未完成段階での販売開始 articulate」 の繰り返し) = 本 rule の原因軸

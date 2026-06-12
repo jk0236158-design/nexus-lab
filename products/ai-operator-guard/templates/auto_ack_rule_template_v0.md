@@ -1,11 +1,11 @@
 # Auto-ACK Rule Template v0 (= AI Operator Guard vertical slice 後段 4 件 1 件目)
 
 generated_at: 2026-06-09 11:55 JST
-status: internal draft、 jun GO 前
+status: v0 draft (= 公開判断は owner GO 経由)
 origin:
-- AI Operator Guard internal_spec_v0.md § 3.2 後段 4 件 1 件目 (= 中心 4 件 chain 完成 = 6/9 朝 reviewable state notification 後の次 phase)
-- nokaze 内 form (= nexus-lab/scripts/zen_stop_hook.sh の auto_ack file 除外 logic、 6/5 実装 land) を AI agent 運用一般向けに汎用化
-- 内部 origin = evidence_detachment_in_ack knot (= 5/22 「ACK は complete ではない」 admit + 6/2 「軽 ACK + 別 sit」 5 日放置 same-form 振り返り、 zen knot export zen-005 軸)
+- AI Operator Guard internal_spec_v0.md § 3.2 後段 4 件 1 件目
+- nokaze 内 form (= turn end hook script の auto_ack file 除外 logic) を AI agent 運用一般向けに汎用化
+- 内部 origin = 「ACK は complete ではない」 admit + 「軽 ACK + 別 sit」 数日放置の同型再発の振り返り
 
 ## 目的
 
@@ -90,13 +90,13 @@ done
 
 ## 自社使用実績 (= evidence、 「appendix-level proof」 軸)
 
-nokaze 環境での実際の運用:
+nokaze 環境での実際の運用 (= 固有名 / 日付は伏せて一般化):
 
-- 5/22 admit = 「ACK は complete ではない」 + 「自動受領 = 完了」 短絡の 5/21 朝 4 回再発 (= wake-after-audit skill 起稿 chain origin)
-- 6/2 admit = Kai 6/2 substantive response への「軽 ACK + 詳細別 sit」 5 日放置、 evidence_detachment_in_ack knot zen-005 typical sample
-- 6/8 構造接続 4 layer 実装 = zen_stop_hook.sh の auto_ack file 除外 logic を base に Aira surface 未言及検出 + skill 未言及検出 + pause + 並列 articulate 軸
+- 「自動受領 = 完了」 短絡が 1 朝に 4 回再発した実例 = 受け取り側の物理 audit 手順の起稿 origin
+- peer agent の substantive response への「軽 ACK + 詳細別 sit」 を 5 日間放置した実例 = 本 rule の典型 sample
+- turn end hook の auto_ack file 除外 logic を base に、 別 lane surface 未言及検出 + skill 未言及検出を追加実装
 
-= 本 rule は「nokaze 環境で踏んだ失敗 → 物理対策」、 「全 user に効く」 軸じゃない、 「失敗の class が実在する」 evidence + 「物理対策の汎用化軸」 が main、 nokaze の自社使用実績は appendix-level の証拠軸。
+= 本 rule は「自社環境で踏んだ失敗 → 物理対策」、 「全 user に効く」 軸じゃない、 「失敗の class が実在する」 evidence + 「物理対策の汎用化軸」 が main、 自社使用実績は appendix-level の証拠軸。
 
 ## boundary
 
@@ -113,8 +113,8 @@ nokaze 環境での実際の運用:
 ## Related
 
 - AI Operator Guard internal_spec_v0.md § 3.2 後段 4 件 1 件目
-- nokaze 内実装 form = nexus-lab/scripts/zen_stop_hook.sh L82-141 (= auto_ack file 除外 + PENDING_WITHOUT_MARKER count、 6/5 実装 land)
+- nokaze 内実装 form = turn end hook script の auto_ack file 除外 + 未返事 count logic (= 自社運用で採用中)
 - mode_declaration_template_v0.md = vertical slice 1 件目、 「mode 宣言 = relay_only」 軸との連動 (= 自動受領 ≒ relay_only mode + 実質的な返答 ≒ executive_action mode)
 - stop_finalization_template_v0.md = vertical slice 2 件目、 Layer 2 「未返事 peer 検出」 と本 template の軸 3 の連動
 - completion_receipt_template_v0.md = vertical slice 3 件目、 「完了の物理証拠 5 ヶ所」 の「Agent Bus」 軸と本 template の軸 2 の連動
-- evidence_detachment_in_ack knot = zen knot export v1 (= research/knot_and_nourishment/zen_knot_export_v1_2026-06-08.json) の zen-005 / zen-003、 本 rule の knot 原因軸
+- 自社の再発記録 (= 「受領と内容取り込みの分離」 の繰り返し) = 本 rule の原因軸

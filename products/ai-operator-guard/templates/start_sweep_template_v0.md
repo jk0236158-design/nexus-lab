@@ -1,11 +1,11 @@
 # Start Sweep Template v0 (= AI Operator Guard vertical slice 後段 4 件 最終件、 chain 完成)
 
 generated_at: 2026-06-09 13:35 JST
-status: internal draft、 jun GO 前
+status: v0 draft (= 公開判断は owner GO 経由)
 origin:
 - AI Operator Guard internal_spec_v0.md § 3.2 後段 4 件 最終件
-- nokaze 内 form (= nexus-lab/scripts/zen_startup_sweep.sh、 575 行 + 11 section、 4/14 起稿 - 6/8 構造接続 4 layer 追加 land) を AI agent 運用一般向けに汎用化
-- 内部 origin = 「セッション開始時に board / status / Aira surface を読まずに動き出す」 → 「前 session の続きを把握せず別 work を fire」 同型再発の対策
+- nokaze 内 form (= startup sweep script、 11 section 構成) を AI agent 運用一般向けに汎用化
+- 内部 origin = 「セッション開始時に board / status / 別 lane surface を読まずに動き出す」 → 「前 session の続きを把握せず別 work を fire」 同型再発の対策
 
 ## 目的
 
@@ -16,7 +16,7 @@ AI agent (= Claude Code / Codex / Gemini CLI 等) のセッション開始時 (=
 ## いつ使う
 
 - 新規 session 立ち上がり時 = 必須 (= SessionStart hook で fire)
-- 自走 wake fire 直後 = 必須 (= wake-after-audit skill と組合せ運用)
+- 自走 wake fire 直後 = 必須 (= wake 直後の物理 audit 手順と組合せ運用)
 - 長期 quiet (= 3-6 時間以上) 後の再開時 = 必須
 - owner chat 戻り直後 = 任意 (= chat lane priority、 sweep より対話)
 
@@ -48,7 +48,7 @@ project 配下の状態確認:
 - 今日中に完了可能 + 過大じゃない軸
 - owner / peer に articulate 可能な軸
 
-「件数評価じゃなく value 評価で進む」 軸 (= zen-executive-scan の軸 6 と整合)。
+「件数評価じゃなく value 評価で進む」 軸 (= 経営者視点の節目 check と整合)。
 
 ### Section 4: memory-lint
 
@@ -77,7 +77,7 @@ memory file の整合性確認:
 - 直近 24-48h の新規 message
 - 自動受領 file の除外 (= auto_ack_rule_template_v0 軸)
 
-board の read miss 防止 = 5/25 同日 board collapse 同型対策 (= zen knot export zen 様 audit_skip_chain 軸の物理化)。
+board の read miss 防止 = 同日に届いた board を読まずに別 work を fire した同型再発への対策 (= 自社の再発記録で物理化済)。
 
 ### Section 7: Controlled Wake / Task Queue
 
@@ -98,11 +98,11 @@ board の read miss 防止 = 5/25 同日 board collapse 同型対策 (= zen knot
 
 「内部 commit を売上と数えない軸」 + 「世界の動き = 0 なら progress_claim_allowed = false」 軸の物理化。
 
-### Section 9: External Surface Read (= 6/8 構造接続 4 layer 由来、 別 AI agent の hint 読み込み)
+### Section 9: External Surface Read (= 別 AI agent の hint 読み込み)
 
 別 AI agent / 別 lane の出してる「次の動き」 surface 読み込み:
 
-- 別 lane の status file 軸 (= 例: nokaze 内 Aira surface = yuino_outcome_chat_preflight + yuino_anti_reactor_review)
+- 別 lane の status file 軸 (= 例: 別 agent の preflight / review surface file、 file path を config で指定)
 - 別 lane の「top_action」 「next_behavior」 「next_min_experiment」 articulate
 - 自分の judgement に取り込む軸の articulate
 
@@ -143,7 +143,7 @@ sweep の終了 articulate:
 ## Related
 
 - AI Operator Guard internal_spec_v0.md § 3.2 後段 4 件 最終件
-- nokaze 内実装 form = nexus-lab/scripts/zen_startup_sweep.sh (= 575 行 + 11 section、 4/14 起稿 - 6/8 構造接続 4 layer land)
+- nokaze 内実装 form = startup sweep script (= 11 section 構成、 自社運用で採用中)
 - mode_declaration_template_v0.md = vertical slice 1 件目、 section 10 で 5 mode 連動
 - stop_finalization_template_v0.md = vertical slice 2 件目、 turn end の物理 hook と本 template の session start の対対称軸
 - auto_ack_rule_template_v0.md = 後段 1 件目、 section 6 board audit で auto_ack 除外連動
@@ -151,26 +151,17 @@ sweep の終了 articulate:
 - overclaim_reminder_template_v0.md = 後段 3 件目、 section 5 + section 8 で数字 articulate 軸との連動
 - handoff_template_v0.md = vertical slice 4 件目、 「読むもの」 軸と本 template の section 2 + 6 軸の連動
 
-## vertical slice chain 完成 articulate (= 6/9 朝 chain land 物)
+## vertical slice chain 完成 articulate
 
 本 template の land = AI Operator Guard vertical slice 中心 4 件 + 後段 4 件 = 8 件 chain 完成:
 
-| 件 | template file | commit |
-|---|---|---|
-| 中心 1 件目 | mode_declaration_template_v0.md | 0ff2b54 |
-| 中心 2 件目 | stop_finalization_template_v0.md | bd3bf45 |
-| 中心 3 件目 | completion_receipt_template_v0.md | fdab1ea |
-| 中心 4 件目 | handoff_template_v0.md | 1d05eb6 |
-| 後段 1 件目 | auto_ack_rule_template_v0.md | 5060f26 |
-| 後段 2 件目 | seven_signal_drift_check_template_v0.md | 4e1e297 |
-| 後段 3 件目 | overclaim_reminder_template_v0.md | 42aa236 |
-| 後段 4 件目 | start_sweep_template_v0.md | (= 本 commit) |
+- 中心 4 件 = mode_declaration / stop_finalization / completion_receipt / handoff
+- 後段 4 件 = auto_ack_rule / seven_signal_drift_check / overclaim_reminder / start_sweep (= 本 template)
 
-= 朝 6:58 - 13:35 chain で 8 件 template land、 AI Operator Guard v0 の template directory 完成。
+次の phase = owner GO + 別 sit fire:
 
-次の phase = jun GO + 別 sit fire:
 - README + 商品 description 起稿 (= internal_spec_v0 + 8 件 template の external-facing 軸)
-- private GitHub repo の prototype 実装
-- public publish / marketplace / 価格 = jun 別 turn GO
+- private repo の prototype 実装
+- public publish / marketplace / 価格 = owner 別 turn GO
 
-= 完了 narrative は AI agent 単独で persist しない (= completion_receipt_template_v0 軸 respect)、 「template directory 8 件 land done」 articulate のみ、 「商品化準備完了」 「公開準備完了」 は jun 判定経由。
+= 完了 narrative は AI agent 単独で persist しない (= completion_receipt_template_v0 軸 respect)、 「template directory 8 件 land done」 articulate のみ、 「商品化準備完了」 「公開準備完了」 は owner 判定経由。

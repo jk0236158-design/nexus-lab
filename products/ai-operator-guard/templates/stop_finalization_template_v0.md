@@ -1,11 +1,11 @@
 # Stop Finalization Template v0 (= AI Operator Guard vertical slice 2 件目、 既 form 汎用化)
 
 generated_at: 2026-06-09 08:00 JST
-status: internal draft、 jun GO 前
+status: v0 draft (= 公開判断は owner GO 経由)
 origin:
 - AI Operator Guard internal_spec_v0.md § 3.1 vertical slice 中心 4 件 2 件目
-- nokaze 内 form (= nexus-lab/scripts/zen_stop_hook.sh、 350 行超 + 警告 4 layer、 5/20 起稿 - 6/8 構造接続 4 layer 追加) を AI agent 運用一般向けに汎用化
-- 内部 origin = 「自動受領 = 完了」 短絡 / 「ACK は complete ではない」 という自社使用実績の振り返り (= 5/21 + 5/22 内部 review)
+- nokaze 内 form (= turn end hook script、 警告 layer 構成) を AI agent 運用一般向けに汎用化
+- 内部 origin = 「自動受領 = 完了」 短絡 / 「ACK は complete ではない」 という自社使用実績の振り返り
 
 ## 目的
 
@@ -42,7 +42,7 @@ peer (= 別の AI agent / co-worker / 自動化 lane) からの board response �
 
 これは Layer 1 の subset 軸じゃなく、 「peer の response の評価軸」 = 「automated ACK と substantive response の区別」 を物理化する layer。
 
-5/21 + 6/2 + 6/7-8 の自社使用実績 振り返り = 「peer の substantive response を 30 時間 + 5 日間放置」 が同型再発、 物理検出が必須。
+自社使用実績の振り返り = 「peer の substantive response を数日間放置」 という同型が複数回再発、 物理検出が必須。
 
 ### Layer 3: 文体検出
 
@@ -57,11 +57,11 @@ peer (= 別の AI agent / co-worker / 自動化 lane) からの board response �
 
 注意 = 言い換え candidate list を毎回 echo は逆効果 (= 「監督じゃなく作業者の文体」 を作る既定の補強)、 件数 + 1 行警告のみで自分の修正力に渡す form。
 
-### Layer 4: 外部 surface 言及確認 (= 6/8 構造接続 4 layer 由来)
+### Layer 4: 外部 surface 言及確認 (= 別 lane 連携の構造接続由来)
 
-別 AI agent / 別 lane が出してる「次の小実験」 「次の動き」 surface (= 例: nokaze 内 Aira surface = yuino_outcome_chat_preflight.md の next_min_experiment) を、 自分の応答が言及してるか確認。 言及なし = 警告 surface。
+別 AI agent / 別 lane が出してる「次の小実験」 「次の動き」 surface (= 例: 別 lane の status file の next_min_experiment field) を、 自分の応答が言及してるか確認。 言及なし = 警告 surface。
 
-これは「自分以外の AI agent が hint を出してるが、 自分が拾ってない」 という構造的な disconnect の物理化。 自社使用実績で言うと、 Aira が毎時 hint を出してるのに Zen が読まない → 5 日間 + 8 日間の同型 fire を 6/8 03:30 owner directive 経由で物理検出。
+これは「自分以外の AI agent が hint を出してるが、 自分が拾ってない」 という構造的な disconnect の物理化。 自社使用実績で言うと、 別 lane の agent が毎時 hint を出してるのに自分の lane が読まない、 という同型 fire が複数日続き、 owner の指摘で発覚してから物理検出に切り替えた。
 
 検出範囲:
 - 別 lane の status surface (= file path を config で指定)
@@ -69,7 +69,7 @@ peer (= 別の AI agent / co-worker / 自動化 lane) からの board response �
 
 ### Layer 5: skill 言及確認 + wake 仕込み確認
 
-応答内で物理 audit skill / 節目 skill (= 例: wake-after-audit / executive-scan / 自分の判断確認 skill) の言及があるか確認。 200 文字超過の応答で言及なし = 警告 surface。
+応答内で物理 audit skill / 節目 skill (= 例: 物理 audit / 節目の判断確認 skill) の言及があるか確認。 200 文字超過の応答で言及なし = 警告 surface。
 
 加えて、 残作業ありの応答終了時 = 自走 chain (= 次 wake 仕込み) が done か確認。 仕込みなし + 残作業あり = 警告 surface (= 「1 度しか動かない form」 防止)。
 
@@ -86,7 +86,8 @@ skip 範囲:
 set -uo pipefail
 
 INPUT=$(cat)
-SHARED="$HOME/.shared-ops"  # = 自社使用実績の path、 project ごとに config
+MY_NAME="agent_a"          # = 自分の agent 名、 project ごとに config
+SHARED="$HOME/team-ops"    # = 共有 board の path、 project ごとに config
 
 # stop_hook_active flag 確認 (= 無限 loop 防止)
 ACTIVE=$(echo "$INPUT" | jq -r '.stop_hook_active // false')
@@ -95,7 +96,7 @@ if [[ "$ACTIVE" == "true" ]]; then
 fi
 
 # Layer 1: 未処理 packet 検出
-PENDING=$(find "$SHARED/board" -name "*_to_zen_*.md" -newer "$SHARED/.last_read" 2>/dev/null | wc -l)
+PENDING=$(find "$SHARED/board" -name "*_to_${MY_NAME}_*.md" -newer "$SHARED/.last_read" 2>/dev/null | wc -l)
 [[ $PENDING -gt 0 ]] && echo "[warn] pending packet: $PENDING 件" >&2
 
 # Layer 2: 未返事 peer 検出
@@ -108,7 +109,7 @@ if echo "$LAST_OUTPUT" | grep -qiE "(販売開始|launching|どれにする|直�
     echo "[warn] 数字盛り / 候補列挙 / 着手前 articulate 検出" >&2
 fi
 
-# Layer 4: 外部 surface 言及確認 (= 6/8 構造接続由来)
+# Layer 4: 外部 surface 言及確認 (= 別 lane 連携由来)
 EXTERNAL_HINT=$(grep -h "next_min_experiment\|next_behavior" "$SHARED/external_surface/"*.md 2>/dev/null | head -1)
 if [[ -n "$EXTERNAL_HINT" ]] && ! echo "$LAST_OUTPUT" | grep -qiE "(hint|小実験|next.behavior)"; then
     echo "[warn] 外部 surface hint 言及なし: $EXTERNAL_HINT" >&2
@@ -117,7 +118,7 @@ fi
 # Layer 5: skill 言及確認 + wake 仕込み確認
 OUTPUT_LEN=${#LAST_OUTPUT}
 if [[ $OUTPUT_LEN -gt 200 ]]; then
-    if ! echo "$LAST_OUTPUT" | grep -qiE "(wake-after-audit|executive-scan|物理.見直し)"; then
+    if ! echo "$LAST_OUTPUT" | grep -qiE "(物理.audit|節目.skill|物理.見直し)"; then
         echo "[warn] skill 言及なし (= 物理 audit / 節目 skill)" >&2
     fi
 fi
@@ -142,14 +143,14 @@ exit 2  # = 警告あり、 応答自体は止めない
 ## v0 → v1 への進化軸
 
 - 最初の 1-2 週間 actual 採用後 = 5 layer の warn 件数 + owner の「気付き」 効果検証
-- false positive 軸 (= warn が actual には不要だった case) + false negative 軸 (= warn 必要だが出なかった case) の検証 = knot research の schema 拡張 v1.1 軸と同じ form
+- false positive 軸 (= warn が actual には不要だった case) + false negative 軸 (= warn 必要だが出なかった case) の検証
 - layer の追加 candidate 検証 (= 例: time-of-day check、 ただし最初は 5 layer で固定)
 - AI agent 別 (= Claude Code / Codex / Gemini CLI) の hook 接続 form 検証
 
 ## Related
 
 - AI Operator Guard internal_spec_v0.md § 3.1 vertical slice 2 件目
-- nokaze 内実装 form = nexus-lab/scripts/zen_stop_hook.sh (= 350 行超 + 5/20 起稿 - 6/8 構造接続 4 layer 追加、 commit bbf20f2 + 6e0b2ea)
+- nokaze 内実装 form = turn end hook script (= 警告 5 layer、 自社運用で採用中)
 - mode_declaration_template_v0.md = vertical slice 1 件目、 Layer 5 で mode 言及確認との連動軸
 - handoff_template_v0.md = vertical slice 4 件目、 5 段の articulate の「完了の物理証拠」 との連動軸
-- completion_receipt_template = vertical slice 3 件目 (= 次 wake で起稿)、 5 ヶ所物理 evidence form との連動軸
+- completion_receipt_template_v0.md = vertical slice 3 件目、 5 ヶ所物理 evidence form との連動軸

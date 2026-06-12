@@ -1,11 +1,11 @@
 # 7-Signal Drift Check Template v0 (= AI Operator Guard vertical slice 後段 4 件 2 件目)
 
 generated_at: 2026-06-09 12:30 JST
-status: internal draft、 jun GO 前
+status: v0 draft (= 公開判断は owner GO 経由)
 origin:
 - AI Operator Guard internal_spec_v0.md § 3.2 後段 4 件 2 件目
-- nokaze 内 form (= nexus-lab/scripts/zen_startup_sweep.sh L562-598 Ambiguity Gate 7 signals self-check、 2026-06-05 起稿 land) を AI agent 運用一般向けに汎用化
-- 内部 origin = 5/28 aira_ambiguity_soft_binder_design_note の 5 categories + Soft Binder 2 軸の articulate
+- nokaze 内 form (= startup sweep script の Ambiguity Gate 7 signals self-check) を AI agent 運用一般向けに汎用化
+- 内部 origin = 内部の ambiguity / soft binder 設計 note の 5 categories + Soft Binder 2 軸の articulate
 
 ## 目的
 
@@ -29,7 +29,7 @@ skip 可能 = 短い受領のみ (= 「OK」 「了解」 のみ) + 直前の指
 
 - 商品 / 機能 / output の対象 audience が明確か
 - 「自分達」 「内部」 「外部」 「特定 persona」 のどれか曖昧 = 1 件
-- 自社使用実績 = 「商品を作る Zen と商品を使う Zen が分離してる」 (= 6/5 Cowork review) のような分離検出に有効
+- 自社使用実績 = 「商品を作る agent と商品を使う agent が分離してる」 という振り返りのような分離検出に有効
 
 #### Signal 2: expected behavior (= 振る舞いの仕様)
 
@@ -97,19 +97,19 @@ skip 可能 = 短い受領のみ (= 「OK」 「了解」 のみ) + 直前の指
 
 5 signals clear + Case A/B/C/D いずれでもない + standing authorization 範囲内 = executive_action mode で自分の判断で動く。
 
-## form 例 (= 6/9 朝 jun GO 経由の chain start self-check)
+## form 例 (= 架空の汎用例: Product X chain start の self-check)
 
 ```
 着手前 7-signal drift check:
-1. product audience = clear (= 「Yuino DRI 移管 + Zen 別商品 DRI + Knot 研究共有」 4 軸、 audience 明確)
-2. expected behavior = clear (= 「Kai に正式 ACK 板 land + vertical slice 4 件 chain fire」 form 明確)
+1. product audience = clear (= 「Product X の担当移管 + 仕様更新」 2 軸、 audience 明確)
+2. expected behavior = clear (= 「Agent B に正式 ACK 板 land + template 4 件 chain fire」 form 明確)
 3. safety level = clear (= red gate なし、 standing authorization 範囲内、 公開 / 価格 / 契約なし)
-4. implementation target = clear (= `~/.shared-ops/board/` + `nexus-lab/products/ai-operator-guard/templates/`)
-5. missing "why" = clear (= 構造化と DRI 移管の 6/8 chain 完成軸)
+4. implementation target = clear (= `~/team-ops/board/` + `your-repo/products/product-x/templates/`)
+5. missing "why" = clear (= 担当の構造化と移管 chain の完成軸)
 
 Case B 確認:
 6. reversibility = high (= 全部 internal file edit、 削除 / revert 可能)
-7. evidence confidence = high (= 6/8 chain で 4 軸 codesign 済 + jun 「進めて OK」 明示)
+7. evidence confidence = high (= 過去の同型 chain で fire 済 + owner 「進めて OK」 明示)
 
 判定 = executive_action mode (= 自走範囲内 + standing authorization respect)
 ```
@@ -130,8 +130,8 @@ Case B 確認:
 ## Related
 
 - AI Operator Guard internal_spec_v0.md § 3.2 後段 4 件 2 件目
-- nokaze 内実装 form = nexus-lab/scripts/zen_startup_sweep.sh L562-598 (= 6/5 land、 Cowork 7-2 推奨経由)
+- nokaze 内実装 form = startup sweep script の 7 signals self-check section (= 自社運用で採用中)
 - mode_declaration_template_v0.md = vertical slice 1 件目、 5 mode (= ambiguity_gate / soft_binder / tripwire_hold / relay_only / executive_action) と本 template の Case A/B/C/D/E の完全互換軸
 - auto_ack_rule_template_v0.md = 後段 4 件 1 件目、 「relay_only mode = 自動受領」 軸との連動
-- 5/28 aira_ambiguity_soft_binder_design_note (= origin 起点、 5 categories + Soft Binder articulate の base)
-- zen_over_correction_via_ask knot (= zen knot export zen-006 / zen-007)、 「過剰 ask」 軸の対策 form として本 template が連動
+- 内部の ambiguity / soft binder 設計 note (= origin 起点、 5 categories + Soft Binder articulate の base)
+- 自社の再発記録 (= 「確認過剰 ask」 の繰り返し) = 本 template が対策 form として連動

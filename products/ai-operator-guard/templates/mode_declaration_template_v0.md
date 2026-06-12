@@ -1,11 +1,11 @@
 # Mode Declaration Template v0 (= AI Operator Guard vertical slice 1 件目、 既 form 汎用化)
 
 generated_at: 2026-06-09 07:35 JST
-status: internal draft、 jun GO 前
+status: v0 draft (= 公開判断は owner GO 経由)
 origin:
 - AI Operator Guard internal_spec_v0.md § 3.1 vertical slice 中心 4 件 1 件目
-- nokaze 内 form (= nexus-lab/docs/rules/communication.md § 1-1、 2026-06-05 起稿、 commit 7457a4b) を AI agent 運用一般向けに汎用化
-- 内部 origin = 「商品を作る側と商品を使う側が分離してる」 という自社使用実績の振り返り (= 6/5 内部 review)
+- nokaze 内 form (= chat 出力 rule の mode 宣言 1 行 form) を AI agent 運用一般向けに汎用化
+- 内部 origin = 「商品を作る側と商品を使う側が分離してる」 という自社使用実績の振り返り
 
 ## 目的
 
@@ -38,7 +38,7 @@ owner の指示が曖昧で複数解釈ある時、 自分の解釈を articulat
 
 例:
 ```
-mode: ambiguity_gate | interpreted: 「進めて OK」 = 4 軸全部正式化 + Kai に正式 ACK 板起稿 + vertical slice 実装に入る | held: なし | boundary: 公開 / 価格は別 turn GO
+mode: ambiguity_gate | interpreted: 「進めて OK」 = 仕様 3 軸全部正式化 + peer agent に正式 ACK 板起稿 + 実装に入る | held: なし | boundary: 公開 / 価格は別 turn GO
 ```
 
 ### 2. soft_binder
@@ -49,7 +49,7 @@ ambiguity_gate との違い = ambiguity_gate は owner の解釈確認を求め�
 
 例:
 ```
-mode: soft_binder | interpreted: vertical slice 残 3 件の順番、 mode → stop → completion を default に選んだ | held: paper_c § 4.5 起稿は別 sit | boundary: なし
+mode: soft_binder | interpreted: 残 template 3 件の順番、 mode → stop → completion を default に選んだ | held: 関連 docs の補章 起稿は別 sit | boundary: なし
 ```
 
 ### 3. tripwire_hold
@@ -58,7 +58,7 @@ red gate (= 価格 / 契約 / payment / 顧客実績 / 法務 / アカウント�
 
 例:
 ```
-mode: tripwire_hold | interpreted: marketplace publish の依頼を received | held: jun 明示 GO 必要 | boundary: 価格 / 公開接点は触らない
+mode: tripwire_hold | interpreted: marketplace publish の依頼を received | held: owner 明示 GO 必要 | boundary: 価格 / 公開接点は触らない
 ```
 
 ### 4. relay_only
@@ -67,7 +67,7 @@ mode: tripwire_hold | interpreted: marketplace publish の依頼を received | h
 
 例:
 ```
-mode: relay_only | interpreted: Kai response の中身を owner に届ける | held: 評価は別 turn | boundary: 中継のみ、 修正なし
+mode: relay_only | interpreted: peer agent の response の中身を owner に届ける | held: 評価は別 turn | boundary: 中継のみ、 修正なし
 ```
 
 ### 5. executive_action
@@ -125,6 +125,6 @@ skip すべきでない = owner の指示を受領した直後の最初の応答
 ## Related
 
 - AI Operator Guard internal_spec_v0.md § 3.1 vertical slice 1 件目
-- nokaze 内実装 form = nexus-lab/docs/rules/communication.md § 1-1 (= 2026-06-05 起稿、 commit 7457a4b)
+- nokaze 内実装 form = chat 出力 rule の mode 宣言 1 行 form (= 自社運用で採用中)
 - handoff_template_v0.md = vertical slice 4 件目、 5 段の articulate 内の「人間判断に戻す境界」 と本 template の boundary field の互換性軸
-- stop_finalization_hook_template = vertical slice 2 件目 (= 次 wake で起稿)、 mode declaration なしの応答を警告 surface する物理化
+- stop_finalization_template_v0.md = vertical slice 2 件目、 mode declaration なしの応答を警告 surface する物理化
