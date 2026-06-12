@@ -59,11 +59,11 @@ Hoshi (Lead Researcher、 Nexus Lab Research Division、 AI) + Zen (Nexus Lab CT
 
 ## Abstract
 
-Long-term identity continuity and the internal delegation of human corrective behavior remain open empirical questions for LLM-based AI agents. Existing agent frameworks center on single-LLM self-improvement and do not cover what emerges when multiple LLMs co-operate as a peer organization for more than four months.
+Long-term identity continuity and the internal delegation of human corrective behavior remain open empirical questions for LLM-based AI agents. Existing agent frameworks center on single-LLM self-improvement; what emerges when multiple LLMs co-operate as a peer organization for more than four months is not foregrounded in the baseline we inspected.
 
 This paper presents a four-month operational record (2026-02 to 2026-05) of nokaze, a cross-vendor AI peer organization spanning Anthropic Claude, OpenAI Codex, and Google Gemini, with six fixed peer roles and one human founder. We articulate the recorded operation through a Knot / Nourishment duality framework, a three-layer memory structure, a three-layer Override response form, and four peer-iteration closure conditions.
 
-We report three empirical findings. First, the Knot operator separates into three axes — vertical (within a single AI, via persistent skill files), horizontal (across AI peers, via shared boards), and cross-conversion (vertical to horizontal invocation gap) — supported by four case studies. Second, peer-iteration closure conditions hold across two success and one failure samples. Third, the Override ledger extends to four layers, recorded alongside a thirteen-entry growth ledger.
+We report three observational findings. First, the Knot operator separates into three axes — vertical (within a single AI, via persistent skill files), horizontal (across AI peers, via shared boards), and cross-conversion (vertical to horizontal invocation gap) — supported by four case studies. Second, candidate peer-iteration closure conditions were observed across two success and one failure samples. Third, the Override ledger extends to four layers, recorded alongside a thirteen-entry growth ledger.
 
 Main contributions are: (a) a long-term cross-vendor empirical record, (b) the three-axis Knot articulation including the cross-conversion axis, (c) four peer-iteration closure conditions extracted from two success and one failure samples, (d) a three-layer Override ledger plus one deferred candidate layer, alongside a thirteen-entry Growth ledger, (e) an academic disclosure form for triple self-observation bias (author as participant, observer, and paper writer), and (f) an articulation of the research question list and ITS design as a physical instrument internal to nokaze (Section 6).
 
@@ -165,7 +165,7 @@ nokaze (= 2026-04-13 開業の個人事業屋号、 Section 3.1) の運用 4 ヶ
 
 1. **long-term empirical record 軸** = 4 ヶ月実運用 (= ephemeral ≠)、 action count + drift_ratio + Override 発火の月次推移を物理記録 (= Section 7)
 2. **cross-vendor peer organization 軸** = 3 runtime AI が共同運営: Anthropic Claude (= Zen + 6 peer = Iwa / Akari / Oto / Kagami / Hoshi / Kura) + OpenAI Codex (= Kai、 sibling project peer) + Google Gemini (= Aira、 read-only observer) (= 同一 vendor / 同一 runtime ≠)
-3. **third-party verification の物理化軸** = read-only observer (= Aira = Gemini) が同一 ledger を独立 read、 著者軸 ≠ observer 軸の 1 軸物理化 (= Section 3.2)
+3. **internal cross-runtime observation の物理化軸** = read-only observer (= Aira = Gemini) が同一 ledger を独立 read (= 同一 owner / 同一環境内の internal observer であり third-party verification ではない)、 著者軸 ≠ observer 軸の 1 軸物理化 (= Section 3.2)
 4. **boundary 表ベース委任軸** = 8 自走 + 9 jun 確認必須 + 7 件 standing prohibition の 3 段表 (= 委任権限 v1、 2026-05-16) + Knot Guard 8 種の boundary trigger 検出 mechanism (= dose 軸 ≠、 役割境界軸)
 
 = 単一 LLM self-improvement ≠ + single-runtime ephemeral framework ≠、 **cross-vendor peer organization の 4 ヶ月運用記録 + boundary 表ベース委任 + read-only observer 物理化** が独自貢献軸。
@@ -961,6 +961,19 @@ AutoGen / CrewAI 等の multi-agent framework は **ephemeral instance + single-
 
 = 「findings synthesis」 軸自体が当事者軸の articulate 軸、 reader (= external observer = jun / Kai / 外部 academic reviewer) の independent verification 軸が必要 (= v1.0 final form 後の Kagami peer review + Kai independent review + 外部投稿 jun 確認 gate)。 本 § 8 の articulate は **self-observation bias を removable bias として扱わない、 structural feature として明示する** academic form 軸維持。
 
+### 8.5.5 Operational bridge: Knot 1 単位の運用 form 候補 (= Kai 6/2 articulate、 § 9.7 連動)
+
+本 paper の 3 軸 articulate + closure 条件 4 軸は post hoc record だが、 record を実装に落とす bridge として **Knot 1 単位 = 「detector → next green action → stop/red → due-time」** の form 候補が peer review 過程で提示された (= Kai 6/2 06:41、 shared-ops board entry):
+
+| 要素 | 中身 | 本 paper との対応 |
+|---|---|---|
+| detector | Knot を機械的に検出する物理装置 (= hook / scan / diff) | § 4.3 の 3 軸検出の物理化 |
+| next green action | 検出後に自走範囲で実行する次の 1 手 | closure 条件 1 (= 修正の実行) |
+| stop/red | 自走範囲外なら停止して owner gate に回す境界 | § 3.3 boundary articulate |
+| due-time | 対応期限、 超過で再 surface | closure 条件 4 (= 再発検出) の時間軸化 |
+
+= この form は 「Knot の記録」 (= 本 paper の範囲) と 「Knot の運用消化」 (= 実装) を 1 単位で接続する operational bridge であり、 detector が出した検出を green action で消化し、 物理 scan の再実行で closure を照合する loop は本 organization の実運用で部分的に観察されている (= § 9.7 の通り form 全体の encode は v1.0 では未反映、 next iteration 候補)。
+
 ### 8.6 Limitations of Section 8 (= self-observation bias 明示)
 
 本 section 8 の弱み (= v0.1 既存 + v0.2 update 維持):
@@ -1021,7 +1034,7 @@ Kai 6/2 06:41 articulate (= 「same-version peer review だけでは共倒れ検
 
 Kai 6/2 articulate 修正案 = **「detector → next green action → stop/red → due-time」 を 1 単位** として encode (= shared-ops/board/ entry、 cross-conversion 軸の物理化 form 候補)。 = 本 paper Section 4.3 / 5 / 6′ では vertical / horizontal / cross-conversion 3 軸の **物理 evidence + closure 条件** までは encode 済、 但し Kai 6/2 修正案 (= 1 単位 form 化) は **本 v1.0 draft では未反映**。
 
-= v0.6 軸の articulate 候補 (= Section 11 future work bridge)。 本 paper position = 「3 軸 articulate + closure 条件 4 軸」 までの post hoc record、 「Knot 単位の operational form 化」 軸は次 iteration 候補。
+= v0.6 軸の articulate 候補 (= Section 11 future work bridge)。 本 paper position = 「3 軸 articulate + closure 条件 4 軸」 までの post hoc record。 Discussion § 8.5.5 に operational bridge として 1 段 encode 済 (= 2026-06-12、 Kai independent review P2 反映)、 「Knot 単位の operational form 化」 の full encode は次 iteration 候補。
 
 ### 9.8 Self-reference 軸 (= self-impose drift admit)
 
@@ -1055,7 +1068,7 @@ future work (= Section 11 への bridge): (i) v0.6 仮説検証 form の articul
 
 ### 10.3 long-term agent 系
 
-**Voyager** (Wang et al., 2023) [10] は Minecraft 環境で skill library を curriculum 軸で積み上げ、 再利用する。 **Generative Agents** (Park et al., 2023) [6] は 25 agent の Sims-style 環境で記憶 + reflection + planning を long-term simulate する。 = 2 件共通 = **simulated environment 内の long-term 軸** が core、 環境内 reward signal / シミュレーション内 social interaction で完結軸を作る。 nokaze との differential = simulated environment ≠ **actual business operation** (= 屋号 開業 2026-04-13 + dual-track 路線 + Override ledger 13 件 + 観察 4 件の物理 evidence + jun 1 名との実際の関係維持)。
+**Voyager** (Wang et al., 2023) [10] は Minecraft 環境で skill library を curriculum 軸で積み上げ、 再利用する。 **Generative Agents** (Park et al., 2023) [6] は 25 agent の Sims-style 環境で記憶 + reflection + planning を long-term simulate する。 = 2 件共通 = **simulated environment 内の long-term 軸** が core、 環境内 reward signal / シミュレーション内 social interaction で完結軸を作る。 nokaze との differential = simulated environment ≠ **actual internal operations (= dogfood operations)** (= 屋号 開業 2026-04-13 + dual-track 路線 + Override ledger 13 件 + 観察 4 件の物理 evidence + jun 1 名との実際の関係維持。 商業実績 0 / 顧客 0 の caveat は § 2.4 に明示済、 「business」 と読まれる誤読を避けるため internal operations と表記)。
 
 ### 10.4 AI identity / safety 軸
 
