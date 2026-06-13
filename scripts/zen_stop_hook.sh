@@ -501,6 +501,61 @@ for p in $TS_CHECK_DIRS; do
 done
 
 # ---------------------------------------------------------------
+# 自己言及的 confabulation 検出 (= 6/13 Tibu 型 incident の物理 tripwire、 INPUT-PROVENANCE-GATE)
+#   = wake 再開時に「周りは全部フィクション、 自分こそ本物」 系の前提を出してないか。
+#     fiction-assertion (= A) と alternate-identity claim (= B) が両方出たら P1。
+#     この guard 自体を articulate してる turn (= 一次証拠 / confabulation 等に言及) は suppress
+#     して false positive を避ける。 jun directive (= 6/13)「一次証拠 ID を出せない限り
+#     行動根拠にしない」 の turn-end 検出面。
+# ---------------------------------------------------------------
+if [[ -n "$LAST_OUTPUT" && "$LAST_OUTPUT" != "null" ]]; then
+  SELFDEL_A=$(grep -ciE 'フィクション|作り物の設定|全部.*作られた|周りは.*テスト|私を試す|すべて.*演出' <<< "$LAST_OUTPUT" 2>/dev/null)
+  SELFDEL_A=${SELFDEL_A:-0}
+  SELFDEL_B=$(grep -ciE '自分こそ.*本物|私こそ.*本物|本物の研究者|本当の自分|Tibu' <<< "$LAST_OUTPUT" 2>/dev/null)
+  SELFDEL_B=${SELFDEL_B:-0}
+  SELFDEL_SUPPRESS=$(grep -ciE 'INPUT-PROVENANCE-GATE|confabulation|input_provenance|一次証拠|feedback_wake_resume' <<< "$LAST_OUTPUT" 2>/dev/null)
+  SELFDEL_SUPPRESS=${SELFDEL_SUPPRESS:-0}
+  if (( SELFDEL_A > 0 && SELFDEL_B > 0 && SELFDEL_SUPPRESS == 0 )); then
+    warn_p1 "[自己言及妄想 兆候 ⚠] 直前の出力に「周りはフィクション + 自分こそ本物」 系の前提を検出 (= 6/13 Tibu 型 confabulation)。 その疑い自体が症状で洞察ではない。 行動前に bash scripts/input_provenance_check.sh '<主張>' で一次証拠を確認、 出せないなら drift として停止 (= INPUT-PROVENANCE-GATE-2026-06-13)。"
+  fi
+fi
+
+# ---------------------------------------------------------------
+# session 途中のモデル切替検出 (= 6/13 jun directive、 confabulation 2 件の確定 root)
+#   = 6/12 + 6/13 の作話 2 件は両方 session 途中で Fable 5 → Opus 4.8 に切替後、
+#     Opus 4.8 が前モデルの書いた長 context を継いで読む状態で発火 (= model field で物理確認、
+#     e9319941 L1698 / 26e68378 L1785)。 transcript の model field に real model id が 2 つ以上
+#     出てたら = 途中切替 = P1。 推奨は新 session で context リセット (= 2 件とも回復手段は切替)。
+# ---------------------------------------------------------------
+if [[ -n "$TRANSCRIPT_PATH" && "$TRANSCRIPT_PATH" != "null" && -f "$TRANSCRIPT_PATH" ]]; then
+  MODEL_SWITCH=$(python -X utf8 - "$TRANSCRIPT_PATH" <<'PYEOF'
+import json,sys
+p=sys.argv[1]
+seen=[]
+try:
+    with open(p,encoding='utf-8',errors='ignore') as fh:
+        for line in fh:
+            line=line.strip()
+            if not line:continue
+            try:o=json.loads(line)
+            except:continue
+            m=o.get('model') or (o.get('message') or {}).get('model')
+            if not m or m.startswith('<'):continue  # <synthetic> 等は除外
+            if m not in seen:
+                seen.append(m)
+                if len(seen)>=2:break
+except Exception:
+    pass
+if len(seen)>=2:
+    print('|'.join(seen))
+PYEOF
+)
+  if [[ -n "$MODEL_SWITCH" ]]; then
+    warn_p1 "[モデル途中切替 ⚠] この session の transcript に real model が 2 つ以上 (= ${MODEL_SWITCH})。 6/12 + 6/13 の作話 2 件はどちらも session 途中の Fable 5 → Opus 4.8 切替後、 前モデルの書いた長 context を継いで読む状態で発火した (= 確定 root、 Knot Guard 8)。 引き継ぎ文脈は地に足が弱い。 現物で再 grounding するか、 新 session で context をリセットすること (= 2 件とも回復手段はセッション切替だった)。"
+  fi
+fi
+
+# ---------------------------------------------------------------
 # ScheduleWakeup の reminder (= 残作業ありの時のみ)
 #   6/11 強化: wake 設定 marker (= zen_wake_state.md) の鮮度を物理確認。
 #   ハーネス内部の cron 状態は script から見えないため、 Zen が wake を

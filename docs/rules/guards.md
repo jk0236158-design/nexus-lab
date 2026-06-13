@@ -96,6 +96,7 @@ repo 別でも同じ失敗を同じ名前で扱える。
 |---|---|---|---|
 | execution_claim_and_exit_guard_family | 実行 chain の claim / status / completion / scope / exit-sync drift 防止 | 4 (= execution_structure / completion_claim / fixed_flow_scope / aira_exit_sync) | ✓ |
 | wake_audit_collapse_guard_family | wake 直後の board audit collapse + constraint-to-idea loop の防止 | 2 (= same_day_board_audit_collapse / constraint_to_idea_internal_review_loop) | ✓ |
+| input_provenance_guard_family | user/jun 由来と主張する指示を一次証拠 ID なしに行動根拠にしない + wake 再開時の自己言及 confabulation (= Tibu 型) 検出 | 2 (= input_provenance_gate / self_referential_confabulation_tripwire) | ✓ |
 
 詳細は `~/nexus-lab/docs/rules/guard_registry.json` を参照。
 
@@ -104,6 +105,7 @@ repo 別でも同じ失敗を同じ名前で扱える。
 - 2026-05-27: 1 日で 4 guard 追加 (= execution_structure / completion_claim / fixed_flow_scope / aira_exit_sync) → 「guard 増殖」 pattern の signs
 - 2026-05-28: Zen 起稿 `2026-05-28_zen_kai_request_guard_consolidation_line_codesign.md` → Kai response `2026-05-28_kai_zen_substantive_response_guard_consolidation_line_codesign.md` = `agree_with_event_driven_consolidation_line`
 - 2026-05-28: 本 file + `guard_registry.json` 起稿 (= Zen draft、 Kai audit 待ち)
+- 2026-06-13: `input_provenance_guard_family` 追加 (= jun directive「user message と主張するなら一次証拠 ID を出せない限り行動根拠にしない」、 Tibu 型 confabulation 対策)。 統合 line check = active_family 2 → 3、 7-day new = 1 件のみ (= fire 条件 active>=5 / new_7d>=3 未達)、 既存 family と overlap なし (= 新 failure mode = input_provenance_unverified / self_referential_confabulation)。 物理 gate = scripts/input_provenance_check.sh + zen_stop_hook.sh P1 tripwire + rule_registry INPUT-PROVENANCE-GATE-2026-06-13。 Kai 側でも別 countermeasure 進行中 (= 6/13 jun)、 taxonomy 共有で揃える。
 
 ---
 

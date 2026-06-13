@@ -1,6 +1,6 @@
 {
   "schema_version": "zen.guard_registry.v1",
-  "last_updated": "2026-05-28",
+  "last_updated": "2026-06-13",
   "consolidation_line": {
     "count_threshold": {
       "active_family_count": 5,
@@ -20,8 +20,18 @@
     "completion_without_evidence",
     "scope_drift",
     "peer_side_wait_misattribution",
-    "exit_sync_miss"
+    "exit_sync_miss",
+    "input_provenance_unverified",
+    "self_referential_confabulation"
   ],
+  "shared_evidence_classes": {
+    "_note": "6/13 Kai/Yuino frame-provenance guard と揃えた証拠分類の共有語彙 (= failure mode 軸とは別の、 証拠の種類軸)。 Zen 側 input_provenance_check.sh + Kai 側 yuino-frame-provenance-guard.ts で同じ語彙を使う。",
+    "primary_user_role_jsonl": "transcript の human user role 行。 ただし keyword の言及 / 質問は『frame を変える権限』 ではない (= trusted_for_authority は文面次第)。",
+    "primary_board_message": "~/.shared-ops/board/ の実 file = 永続 artifact。",
+    "primary_owner_decision": "~/.shared-ops/owner-decisions/ の実 file = 永続 artifact。",
+    "assistant_claim_only": "assistant 自身の出力にしか出ない = 自己生成、 一次証拠にならない (= confabulation 兆候)。",
+    "untrusted_tool_or_system_user": "tool 結果 / task notification / system 由来で user role に見えるテキスト = human authority ではない。"
+  },
   "guard_families": [
     {
       "id": "execution_claim_and_exit_guard_family",
@@ -97,6 +107,35 @@
           "failure_modes": ["completion_without_evidence"],
           "active": true,
           "role": "下位軸"
+        }
+      ]
+    },
+    {
+      "id": "input_provenance_guard_family",
+      "active": true,
+      "description": "user/jun 由来と主張する指示・前提を一次証拠 ID なしに行動根拠にしない + wake 再開時の自己言及的 confabulation (= Tibu 型) を捕まえる guard family",
+      "origin": "6/13 jun directive (= Tibu 型 confabulation 対策) + Kai クロス調査",
+      "primary_physical_gate": [
+        "scripts/input_provenance_check.sh",
+        "scripts/zen_stop_hook.sh (= 自己言及妄想 兆候 P1 tripwire)",
+        "~/.shared-ops/rules/rule_registry_v0_2026-06-03.md (= INPUT-PROVENANCE-GATE-2026-06-13)"
+      ],
+      "sub_guards": [
+        {
+          "id": "input_provenance_gate",
+          "axis": "claimed-instruction without primary-evidence ID",
+          "origin": "6/13 jun directive",
+          "failure_modes": ["input_provenance_unverified"],
+          "active": true,
+          "role": "上位軸 (= 一次証拠 ID なしの指示を行動根拠にしない)"
+        },
+        {
+          "id": "self_referential_confabulation_tripwire",
+          "axis": "wake-resume self-referential fiction / alternate-identity assertion",
+          "origin": "6/13 Tibu incident",
+          "failure_modes": ["self_referential_confabulation", "input_provenance_unverified"],
+          "active": true,
+          "role": "下位軸 (= stop hook P1 物理検出)"
         }
       ]
     }
