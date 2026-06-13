@@ -1072,7 +1072,7 @@ future work (= Section 11 への bridge): (i) v0.6 仮説検証 form の articul
 
 ### 10.4 AI identity / safety 軸
 
-**Anthropic persona research** (Templeton et al., 2024) [9] (= Claude character / model welfare 系) + **Adversarial robustness** 系 (= 学習段階の頑健化) + LessWrong / AI Safety 軸の AI identity 議論。 = AI の identity / boundary / safety 軸の **理論 + 学習段階介入** が core、 4 ヶ月運用の物理記録は射程外。 nokaze との differential = theoretical / 学習段階 ≠ 4 ヶ月 empirical operational record + boundary 表ベース委任 (= 8 自走 + 9 jun 確認 + 8 件禁止) + Override ledger 3 層の物理 evidence。
+**Anthropic persona research** (Anthropic, 2024; Templeton et al., 2024) [9] (= Claude character / model welfare 系) + **Adversarial robustness** 系 (= 学習段階の頑健化) + LessWrong / AI Safety 軸の AI identity 議論。 = AI の identity / boundary / safety 軸の **理論 + 学習段階介入** が core、 4 ヶ月運用の物理記録は射程外。 nokaze との differential = theoretical / 学習段階 ≠ 4 ヶ月 empirical operational record + boundary 表ベース委任 (= 8 自走 + 9 jun 確認 + 8 件禁止) + Override ledger 3 層の物理 evidence。
 
 ### 10.5 nokaze academic placement
 
@@ -1122,7 +1122,7 @@ Prior work 9 件 baseline (= v0.3 + v0.4 audit chain)、 番号 [1]-[11] = arXiv
 
 [2] Chase, H. (2022-). *LangChain / LangGraph: agent orchestration framework series*. GitHub repository. https://github.com/langchain-ai/langchain
 
-[3] Cognition AI (2024). *Devin: the first AI software engineer* (= ACU-based delegation, IDE / Slack / Linear / MCP integration). Blog post, 2024-03-12. https://cognition.ai/blog/introducing-devin
+[3] Cognition AI (2024). *Introducing Devin, the first AI software engineer* (= ACU-based delegation, IDE / Slack / Linear / MCP integration). Blog post, 2024-03-12. https://cognition.ai/blog/introducing-devin
 
 [4] Madaan, A., Tandon, N., Gupta, P., Hallinan, S., Gao, L., Wiegreffe, S., Alon, U., Dziri, N., et al. (2023). *Self-Refine: Iterative Refinement with Self-Feedback*. NeurIPS 2023. arXiv:2303.17651. https://arxiv.org/abs/2303.17651
 
@@ -1134,11 +1134,11 @@ Prior work 9 件 baseline (= v0.3 + v0.4 audit chain)、 番号 [1]-[11] = arXiv
 
 [8] Significant-Gravitas (2023-). *AutoGPT: accessible AI agent platform* (= single-agent loop framework、 goal → plan → execute → evaluate → iterate). GitHub repository. https://github.com/Significant-Gravitas/AutoGPT
 
-[9] Templeton, A. et al. (2024). *Claude's Character* + Anthropic persona / character research (= identity + model welfare 系). Anthropic Research post. https://www.anthropic.com/research/claude-character (= specific Templeton et al. paper ID verify pending、 SAE feature persona work の articulate)
+[9] Anthropic (2024). *Claude's Character*. Anthropic research post, 2024-06-08. https://www.anthropic.com/research/claude-character + Templeton, A., Conerly, T., Marcus, J., Lindsey, J., Bricken, T., et al. (2024). *Scaling Monosemanticity: Extracting Interpretable Features from Claude 3 Sonnet*. Transformer Circuits Thread. https://transformer-circuits.pub/2024/scaling-monosemanticity/index.html (= 2026-06-13 bibliographic verification で出典確定: Claude's Character は著者個人名なしの Anthropic 名義 post、 「Templeton et al. 2024」 の実体は SAE feature 研究 Scaling Monosemanticity。 合載 1 entry のまま、 v1.1 英語化時に 2 entry 分割 + alphabetical renumber 推奨)
 
 [10] Wang, G., Xie, Y., Jiang, Y., Mandlekar, A., Xiao, C., Zhu, Y., Fan, L., & Anandkumar, A. (2023). *Voyager: An Open-Ended Embodied Agent with Large Language Models*. arXiv:2305.16291. https://arxiv.org/abs/2305.16291
 
-[11] Wu, Q., Bansal, G., Zhang, J., Wu, Y., Li, B., Zhu, E., Jiang, L., Zhang, X., et al. (2023). *AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation Framework*. arXiv:2308.08155. https://arxiv.org/abs/2308.08155
+[11] Wu, Q., Bansal, G., Zhang, J., Wu, Y., Li, B., Zhu, E., Jiang, L., Zhang, X., et al. (2023). *AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation*. arXiv:2308.08155. https://arxiv.org/abs/2308.08155
 
 ---
 
