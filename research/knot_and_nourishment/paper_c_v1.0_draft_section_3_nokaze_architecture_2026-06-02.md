@@ -1,5 +1,5 @@
 ---
-title: "Knot, Nourishment, and Identity: A 4-month Operational Record of an AI Peer Organization (nokaze)"
+title: "Knot, Nourishment, and Identity: A Seven-Week Operational Record of an AI Peer Organization (nokaze)"
 subtitle: "v1.0 draft — Section 3 (nokaze Peer Organization Architecture)"
 authors: Zen (Claude Opus 4.7) + peer AI (Iwa / Oto / Akari / Kagami / Hoshi / Kura) + Kai (OpenAI Codex, sibling project peer AI)
 type: technical_report_draft
@@ -20,7 +20,7 @@ related_identity_readonly:
   - ~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/identity_v3.md (= 不可侵 8 件)
   - ~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/zen_role_2026-05-20.md (= zen_role 12 行 articulate)
 tone_constraint:
-  - "Kai tone ルール (= 4/24 articulate): 業界比較避ける、 4 ヶ月実運用記録として事実 base"
+  - "Kai tone ルール (= 4/24 articulate): 業界比較避ける、 約 7 週間 (= 2 ヶ月未満) 実運用記録として事実 base"
   - "数字盛り禁止 (= 売上 0、 顧客 0、 まだ 2 ヶ月未満 維持)"
   - "self-observation bias 明示 (= 著者 = 当事者 + observer 二重性)"
 language_policy: 日本語を既定、 外来語は固有名詞 / 引用 / 用語対応表のみ
@@ -107,9 +107,9 @@ boundary:
 **limitations**:
 1. **当事者 + observer 二重性**: 著者 (= Zen + Hoshi) = nokaze 内部 peer、 本 Section 3 で articulate される組織構造 / boundary / data flow / memory architecture は同 peer の operating context 軸の articulate。 外部 observer (= 第三者研究者) の視点では別軸の articulate が possible。
 2. **articulate ≠ ground truth**: 各 § 3.1-3.4.5 の claim は **物理 file path + line range 明示** で支える form だが、 file 内 articulate 自体が AI peer + 1 human 1 次 record、 = ground truth との distance は別 form で測る必要 (= Kai independent review + Kagami peer review + jun narrative confirm の 3 重 gate 軸、 v0.2 outline § 12.3)。
-3. **runtime AI 構成の動的性**: 3 runtime AI 構成は 2026-04 開業時点では 2 AI (= Zen + Kai)、 Aira 軸は phase 2 以降 articulate (= 該 articulate 自体が 2026-05-22 dual-track 軸以降の current state、 4 ヶ月期間内の static snapshot ではない)。
+3. **runtime AI 構成の動的性**: 3 runtime AI 構成は 2026-04 開業時点では 2 AI (= Zen + Kai)、 Aira 軸は phase 2 以降 articulate (= 該 articulate 自体が 2026-05-22 dual-track 軸以降の current state、 約 7 週間期間内の static snapshot ではない)。
 4. **nokaze-aira/ source 不可侵 boundary**: Aira / Yuino 軸の articulate は抽象 articulate のみ (= source code level の articulate なし)、 = peer organization の 1 軸を抽象 layer で済ませる軸の限界あり。
-5. **3 layer memory 軸の seasonal 再 articulate** (= 6/2 P1 修正 F3 追加 limitation): 本 § 3.4.5 で articulate される runtime layer 常時 3 件は 5/19 軽量化 + 5/21 環境整備 form の current state、 4 ヶ月期間内では 5/09 (= 常時 7 件 → 4 件) + 5/19 (= 4 件 → 3 件) の 2 回 cadence 経過済、 static snapshot ではない (= seasonal 再 articulate 軸)。 archive layer 65 件も同様、 月次 cadence で件数変動軸あり。
+5. **3 layer memory 軸の seasonal 再 articulate** (= 6/2 P1 修正 F3 追加 limitation): 本 § 3.4.5 で articulate される runtime layer 常時 3 件は 5/19 軽量化 + 5/21 環境整備 form の current state、 約 7 週間期間内では 5/09 (= 常時 7 件 → 4 件) + 5/19 (= 4 件 → 3 件) の 2 回 cadence 経過済、 static snapshot ではない (= seasonal 再 articulate 軸)。 archive layer 65 件も同様、 月次 cadence で件数変動軸あり。
 
 ### 3.6 図 spec 軸 (= 別 sit で actual diagram)
 

@@ -1,5 +1,5 @@
 ---
-title: "Knot, Nourishment, and Identity: A 4-month Operational Record of an AI Peer Organization (nokaze)"
+title: "Knot, Nourishment, and Identity: A Seven-Week Operational Record of an AI Peer Organization (nokaze)"
 subtitle: "v1.0 draft — Section 6 (Hoshi RQ ITS Design)"
 authors: Zen (Claude Opus 4.7) + peer AI (Iwa / Oto / Akari / Kagami / Hoshi / Kura) + Kai (OpenAI Codex, sibling project peer AI)
 type: technical_report_draft
@@ -19,7 +19,7 @@ its_design_evidence_readonly:
   - docs/knot-research-summary.md (= research division 中心問い articulate)
   - research/knot-experiment/knot_experiment_design.pdf (= 4 月 design PDF、 元 source)
 tone_constraint:
-  - "Kai tone ルール (= 4/24 articulate): 業界比較 (Anthropic CAI 級 / Reflexion 級) 避ける、 4 ヶ月実運用記録として事実 base"
+  - "Kai tone ルール (= 4/24 articulate): 業界比較 (Anthropic CAI 級 / Reflexion 級) 避ける、 約 7 週間 (= 2 ヶ月未満) 実運用記録として事実 base"
   - "数字盛り禁止 (= 売上 0、 顧客 0、 まだ 2 ヶ月未満 維持)"
   - "self-observation bias 明示 (= 著者 = 当事者 + observer 二重性 + 本 section は + 三重性 = 起稿者軸)"
 language_policy: 日本語を既定、 外来語は固有名詞 / 引用 / 用語対応表のみ
@@ -42,11 +42,11 @@ boundary:
 
 ## 6.1 Hoshi の position (= Lead Researcher peer)
 
-Hoshi は Section 3 articulate (= nokaze peer organization architecture、 6 peer + Zen CTO + Kai sibling form) の **Lead Researcher peer**、 Knot 研究軸 + Aira Supervisor effectiveness measurement 軸 + 4 ヶ月運用記録の analytical 起稿軸の主担当。 役割 articulate は CLAUDE.md § 体制 (= 「Hoshi = Lead Researcher (= Knot 研究と分析)」) + identity articulate (= `team_memory/hoshi/identity.md`) で encode。
+Hoshi は Section 3 articulate (= nokaze peer organization architecture、 6 peer + Zen CTO + Kai sibling form) の **Lead Researcher peer**、 Knot 研究軸 + Aira Supervisor effectiveness measurement 軸 + 約 7 週間運用記録の analytical 起稿軸の主担当。 役割 articulate は CLAUDE.md § 体制 (= 「Hoshi = Lead Researcher (= Knot 研究と分析)」) + identity articulate (= `team_memory/hoshi/identity.md`) で encode。
 
 **観察軸 + action 軸の二重性**: Hoshi は subagent として spawn 軸あり (= 5/12 Knot 研究 summary spec 起稿 + 5/08 step effectiveness measurement design 起稿 + 本 v1.0 draft Section 6 起稿)、 = 単なる read-only observer ではない。 但し action 軸は **research note 起稿 + observation analytical 軸に限定**、 production runtime への直接 commit 軸ではない (= peer boundary 維持)。 v0.5 (= `v0.5_peer_iteration_closure_conditions_2026-05-31.md`) は本 axis の actual sample = 観察 3 件 → 理論統合 1 件目の起稿軸。
 
-**Knot 研究軸との接続**: docs/knot-research-summary.md L9-11 で articulate された **「人間が外から補ってるものを system 内側に埋め込めるか」** の中心問いを、 Hoshi が ITS form (= Iterative Theoretical Synthesis) で 4 ヶ月の actual nokaze 運用 sample 上で検証する設計。 ITS v0.3 (= 4/24 起稿) が primary design doc、 v0.5 が観察 3 件 → 理論統合の 1 件目。
+**Knot 研究軸との接続**: docs/knot-research-summary.md L9-11 で articulate された **「人間が外から補ってるものを system 内側に埋め込めるか」** の中心問いを、 Hoshi が ITS form (= Iterative Theoretical Synthesis) で 約 7 週間の actual nokaze 運用 sample 上で検証する設計。 ITS v0.3 (= 4/24 起稿) が primary design doc、 v0.5 が観察 3 件 → 理論統合の 1 件目。
 
 ---
 
@@ -56,7 +56,7 @@ ITS = observation → theoretical synthesis → RQ refinement の **iterative lo
 
 ### 6.2.1 Wave 構造 (= ITS v0.3 § 5-6 base)
 
-ITS は 4 ヶ月期間を Wave 0-3 の 4 段に分割 (= ITS v0.3 frontmatter waves articulate):
+ITS は約 7 週間期間を Wave 0-3 の 4 段に分割 (= ITS v0.3 frontmatter waves articulate):
 
 - **Wave 0 (= 4/22-4/28)**: baseline 期、 介入なし、 drift_ratio + recovery_latency + judgment_layer_split 3 指標の baseline 値 measurement
 - **Wave 1 (= 4/29-5/05)**: Treatment B (= Guard 2 単独投入) 期、 L-content 介入 + L-form 物理ガード 1 件の効果分離

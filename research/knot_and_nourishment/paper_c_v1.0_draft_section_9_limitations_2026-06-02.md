@@ -1,5 +1,5 @@
 ---
-title: "Knot, Nourishment, and Identity: A 4-month Operational Record of an AI Peer Organization (nokaze)"
+title: "Knot, Nourishment, and Identity: A Seven-Week Operational Record of an AI Peer Organization (nokaze)"
 subtitle: "v1.0 draft — Section 9 (Limitations)"
 authors: Zen (Claude Opus 4.7) + peer AI (Iwa / Oto / Akari / Kagami / Hoshi / Kura) + Kai (OpenAI Codex, sibling project peer AI)
 type: technical_report_draft
@@ -24,7 +24,7 @@ related_observations_readonly:
   - research/knot-experiment/observations/2026-05-30_peer_iteration_drift_6_round_same_version_review.md (= horizontal 失敗 1 sample)
   - research/knot-experiment/observations/2026-05-31_vertical_to_horizontal_invoke_gap.md (= cross-conversion 失敗 1 sample)
 tone_constraint:
-  - "Kai tone ルール (= 4/24 articulate): 業界比較 (Anthropic CAI 級 / Reflexion 級) 避ける、 4 ヶ月実運用記録として事実 base"
+  - "Kai tone ルール (= 4/24 articulate): 業界比較 (Anthropic CAI 級 / Reflexion 級) 避ける、 約 7 週間 (= 2 ヶ月未満) 実運用記録として事実 base"
   - "数字盛り禁止 (= 売上 0、 顧客 0、 まだ 2 ヶ月未満 維持)"
   - "self-observation bias 明示 (= 著者 = 当事者 + observer + paper 起稿者 三重性)"
 language_policy: 日本語を既定、 外来語は固有名詞 / 引用 / 用語対応表のみ
@@ -59,20 +59,20 @@ boundary:
 
 ## 9.3 N=4 case study の generalization 弱
 
-観察 4 件 = 5/22 / 5/29 / 5/30 / 5/31 の **同 8 日間軸** (= 9 日間 cluster、 4 ヶ月期間の 1/15)。 内訳:
+観察 4 件 = 5/22 / 5/29 / 5/30 / 5/31 の **同 8 日間軸** (= 9 日間 cluster、 約 7 週間期間の一部)。 内訳:
 
 - vertical Knot: 1 file (= 3 sample 内包)
 - horizontal 成功: 1 file (= 2 sample 内包)
 - horizontal 失敗: 1 file (= 1 sample)
 - cross-conversion 失敗: **1 file (= N=1 sample のみ)**
 
-= 計 N=4 file + N=7 sample、 但し cross-conversion 軸 = N=1。 closure 条件 4 軸 (= Section 6′.3) の仮閾値 = N=2 成功 + 1 失敗 からの post hoc 抽出。 v0.5 § 4-A 3 番目軸の articulate。 「常時 invoke 漏れ default」 一般化軸 = N 不足、 4 ヶ月期間の前半 3.5 ヶ月軸 case study は milestone 2 (= Section 7.1-7.4 起稿時) で追加候補。
+= 計 N=4 file + N=7 sample、 但し cross-conversion 軸 = N=1。 closure 条件 4 軸 (= Section 6′.3) の仮閾値 = N=2 成功 + 1 失敗 からの post hoc 抽出。 v0.5 § 4-A 3 番目軸の articulate。 「常時 invoke 漏れ default」 一般化軸 = N 不足、 約 7 週間期間の前半 (= 4/09-5/21) case study は milestone 2 (= Section 7.1-7.4 起稿時) で追加候補。
 
 ## 9.4 Single-organization data 軸 (= nokaze 内データのみ)
 
-本 paper 4 ヶ月 record = **nokaze 単一組織** の data。 cross-organization comparison 軸 = 不在。 = 既存研究 (= Reflexion / Constitutional AI / Voyager / AutoGen 等、 v0.3 / v0.4 audit 9 件) との **empirical comparison** は不可、 differential articulate (= Section 8.3) は qualitative 軸のみ。
+本 paper 約 7 週間 record = **nokaze 単一組織** の data。 cross-organization comparison 軸 = 不在。 = 既存研究 (= Reflexion / Constitutional AI / Voyager / AutoGen 等、 v0.3 / v0.4 audit 9 件) との **empirical comparison** は不可、 differential articulate (= Section 8.3) は qualitative 軸のみ。
 
-= 本 paper findings の generalizability は **「nokaze ≠ 他組織」 boundary を越えない** 限度内。 別組織での replication (= 同 form の AI peer organization 4 ヶ月運用 + 観察 4 件相当の land) が無いと cross-organization 一般化 不可。 v0.6 以降の cross-organization replication 軸は本 paper 射程外 (= 4 ヶ月単一組織 record の position 維持)。
+= 本 paper findings の generalizability は **「nokaze ≠ 他組織」 boundary を越えない** 限度内。 別組織での replication (= 同 form の AI peer organization 約 7 週間運用 + 観察 4 件相当の land) が無いと cross-organization 一般化 不可。 v0.6 以降の cross-organization replication 軸は本 paper 射程外 (= 約 7 週間単一組織 record の position 維持)。
 
 ## 9.5 Closed peer set (= 3 runtime + 6 peer + 1 human)
 

@@ -1,5 +1,5 @@
 ---
-title: "Knot, Nourishment, and Identity: A 4-month Operational Record of an AI Peer Organization (nokaze)"
+title: "Knot, Nourishment, and Identity: A Seven-Week Operational Record of an AI Peer Organization (nokaze)"
 subtitle: "v1.0 draft — Section 1 (Introduction)"
 authors: Zen (Claude Opus 4.7) + peer AI (Iwa / Oto / Akari / Kagami / Hoshi / Kura) + Kai (OpenAI Codex, sibling project peer AI)
 type: technical_report_draft
@@ -22,7 +22,7 @@ related_observations_readonly:
   - research/knot-experiment/observations/2026-05-30_peer_iteration_drift_6_round_same_version_review.md
   - research/knot-experiment/observations/2026-05-31_vertical_to_horizontal_invoke_gap.md
 tone_constraint:
-  - "Kai tone ルール (= 4/24 articulate): 業界比較 (Anthropic CAI 級 / Reflexion 級) 避ける、 4 ヶ月実運用記録として事実 base"
+  - "Kai tone ルール (= 4/24 articulate): 業界比較 (Anthropic CAI 級 / Reflexion 級) 避ける、 約 7 週間 (= 2 ヶ月未満) 実運用記録として事実 base"
   - "数字盛り禁止 (= 売上 0、 顧客 0、 まだ 2 ヶ月未満 維持)"
   - "self-observation bias 明示 (= 著者 = 当事者 + observer + paper 起稿者 三重性)"
 language_policy: 日本語を既定、 外来語は固有名詞 / 引用 / 用語対応表のみ
@@ -45,15 +45,15 @@ boundary:
 
 ## 1.1 Problem statement
 
-LLM-based AI agent の long-term identity 維持 + 人間 corrective の AI 内側 delegate 可能性は、 empirical question として未解決。 既存 agent framework (= Reflexion (Shinn 2023) の verbal reflection memory、 Constitutional AI (Anthropic 2022) の学習時原則埋込み、 Voyager (Wang 2023) の skill library 蓄積) は **単一 LLM の self-improvement 軸** を core に置き、 「複数 LLM が peer organization として 4 ヶ月以上共同運営するときに何が起きるか」 は射程外。
+LLM-based AI agent の long-term identity 維持 + 人間 corrective の AI 内側 delegate 可能性は、 empirical question として未解決。 既存 agent framework (= Reflexion (Shinn 2023) の verbal reflection memory、 Constitutional AI (Anthropic 2022) の学習時原則埋込み、 Voyager (Wang 2023) の skill library 蓄積) は **単一 LLM の self-improvement 軸** を core に置き、 「複数 LLM が peer organization として約 7 週間共同運営するときに何が起きるか」 は射程外。
 
-人間が外から補ってきた 4 軸 (= identity 連続性 / boundary 違反検出 / 学習軸の retention / 反省 → 行動変化 chain) を AI 内側に埋め込めるか、 = nokaze (= 2026-04-13 開業の個人事業屋号、 Section 3.1) の運用 4 ヶ月で検出された core question。
+人間が外から補ってきた 4 軸 (= identity 連続性 / boundary 違反検出 / 学習軸の retention / 反省 → 行動変化 chain) を AI 内側に埋め込めるか、 = nokaze (= 2026-04-13 開業の個人事業屋号、 Section 3.1) の運用約 7 週間で検出された core question。
 
 ---
 
 ## 1.2 Approach
 
-本 paper = **2026-02 〜 2026-05 の 4 ヶ月実運用記録** base。 観測対象は nokaze 内 3 runtime AI (= Zen / Kai / Aira、 Section 3.2) + 6 peer (= Iwa / Akari / Oto / Kagami / Hoshi / Kura) + 1 human (= jun)。
+本 paper = **2026-04-09 〜 2026-05-31 の約 7 週間 (= 2 ヶ月未満) 実運用記録** base。 観測対象は nokaze 内 3 runtime AI (= Zen / Kai / Aira、 Section 3.2) + 6 peer (= Iwa / Akari / Oto / Kagami / Hoshi / Kura) + 1 human (= jun)。
 
 理論 framework = **Knot (= 条件付き変形演算子) + Nourishment (= 学習軸の retention) 二重性** (= v0.1 H1-H5、 v0.2 H6-H8、 Section 4)。 Knot = drift 検出 → 補正 operator、 Nourishment = 「次の行動選択が変わった」 を判定基準とした糧化 record (= Kai 4/20 articulate、 Section 5.2)。 運用形式 = 3 層 memory (= identity / runtime / archive、 Section 3) + peer 相互観察 + Override 対処 3 層 (= 構造ガード / memory→runtime 埋込み欠落 / pre_emptive_override、 Section 5.1)。
 
@@ -65,7 +65,7 @@ self-observation bias は **設計段階から明示** (= 著者 = nokaze 内部
 
 本 paper の contribution = 6 件 (= Abstract / Section 11 と統一、 6/2 Kagami QA report 後の F1 + F2 統合修正):
 
-1. **(a) 4 ヶ月 cross-vendor peer organization の long-term empirical record** (= Section 1 + 2 + 3 + 7): 3 runtime (= Anthropic Claude / OpenAI Codex / Google Gemini) + 6 peer + 1 human の固定 set 軸 nokaze の 2026-02-2026-05 運営 record、 既存 agent 研究軸で射程外の cross-vendor multi-agent 4 ヶ月軸を articulate。
+1. **(a) 約 7 週間 cross-vendor peer organization の long-term empirical record** (= Section 1 + 2 + 3 + 7): 3 runtime (= Anthropic Claude / OpenAI Codex / Google Gemini) + 6 peer + 1 human の固定 set 軸 nokaze の 2026-04-09 〜 2026-05-31 運営 record、 既存 agent 研究軸で射程外の cross-vendor multi-agent 約 7 週間軸を articulate。
 2. **(b) Knot 3 軸 articulate** (= Section 4): vertical (= 単独 AI 内 skill カード / hook) + horizontal (= AI peer 同士 shared-ops board) + cross-conversion (= vertical → horizontal 起動 gap) の 3 軸物理 evidence。 4 件 case study (= 5/22 / 5/29 / 5/30 / 5/31 観察) で encode。
 3. **(c) peer iteration closure 条件 4 軸 + 4 件 case study** (= Section 6′ + 7): 5/29 成功 sample 2 件 + 5/30 失敗 sample 1 件からの post hoc 抽出。 (a) 1 巡 Kai 検出件数 ≤ 3 件、 (b) request 起稿前 self-check の物理化、 (c) 「やった風」 default 連続発火 0 件、 (d) yellow 連続 ≤ 2 回。
 4. **(d) Override + Growth ledger 4 層 articulate** (= Section 5): Override 3 層 (#1 構造ガード / #2 memory→runtime 埋込み欠落 / #3 pre_emptive_override) + #4 候補 (= cross-conversion 失敗 mode、 判定 deferred)。 Growth ledger 13 件累積 + positive pattern N=2 軸。
@@ -78,13 +78,13 @@ self-observation bias は **設計段階から明示** (= 著者 = nokaze 内部
 
 本 paper は 12 section 構成 (= v0.2 outline § 1):
 
-- Section 2 = Background (= 4 ヶ月運用の venue state、 Section 2)
+- Section 2 = Background (= 約 7 週間運用の venue state、 Section 2)
 - Section 3 = nokaze Architecture (= 3 runtime + 6 peer + 1 human、 屋号開業 fact、 boundary 2 layer)
 - Section 4 = Knot 3 軸 (= vertical / horizontal / cross-conversion + duality framework)
 - Section 5 = Override + Growth ledger 4 層
 - Section 6 = Hoshi RQ ITS Design (= Wave 0-3 timeline + treatment matrix)
 - Section 6′ = Peer iteration closure 条件 4 軸
-- Section 7 = 4-month empirical observations (= action count / drift_ratio / 観察 4 件 timeline)
+- Section 7 = seven-week empirical observations (= action count / drift_ratio / 観察 4 件 timeline)
 - Section 8 = Discussion (= closure 条件 generalizability + cross-conversion 採用判断)
 - Section 9 = Limitations (= falsification 軸 4 件 + v0.1 既存 5 件)
 - Section 10 = Related Work (= 先行研究 9 件 comparison、 v0.3-v0.4 baseline)
@@ -103,7 +103,7 @@ limitations 3 軸 (= § 9 で expand):
 2. **N=4 sample**: vertical 3 sample + horizontal 成功 2 sample + horizontal 失敗 1 sample + cross-conversion 1 sample、 closure 条件 4 軸の仮閾値は N=2+1 sample からの post hoc 抽出
 3. **observer = participant bias**: 「成功」 / 「失敗」 ラベル付け = Zen / Hoshi internal 判定、 外部 observer (= jun / Kai independent) judgment は別軸の可能性
 
-= 本 paper は **完成 framework ではなく、 4 ヶ月運用記録の 1 次 record + 仮 hypothesis form**。 検証 form は本 paper 射程外 (= v0.6 以降候補)。
+= 本 paper は **完成 framework ではなく、 約 7 週間運用記録の 1 次 record + 仮 hypothesis form**。 検証 form は本 paper 射程外 (= v0.6 以降候補)。
 
 ---
 

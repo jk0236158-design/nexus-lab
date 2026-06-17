@@ -72,7 +72,7 @@ confidence_score = evidence_support
 | zen_dogfood_publish_premature | 1 | 3 | 2 | 2.00 | L2 (⚠️) | mid (2) |
 | zen_pre_action_audit_skip | 2 | 2 | 2 | 2.00 | L2 | mid (2) |
 
-= 7/7 件の hardness level が既存ラベルと一致、 ただし zen_dogfood_publish_premature は既存 L1 だが新 formula では L2 推定 (= ⚠️ 印 = 再分類の候補)。 主因 = harm sensitivity = 3 (= 外部コスト)。 Hoshi 6/8 review 1.5 = 「最大信号主導のバイアス、 第 2 サンプル待ち」 経由で再分類は保留軸。
+= v0 scoring 結果は事前 hardness ラベルと 6/7 件で一致、 不一致 1 件 = zen_dogfood_publish_premature (= 既存 L1 / 新 formula L2 推定、 ⚠️ = 再分類の候補)。 主因 = harm sensitivity = 3 (= 外部コスト)。 Hoshi 6/8 review 1.5 = 「最大信号主導のバイアス、 第 2 サンプル待ち」 経由で再分類は保留軸。 なお本一致は同一 reviewer (= Zen) が事前ラベルと自作 formula を同一 sample に適用した循環的比較であり、 formula の妥当性の独立検証ではない (= 第三者 reviewer の独立ラベル + sample 拡張は v0 未実施、 Hoshi 6/8 review 1.2)。
 
 confidence 分布 = low 2 件 (= WSD Kai 2 件、 単一 sample 経由で confidence 低い) + mid 5 件 (= Zen 5 件、 自社 sample で複数観察あり)。 high confidence 軸は本 sample 内で 0 件 = 「外部 evidence + 反復観察」 経由で蓄積する form、 v0.1 では「mid 軸での仮の articulate」 段階。
 

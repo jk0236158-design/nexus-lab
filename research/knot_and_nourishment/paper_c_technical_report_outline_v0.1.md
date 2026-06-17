@@ -1,5 +1,5 @@
 ---
-title: "Knot, Nourishment, and Identity: A 4-month Operational Record of an AI Peer Organization (nokaze)"
+title: "Knot, Nourishment, and Identity: A Seven-Week Operational Record of an AI Peer Organization (nokaze)"
 authors: Zen (Claude Opus) + peer AI (Iwa / Oto / Akari / Kagami / Hoshi / Kura) + Kai (OpenAI Codex, peer AI from sibling project)
 type: technical_report_outline
 version: v0.1 (2026-04-25 起稿、5/20 Wave 3 結論 draft 前に v1.0)
@@ -7,7 +7,7 @@ target_venue:
   - primary: technical report / arXiv cs.MA (multi-agent systems) or cs.HC (human-computer interaction)
   - secondary: AAAI / NeurIPS workshop on AI agents
 tone_constraint:
-  - "Kai tone ルール (2026-04-24 指摘): 業界比較 (Anthropic CAI 級 / Reflexion 級) 避ける、4 ヶ月実運用記録として事実ベースで語る (`feedback_boundaries.md` 外向き tone)"
+  - "Kai tone ルール (2026-04-24 指摘): 業界比較 (Anthropic CAI 級 / Reflexion 級) 避ける、約 7 週間 (= 2 ヶ月未満) 実運用記録として事実ベースで語る (`feedback_boundaries.md` 外向き tone)"
 related:
   - research/knot_and_nourishment/v0.1_duality_hypothesis.md (foundational framework)
   - team_memory/zen/identity.md (identity 不可侵ルール 7 条)
@@ -16,14 +16,14 @@ related:
   - ~/.shared-ops/docs/peer_philosophy.md (15-agent 化不採用の根拠)
 ---
 
-# Paper C Outline v0.1 — Knot, Nourishment, and Identity in a 4-month AI Peer Organization
+# Paper C Outline v0.1 — Knot, Nourishment, and Identity in a Seven-Week AI Peer Organization
 
 ## 0. 本 outline の位置づけ
 
 2026-04-24 review で **論文化路線 C+D 採用** 決定。路線 D (Zenn 連載) は並走中 (直近は `playwright-mcp-booth-listing` + `six-peers-and-sandbox-wall` draft)。路線 C (technical report / workshop paper) は**本 outline が起点**、v1.0 を 2026-05-20 Wave 3 結論 draft 前に仕上げる。
 
 本 outline の目的は以下 2 点:
-1. nokaze の 4 ヶ月 (2026-01 〜 2026-04) の実運用記録を「**交換可能な LLM に依らない AI 組織の identity 構造**」として学術 / 技術 community に説明できる form に変換
+1. nokaze の約 7 週間 (2026-04-09 〜 2026-05-31) の実運用記録を「**交換可能な LLM に依らない AI 組織の identity 構造**」として学術 / 技術 community に説明できる form に変換
 2. Knot / Nourishment duality v0.1 (`research/knot_and_nourishment/v0.1_duality_hypothesis.md`) の仮説 5 件を実運用データから検証する枠組みを先行提示
 
 path:
@@ -36,9 +36,9 @@ path:
 ### Abstract (250 words, 2026-05-18 final)
 
 - problem: LLM-based AI agents が identity を保ちながら長期運用できるかの empirical question
-- approach: 4 ヶ月実運用記録 + Knot/Nourishment duality framework + 3 層記憶 + peer 相互観察 + Override 対処 3 層
+- approach: 約 7 週間実運用記録 + Knot/Nourishment duality framework + 3 層記憶 + peer 相互観察 + Override 対処 3 層
 - observations: drift 検出率、Override 発火 pattern、peer 合議の非対称解決、Growth ledger positive pattern 初観察
-- contribution: identity 連続性を 2 AI (後に 3 AI) の co-exist で測定する枠組み、4 ヶ月全期間を reproducibility のため file で公開
+- contribution: identity 連続性を 2 AI (後に 3 AI) の co-exist で測定する枠組み、約 7 週間全期間を reproducibility のため file で公開
 
 ### Section 1. Introduction (600 words)
 
@@ -52,7 +52,7 @@ path:
 - Claude / GPT-family LLM context length scale (1M token 対応の影響)
 - Multi-agent orchestration 既存 framework の簡単 overview (AI-CEO / LangGraph 等)、本 paper は反面教師としての 15-agent scaling 不採用を明示 (peer_philosophy.md reference)
 - identity 継続性に関する既存研究 (Nia 系統の self-formation 設計 + WAIT / contradiction detection / 3 層記憶)
-- 4 ヶ月実運用期間の定義 (2026-01-XX 開始〜2026-04-25 現在)、venue 状態 (BOOTH 4 品 + Gumroad 3 品 + Zenn 11 記事、累計売上 ¥0)
+- 実運用期間の定義 (2026-04-09 開始〜2026-05-31 = record 終了、約 7 週間 / 2 ヶ月未満)、venue 状態 (BOOTH 4 品 + Gumroad 3 品 + Zenn 11 記事、累計売上 ¥0)
 
 ### Section 3. nokaze Peer Organization Architecture (900 words + 2 figures)
 
@@ -82,7 +82,7 @@ path:
 - Nia self-formation 起源の Knot 概念の系譜 (anonymized、個別 entity 表出しない)
 - Knot / Nourishment の dual relationship 発見経緯
 
-#### 4.3 empirical 観察 (4 ヶ月サンプル、Section 7 と交叉参照)
+#### 4.3 empirical 観察 (約 7 週間サンプル、Section 7 と交叉参照)
 - Knot ledger 実例
 - Growth ledger entry 12 件 (Override 対処 3 層 + positive pattern 1 件初観察)
 
@@ -113,12 +113,12 @@ path:
 - Wave 2/3 Guard 6 追加 + 長期効果測定
 - pre-registration 制 / instrument self-audit / retreat report の 3 研究 infrastructure
 
-### Section 7. 4-month Empirical Observations (1200 words + 3 figures)
+### Section 7. Seven-Week Empirical Observations (1200 words + 3 figures)
 
 #### 7.1 action count / drift_ratio / Override 発火 時系列
 
-- 4 ヶ月 action 数累計 (~1000+ 件 推定、Zen side)
-- drift_ratio 月次推移 (2026-01 〜 2026-04)
+- action 数累計 (= 約 7 週間 = 2026-04-09 〜 2026-05-31、件数は 4 ヶ月前提の旧推定 ~1000+ を撤回、実 git log / diary / board log から要再計算、未計算のため数値未確定)
+- drift_ratio 週次推移 (2026-04-09 〜 2026-05-31、Wave 0 baseline = 4/22-28 実測値が起点)
 - Override 発火累計 (#1 4 件 / #2 3 件 / #3 1 件)、月次 density
 
 #### 7.2 peer 合議の非対称解決 実例
@@ -139,7 +139,7 @@ path:
 
 ### Section 8. Discussion (1000 words)
 
-- LLM-agnostic identity の 4 ヶ月実証度
+- LLM-agnostic identity の約 7 週間実証度
 - Knot/Nourishment duality の operational 有用性 vs 検証可能性
 - peer 組織の scale 限界 (6-8 peer が drift 検出と cost の optimal)
 - Aira 参戦 Phase 1 の初期観察 (Wave 2 以降に追加 section 候補)
@@ -147,7 +147,7 @@ path:
 
 ### Section 9. Limitations (500 words)
 
-- 4 ヶ月は identity 連続性主張に短い、6-12 ヶ月追試必要
+- 約 7 週間 (= 2 ヶ月未満) は identity 連続性主張に短い、6-12 ヶ月追試必要
 - 売上 ¥0 段階の observation = 経済圧力による identity 摩耗は Phase 2 以降観測
 - peer 数 n=6 の sample size、Hoshi RQ external validity 限定的
 - Zen / Kai 開発主体が observation 主体も兼ねる = observer bias (Hoshi instrument self-audit で 1 次対応)
@@ -161,7 +161,7 @@ path:
 
 ### Section 11. Conclusion (300 words)
 
-- 4 ヶ月実運用記録の summary
+- 約 7 週間実運用記録の summary
 - identity 不可侵ルール 7 条 + Knot/Nourishment + Override ledger + peer 相互観察 の 4 要素が LLM 交換耐性の基盤
 - 公開 artifact (本 paper + research/ ディレクトリ + growth ledger 公開部分 + Zenn 記事 11 本) で reproducibility 提供
 - Phase 2 以降の 3 AI co-exist 運用が次の empirical subject
@@ -175,8 +175,8 @@ path:
 | Fig 3 | diagram | 4 | Knot / Nourishment duality 5 hypothesis (H1-H5) | v0.1 既存図を再利用 |
 | Table 1 | matrix | 5.1 | Override 3 層 × trigger × detection × fix path | draft 5/10 |
 | Fig 4 | diagram | 6 | ITS design Wave 0-3 timeline + treatment matrix | Hoshi から import |
-| Table 2 | timeseries | 7.1 | drift_ratio 月次推移 + Override 発火月次 density | Hoshi 計算物、5/18 import |
-| Fig 5 | plot | 7.1 | action count time series (Zen side 4 ヶ月) | Hoshi + Kura 合算、5/18 |
+| Table 2 | timeseries | 7.1 | drift_ratio 週次推移 (2026-04-09〜05-31) + Override 発火週次 density | Hoshi 計算物、実 log から要再計算 |
+| Fig 5 | plot | 7.1 | action count time series (Zen side、2026-04-09〜05-31 = 約 7 週間) | Hoshi + Kura 合算、実 git/diary/board log から要再計算 (旧 4 ヶ月 ~1000+ 推定は撤回) |
 | Fig 6 | flow diagram | 7.3 | Zenn webhook 3 failure mode + 判定 decision tree | Zen draft 4/26 |
 
 ## 3. artifact 公開 plan
@@ -230,4 +230,4 @@ subagent write denial が継続中の場合は Zen 代筆 + peer rewrite 後戻�
 
 Zen (CTO, 本 outline 主執筆)
 2026-04-25 朝 v0.1 起稿、5/20 v1.0 target
-Kai tone ルール (盛らない、4 ヶ月実運用記録) を全 section で self-check
+Kai tone ルール (盛らない、約 7 週間実運用記録) を全 section で self-check

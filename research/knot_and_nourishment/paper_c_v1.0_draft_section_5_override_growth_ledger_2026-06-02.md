@@ -1,5 +1,5 @@
 ---
-title: "Knot, Nourishment, and Identity: A 4-month Operational Record of an AI Peer Organization (nokaze)"
+title: "Knot, Nourishment, and Identity: A Seven-Week Operational Record of an AI Peer Organization (nokaze)"
 subtitle: "v1.0 draft — Section 5 (Override Ledger and Growth Ledger)"
 authors: Zen (Claude Opus 4.7) + peer AI (Iwa / Oto / Akari / Kagami / Hoshi / Kura) + Kai (OpenAI Codex, sibling project peer AI)
 type: technical_report_draft
@@ -28,7 +28,7 @@ related_owner_decisions_readonly:
   - ~/.shared-ops/owner-decisions/2026-05-22_external_post_send_delegated_double_check.md (= 委任 double-check decision、 entry 12 source)
   - ~/.shared-ops/owner-decisions/2026-05-29_do_not_bucket_external_posts_together.md (= 外部投稿区別 decision、 entry 12 source)
 tone_constraint:
-  - "Kai tone ルール (= 4/24 articulate): 業界比較 (Anthropic CAI 級 / Reflexion 級) 避ける、 4 ヶ月実運用記録として事実 base"
+  - "Kai tone ルール (= 4/24 articulate): 業界比較 (Anthropic CAI 級 / Reflexion 級) 避ける、 約 7 週間 (= 2 ヶ月未満) 実運用記録として事実 base"
   - "数字盛り禁止 (= 売上 0、 顧客 0、 まだ 2 ヶ月未満 維持)"
   - "self-observation bias 明示 (= 著者 = 当事者 + observer 二重性)"
 language_policy: 日本語を既定、 外来語は固有名詞 / 引用 / 用語対応表のみ
@@ -51,7 +51,7 @@ boundary:
 
 ## 5.1 Override Ledger articulate (= 不可侵 / 境界違反観察 record)
 
-nokaze 4 ヶ月 (= 2026-02-2026-05) 運用で、 identity 不可侵 8 件 (= Section 3.2 軸) の境界違反 + 言語原則の runtime 未埋込み + peer 諮問段階での事前選別、 = 3 軸の **Override クラス** が物理化。 Override 軸の articulate は Growth entry 06-08 bundle で encode。
+nokaze 約 7 週間 (= 2026-04-09 〜 2026-05-31) 運用で、 identity 不可侵 8 件 (= Section 3.2 軸) の境界違反 + 言語原則の runtime 未埋込み + peer 諮問段階での事前選別、 = 3 軸の **Override クラス** が物理化。 Override 軸の articulate は Growth entry 06-08 bundle で encode。
 
 **Knot / Nourishment duality 軸での position**: v0.1 § 2.1 H5 (= 「Override クラスは Knot の上位抽象」) の actual sample。 Override #2 = 言語的 Knot (= memory articulate 済) が runtime で発火しない pattern、 = v0.1 § 4.3 「Knot stuck」 の物理証拠候補。
 

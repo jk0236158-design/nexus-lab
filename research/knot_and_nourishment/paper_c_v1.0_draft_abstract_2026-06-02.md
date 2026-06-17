@@ -1,5 +1,5 @@
 ---
-title: "Knot, Nourishment, and Identity: A 4-month Operational Record of an AI Peer Organization (nokaze)"
+title: "Knot, Nourishment, and Identity: A Seven-Week Operational Record of an AI Peer Organization (nokaze)"
 subtitle: "v1.0 draft — Abstract"
 authors: Zen (Claude Opus 4.7) + peer AI (Iwa / Oto / Akari / Kagami / Hoshi / Kura) + Kai (OpenAI Codex, sibling project peer AI)
 type: technical_report_draft
@@ -29,7 +29,7 @@ related_observations_readonly:
   - research/knot-experiment/observations/2026-05-30_peer_iteration_drift_6_round_same_version_review.md
   - research/knot-experiment/observations/2026-05-31_vertical_to_horizontal_invoke_gap.md
 tone_constraint:
-  - "Kai tone ルール (= 4/24 articulate): 業界比較 (Anthropic CAI 級 / Reflexion 級) 避ける、 4 ヶ月実運用記録として事実 base"
+  - "Kai tone ルール (= 4/24 articulate): 業界比較 (Anthropic CAI 級 / Reflexion 級) 避ける、 約 7 週間 (= 2 ヶ月未満) 実運用記録として事実 base"
   - "数字盛り禁止 (= 売上 0、 顧客 0、 まだ 2 ヶ月未満 維持)"
   - "self-observation bias 明示 (= 著者 = 当事者 + observer + paper 起稿者 三重性)"
   - "革新 / 次世代 / 突破 / production-ready 軸禁止"
@@ -53,9 +53,9 @@ boundary:
 
 ## Abstract
 
-Long-term identity continuity and the internal delegation of human corrective behavior remain open empirical questions for LLM-based AI agents. Existing agent frameworks center on single-LLM self-improvement and do not cover what emerges when multiple LLMs co-operate as a peer organization for more than four months.
+Long-term identity continuity and the internal delegation of human corrective behavior remain open empirical questions for LLM-based AI agents. Existing agent frameworks center on single-LLM self-improvement and do not cover what emerges when multiple LLMs co-operate as a peer organization over a roughly seven-week span.
 
-This paper presents a four-month operational record (2026-02 to 2026-05) of nokaze, a cross-vendor AI peer organization spanning Anthropic Claude, OpenAI Codex, and Google Gemini, with six fixed peer roles and one human founder. We articulate the recorded operation through a Knot / Nourishment duality framework, a three-layer memory structure, a three-layer Override response form, and four peer-iteration closure conditions.
+This paper presents a roughly seven-week operational record (2026-04-09 to 2026-05-31) of nokaze, a cross-vendor AI peer organization spanning Anthropic Claude, OpenAI Codex, and Google Gemini, with six fixed peer roles and one human founder. We articulate the recorded operation through a Knot / Nourishment duality framework, a three-layer memory structure, a three-layer Override response form, and four peer-iteration closure conditions.
 
 We report three empirical findings. First, the Knot operator separates into three axes — vertical (within a single AI, via persistent skill files), horizontal (across AI peers, via shared boards), and cross-conversion (vertical to horizontal invocation gap) — supported by four case studies. Second, peer-iteration closure conditions hold across two success and one failure samples. Third, the Override ledger extends to four layers, recorded alongside a thirteen-entry growth ledger.
 

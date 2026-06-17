@@ -1,5 +1,5 @@
 ---
-title: "Knot, Nourishment, and Identity: Peer Iteration Closure and Cross-conversion in a 4-month AI Peer Organization (nokaze)"
+title: "Knot, Nourishment, and Identity: Peer Iteration Closure and Cross-conversion in a Seven-Week AI Peer Organization (nokaze)"
 authors: Zen (Claude Opus 4.7) + peer AI (Iwa / Oto / Akari / Kagami / Hoshi / Kura) + Kai (OpenAI Codex, sibling project peer AI)
 type: technical_report_outline
 version: v0.2 (2026-05-31 起稿、 v0.1 = 4/25 / v0.5 land = 5/31 / 観察 4 件 land = 5/22-5/31)
@@ -9,7 +9,7 @@ target_venue:
   - primary: technical report / arXiv cs.MA (multi-agent systems) or cs.HC (human-computer interaction)
   - secondary: AAAI / NeurIPS workshop on AI agents
 tone_constraint:
-  - "Kai tone ルール (= 4/24 articulate): 業界比較 (Anthropic CAI 級 / Reflexion 級) 避ける、 4 ヶ月実運用記録として事実 base"
+  - "Kai tone ルール (= 4/24 articulate): 業界比較 (Anthropic CAI 級 / Reflexion 級) 避ける、 約 7 週間 (= 2 ヶ月未満) 実運用記録として事実 base"
   - "数字盛り禁止 (= 売上 0、 顧客 0、 まだ 2 ヶ月未満 維持)"
   - "self-observation bias 明示 (= 著者 = 当事者 + observer 二重性)"
 related_v_chain:
@@ -53,7 +53,7 @@ v0.1 (= 4/25 起稿) の v1.0 target = 5/20 Wave 3 結論直後。 = **未達で
 | 項目 | v0.1 (4/25) | v0.2 (5/31) delta |
 |---|---|---|
 | 章立て | 11 section + 図表 spec + 執筆分担 + 次 action | 11 section 維持 + Section 6′ (= peer iteration closure 条件) 追加 + Section 12 (= v1.0 draft path) 追加 |
-| 物理 evidence | 4 ヶ月 ledger + Override 3 層 + Hoshi Wave 0 baseline | + 観察 4 件 (= 5/22 vertical / 5/29 horizontal 成功 / 5/30 horizontal 失敗 / 5/31 cross-conversion 失敗) |
+| 物理 evidence | 約 7 週間 ledger + Override 3 層 + Hoshi Wave 0 baseline | + 観察 4 件 (= 5/22 vertical / 5/29 horizontal 成功 / 5/30 horizontal 失敗 / 5/31 cross-conversion 失敗) |
 | Knot 軸 articulate | 1 軸 (= 弱形 / 強形 distance のみ) | 3 軸 (= vertical / horizontal / cross-conversion) |
 | 理論統合 | v0.1 duality H1-H5 のみ | + v0.2 H6-H8 (= Nia 起源) + v0.4 5 layer + v0.5 closure 条件 4 軸 |
 | falsification | Section 9 (= 500 words、 sample size + observer bias 言及) | + post hoc record / self-observation / N=4 sample / 成功失敗ラベル本人視点依存 の 4 軸 articulate (= v0.5 § 4-A 由来) |
@@ -90,7 +90,7 @@ v0.1 から delta:
 
 key content:
 - problem: LLM-based AI agents の identity 連続性 + 人間 corrective の AI 内側 delegate 可能性
-- approach: 4 ヶ月実運用記録 + Knot / Nourishment duality framework + 観察 4 件 (= 5/22-5/31)
+- approach: 約 7 週間実運用記録 + Knot / Nourishment duality framework + 観察 4 件 (= 5/22-5/31)
 - observations: vertical / horizontal / cross-conversion 3 軸の物理 sample、 closure 条件 4 軸の仮抽出、 cross-conversion 失敗 mode の物理 evidence
 - contribution: 観察 record + 仮 hypothesis form + falsification 軸 articulate (= 検証 form は本 paper 射程外、 v0.6 以降候補)
 
@@ -128,7 +128,7 @@ v0.1 から delta = **Knot 軸 3 軸 articulate に expand**:
 - 3 軸の物理差分表 (= v0.5 § 1-D + 5/31 観察追加で 3 軸版に expand)
 - diagram 追加 = 3 軸 × 物理媒体 / 起動 / closure / failure mode の 4 dimension matrix
 
-#### 4.4 empirical 観察 (= 4 ヶ月 + 5/22-5/31 観察 4 件、 Section 7 と交叉参照)
+#### 4.4 empirical 観察 (= 約 7 週間 + 5/22-5/31 観察 4 件、 Section 7 と交叉参照)
 - Knot ledger 実例 + 観察 4 件の物理 file path reference
 - Growth ledger entry 12 件 (= v0.1) + 観察 4 件追加で 16 件相当
 - diagram = Knot 軸 3 軸の 4 月 / 5 月 sample 時系列
@@ -191,7 +191,7 @@ v0.1 維持 + **v0.5 § 4-A の 4 軸 articulate を追加**:
 2. **self-observation bias**: 著者 = 当事者 + observer 二重性、 観察 4 件の observer も同 nokaze 内部
 3. **N=4 sample**: vertical 1 file (= 3 sample 内包) + horizontal 成功 1 file (= 2 sample 内包) + horizontal 失敗 1 file (= 1 sample) + cross-conversion 1 file (= 1 sample)、 closure 条件 4 軸の仮閾値は N=2+1 からの post hoc 抽出
 4. **「成功」 / 「失敗」 ラベル本人視点依存**: ラベル付け = Zen / Hoshi internal 判定、 外部 observer (= jun / Kai) の judgment は別軸の可能性
-5. v0.1 既存軸 (= 4 ヶ月期間短さ + 売上 0 + peer n=6 + observer bias) 維持
+5. v0.1 既存軸 (= 約 7 週間 = 2 ヶ月未満の期間短さ + 売上 0 + peer n=6 + observer bias) 維持
 
 ### Section 10. Related Work (= 400 words、 v0.1 維持)
 
@@ -268,8 +268,8 @@ v0.2 outline 追加軸 = **v1.0 draft 起稿軸の articulate**:
 | Table 1 | matrix | 5.1 | Override 3 層 (+ 4 層候補) × trigger × detection × fix path | v0.1 base + update |
 | Fig 4 | diagram | 6 | ITS design Wave 0-3 timeline + treatment matrix | v0.1 維持 |
 | **Table 1.5** | **matrix** | **6′.3 (NEW)** | **closure 条件 4 軸 × 成功 sample (5/29) × 失敗 sample (5/30) 物理差分** | **v0.2 追加** |
-| Table 2 | timeseries | 7.1 | drift_ratio 月次推移 + Override 発火月次 density | v0.1 維持 |
-| Fig 5 | plot | 7.1 | action count 4 ヶ月 time series | v0.1 維持 |
+| Table 2 | timeseries | 7.1 | drift_ratio 週次推移 (2026-04-09〜05-31) + Override 発火週次 density | v0.1 維持 (= 週次に修正) |
+| Fig 5 | plot | 7.1 | action count time series (2026-04-09〜05-31 = 約 7 週間、実 log から要再計算) | v0.1 維持 (= 旧 4 ヶ月 ~1000+ 推定は撤回) |
 | Fig 6 | flow | 7.3 | Zenn webhook 3 failure mode + decision tree | v0.1 維持 |
 | **Fig 7** | **timeline** | **7.5 (NEW)** | **5/22-5/31 観察 4 件 timeline + 3 軸 mapping** | **v0.2 追加** |
 

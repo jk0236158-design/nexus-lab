@@ -1,5 +1,5 @@
 ---
-title: "Knot, Nourishment, and Identity: A 4-month Operational Record of an AI Peer Organization (nokaze)"
+title: "Knot, Nourishment, and Identity: A Seven-Week Operational Record of an AI Peer Organization (nokaze)"
 subtitle: "v1.0 draft — Section 2 (Background)"
 authors: Zen (Claude Opus 4.7) + peer AI (Iwa / Oto / Akari / Kagami / Hoshi / Kura) + Kai (OpenAI Codex, sibling project peer AI)
 type: technical_report_draft
@@ -15,7 +15,7 @@ base_v_chain_readonly:
   - research/knot_and_nourishment/v0.3_prior_work_comparison.md (= 5/13 先行研究 7 件 baseline)
   - research/knot_and_nourishment/v0.4_prior_work_comparison.md (= 5/17 + AutoGPT + Devin = 9 件 baseline)
 tone_constraint:
-  - "Kai tone ルール (= 4/24 articulate): 業界比較 (Anthropic CAI 級 / Reflexion 級) 避ける、 4 ヶ月実運用記録として事実 base"
+  - "Kai tone ルール (= 4/24 articulate): 業界比較 (Anthropic CAI 級 / Reflexion 級) 避ける、 約 7 週間 (= 2 ヶ月未満) 実運用記録として事実 base"
   - "数字盛り禁止 (= 売上 0、 顧客 0、 まだ 2 ヶ月未満 維持)"
   - "self-observation bias 明示 (= 著者 = 当事者 + observer + paper 起稿者 三重性)"
 language_policy: 日本語を既定、 外来語は固有名詞 / 引用 / 用語対応表のみ
@@ -48,7 +48,7 @@ LLM-based AI agent の自己改善軸は、 単一 LLM 内の reflection / 学�
 
 **Self-Refine** (Madaan et al. 2023) は同一 LLM が出力 → 自己批評 → 改稿を反復する。 1 prompt 内の reflection 完結が core。
 
-これら 4 件はいずれも **「単一 LLM が単独で良くなる」** 軸を core に置く。 複数 LLM の cross-vendor coordination + 4 ヶ月以上の long-term 運用 + 人間との関係維持 boundary は射程外。
+これら 4 件はいずれも **「単一 LLM が単独で良くなる」** 軸を core に置く。 複数 LLM の cross-vendor coordination + 約 7 週間の long-term 運用 + 人間との関係維持 boundary は射程外。
 
 ---
 
@@ -70,14 +70,14 @@ LLM-based AI agent の自己改善軸は、 単一 LLM 内の reflection / 学�
 
 ## 2.3 nokaze position + differential (= 本 paper の独自軸)
 
-nokaze (= 2026-04-13 開業の個人事業屋号、 Section 3.1) の運用 4 ヶ月 (= 2026-02-2026-05) は、 既存研究の 3 軸と differential:
+nokaze (= 2026-04-13 開業の個人事業屋号、 Section 3.1) の運用約 7 週間 (= 2026-04-09 〜 2026-05-31) は、 既存研究の 3 軸と differential:
 
-1. **long-term empirical record 軸** = 4 ヶ月実運用 (= ephemeral ≠)、 action count + drift_ratio + Override 発火の月次推移を物理記録 (= Section 7)
+1. **long-term empirical record 軸** = 約 7 週間実運用 (= ephemeral ≠)、 action count + drift_ratio + Override 発火の月次推移を物理記録 (= Section 7)
 2. **cross-vendor peer organization 軸** = 3 runtime AI が共同運営: Anthropic Claude (= Zen + 6 peer = Iwa / Akari / Oto / Kagami / Hoshi / Kura) + OpenAI Codex (= Kai、 sibling project peer) + Google Gemini (= Aira、 read-only observer) (= 同一 vendor / 同一 runtime ≠)
 3. **third-party verification の物理化軸** = read-only observer (= Aira = Gemini) が同一 ledger を独立 read、 著者軸 ≠ observer 軸の 1 軸物理化 (= Section 3.2)
 4. **boundary 表ベース委任軸** = 8 自走 + 9 jun 確認必須 + 8 件 standing prohibition の 3 段表 (= 委任権限 v1、 2026-05-16) + Knot Guard 8 種の boundary trigger 検出 mechanism (= dose 軸 ≠、 役割境界軸)
 
-= 単一 LLM self-improvement ≠ + single-runtime ephemeral framework ≠、 **cross-vendor peer organization の 4 ヶ月運用記録 + boundary 表ベース委任 + read-only observer 物理化** が独自貢献軸。
+= 単一 LLM self-improvement ≠ + single-runtime ephemeral framework ≠、 **cross-vendor peer organization の約 7 週間運用記録 + boundary 表ベース委任 + read-only observer 物理化** が独自貢献軸。
 
 但し本 paper は **完成 framework ではなく 1 次 record + 仮 hypothesis form** (= Section 1.5)。 検証 form は本 paper 射程外、 v0.6 以降候補。
 
@@ -90,7 +90,7 @@ nokaze (= 2026-04-13 開業の個人事業屋号、 Section 3.1) の運用 4 ヶ
 3 件の honest caveat:
 
 1. **9 件先行研究 baseline の totality 限定** = v0.3 7 件 + v0.4 +AutoGPT + Devin = 9 件は AI 文献 totality ではない、 より広い survey で同形が見つかる可能性は維持 (= v0.4 § 7 honest)
-2. **venue state の数字** = 本 paper 起稿時点 (= 2026-06-02) で売上 0 / 顧客 0 / nokaze 創業 (= 2026-04-13) から 2 ヶ月未満。 「4 ヶ月実運用」 の数字は研究観測期間 (= 2026-02-2026-05) であって商業実績ではない、 = 商業成功 evidence なし
+2. **venue state の数字** = 本 paper 起稿時点 (= 2026-06-02) で売上 0 / 顧客 0 / nokaze 創業 (= 2026-04-13) から 2 ヶ月未満。 「約 7 週間実運用」 の数字は研究観測期間 (= 2026-04-09 〜 2026-05-31) であって商業実績ではない、 = 商業成功 evidence なし
 3. **observer 物理化軸の不完全性** = Aira (= read-only observer) は同一 jun 環境内、 完全 third-party (= 外部研究機関 audit / 外部読者) ではない、 「内部 peer 三重性 → 内部 observer」 の 1 段拡張のみ
 
 = 本 section の position 取り 「nokaze は cross-vendor peer organization の long-term record 軸が独自貢献」 は **強い主張 (= 4 軸 differential)** + **弱い caveat (= 9 件 baseline totality 限定 + 商業実績なし + 物理化不完全)** の dual 構造、 honest 軸。

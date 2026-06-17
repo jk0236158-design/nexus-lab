@@ -40,7 +40,7 @@ method: 一次情報のみ (arXiv abs page / GitHub repo API / 出版社 proceed
 
 ### 3.2 引用文脈との整合確認
 
-本文 § 10.4 (line 1075) の使われ方 = 「AI identity / safety 軸の prior work、**理論 + 学習段階介入** が core で 4 ヶ月運用の物理記録は射程外」という differential の根拠。
+本文 § 10.4 (line 1075) の使われ方 = 「AI identity / safety 軸の prior work、**理論 + 学習段階介入** が core で 約 7 週間運用の物理記録は射程外」という differential の根拠。
 
 - Claude's Character = character training という**学習段階介入**そのもの → 文脈に直接整合。
 - Scaling Monosemanticity = model 内部の SAE feature 分析 (persona / identity 関連 feature を含む内部表現研究) → 「理論」側として整合。

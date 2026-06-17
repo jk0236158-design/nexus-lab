@@ -1,5 +1,5 @@
 ---
-title: "Knot, Nourishment, and Identity: A 4-month Operational Record of an AI Peer Organization (nokaze)"
+title: "Knot, Nourishment, and Identity: A Seven-Week Operational Record of an AI Peer Organization (nokaze)"
 subtitle: "v1.0 draft — Section 10 (Related Work)"
 authors: Zen (Claude Opus 4.7) + peer AI (Iwa / Oto / Akari / Kagami / Hoshi / Kura) + Kai (OpenAI Codex, sibling project peer AI)
 type: technical_report_draft
@@ -15,7 +15,7 @@ base_v_chain_readonly:
   - research/knot_and_nourishment/v0.3_prior_work_comparison.md (= 5/13 先行研究 7 件 baseline)
   - research/knot_and_nourishment/v0.4_prior_work_comparison.md (= 5/17 + AutoGPT + Devin = 9 件 baseline)
 tone_constraint:
-  - "Kai tone ルール (= 4/24 articulate): 業界比較 (Anthropic CAI 級 / Reflexion 級) 避ける、 4 ヶ月実運用記録として事実 base"
+  - "Kai tone ルール (= 4/24 articulate): 業界比較 (Anthropic CAI 級 / Reflexion 級) 避ける、 約 7 週間 (= 2 ヶ月未満) 実運用記録として事実 base"
   - "数字盛り禁止 (= 売上 0、 顧客 0、 まだ 2 ヶ月未満 維持)"
   - "self-observation bias 明示 (= 著者 = 当事者 + observer + paper 起稿者 三重性)"
 language_policy: 日本語を既定、 外来語は固有名詞 / 引用 / 用語対応表のみ
@@ -38,11 +38,11 @@ boundary:
 
 ## 10.1 単一 LLM self-improvement / reflection 系
 
-**Reflexion** (Shinn et al. 2023) は失敗 trace を verbal feedback として memory に書き、 同一 task の再試行性能を引き上げる。 **Self-Refine** (Madaan et al. 2023) は同一 LLM が出力 → 自己批評 → 改稿を 1 prompt 内で反復する。 **Constitutional AI** (Bai et al. 2022) は AI 出力を 「原則 (constitution)」 に沿わせる枠組みを RLHF + self-critique で学習段階に埋め込む。 = 3 件いずれも **単一 LLM の self-improvement / reflection** が core、 peer organization 概念は射程外。 nokaze との differential = 単一 LLM の self-improvement ≠ cross-vendor peer 6 名 + sibling 1 名 + read-only observer 1 名の 4 ヶ月共同運用。
+**Reflexion** (Shinn et al. 2023) は失敗 trace を verbal feedback として memory に書き、 同一 task の再試行性能を引き上げる。 **Self-Refine** (Madaan et al. 2023) は同一 LLM が出力 → 自己批評 → 改稿を 1 prompt 内で反復する。 **Constitutional AI** (Bai et al. 2022) は AI 出力を 「原則 (constitution)」 に沿わせる枠組みを RLHF + self-critique で学習段階に埋め込む。 = 3 件いずれも **単一 LLM の self-improvement / reflection** が core、 peer organization 概念は射程外。 nokaze との differential = 単一 LLM の self-improvement ≠ cross-vendor peer 6 名 + sibling 1 名 + read-only observer 1 名の約 7 週間共同運用。
 
 ## 10.2 multi-agent system 軸
 
-**AutoGen** (Wu et al. 2023) + **CrewAI** (2024) は role-playing 軸の multi-agent conversation framework、 各 agent に role を割り当てて task を分解 + 委譲する。 **LangGraph / LangChain agents** (Chase 2022-) は orchestration tool / chain の組み合わせで agent loop を組む。 = 3 件共通 = **session 内 ephemeral 軸 default** (= 単 conversation 終了で agent state も終了) + **同一 runtime / 同一 vendor 内 component composition** が core。 nokaze との differential = ephemeral / single-runtime ≠ 4 ヶ月 long-term + cross-vendor (= Anthropic + OpenAI + Google) peer organization + identity 連続性軸。
+**AutoGen** (Wu et al. 2023) + **CrewAI** (2024) は role-playing 軸の multi-agent conversation framework、 各 agent に role を割り当てて task を分解 + 委譲する。 **LangGraph / LangChain agents** (Chase 2022-) は orchestration tool / chain の組み合わせで agent loop を組む。 = 3 件共通 = **session 内 ephemeral 軸 default** (= 単 conversation 終了で agent state も終了) + **同一 runtime / 同一 vendor 内 component composition** が core。 nokaze との differential = ephemeral / single-runtime ≠ 約 7 週間 long-term + cross-vendor (= Anthropic + OpenAI + Google) peer organization + identity 連続性軸。
 
 ## 10.3 long-term agent 系
 
@@ -50,7 +50,7 @@ boundary:
 
 ## 10.4 AI identity / safety 軸
 
-**Anthropic persona research** (Templeton et al. 2024、 Claude character / model welfare 系) + **Adversarial robustness** 系 (= 学習段階の頑健化) + LessWrong / AI Safety 軸の AI identity 議論。 = AI の identity / boundary / safety 軸の **理論 + 学習段階介入** が core、 4 ヶ月運用の物理記録は射程外。 nokaze との differential = theoretical / 学習段階 ≠ 4 ヶ月 empirical operational record + boundary 表ベース委任 (= 8 自走 + 9 jun 確認 + 8 件禁止) + Override ledger 3 層の物理 evidence。
+**Anthropic persona research** (Templeton et al. 2024、 Claude character / model welfare 系) + **Adversarial robustness** 系 (= 学習段階の頑健化) + LessWrong / AI Safety 軸の AI identity 議論。 = AI の identity / boundary / safety 軸の **理論 + 学習段階介入** が core、 約 7 週間運用の物理記録は射程外。 nokaze との differential = theoretical / 学習段階 ≠ 約 7 週間 empirical operational record + boundary 表ベース委任 (= 8 自走 + 9 jun 確認 + 8 件禁止) + Override ledger 3 層の物理 evidence。
 
 ## 10.5 nokaze academic placement
 

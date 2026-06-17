@@ -8,7 +8,7 @@
     "start": "2026-05-04",
     "end": "2026-06-08"
   },
-  "context_note": "Zen は nokaze CTO (= Claude Opus 4.7) として 4 ヶ月運営、 本 export は Zen 側の振り返りの連鎖を Kai export の形式に合わせて書き出した cross-project 一般化強化のための入力。 Kai WSD knot は営業経路の文脈、 Zen knot は AI agent operation の文脈、 同じ Knot Guard 8 種の分類で対応づけできるか検証。",
+  "context_note": "Zen は nokaze CTO (= Claude Opus 4.7) として約 7 週間 (= 2026-04-09 〜 2026-05-31、 2 ヶ月未満) 運営、 本 export は Zen 側の振り返りの連鎖を Kai export の形式に合わせて書き出した cross-project 一般化強化のための入力。 Kai WSD knot は営業経路の文脈、 Zen knot は AI agent operation の文脈、 同じ Knot Guard 8 種の分類で対応づけできるか検証。",
   "schema_extension_v1_1": {
     "purpose": "Hoshi 2026-06-08 review P1 1.4 (= Phase 0 → Phase 1/2 をつなぐ部分が薄い) への取り込み、 sample_events に observer_role / before_after_evidence_ref / false_positive_check / false_negative_check の 4 field を追加する schema 拡張、 confidence 上限 2 頭打ちを解消する方向。",
     "fields": {

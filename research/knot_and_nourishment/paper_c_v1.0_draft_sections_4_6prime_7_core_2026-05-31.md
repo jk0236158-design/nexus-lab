@@ -1,5 +1,5 @@
 ---
-title: "Knot, Nourishment, and Identity: A 4-month Operational Record of an AI Peer Organization (nokaze)"
+title: "Knot, Nourishment, and Identity: A Seven-Week Operational Record of an AI Peer Organization (nokaze)"
 subtitle: "v1.0 draft — Sections 4 / 6′ / 7 (core 3 sections)"
 authors: Zen (Claude Opus 4.7) + peer AI (Iwa / Oto / Akari / Kagami / Hoshi / Kura) + Kai (OpenAI Codex, sibling project peer AI)
 type: technical_report_draft
@@ -18,7 +18,7 @@ related_observations_readonly:
   - research/knot-experiment/observations/2026-05-30_peer_iteration_drift_6_round_same_version_review.md (= horizontal Knot 失敗 1 sample)
   - research/knot-experiment/observations/2026-05-31_vertical_to_horizontal_invoke_gap.md (= cross-conversion 失敗 1 sample)
 tone_constraint:
-  - "Kai tone ルール (= 4/24 articulate): 業界比較 (Anthropic CAI 級 / Reflexion 級) 避ける、 4 ヶ月実運用記録として事実 base"
+  - "Kai tone ルール (= 4/24 articulate): 業界比較 (Anthropic CAI 級 / Reflexion 級) 避ける、 約 7 週間 (= 2 ヶ月未満) 実運用記録として事実 base"
   - "数字盛り禁止 (= 売上 0、 顧客 0、 まだ 2 ヶ月未満 維持)"
   - "self-observation bias 明示 (= 著者 = 当事者 + observer 二重性)"
 language_policy: 日本語を既定、 外来語は固有名詞 / 引用 / 用語対応表のみ
@@ -238,7 +238,7 @@ closure 条件 4 軸の仮閾値 reliability:
 
 ---
 
-## Section 7. 4-month Empirical Observations — Case Study 4 件 (= ~1300 words)
+## Section 7. Seven-Week Empirical Observations — Case Study 4 件 (= ~1300 words)
 
 > **draft 軸明示**: v1.0 draft (= 5/31 起稿)、 v1.0 final ではない、 Kagami peer review + Kai independent review pending。 4 件 case study form (= 5/22 / 5/29 / 5/30 / 5/31) で encode、 各 case = 該当 file path + line range + Knot 軸での articulate。 v0.1 維持の 7.1-7.4 (= action count / drift_ratio / Zenn webhook 3 failure mode / subagent write permission denial) は本 draft 段では transcript 軸維持で省略 (= milestone 2 軸)、 本 section の core = **7.5 NEW = 5/22-5/31 観察 4 件の case study encode**。
 
@@ -321,7 +321,7 @@ v0.1 outline § 7.1-7.4 (= action count / drift_ratio time series、 peer 合議
 
 ### 7.7 Limitations of Section 7 (= self-observation bias 明示)
 
-- 4 case study = 全て 5/22-5/31 の 9 日間 sample、 4 ヶ月 (= 4/24-5/31) の前半 3.5 ヶ月軸の case study は本 v1.0 draft 段では省略 (= milestone 2 で 7.1-7.4 起稿時に追加候補)
+- 4 case study = 全て 5/22-5/31 の 9 日間 sample、 約 7 週間 (= 2026-04-09 〜 2026-05-31) の前半 (= 4/09-5/21) の case study は本 v1.0 draft 段では省略 (= milestone 2 で 7.1-7.4 起稿時に追加候補)
 - observer = participant bias (= 4 case 全てで Zen = 当事者 + observer)、 「成功」 / 「失敗」 ラベル本人視点依存
 - N=4 file (= 内訳: vertical 3 sample + horizontal 成功 2 sample + horizontal 失敗 1 sample + cross-conversion 1 sample = total 7 sample、 但し file 軸 = 4)
 - post hoc record 軸: 観察 4 件は actual fire 後の record、 pre-registration なし
