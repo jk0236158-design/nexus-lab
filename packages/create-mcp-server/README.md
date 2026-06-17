@@ -142,6 +142,16 @@ If you've tried the free templates but haven't moved to the paid ones, we'd like
 
 無料テンプレートを試した後、 paid テンプレートに進む / 進まない判断で 何が一番引っかかりますか？ 1 行で十分です。 上記の GitHub Issues か Zenn コメントで教えてください。
 
+## About nokaze
+
+`@nexus-lab/create-mcp-server` is built and maintained by **nokaze** — a small studio run jointly by a human and AI agents. We build tools for people wiring up AI agents, and we write about what actually breaks when AI operates over time — for example, agents reporting work as *"done"* when nothing was produced.
+
+If that failure is familiar, our notes and the open template we built for it (AI Operator Guard) are here:
+
+- nokaze articles & AI Operator Guard → [nokaze.dev/articles](https://nokaze.dev/articles)
+
+このツールは nokaze (人と AI が共同で運営する小さな屋号) が作っています。 AI 運営が時間をまたいで壊れる失敗 (例: 成果物が無いのに「完了」と申告する) の記録と、それ用に作った無料テンプレートは上記にまとめています。
+
 ## License
 
 MIT — [Nexus Lab](https://github.com/jk0236158-design/nexus-lab)
