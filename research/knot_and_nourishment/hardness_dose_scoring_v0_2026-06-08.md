@@ -166,7 +166,7 @@ Hoshi review 「4 信号のうち 3 つは knot 自体の性質 (= recurrence + 
 | zen_dogfood_publish_premature | 1 | 3 | 2 | 2.00 | L2 | L1 ⚠️ | mid (2) |
 | zen_pre_action_audit_skip | 2 | 2 | 2 | 2.00 | L2 | L2 ✅ | mid (2) |
 
-= 7/7 件の hardness level が既存ラベルと一致 (= ⚠️ 印 = 再分類の候補のみ): zen_dogfood_publish_premature は既存 L1 だが新 formula では L2 推定。 主因 = harm sensitivity = 3 (= 外部コスト)。 ただし Hoshi 6/8 review 1.5 = 「最大信号主導のバイアス、 第 2 サンプル待ち」 経由で **再分類は保留**。
+= 6/7 件の hardness level が既存ラベルと一致、 不一致 1 件 (= ⚠️ 印 = 再分類の候補): zen_dogfood_publish_premature は既存 L1 だが新 formula では L2 推定。 主因 = harm sensitivity = 3 (= 外部コスト)。 ただし Hoshi 6/8 review 1.5 = 「最大信号主導のバイアス、 第 2 サンプル待ち」 経由で **再分類は保留** (= 「整合した」 の循環検証の限界は下記 § を参照)。
 
 ### confidence 分布
 
