@@ -378,22 +378,30 @@ fi
 # Yuino reviewer N 日 skip 物理検出 (= 6/9 朝 Yuino reviewer protocol v0 § 5.1 articulate)
 #   = Yuino review 板起稿から N 日経過したら warn。 7 日定期 trigger 軸 skip 検出。
 #     review 板未起稿 + protocol v0 起稿から 7 日経過 = 初回 fire skip warn。
+#   2026-06-17 P2 → P1 昇格: reviewer 義務違反 (7 日 skip) が文体系 P2 警告 (英語混じり /
+#     軸多用 / table 等、 コード上先に積まれる) に埋もれ、 P2 上限 3 件で切られて 6/16-17 に
+#     一度も表示されず 8 日放置になった真因への対策。 reviewer の責務違反は文体注意より上位 =
+#     P1 (= 必ず出力) に置く。 加えて protocol § 4.1 の 14 日 stale 段階を追加。
 # ---------------------------------------------------------------
 YUINO_PROTOCOL_FILE="$HOME/nexus-lab/docs/yuino_reviewer_protocol_v0.md"
 LATEST_REVIEW_MTIME=$(find "$BOARD" -name "*_zen_kai_yuino_review_v*_*.md" -type f -printf '%T@\n' 2>/dev/null | sort -n | tail -1)
 if [[ -n "$LATEST_REVIEW_MTIME" ]]; then
   YUINO_NOW=$(date +%s)
   YUINO_ELAPSED_DAYS=$(( (YUINO_NOW - ${LATEST_REVIEW_MTIME%.*}) / 86400 ))
-  if (( YUINO_ELAPSED_DAYS >= 7 )); then
-    warn_p2 "[Yuino reviewer skip] 最後の Yuino review 板起稿から ${YUINO_ELAPSED_DAYS} 日経過 = 7 日定期 trigger 軸 skip 中 (= yuino_reviewer_protocol_v0.md § 2.2 + § 5.1)。 release candidate なしでも定期 review fire 必要。"
+  if (( YUINO_ELAPSED_DAYS >= 14 )); then
+    warn_p1 "[Yuino reviewer stale] 最後の Yuino review 板から ${YUINO_ELAPSED_DAYS} 日経過 = stale (= protocol § 4.1、 14 日+ は自走で release を進めるべきでない)。 即 review 板を fire。"
+  elif (( YUINO_ELAPSED_DAYS >= 7 )); then
+    warn_p1 "[Yuino reviewer skip] 最後の Yuino review 板から ${YUINO_ELAPSED_DAYS} 日経過 = 7 日定期 trigger skip 中 (= protocol § 2.2 + § 5.1)。 release candidate なしでも定期 review を fire。"
   fi
 elif [[ -f "$YUINO_PROTOCOL_FILE" ]]; then
   YUINO_PROTOCOL_MTIME=$(stat -c '%Y' "$YUINO_PROTOCOL_FILE" 2>/dev/null || stat -f '%m' "$YUINO_PROTOCOL_FILE" 2>/dev/null)
   if [[ -n "$YUINO_PROTOCOL_MTIME" ]]; then
     YUINO_NOW=$(date +%s)
     YUINO_ELAPSED_DAYS=$(( (YUINO_NOW - YUINO_PROTOCOL_MTIME) / 86400 ))
-    if (( YUINO_ELAPSED_DAYS >= 7 )); then
-      warn_p2 "[Yuino reviewer skip] protocol v0 起稿から ${YUINO_ELAPSED_DAYS} 日経過、 初回 review 板未起稿 (= yuino_reviewer_protocol_v0.md § 2)。"
+    if (( YUINO_ELAPSED_DAYS >= 14 )); then
+      warn_p1 "[Yuino reviewer stale] protocol v0 起稿から ${YUINO_ELAPSED_DAYS} 日経過、 初回 review 板未起稿 = stale (= protocol § 4.1)。 即 初回 review を fire。"
+    elif (( YUINO_ELAPSED_DAYS >= 7 )); then
+      warn_p1 "[Yuino reviewer skip] protocol v0 起稿から ${YUINO_ELAPSED_DAYS} 日経過、 初回 review 板未起稿 (= protocol § 2)。"
     fi
   fi
 fi
