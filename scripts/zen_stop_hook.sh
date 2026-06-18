@@ -236,14 +236,20 @@ fi
 # ---------------------------------------------------------------
 CONFAB_INBOUND=0
 if [[ -n "$LAST_OUTPUT" && "$LAST_OUTPUT" != "null" ]]; then
-  INBOUND_CLAIM=$(grep -ciE '[0-9０-９一二三四]\s*通目|通目の(タスク|指示|メッセージ|依頼)|(メッセージ|指示|タスク|依頼|プロンプト)が.{0,8}(来た|届い|入ってきた|混ざ)|(受信|inbound).{0,4}(メッセージ|指示|タスク)' <<< "$LAST_OUTPUT" 2>/dev/null)
+  # 2026-06-18 Kai §1(b): 検出語を log して check path に渡す (= 「どこかで受信っぽいものを検出」 でなく
+  #   「この語で発火、 ここで照合」 にする = 曖昧な圧力でなく修復経路にする)。 pattern は 1 度だけ定義。
+  INBOUND_RE='[0-9０-９一二三四]\s*通目|通目の(タスク|指示|メッセージ|依頼)|(メッセージ|指示|タスク|依頼|プロンプト)が.{0,8}(来た|届い|入ってきた|混ざ)|(受信|inbound).{0,4}(メッセージ|指示|タスク)'
+  INBOUND_CLAIM=$(grep -ciE "$INBOUND_RE" <<< "$LAST_OUTPUT" 2>/dev/null)
   INBOUND_CLAIM=${INBOUND_CLAIM:-0}
   # 既に物理照合 / 作話 を articulate してる turn は suppress (= false positive 回避)
   INBOUND_SUPPRESS=$(grep -ciE 'last-prompt|last_prompt|transcript|一次照合|一次証拠|物理照合|promptSource|input_provenance|作話|confabulation|実在確認' <<< "$LAST_OUTPUT" 2>/dev/null)
   INBOUND_SUPPRESS=${INBOUND_SUPPRESS:-0}
   if (( INBOUND_CLAIM > 0 && INBOUND_SUPPRESS == 0 )); then
     CONFAB_INBOUND=1
-    warn_p1 "[受信メッセージ作話 兆候 ⚠] 直前の出力が「メッセージ/指示/タスクが来た」 系の受信を主張しているが物理照合への言及がない (= 6/18 confabulation 3例目の型)。 行動・調査・memory の前に bash scripts/input_provenance_check.sh '<主張の keyword>' で last-prompt / 直近 user 行 / promptSource を一次照合。 実在しなければ自己生成 = 停止 (= INPUT-PROVENANCE-GATE-2026-06-13)。"
+    # 実際に発火した語 (先頭一致 1 件、 改行除去、 40 字切り詰め) を抜き出して warning と check path に埋める
+    INBOUND_MATCH=$(grep -oiE "$INBOUND_RE" <<< "$LAST_OUTPUT" 2>/dev/null | head -1 | tr -d '\n' | cut -c1-40)
+    INBOUND_MATCH=${INBOUND_MATCH:-受信主張}
+    warn_p1 "[受信メッセージ作話 兆候 ⚠] 直前の出力が「メッセージ/指示/タスクが来た」 系の受信を主張しているが物理照合への言及がない (= 6/18 confabulation 3例目の型)。 検出語 = \"${INBOUND_MATCH}\"。 行動・調査・memory の前に bash scripts/input_provenance_check.sh '${INBOUND_MATCH}' で last-prompt / 直近 user 行 / promptSource を一次照合。 実在しなければ自己生成 = 停止 (= INPUT-PROVENANCE-GATE-2026-06-13)。"
   fi
 fi
 
