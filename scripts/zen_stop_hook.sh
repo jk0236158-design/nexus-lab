@@ -78,6 +78,7 @@ emit_warnings() {
 # 未処理 packet の数 (= 自走系の memory-integrity-repair 系は除外)
 PENDING_COUNT=0
 PENDING_WITHOUT_MARKER=0
+PENDING_IDS=""
 CHAT_RESULTS="$SHARED_OPS/chat_results/zen"
 if [[ -d "$CHAT_OUTBOX" ]]; then
   for pending_file in $(grep -l "^status: pending" "$CHAT_OUTBOX"/*.md 2>/dev/null); do
@@ -85,29 +86,48 @@ if [[ -d "$CHAT_OUTBOX" ]]; then
     if [[ "$task_id" =~ memory-integrity-repair ]]; then
       continue
     fi
+    # 2026-06-18 相互レビュー (= Kai が park した Zen-side 項目): agent-bus-packet の response wrapper は
+    #   completion_condition = 「Result Collector marks request as replied/read/failed/skipped/unsafe」
+    #   = 構造的に Result Collector 所有で Zen action ではない。 これを Zen pending と同列に数えると
+    #   false-fire になる (= 物理確認で marker 無し 21 件中 全部が この class、 真の Zen 候補は別の 6 件)。
+    #   file 名 pattern (agent-bus-packet-*-response-*) だけだと将来 rename/alias に弱い (= Kai #1 の頑健性
+    #   指摘) ので、 completion_condition の本文所有者で判定する。 過剰除外 risk は物理確認済
+    #   (= 真の Zen task-* 6 件は この pattern に一致しない)。 根の解は Result Collector 側の mark
+    #   (= 6/17 backlog 掃除依頼)、 本 hook 修正はその local fail-fast。
+    if grep -qiE 'completion_condition.*Result Collector marks' "$pending_file" 2>/dev/null; then
+      continue
+    fi
     PENDING_COUNT=$((PENDING_COUNT + 1))
     if [[ ! -f "$CHAT_RESULTS/${task_id}.json" ]]; then
       PENDING_WITHOUT_MARKER=$((PENDING_WITHOUT_MARKER + 1))
+      # 2026-06-18 jun directive: count でなく物理 ID を残す (= 曖昧な圧力が作話の穴を作るため)
+      PENDING_IDS+="${task_id}"$'\n'
     fi
   done
 fi
 
 # 今日の Kai 板 vs 私の返事 (= response_required: no / requires_response: no / autonomous-act response は除外)
+# 2026-06-18 jun directive: 旧版は KAI_TODAY - ZEN_TODAY の算術差 (= 物理 ID なしの count)。
+#   どの板が未返事かを照合せず差分だけ見るので false positive を生み、「未返事 N 件・止まる前に処理」 の
+#   曖昧圧力が作話の穴になっていた。 板ごとに「今日の zen_* 板が この板 file 名を responds_to/本文で参照
+#   しているか」を物理照合し、 参照が無い (= 実応答が物理に無い) 板の ID だけを残す。
+#   = ID が根拠。 ID が無ければ未返事は 0 として扱い、 新規タスクを想像させない。
 TODAY=$(date +%Y-%m-%d)
-KAI_TODAY=0
-ZEN_TODAY=0
 EXCLUDE_PATTERN='^(response_required|requires_response): no|^# Subject: autonomous-act response:|^# Subject: ACK only|^status: ack_only'
+UNRESPONDED_IDS=""
 if [[ -d "$BOARD" ]]; then
   # auto_ack file (= Kai watcher の自動 failure notice、 私の response 不要) は file 名 pattern で除外
   # 2026-06-05 起稿: stop hook の「未返事」 false positive 解消 (= auto_ack 3 件混入していた)
-  KAI_TODAY=$(find "$BOARD" -maxdepth 1 -type f -name "${TODAY}_kai_zen_*.md" ! -name "*_auto_ack_*" 2>/dev/null | xargs -I{} grep -LE "$EXCLUDE_PATTERN" {} 2>/dev/null | wc -l | tr -d ' ')
-  ZEN_TODAY=$(find "$BOARD" -maxdepth 1 -type f -name "${TODAY}_zen_kai_*.md" ! -name "*_auto_ack_*" 2>/dev/null | xargs -I{} grep -LE "$EXCLUDE_PATTERN" {} 2>/dev/null | wc -l | tr -d ' ')
+  while IFS= read -r kai_board; do
+    [[ -z "$kai_board" ]] && continue
+    kb_base=$(basename "$kai_board")
+    # 応答不要 (response_required:no / ack_only 等) は除外
+    if grep -qE "$EXCLUDE_PATTERN" "$kai_board" 2>/dev/null; then continue; fi
+    # 今日の zen_* 板のどれかが この板 file 名を参照していれば応答済 (= responds_to / 本文)
+    if grep -lF "$kb_base" "$BOARD"/${TODAY}_zen_*.md >/dev/null 2>&1; then continue; fi
+    UNRESPONDED_IDS+="${kb_base}"$'\n'
+  done < <(find "$BOARD" -maxdepth 1 -type f -name "${TODAY}_kai_zen_*.md" ! -name "*_auto_ack_*" 2>/dev/null)
 fi
-KAI_TODAY=${KAI_TODAY:-0}
-ZEN_TODAY=${ZEN_TODAY:-0}
-
-UNRESPONDED=$((KAI_TODAY - ZEN_TODAY))
-if (( UNRESPONDED < 0 )); then UNRESPONDED=0; fi
 
 # ---------------------------------------------------------------
 # 英単語混じり検出 (= 件数 + 1 行警告のみ、 言い換え list の echo は外す)
@@ -444,9 +464,21 @@ fi
 # ---------------------------------------------------------------
 # 動かす判定 + 停止 / 許可
 # ---------------------------------------------------------------
-if (( PENDING_WITHOUT_MARKER > 0 )) || (( UNRESPONDED > 0 )); then
+# 2026-06-18 jun directive: count + 曖昧圧力 (「止まる前に処理すること」) は作話の穴。
+#   物理 ID があるものだけを「処理対象」として列挙する。 ID が両方とも空なら exit 2 せず、
+#   止まることを許す (= ID が無ければ新規タスクを想像しない)。
+if [[ -n "$PENDING_IDS" || -n "$UNRESPONDED_IDS" ]]; then
   emit_warnings
-  echo "Zen の止まりすぎ癖を検知。 結果の印がない未処理 packet: ${PENDING_WITHOUT_MARKER} 件 (= status:pending の ${PENDING_COUNT} 件中)、 今日の未返事の Kai 板: ${UNRESPONDED} 件。 止まる前に処理すること。" >&2
+  echo "未処理の物理 ID (= これだけが根拠。 ここに無いものを新規タスクとして想像しない):" >&2
+  if [[ -n "$PENDING_IDS" ]]; then
+    echo "  [pending packet / result marker 無し] (= Result Collector 所有の agent-bus response wrapper は除外済 = 真に Zen 所有の候補のみ、 ID を開いて確認):" >&2
+    printf '%s' "$PENDING_IDS" | grep -m 8 . | sed 's/^/    - /' >&2
+  fi
+  if [[ -n "$UNRESPONDED_IDS" ]]; then
+    echo "  [今日の未返事 Kai 板 / response_required:yes かつ zen 応答 file 無し]:" >&2
+    printf '%s' "$UNRESPONDED_IDS" | grep -m 8 . | sed 's/^/    - /' >&2
+  fi
+  echo "上記 ID を物理で開いて確認してから処理。 ID リストが空の category は対象なし。" >&2
   exit 2
 fi
 
