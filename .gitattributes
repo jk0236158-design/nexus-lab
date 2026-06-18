@@ -1,0 +1,10 @@
+# Shell scripts must check out with LF on every platform.
+# core.autocrlf=true was smudging *.sh to CRLF on Windows, which made
+# bash -n fail with `syntax error near unexpected token $'{\r'` on native
+# Windows/PowerShell shells (Kai 2026-06-18 Commit B/C post-review P1).
+# eol=lf pins the working-tree line endings so the stop hook / guard
+# scripts parse identically from the harness runner, PowerShell, and WSL.
+*.sh text eol=lf
+
+# Node helper scripts are run by node; keep them LF too for consistency.
+*.mjs text eol=lf
