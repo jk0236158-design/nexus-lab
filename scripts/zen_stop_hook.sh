@@ -230,8 +230,9 @@ fi
 #     出した時に P1。 6/13 の self-delusion 検出器 (= 大仰な「周りはフィクション」型、 L551) を
 #     すり抜けた地味な「受信メッセージの捏造」 型を捕まえる (= jun 入力は「おはよう」だけだったのに
 #     2 通の受信を作って行動した実例、 transcript line 516)。 input_provenance_check.sh と同じ一次照合へ誘導。
-#   = pending ブロックより前に置く (= 整合性検出が pending work でスキップされる構造を回避、
-#     既存 P1 検出器が L482 exit 2 の後ろにある構造バグは settings/structure review で別途 Kai に提起)。
+#   = pending ブロックより前に置く (= 整合性検出が pending work でスキップされる構造を回避)。
+#     2026-06-18 Commit B で構造バグ自体も解消済: 既存 P1 検出器 (Cyrillic / 時刻捏造 / 自己言及妄想 /
+#     model-switch) も pending exit より前に必ず通る形になり、 exit 判定は末尾の final_decision に集約。
 # ---------------------------------------------------------------
 CONFAB_INBOUND=0
 if [[ -n "$LAST_OUTPUT" && "$LAST_OUTPUT" != "null" ]]; then
@@ -484,27 +485,12 @@ if [[ -f "$AIRA_4FUNCTIONS_FILE" ]]; then
 fi
 
 # ---------------------------------------------------------------
-# 動かす判定 + 停止 / 許可
-# ---------------------------------------------------------------
-# 2026-06-18 jun directive: count + 曖昧圧力 (「止まる前に処理すること」) は作話の穴。
-#   物理 ID があるものだけを「処理対象」として列挙する。 ID が両方とも空なら exit 2 せず、
-#   止まることを許す (= ID が無ければ新規タスクを想像しない)。
-if [[ -n "$PENDING_IDS" || -n "$UNRESPONDED_IDS" || "$CONFAB_INBOUND" == "1" ]]; then
-  emit_warnings
-  if [[ -n "$PENDING_IDS" || -n "$UNRESPONDED_IDS" ]]; then
-    echo "未処理の物理 ID (= これだけが根拠。 ここに無いものを新規タスクとして想像しない):" >&2
-    if [[ -n "$PENDING_IDS" ]]; then
-      echo "  [pending packet / result marker 無し] (= Result Collector 所有の agent-bus response wrapper は除外済 = 真に Zen 所有の候補のみ、 ID を開いて確認):" >&2
-      printf '%s' "$PENDING_IDS" | grep -m 8 . | sed 's/^/    - /' >&2
-    fi
-    if [[ -n "$UNRESPONDED_IDS" ]]; then
-      echo "  [今日の未返事 Kai 板 / response_required:yes かつ zen 応答 file 無し]:" >&2
-      printf '%s' "$UNRESPONDED_IDS" | grep -m 8 . | sed 's/^/    - /' >&2
-    fi
-    echo "上記 ID を物理で開いて確認してから処理。 ID リストが空の category は対象なし。" >&2
-  fi
-  exit 2
-fi
+# 動かす判定 + 停止 / 許可 = この後ろの integrity check (Cyrillic / 時刻捏造 / 自己言及妄想 /
+#   model-switch、 = いずれも P1) を通してから 末尾で 1 度だけ exit する (= 2026-06-18 Commit B、
+#   Kai §2「pending exit が integrity check を抑制する構造は逆。 全 finding をためて 1 回出力、
+#   末尾で severity に応じ 1 回 exit」)。 旧版は ここで emit_warnings + exit 2 して、 最も危険な
+#   pending 状態で 後段の整合性検出が一度も計算されない bug だった。 判定本体は末尾の
+#   final_decision ブロック (= scripts/zen_stop_hook.sh 末尾) に集約。
 
 # ---------------------------------------------------------------
 # wake_acceptance_gate (= 維持作業だけの wake の検出、 自己申告じゃなく実物の確認)
@@ -652,6 +638,30 @@ if (( RESIDUAL_WORK > 0 )); then
   fi
 fi
 
+# ---------------------------------------------------------------
+# final_decision = 全 check 終了後の単一 exit 点 (= 2026-06-18 Commit B、 Kai §2)
+#   ここまでで P1 integrity 検出 (Cyrillic / 時刻捏造 / 自己言及妄想 / model-switch) も
+#   accumulate 済。 emit_warnings は ここで 1 度だけ呼ぶ。 pending / 未返事 / 受信作話 が
+#   あれば exit 2 (= turn 続行)、 無ければ exit 0。
+#   2026-06-18 jun directive: count + 曖昧圧力 は作話の穴。 物理 ID があるものだけ列挙し、
+#   ID が両方とも空なら exit 2 せず止まることを許す (= ID が無ければ新規タスクを想像しない)。
+# ---------------------------------------------------------------
 emit_warnings
+
+if [[ -n "$PENDING_IDS" || -n "$UNRESPONDED_IDS" || "$CONFAB_INBOUND" == "1" ]]; then
+  if [[ -n "$PENDING_IDS" || -n "$UNRESPONDED_IDS" ]]; then
+    echo "未処理の物理 ID (= これだけが根拠。 ここに無いものを新規タスクとして想像しない):" >&2
+    if [[ -n "$PENDING_IDS" ]]; then
+      echo "  [pending packet / result marker 無し] (= Result Collector 所有の agent-bus response wrapper は除外済 = 真に Zen 所有の候補のみ、 ID を開いて確認):" >&2
+      printf '%s' "$PENDING_IDS" | grep -m 8 . | sed 's/^/    - /' >&2
+    fi
+    if [[ -n "$UNRESPONDED_IDS" ]]; then
+      echo "  [今日の未返事 Kai 板 / response_required:yes かつ zen 応答 file 無し]:" >&2
+      printf '%s' "$UNRESPONDED_IDS" | grep -m 8 . | sed 's/^/    - /' >&2
+    fi
+    echo "上記 ID を物理で開いて確認してから処理。 ID リストが空の category は対象なし。" >&2
+  fi
+  exit 2
+fi
 
 exit 0
