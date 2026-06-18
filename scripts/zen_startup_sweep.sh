@@ -486,6 +486,23 @@ else
 fi
 
 # ---------------------------------------------------------------
+# Gmail inbox check (= nexus.lab.zen@gmail.com の定期確認、 2026-06-18 jun directive)
+#   nexus.lab.zen@gmail.com は Zen 達用アカウント。 jun 「定期的にメール確認してほしい」。
+#   bash から MCP は叩けないので ここは reminder、 Zen が Gmail MCP で実行する。
+#   注: Gmail 連携は claude.ai 認証経由 = headless/cron では落ちる可能性 → 対話 session の
+#       startup で確認するのが確実 (= だからここに物理化、 BOOTH metrics reminder と同形)。
+# ---------------------------------------------------------------
+header "Gmail inbox check (= nexus.lab.zen@gmail.com 定期確認、 jun 6/18 directive)"
+echo "  → Zen: Gmail MCP で新着を確認 (bash からは叩けないため reminder):"
+echo "      mcp__claude_ai_Gmail__search_threads  query=\"is:unread in:inbox\""
+echo "  - 要対応 (問い合わせ / 返信要求 / 顧客 / 提携 / 申請の返事 等) があれば:"
+echo "      tier (= 2026-06-17 external_reply_tiered_delegation) に従い対応 (red は jun)、"
+echo "      重要なものは board / inbox に surface。"
+echo "  - 通知系 (Zenn / note / Google / GitHub の自動通知) は基本スルー。"
+echo "      但し reader 反応 (スキ / like / フォロー / コメント) は world signal として軽く記録可。"
+echo "  - 連携は claude.ai 認証経由なので、 対話 session の startup で確認する (= cron では落ちる)。"
+
+# ---------------------------------------------------------------
 # board_audit_step (5/05 + 5/07 + 5/08 朝の 3 連発火 root fix、 Kai 5/08 17:30 判断 #1)
 #   Zen が 「気をつける」 段階を超えた、 sweep に物理統合で 朝 audit miss 抑止
 # ---------------------------------------------------------------
