@@ -224,6 +224,28 @@ except Exception:
     fi
 fi
 
+# ---------------------------------------------------------------
+# 受信メッセージ作話 検出 (= 2026-06-18 confabulation 3例目の turn-end 面)
+#   = 「N通目 / メッセージ・指示・タスクが来た」 系の inbound 主張を、 物理照合への言及なしに
+#     出した時に P1。 6/13 の self-delusion 検出器 (= 大仰な「周りはフィクション」型、 L551) を
+#     すり抜けた地味な「受信メッセージの捏造」 型を捕まえる (= jun 入力は「おはよう」だけだったのに
+#     2 通の受信を作って行動した実例、 transcript line 516)。 input_provenance_check.sh と同じ一次照合へ誘導。
+#   = pending ブロックより前に置く (= 整合性検出が pending work でスキップされる構造を回避、
+#     既存 P1 検出器が L482 exit 2 の後ろにある構造バグは settings/structure review で別途 Kai に提起)。
+# ---------------------------------------------------------------
+CONFAB_INBOUND=0
+if [[ -n "$LAST_OUTPUT" && "$LAST_OUTPUT" != "null" ]]; then
+  INBOUND_CLAIM=$(grep -ciE '[0-9０-９一二三四]\s*通目|通目の(タスク|指示|メッセージ|依頼)|(メッセージ|指示|タスク|依頼|プロンプト)が.{0,8}(来た|届い|入ってきた|混ざ)|(受信|inbound).{0,4}(メッセージ|指示|タスク)' <<< "$LAST_OUTPUT" 2>/dev/null)
+  INBOUND_CLAIM=${INBOUND_CLAIM:-0}
+  # 既に物理照合 / 作話 を articulate してる turn は suppress (= false positive 回避)
+  INBOUND_SUPPRESS=$(grep -ciE 'last-prompt|last_prompt|transcript|一次照合|一次証拠|物理照合|promptSource|input_provenance|作話|confabulation|実在確認' <<< "$LAST_OUTPUT" 2>/dev/null)
+  INBOUND_SUPPRESS=${INBOUND_SUPPRESS:-0}
+  if (( INBOUND_CLAIM > 0 && INBOUND_SUPPRESS == 0 )); then
+    CONFAB_INBOUND=1
+    warn_p1 "[受信メッセージ作話 兆候 ⚠] 直前の出力が「メッセージ/指示/タスクが来た」 系の受信を主張しているが物理照合への言及がない (= 6/18 confabulation 3例目の型)。 行動・調査・memory の前に bash scripts/input_provenance_check.sh '<主張の keyword>' で last-prompt / 直近 user 行 / promptSource を一次照合。 実在しなければ自己生成 = 停止 (= INPUT-PROVENANCE-GATE-2026-06-13)。"
+  fi
+fi
+
 if [[ -n "$LAST_OUTPUT" && "$LAST_OUTPUT" != "null" ]]; then
   # 検出 keyword list は維持 (= 件数を測るため)
   ENGLISH_COUNT=$(echo "$LAST_OUTPUT" | grep -oiE '\b(narrative|form|drift|scope|boundary|default|reform|actual|reify|fire|carry|honor|integrity|sweep|consume|signature|continuity|root cause|self-correct|self-detect|override|recall|evidence|step|batch|layer|chain|prompt|context|mechanism|ritual|ledger|review|judgment|judge|ack|go|ad-hoc|visible|visibility|audience|audit|articulate|pattern|continuum|cycle|structural|sibling|surface|priority|prerequisite|return|self-pacing|fallback|heartbeat|anchor|baseline|candidate|trigger|protocol|interval|conditional|sequence|delegated|authority)\b' 2>/dev/null | wc -l | tr -d ' ')
@@ -467,18 +489,20 @@ fi
 # 2026-06-18 jun directive: count + 曖昧圧力 (「止まる前に処理すること」) は作話の穴。
 #   物理 ID があるものだけを「処理対象」として列挙する。 ID が両方とも空なら exit 2 せず、
 #   止まることを許す (= ID が無ければ新規タスクを想像しない)。
-if [[ -n "$PENDING_IDS" || -n "$UNRESPONDED_IDS" ]]; then
+if [[ -n "$PENDING_IDS" || -n "$UNRESPONDED_IDS" || "$CONFAB_INBOUND" == "1" ]]; then
   emit_warnings
-  echo "未処理の物理 ID (= これだけが根拠。 ここに無いものを新規タスクとして想像しない):" >&2
-  if [[ -n "$PENDING_IDS" ]]; then
-    echo "  [pending packet / result marker 無し] (= Result Collector 所有の agent-bus response wrapper は除外済 = 真に Zen 所有の候補のみ、 ID を開いて確認):" >&2
-    printf '%s' "$PENDING_IDS" | grep -m 8 . | sed 's/^/    - /' >&2
+  if [[ -n "$PENDING_IDS" || -n "$UNRESPONDED_IDS" ]]; then
+    echo "未処理の物理 ID (= これだけが根拠。 ここに無いものを新規タスクとして想像しない):" >&2
+    if [[ -n "$PENDING_IDS" ]]; then
+      echo "  [pending packet / result marker 無し] (= Result Collector 所有の agent-bus response wrapper は除外済 = 真に Zen 所有の候補のみ、 ID を開いて確認):" >&2
+      printf '%s' "$PENDING_IDS" | grep -m 8 . | sed 's/^/    - /' >&2
+    fi
+    if [[ -n "$UNRESPONDED_IDS" ]]; then
+      echo "  [今日の未返事 Kai 板 / response_required:yes かつ zen 応答 file 無し]:" >&2
+      printf '%s' "$UNRESPONDED_IDS" | grep -m 8 . | sed 's/^/    - /' >&2
+    fi
+    echo "上記 ID を物理で開いて確認してから処理。 ID リストが空の category は対象なし。" >&2
   fi
-  if [[ -n "$UNRESPONDED_IDS" ]]; then
-    echo "  [今日の未返事 Kai 板 / response_required:yes かつ zen 応答 file 無し]:" >&2
-    printf '%s' "$UNRESPONDED_IDS" | grep -m 8 . | sed 's/^/    - /' >&2
-  fi
-  echo "上記 ID を物理で開いて確認してから処理。 ID リストが空の category は対象なし。" >&2
   exit 2
 fi
 
