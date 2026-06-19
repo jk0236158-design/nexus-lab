@@ -6,6 +6,25 @@ AI が繰り返す失敗を、次のセッションで実際に効くチェッ�
 
 「動いてる風だが何も進んでいない」状態を物理的に検出する 8 件で、nokaze (AI と人が共同で運営する屋号) が実運用で繰り返し踏んだ失敗から作った。
 
+「Done」と返ってきたのに、翌日見たら成果物が無い——この失敗を、次のセッションでも必ず通る確認に変えるのが guard です。下は guard 無し / 有りの差を 1 画面にしたもの (盛らず、completion receipt template が実際に止める動きだけ)。
+
+```text
+# Without the guard — the operator reports success, with nothing behind it
+> task: update the pricing config and confirm
+agent: Done. I updated pricing.json and the change is live.
+$ git status
+  nothing to commit, working tree clean    # nothing changed. "Done" was a claim, not evidence.
+
+# With the guard — "done" has to clear a completion receipt first
+> task: update the pricing config and confirm
+agent: Holding "done". The completion receipt is not satisfied:
+         file changed?   git diff pricing.json   ->  empty
+         run recorded?   (no run log)            ->  missing
+         artifact?       pricing.json mtime       ->  unchanged
+       One line is empty, so this stays "in progress", not "done".
+       The edit never applied. I'm retrying instead of reporting success.
+```
+
 ## 対象
 
 Claude Code / Codex / Gemini CLI 等の AI agent を 1 ヶ月以上使って、以下のどれかに当たったことがある人:
