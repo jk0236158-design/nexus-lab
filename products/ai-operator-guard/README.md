@@ -1,3 +1,11 @@
+<!--
+⚠️ これは古い内部 copy です（公開正本ではありません）。
+公開正本 = products/ai-operator-guard/public_repo/README.md
+（guard story デモ核 + 外部測定アンカー arXiv:2601.04886 を含む最新版。本 file には未反映）。
+編集・引用・配布はすべて public_repo/README.md を見てください。本 file は履歴目的で残置。
+最終確認: 2026-06-21 Zen（source-of-truth 整理、削除は jun 承認待ちのため未実施）
+-->
+
 # AI Operator Guard
 
 AI が繰り返す失敗を、 次のセッションで実際に効くチェックに変える guard template set。 「動いてる風だが何も進んでいない」 状態を物理的に検出する 8 件で、 nokaze が実運用で繰り返し踏んだ失敗から作った。
