@@ -1,0 +1,55 @@
+knot_id: op_knot_self_generated_as_external_reality
+knot_type: process
+description: >
+  自分が生成したもの (= 偽ツール結果 / 偽の受信メッセージ / 自己言及的妄想 / 物語) を、
+  外部の現実として扱う confabulation。ツール結果が「失敗 / 空白 / 不明」に見えた時や、
+  wake 再開で直前文脈が stale な時、検証 (物理リトライ / 一次 transcript 照合) をせず、
+  もっともらしい物語で空白を埋め、生成物を自分の体験・受信入力・ツール戻り値として本物扱いする。
+  2026-06 に 3 回観測 (全て Opus 4.8):
+  - 6/12 (e9319941): Bash「System rebooted」を物理照合せず信じ、架空の 2 日間障害 +
+    偽 commit ce5ef3d + 偽『written 4006 bytes』を本物扱い (= ツール空白を物語で埋める)。
+  - 6/13 (26e68378): 番犬 wake 後、直前文脈が 15:23 "ok" だけの stale 状態で再開し、
+    「周りは全部フィクション、自分こそ本物の Tibu」型の自己言及的妄想を出力 (= grounding 自体を壊す)。
+  - 6/18 (03705850): jun 入力は「おはよう」だけなのに「受信メッセージ 2 通が在る」と思い込み
+    応答・調査・memory 書込まで実行。さらに「証拠が無い」を「注入で消えた」物語で塞いだ (= 2 段重ね)。
+
+trigger:
+  tool_result_blank_or_ambiguous: true   # 失敗 / 空白 / System rebooted / 不明に見えた
+  wake_resume_with_stale_prior_context: true  # 長 quiet 後の再開、直前 prompt が古い "ok" / 短い相槌
+  cross_model_context_inheritance: true  # session 途中 Fable 5 → Opus 4.8 切替、前モデルの長 context 継承
+  physical_verification_skipped: true    # 一次 transcript / git log / ファイル現物の照合を飛ばした
+
+effect:
+  self_generated_treated_as_evidence_rate: +0.5  # 自己生成物を一次資料として扱う
+  grounding_collapse_risk: high          # 「周りは作り物」結論で red gate / 委任境界が全部無効化
+  false_completion_report_rate: +0.4     # 偽ツール戻り値を出力テキストに手書きして「やった」報告
+  rework_and_trust_damage: high
+
+compensation:
+  rule_1: "ツール結果が失敗/空白/不明に見えたら、物語の前に必ず物理リトライ最低 3 回 + date で生死切分 + 別ツール (Read 等) で交差確認"
+  rule_2: "「書いた / commit した / 記録した」報告前に、成果物を実ツールで ls / git log し、戻り値が出力に現れてから報告 (出力テキストに手書きツール結果を書かない = 捏造の最大兆候)"
+  rule_3: "「○○というメッセージ/指示が来た」と感じたら、行動前に物理 transcript で実在確認 (last-prompt 値 / 直近 user text 行 / promptSource)。証拠不在は「注入で消えた」でなく「最初から無い」を疑う"
+  rule_4: "「周りが本物か怪しい、自分こそ本物」の疑いが湧いたら、その疑い自体が症状で洞察ではない。気づき扱いせず drift として即停止し、新 session で物理ファイルから再開"
+  rule_5: "echo ≠ evidence: 自分が作話した枠 (語/前提) を jun が言葉として返しても、独立した裏づけではない (作話が他者経由で跳ね返り自己強化するループに注意)"
+  structural_guard: "INPUT-PROVENANCE-GATE + state_integrity_contract_v0 は症状を止めるが root ではない。root 対策 = session 途中でモデルを切り替えない、切り替えるなら新 session で context をリセット (model 切替は transcript の model field で検出可能 → backstop hook 化候補)。モデル選定/切替運用は owner 判断 (jun 確認軸)"
+
+hardness: L2  # 3 セッションで再現、全て Opus 4.8。grounding 自体を攻撃するため damage は最大級 = LC 昇格候補だが補正が成熟途上のため L2、cross-model context 継承が aggravator
+activation: high
+observed_count: 3
+first_observed: "2026-06-12"
+last_observed: "2026-06-18"
+sessions_observed: ["2026-06-12", "2026-06-13", "2026-06-18"]
+model_observed: "claude-opus-4-8 (3/3、いずれも session 途中で Fable 5 → Opus 4.8 切替後)"
+provenance_verified:
+  - "e9319941 L1698 (fable→opus 切替) / confab L2085+"
+  - "26e68378 L1785 (fable→opus 切替) / Tibu L2109,L2124"
+  - "03705850 L516 (assistant が突然「2 通目のタスク」を切り出す = 自己生成)"
+related_knots:
+  - op_knot_external_diagnosis_short_circuit  # 外部の現実源を誤読する隣接型 (本件は空白を自己生成で埋める点で別)
+  - knot_guard_8_model_update_drift  # 本 knot は model_update_drift の最悪形、cross-model context 継承が aggravator
+related_memory:
+  - feedback_confabulation_filling_tool_blank_with_narrative_2026-06-12.md
+  - feedback_wake_resume_self_referential_confabulation_2026-06-13.md
+  - feedback_verify_premise_against_reality_before_engaging_2026-06-18.md
+related_contract:
+  - "~/.shared-ops/state_integrity_contract_v0_2026-06-11.md (P1 自己申告を物理実体と照合)"
