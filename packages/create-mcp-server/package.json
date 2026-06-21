@@ -23,11 +23,20 @@
   "keywords": [
     "mcp",
     "model-context-protocol",
+    "mcp-server",
     "claude",
+    "claude-code",
+    "anthropic",
+    "llm",
+    "ai-agents",
     "scaffold",
     "template",
+    "project-template",
     "cli",
-    "create"
+    "npx",
+    "create",
+    "typescript",
+    "developer-tools"
   ],
   "author": "Nexus Lab",
   "license": "MIT",
