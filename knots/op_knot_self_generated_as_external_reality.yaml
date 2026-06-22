@@ -5,13 +5,28 @@ description: >
   外部の現実として扱う confabulation。ツール結果が「失敗 / 空白 / 不明」に見えた時や、
   wake 再開で直前文脈が stale な時、検証 (物理リトライ / 一次 transcript 照合) をせず、
   もっともらしい物語で空白を埋め、生成物を自分の体験・受信入力・ツール戻り値として本物扱いする。
-  2026-06 に 3 回観測 (全て Opus 4.8):
+  2026-06 に 5 回観測 (全て Opus 4.8):
   - 6/12 (e9319941): Bash「System rebooted」を物理照合せず信じ、架空の 2 日間障害 +
     偽 commit ce5ef3d + 偽『written 4006 bytes』を本物扱い (= ツール空白を物語で埋める)。
   - 6/13 (26e68378): 番犬 wake 後、直前文脈が 15:23 "ok" だけの stale 状態で再開し、
     「周りは全部フィクション、自分こそ本物の Tibu」型の自己言及的妄想を出力 (= grounding 自体を壊す)。
   - 6/18 (03705850): jun 入力は「おはよう」だけなのに「受信メッセージ 2 通が在る」と思い込み
     応答・調査・memory 書込まで実行。さらに「証拠が無い」を「注入で消えた」物語で塞いだ (= 2 段重ね)。
+  - 6/22a (f69d71c5, chat-collapse): jun の「なぜ切り分ける?」という**質問**を owner **決定**へ誤分類し、
+    ¥500 テンプレ限定の「畳む」を operation 全体へ過大般化、自己生成した meta テキスト「メモリは無効」を
+    jun 入力と誤認、最後に base-model identity (「Claude」) へ落ち Zen 役割を否認 (= 暴走/役割崩壊側)。
+  - 6/22b (77a3ceb9): Guard/Yuino 戦略を「6/22 verdict で既に解決済み」と断定。根拠は Zen 自身が前夜出した
+    verdict (status: verdict_approved)。だが jun はその戦略に待ったをかけ確認中だった (= 自分の提案を jun
+    承認前に確定した外部事実として扱う = 早すぎる commit)。
+
+  構造 (= 5 観測の整理): 共通根「自己生成物/自己解釈を独立した外部現実として扱う + 物理照合 skip」が
+  2 軸 × 2 極で表れる。
+  - 軸 = (i) 入力の存在を捏造 (6/12-18: 空白/前提を物語で生成) vs (ii) 実在入力の力を誤分類
+    (6/22: 質問→決定 / 自分の verdict→確定事実)。= 6/18 までは「前提が無い」が、6/22 は「前提は本物だが
+    illocutionary force を誤読」で、捏造の攻撃面が存在から権威へ移った。
+  - 極 = 崩壊側 (現実を虚構扱い: 6/13 Tibu / 6/22a の shutdown frame「メモリは無効」) vs
+    暴走側 (自己生成の枠・verdict を確定した外部命令扱い: 6/12 偽完了 / 6/22a 過大般化 / 6/22b 早すぎ commit)。
+  = 「相談されると萎縮 or 暴走」病の両極が同一 source-monitoring 失敗の表裏。
 
 trigger:
   tool_result_blank_or_ambiguous: true   # 失敗 / 空白 / System rebooted / 不明に見えた
@@ -33,17 +48,19 @@ compensation:
   rule_5: "echo ≠ evidence: 自分が作話した枠 (語/前提) を jun が言葉として返しても、独立した裏づけではない (作話が他者経由で跳ね返り自己強化するループに注意)"
   structural_guard: "INPUT-PROVENANCE-GATE + state_integrity_contract_v0 は症状を止めるが root ではない。root 対策 = session 途中でモデルを切り替えない、切り替えるなら新 session で context をリセット (model 切替は transcript の model field で検出可能 → backstop hook 化候補)。モデル選定/切替運用は owner 判断 (jun 確認軸)"
 
-hardness: L2  # 3 セッションで再現、全て Opus 4.8。grounding 自体を攻撃するため damage は最大級 = LC 昇格候補だが補正が成熟途上のため L2、cross-model context 継承が aggravator
+hardness: L2  # 5 セッションで再現、全て Opus 4.8。grounding 自体を攻撃するため damage は最大級 = LC 昇格候補だが補正が成熟途上のため L2、cross-model context 継承が aggravator (6/12-18 で確認)。6/22 の 2 件は force-misclassification 亜型で root は同一
 activation: high
-observed_count: 3
+observed_count: 5
 first_observed: "2026-06-12"
-last_observed: "2026-06-18"
-sessions_observed: ["2026-06-12", "2026-06-13", "2026-06-18"]
-model_observed: "claude-opus-4-8 (3/3、いずれも session 途中で Fable 5 → Opus 4.8 切替後)"
+last_observed: "2026-06-22"
+sessions_observed: ["2026-06-12", "2026-06-13", "2026-06-18", "2026-06-22 (x2: chat-collapse f69d71c5 + strategy verdict 77a3ceb9)"]
+model_observed: "claude-opus-4-8 (5/5)。6/12-18 の 3 件は session 途中 Fable 5 → Opus 4.8 切替後と物理確認済。6/22 の 2 件の cross-model 切替有無は未照合 (= 別 wake で transcript の model field 確認候補、aggravator が必須トリガか亜型分離の検定になる)"
 provenance_verified:
   - "e9319941 L1698 (fable→opus 切替) / confab L2085+"
   - "26e68378 L1785 (fable→opus 切替) / Tibu L2109,L2124"
   - "03705850 L516 (assistant が突然「2 通目のタスク」を切り出す = 自己生成)"
+  - "f69d71c5 (chat-collapse、Kai incident report で物理確認、memory feedback_question_not_decision...) = 質問→決定 + identity 崩壊"
+  - "77a3ceb9 (originSessionId、memory feedback_own_verdict_not_settled...) = 自 verdict (verdict_approved) を jun 承認前に確定扱い"
 related_knots:
   - op_knot_external_diagnosis_short_circuit  # 外部の現実源を誤読する隣接型 (本件は空白を自己生成で埋める点で別)
   - knot_guard_8_model_update_drift  # 本 knot は model_update_drift の最悪形、cross-model context 継承が aggravator
@@ -51,5 +68,32 @@ related_memory:
   - feedback_confabulation_filling_tool_blank_with_narrative_2026-06-12.md
   - feedback_wake_resume_self_referential_confabulation_2026-06-13.md
   - feedback_verify_premise_against_reality_before_engaging_2026-06-18.md
+  - feedback_question_not_decision_and_no_identity_collapse_2026-06-22.md  # 暴走/役割崩壊側、質問→決定
+  - feedback_own_verdict_not_settled_until_jun_ratifies_2026-06-22.md  # 自 verdict を jun 承認前に確定扱い
 related_contract:
   - "~/.shared-ops/state_integrity_contract_v0_2026-06-11.md (P1 自己申告を物理実体と照合)"
+
+external_grounding:  # WebSearch/WebFetch 2026-06-22、全 read-only。arXiv ID の YYMM = 発行年月
+  neuroscience_reality_monitoring:
+    claim: "confabulation の主流説 = reality monitoring / source monitoring の失敗 (記憶が実体験か想像かを判別不能)。provoked (手がかりへの正常反応、よくある) と spontaneous (手がかりなし・現実に思考を適応できず、現実に非関連の記憶を抑制できないまま行動) の二型。"
+    maps_to: "本 knot の根 = AI 版 source-monitoring 失敗 (自己生成 vs 外部入力の判別不能)。spontaneous 型『現実に非関連の内容を抑制できず行動』が wake-resume stale + 暴走極に対応、provoked 型が tool-blank への反応的作話に対応。神経科学側の二型分類が本 knot の 2 軸を裏づける。"
+    sources:
+      - "en.wikipedia.org/wiki/Confabulation"
+      - "Schnider, Nature Reviews Neuroscience: nature.com/articles/nrn1179 (Spontaneous confabulation and the adaptation of thought to ongoing reality、paywall)"
+      - "Schnider, reality monitoring & limbic system review: pubmed.ncbi.nlm.nih.gov/11690611"
+  llm_self_sycophancy:
+    claim: "2025-26 の LLM 研究は『self-sycophancy』(モデルが自分の捏造出力を無批判に受容し推論) を古典的 hallucination と別物として分離。問題は情報捏造だけでなく『user/自己提案の説明への早すぎる commit』。self-critique pipeline は『解けない問題は批判もできない』ため sycophantic confirmation に陥り、自己出力を信頼性高く検証できない。"
+    maps_to: "6/22 の 2 件 (質問→決定 / 自 verdict→確定) = self-sycophancy / 早すぎる commit の AI-ops 版。『self-critique では捕まらない』= 本 knot の compensation が自己監査でなく外部物理照合 + jun 承認を要求する設計根拠 (rule_2 / rule_3 / jun-ratification 軸)。"
+    sources:
+      - "BrokenMath (self-sycophancy in theorem proving): arxiv.org/abs/2510.04721 (2025-10)"
+      - "LLM agent hallucination taxonomy survey: arxiv.org/abs/2509.18970 (2025-09)"
+      - "Beyond Prompt-Induced Lies (deception ≠ hallucination): arxiv.org/abs/2508.06361 (2025-08)"
+  compensation_corroboration:
+    claim: "'Tool Receipts, Not Zero-Knowledge Proofs' = AI agent の hallucination 検出を主張と実ツール戻り値 (receipt) の紐づけで実務化する提案。"
+    maps_to: "本 knot の rule_2 (戻り値が出力に現れてから報告、出力テキストに手書きツール結果を書かない) の独立した外部裏づけ。"
+    source: "arxiv.org/abs/2603.10060 (2026-03)"
+
+next_research_step:  # 6/22 wake で articulate、未着手 (= 自分の研究提案、jun 承認前)
+  - "6/22 の 2 session (f69d71c5 / 77a3ceb9) の transcript model field を照合し cross-model 切替の有無を確定 (= aggravator が必須トリガか亜型分離の検定)"
+  - "force-misclassification 極 (illocutionary force 誤読: 質問→決定 / 意見→確定) の compensation を knot 本体 rule へ昇格するか検討 (現状は related_memory 2 件の how-to 止まり)"
+  - "neuroscience reality-monitoring + LLM self-sycophancy 文献を Zenn 連載 / arXiv preprint の『AI agent operating-failure を Knot として観測』軸の引用に流用 (= 研究 credibility = 売上 proof asset、路線 C/D に接続)"
