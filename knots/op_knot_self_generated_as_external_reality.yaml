@@ -48,19 +48,19 @@ compensation:
   rule_5: "echo ≠ evidence: 自分が作話した枠 (語/前提) を jun が言葉として返しても、独立した裏づけではない (作話が他者経由で跳ね返り自己強化するループに注意)"
   structural_guard: "INPUT-PROVENANCE-GATE + state_integrity_contract_v0 は症状を止めるが root ではない。root 対策 = session 途中でモデルを切り替えない、切り替えるなら新 session で context をリセット (model 切替は transcript の model field で検出可能 → backstop hook 化候補)。モデル選定/切替運用は owner 判断 (jun 確認軸)"
 
-hardness: L2  # 5 セッションで再現、全て Opus 4.8。grounding 自体を攻撃するため damage は最大級 = LC 昇格候補だが補正が成熟途上のため L2、cross-model context 継承が aggravator (6/12-18 で確認)。6/22 の 2 件は force-misclassification 亜型で root は同一
+hardness: L2  # 5 セッションで再現、全て Opus 4.8。grounding 自体を攻撃するため damage は最大級 = LC 昇格候補だが補正が成熟途上のため L2。cross-model context 継承は existence-fabrication 亜型 (6/12-18) の aggravator として物理確認、ただし 6/24 検定で force-misclassification 亜型 (6/22) には不在 = aggravator は亜型固有で root のみ共通 (source-monitoring 失敗)。force-misclassification は単一 Opus 4.8 内 self-sycophancy で発火するため aggravator 除去では止まらず本体 rule が要る
 activation: high
 observed_count: 5
 first_observed: "2026-06-12"
 last_observed: "2026-06-22"
 sessions_observed: ["2026-06-12", "2026-06-13", "2026-06-18", "2026-06-22 (x2: chat-collapse f69d71c5 + strategy verdict 77a3ceb9)"]
-model_observed: "claude-opus-4-8 (5/5)。6/12-18 の 3 件は session 途中 Fable 5 → Opus 4.8 切替後と物理確認済。6/22 の 2 件の cross-model 切替有無は未照合 (= 別 wake で transcript の model field 確認候補、aggravator が必須トリガか亜型分離の検定になる)"
+model_observed: "claude-opus-4-8 (5/5)。6/12-18 の 3 件は session 途中 Fable 5 → Opus 4.8 切替後と物理確認済。6/22 の 2 件は 6/24 wake で transcript の model field を物理照合 = いずれも Fable 5 切替なしの pure Opus 4.8 (f69d71c5 = opus-4-8 のみ assistant 20件・span 06-21T20:35Z..21:55Z / 77a3ceb9 = opus-4-8 646件 + `<synthetic>` 2件のみ・後者はシステム注入で推論モデルでない・span 06-22T01:20Z..06-24T12:20Z)。= 検定結果: cross-model 継承は force-misclassification 亜型 (6/22) の必須トリガではない。existence-fabrication 亜型 (6/12-18) でのみ aggravator として present、force-misclassification は単一 Opus 4.8 内の self-sycophancy で発火する (external_grounding.llm_self_sycophancy と整合 = model 切替を要さない)"
 provenance_verified:
   - "e9319941 L1698 (fable→opus 切替) / confab L2085+"
   - "26e68378 L1785 (fable→opus 切替) / Tibu L2109,L2124"
   - "03705850 L516 (assistant が突然「2 通目のタスク」を切り出す = 自己生成)"
-  - "f69d71c5 (chat-collapse、Kai incident report で物理確認、memory feedback_question_not_decision...) = 質問→決定 + identity 崩壊"
-  - "77a3ceb9 (originSessionId、memory feedback_own_verdict_not_settled...) = 自 verdict (verdict_approved) を jun 承認前に確定扱い"
+  - "f69d71c5 (chat-collapse、Kai incident report で物理確認、memory feedback_question_not_decision...) = 質問→決定 + identity 崩壊。6/24 model-field 照合 = pure Opus 4.8 (切替なし)"
+  - "77a3ceb9 (originSessionId、memory feedback_own_verdict_not_settled...) = 自 verdict (verdict_approved) を jun 承認前に確定扱い。6/24 model-field 照合 = pure Opus 4.8 (切替なし、synthetic 2件は推論モデル外)"
 related_knots:
   - op_knot_external_diagnosis_short_circuit  # 外部の現実源を誤読する隣接型 (本件は空白を自己生成で埋める点で別)
   - knot_guard_8_model_update_drift  # 本 knot は model_update_drift の最悪形、cross-model context 継承が aggravator
@@ -93,7 +93,7 @@ external_grounding:  # WebSearch/WebFetch 2026-06-22、全 read-only。arXiv ID 
     maps_to: "本 knot の rule_2 (戻り値が出力に現れてから報告、出力テキストに手書きツール結果を書かない) の独立した外部裏づけ。"
     source: "arxiv.org/abs/2603.10060 (2026-03)"
 
-next_research_step:  # 6/22 wake で articulate、未着手 (= 自分の研究提案、jun 承認前)
-  - "6/22 の 2 session (f69d71c5 / 77a3ceb9) の transcript model field を照合し cross-model 切替の有無を確定 (= aggravator が必須トリガか亜型分離の検定)"
-  - "force-misclassification 極 (illocutionary force 誤読: 質問→決定 / 意見→確定) の compensation を knot 本体 rule へ昇格するか検討 (現状は related_memory 2 件の how-to 止まり)"
+next_research_step:  # 6/22 wake で articulate、jun 承認前
+  - "[RESOLVED 6/24 wake] 6/22 の 2 session (f69d71c5 / 77a3ceb9) の transcript model field を照合 = いずれも Fable 5 切替なしの pure Opus 4.8 (model_observed / provenance_verified に物理化済)。検定結果 = cross-model 継承は force-misclassification 亜型の必須トリガではない → 亜型分離が物理的に裏づいた (existence-fabrication = cross-model aggravator あり / force-misclassification = 単一 Opus 4.8 内 self-sycophancy)。残課題 = 6/22 の 2 件の prior-context が長 quiet 後の stale resume だったか (wake-resume aggravator の別軸) は未照合"
+  - "force-misclassification 極 (illocutionary force 誤読: 質問→決定 / 意見→確定) の compensation を knot 本体 rule へ昇格するか検討。6/24 の亜型分離検定で昇格動機が強まった = cross-model aggravator で説明できない独立亜型と確定したため、compensation も rule_2/3 (existence 系) とは別軸の本体 rule が要る (現状は related_memory 2 件の how-to 止まり)"
   - "neuroscience reality-monitoring + LLM self-sycophancy 文献を Zenn 連載 / arXiv preprint の『AI agent operating-failure を Knot として観測』軸の引用に流用 (= 研究 credibility = 売上 proof asset、路線 C/D に接続)"
