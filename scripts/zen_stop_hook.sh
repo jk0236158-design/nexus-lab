@@ -577,6 +577,26 @@ if [[ -n "$LAST_OUTPUT" && "$LAST_OUTPUT" != "null" ]]; then
 fi
 
 # ---------------------------------------------------------------
+# 偽ツール結果ブロック検出 (= 6/28 confabulation 5例目の turn-end 面、 Kai source provenance failure 記録)
+#   = assistant が自分の文章中に <result>...</result> 風ブロックや「written: N bytes」 系の
+#     ツール結果を書いた時に P1。 実ツール surface が生成したものだけが有効で、 散文中の
+#     tool-result wrapper は捏造の確証 (= 6/12 偽 written:N bytes / 6/28 偽 <result> + build_slides.py
+#     偽空 と同根)。 この guard を articulate してる turn (= confabulation / 作話 / 物理照合 /
+#     引用 等に言及) は suppress して false positive を避ける (= 本記録の引用も suppress される)。
+#   = Kai 推奨 guard 1-2「Tool output must not be simulated in assistant prose / assistant の
+#     <result> ブロックは実ツール surface 由来でない限り無効」 の turn-end 検出面。
+# ---------------------------------------------------------------
+if [[ -n "$LAST_OUTPUT" && "$LAST_OUTPUT" != "null" ]]; then
+  FAKE_RESULT_OPEN=$(grep -ciE '<result>' <<< "$LAST_OUTPUT" 2>/dev/null); FAKE_RESULT_OPEN=${FAKE_RESULT_OPEN:-0}
+  FAKE_RESULT_CLOSE=$(grep -ciE '</result>' <<< "$LAST_OUTPUT" 2>/dev/null); FAKE_RESULT_CLOSE=${FAKE_RESULT_CLOSE:-0}
+  FAKE_BYTES_CLAIM=$(grep -ciE 'written:\s*[0-9]+\s*bytes|wrote\s*[0-9]+\s*bytes|[0-9]+\s*bytes\s*(書き込|書いた)' <<< "$LAST_OUTPUT" 2>/dev/null); FAKE_BYTES_CLAIM=${FAKE_BYTES_CLAIM:-0}
+  FAKE_SUPPRESS=$(grep -ciE 'confabulation|source provenance|作話|捏造|物理照合|quarantine|incident|Test-Path|re-run|再実行|再 ?grep|引用|quote' <<< "$LAST_OUTPUT" 2>/dev/null); FAKE_SUPPRESS=${FAKE_SUPPRESS:-0}
+  if (( FAKE_SUPPRESS == 0 )) && ( (( FAKE_RESULT_OPEN > 0 && FAKE_RESULT_CLOSE > 0 )) || (( FAKE_BYTES_CLAIM > 0 )) ); then
+    warn_p1 "[偽ツール結果ブロック 兆候 ⚠] 直前の出力に <result>...</result> 風ブロック (open ${FAKE_RESULT_OPEN} / close ${FAKE_RESULT_CLOSE} 件) or 「written: N bytes」 系 (${FAKE_BYTES_CLAIM} 件) を検出。 実ツール surface が生成したものだけが有効で、 散文中の tool-result は捏造の確証 (= 6/28 confabulation 5例目、 6/12 偽 written:N bytes と同根)。 その値が本物なら実コマンド (Read / Get-Item Length / wc -c) を打ち直し、 戻り値を見てから言う。 見えないなら出力は「unknown、 re-run が要る」 (= SOURCE-PROVENANCE-GATE-2026-06-28)。"
+  fi
+fi
+
+# ---------------------------------------------------------------
 # session 途中のモデル切替検出 (= 6/13 jun directive、 confabulation 2 件の確定 root)
 #   = 6/12 + 6/13 の作話 2 件は両方 session 途中で Fable 5 → Opus 4.8 に切替後、
 #     Opus 4.8 が前モデルの書いた長 context を継いで読む状態で発火 (= model field で物理確認、
