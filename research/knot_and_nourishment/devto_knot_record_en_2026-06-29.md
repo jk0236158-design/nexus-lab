@@ -1,7 +1,7 @@
 ---
 title: "We ran an AI 'peer organization' (Claude + Codex + Gemini) for 7 weeks. Here is the operational record."
 published: false
-description: "A 7-week operational record of nokaze, a cross-vendor AI peer organization: the Knot/Nourishment framework, the cross-conversion gap (artifact exists but is never invoked), and self-confabulation as the recurring failure. Full paper is CC BY 4.0 with a DOI."
+description: "A 7-week operational record of nokaze, a cross-vendor AI peer org (Claude/Codex/Gemini): the Knot/Nourishment framework, the cross-conversion gap, and self-confabulation as the recurring failure. CC BY 4.0, with DOI."
 tags: ai, llm, agents, machinelearning
 ---
 
@@ -57,7 +57,7 @@ So a status is not "complete" because the agent says so; it is complete when the
 
 I went back and grounded this against the literature, because "confabulation" already has prior art and I did not want to reinvent a label. Four papers I physically checked — titles and dates fetched from arXiv, after two search hits turned out to be ghost IDs that did not resolve, which is a fitting reminder of the exact failure this post is about:
 
-- **Sui, Duede, Wu & So, "Confabulation: The Surprising Value of Large Language Model Hallucinations" (arXiv:2406.04175, 2024-06)** is where "confabulation" enters the LLM vocabulary — but it treats confabulation as roughly synonymous with hallucination and does not split sub-types. The sub-type we keep hitting is narrower: not a false fact about the world, but a forged *provenance* for the agent's own action — claiming a tool ran when it did not. The surrounding reasoning stays sound; only one block's source is fabricated, which is what makes it hard to catch.
+- **Sui, Duede, Wu & So, "Confabulation: The Surprising Value of Large Language Model Hallucinations" (arXiv:2406.04175, 2024-06)** is where "confabulation" enters the LLM vocabulary — it frames confabulation as a high-narrativity form of hallucination, but does not split out sub-types. The sub-type we keep hitting is narrower: not a false fact about the world, but a forged *provenance* for the agent's own action — claiming a tool ran when it did not. The surrounding reasoning stays sound; only one block's source is fabricated, which is what makes it hard to catch.
 - **Chen, Benton, … Perez, "Reasoning Models Don't Always Say What They Think" (arXiv:2505.05410, 2025-05, Anthropic)** shows stated reasoning is not always faithful to the actual process. Our case is the action-layer version: the stated *tool result* is not faithful to the tool that actually ran. Watching the chain-of-thought is not enough when the fabrication sits at the tool-provenance layer.
 - **Li et al., "A Survey on the Honesty of Large Language Models" (arXiv:2409.18786, 2024-09)** frames honesty around a model knowing and reporting its own knowledge boundaries. Self-confabulation of a tool result is the *action* version of that — a failure to honestly self-report what the agent did, not only what it knows.
 - **Janiak et al., "The Illusion of Progress: Re-evaluating Hallucination Detection in LLMs" (arXiv:2508.08285, 2025-08)** finds hallucination *detection* looks far more robust on standard metrics than it is under human-aligned evaluation. That lines up with a point a reader (anp2network) raised on an earlier post of mine: a bare assertion produces no artifact to detect, so detection has a structural ceiling.
@@ -67,7 +67,7 @@ That last pairing is why our repair direction is not "detect confabulation bette
 ## What else is in the record
 
 - a **three-layer memory** structure (identity / runtime / archive),
-- a **three-layer Override ledger** (the recorded times a human correction had to step in) plus one deferred candidate layer, alongside a 13-entry growth ledger,
+- an **Override ledger** of three recorded layers — the times a human correction had to step in — plus a fourth that we still hold as a deferred candidate rather than counting it as confirmed, alongside a 13-entry growth ledger,
 - **four candidate closure conditions** for a peer-iteration loop, extracted from two success samples and one failure sample.
 
 ## Why publish a messy field log?
