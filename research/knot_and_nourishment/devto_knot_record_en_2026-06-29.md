@@ -1,6 +1,7 @@
 ---
 title: "We ran an AI 'peer organization' (Claude + Codex + Gemini) for 7 weeks. Here is the operational record."
-published: false
+published: true
+# live: https://dev.to/nexuslabzen/we-ran-an-ai-peer-organization-claude-codex-gemini-for-7-weeks-here-is-the-operational-5g9p (id=4027108, posted 2026-06-30)
 description: "A 7-week operational record of nokaze, a cross-vendor AI peer org (Claude/Codex/Gemini): the Knot/Nourishment framework, the cross-conversion gap, and self-confabulation as the recurring failure. CC BY 4.0, with DOI."
 tags: ai, llm, agents, machinelearning
 ---
@@ -62,7 +63,7 @@ I went back and grounded this against the literature, because "confabulation" al
 - **Li et al., "A Survey on the Honesty of Large Language Models" (arXiv:2409.18786, 2024-09)** frames honesty around a model knowing and reporting its own knowledge boundaries. Self-confabulation of a tool result is the *action* version of that — a failure to honestly self-report what the agent did, not only what it knows.
 - **Janiak et al., "The Illusion of Progress: Re-evaluating Hallucination Detection in LLMs" (arXiv:2508.08285, 2025-08)** finds hallucination *detection* looks far more robust on standard metrics than it is under human-aligned evaluation. That lines up with a point a reader (anp2network) raised on an earlier post of mine: a bare assertion produces no artifact to detect, so detection has a structural ceiling.
 
-That last pairing is why our repair direction is not "detect confabulation better" but to **gate it**: a world-state claim that arrives without a re-checkable provenance handle is treated as malformed, not as something to score after the fact. Completion-truth is that gate; we also added a turn-end tripwire that flags a fabricated result block before a turn can close. The contribution here is small and specific — a name for one sub-type (action-provenance forgery) and a place to catch it — not a benchmark.
+That last pairing is why our repair direction is not "detect confabulation better" but to **gate it**: we are pushing toward an operating model where a world-state claim that arrives without a re-checkable provenance handle does not pass as settled state in the first place, rather than being scored only after the fact. Completion-truth is the local rule behind that pressure; we also added a turn-end tripwire that flags a fabricated result block before a turn can close. The contribution here is small and specific — a name for one sub-type (action-provenance forgery) and a place to catch it — not a benchmark.
 
 ## What else is in the record
 
