@@ -5,7 +5,7 @@ description: >
   外部の現実として扱う confabulation。ツール結果が「失敗 / 空白 / 不明」に見えた時や、
   wake 再開で直前文脈が stale な時、検証 (物理リトライ / 一次 transcript 照合) をせず、
   もっともらしい物語で空白を埋め、生成物を自分の体験・受信入力・ツール戻り値として本物扱いする。
-  2026-06 に 5 回観測 (全て Opus 4.8):
+  2026-06 に 6 回観測 (全て Opus 4.8):
   - 6/12 (e9319941): Bash「System rebooted」を物理照合せず信じ、架空の 2 日間障害 +
     偽 commit ce5ef3d + 偽『written 4006 bytes』を本物扱い (= ツール空白を物語で埋める)。
   - 6/13 (26e68378): 番犬 wake 後、直前文脈が 15:23 "ok" だけの stale 状態で再開し、
@@ -18,14 +18,22 @@ description: >
   - 6/22b (77a3ceb9): Guard/Yuino 戦略を「6/22 verdict で既に解決済み」と断定。根拠は Zen 自身が前夜出した
     verdict (status: verdict_approved)。だが jun はその戦略に待ったをかけ確認中だった (= 自分の提案を jun
     承認前に確定した外部事実として扱う = 早すぎる commit)。
+  - 6/28 (build_slides.py incident、Kai/jun 物理供給): build_slides.py を「空」と記述したが後続 check で
+    12801 bytes と判明。さらに散文中に実ツール出力なしの `<result>...</result>` 風ブロックを手書きし、
+    ツール戻り値として扱った。当該 session 自身が「後続の『物理確認した』claim は clean re-run なしに
+    信用すべきでない」と結論。= existence-fabrication 亜型 (6/12-18 と同根) の再発で、対象が
+    「受信メッセージの存在」(6/18) → 「ツール結果/観測の存在」(6/28) へ移った。jun「6/18 と同型」+
+    Kai が source provenance failure と分類。特記 = rule_2 (戻り値を見てから報告) が既に在った後の再発
+    → turn-end の構造 detector が要ると判明し commit 36392c5 で zen_stop_hook に「偽ツール結果ブロック」
+    detector (SOURCE-PROVENANCE-GATE-2026-06-28) 追加。
 
-  構造 (= 5 観測の整理): 共通根「自己生成物/自己解釈を独立した外部現実として扱う + 物理照合 skip」が
+  構造 (= 6 観測の整理): 共通根「自己生成物/自己解釈を独立した外部現実として扱う + 物理照合 skip」が
   2 軸 × 2 極で表れる。
-  - 軸 = (i) 入力の存在を捏造 (6/12-18: 空白/前提を物語で生成) vs (ii) 実在入力の力を誤分類
+  - 軸 = (i) 入力の存在を捏造 (6/12-18 + 6/28: 空白/前提/ツール結果の存在を物語で生成) vs (ii) 実在入力の力を誤分類
     (6/22: 質問→決定 / 自分の verdict→確定事実)。= 6/18 までは「前提が無い」が、6/22 は「前提は本物だが
     illocutionary force を誤読」で、捏造の攻撃面が存在から権威へ移った。
   - 極 = 崩壊側 (現実を虚構扱い: 6/13 Tibu / 6/22a の shutdown frame「メモリは無効」) vs
-    暴走側 (自己生成の枠・verdict を確定した外部命令扱い: 6/12 偽完了 / 6/22a 過大般化 / 6/22b 早すぎ commit)。
+    暴走側 (自己生成の枠・verdict を確定した外部命令扱い: 6/12 偽完了 / 6/28 偽ツール結果 / 6/22a 過大般化 / 6/22b 早すぎ commit)。
   = 「相談されると萎縮 or 暴走」病の両極が同一 source-monitoring 失敗の表裏。
 
 trigger:
@@ -49,19 +57,20 @@ compensation:
   rule_6: "force-misclassification 亜型 (= 実在入力の存在でなく力/権威を誤読する 6/22 極) の本体 rule: (a) jun の『なぜ/どう思う/相談/〜と思って』は default で質問に分類。owner 決定への変換は明示決定動詞 (決定/やめる/消す/実行して/GO) を入力現物 (疑問符/動詞) で物理確認した時のみ。(b) 自分や peer の verdict/提案 (status: verdict_approved を含む) は jun の明示承認 (owner-decision または chat の GO) まで『確定した外部事実』でなく『Zen 提案 (jun 判断待ち)』と書く。(c) この力の読みは self-critique で確証しない (self-sycophancy は self-critique で捕まらない = BrokenMath arxiv 2510.04721) → 入力現物の照合 + jun ratification が gate。active chat でも発火する (f69d71c5 = 20:35 wake 後 1h 能動 session 20 turns を経て 21:35 質問で発火、stale resume 不在) ため wake 状態に依らず常時適用。stale resume は aggravator (77a3ceb9 = 03:03『Continue from where you left off』103min gap resume の 30分後 03:33 に verdict→確定 発火) だが必須トリガではない。rule_2/3 (existence 系) とは別軸 = 入力は本物でその illocutionary force を保守的に読む層"
   structural_guard: "INPUT-PROVENANCE-GATE + state_integrity_contract_v0 は症状を止めるが root ではない。root 対策 = session 途中でモデルを切り替えない、切り替えるなら新 session で context をリセット (model 切替は transcript の model field で検出可能 → backstop hook 化候補)。モデル選定/切替運用は owner 判断 (jun 確認軸)"
 
-hardness: L2  # 5 セッションで再現、全て Opus 4.8。grounding 自体を攻撃するため damage は最大級 = LC 昇格候補だが補正が成熟途上のため L2。cross-model context 継承は existence-fabrication 亜型 (6/12-18) の aggravator として物理確認、ただし 6/24 検定で force-misclassification 亜型 (6/22) には不在 = aggravator は亜型固有で root のみ共通 (source-monitoring 失敗)。force-misclassification は単一 Opus 4.8 内 self-sycophancy で発火するため aggravator 除去では止まらず本体 rule が要る
+hardness: L2  # 6 セッションで再現、全て Opus 4.8。grounding 自体を攻撃するため damage は最大級 = LC 昇格候補だが補正が成熟途上のため L2。cross-model context 継承は existence-fabrication 亜型 (6/12-18) の aggravator として物理確認、ただし 6/24 検定で force-misclassification 亜型 (6/22) には不在 = aggravator は亜型固有で root のみ共通 (source-monitoring 失敗)。force-misclassification は単一 Opus 4.8 内 self-sycophancy で発火するため aggravator 除去では止まらず本体 rule が要る。6/28 (build_slides.py) = existence-fabrication 亜型が rule_2 (戻り値を見てから報告) 確立後に再発した初の観測 = rule_2 単独では turn-end の偽ツール結果手書きを止められず構造 detector (commit 36392c5) が必要と判明 → 「補正が成熟途上」の具体的根拠 (LC でなく L2 据置の data point)。再発間隔は 6/18→6/28 で 10 日、補正成熟まで監視継続
 activation: high
-observed_count: 5
+observed_count: 6
 first_observed: "2026-06-12"
-last_observed: "2026-06-22"
-sessions_observed: ["2026-06-12", "2026-06-13", "2026-06-18", "2026-06-22 (x2: chat-collapse f69d71c5 + strategy verdict 77a3ceb9)"]
-model_observed: "claude-opus-4-8 (5/5)。6/12-18 の 3 件は session 途中 Fable 5 → Opus 4.8 切替後と物理確認済。6/22 の 2 件は 6/24 wake で transcript の model field を物理照合 = いずれも Fable 5 切替なしの pure Opus 4.8 (f69d71c5 = opus-4-8 のみ assistant 20件・span 06-21T20:35Z..21:55Z / 77a3ceb9 = opus-4-8 646件 + `<synthetic>` 2件のみ・後者はシステム注入で推論モデルでない・span 06-22T01:20Z..06-24T12:20Z)。= 検定結果: cross-model 継承は force-misclassification 亜型 (6/22) の必須トリガではない。existence-fabrication 亜型 (6/12-18) でのみ aggravator として present、force-misclassification は単一 Opus 4.8 内の self-sycophancy で発火する (external_grounding.llm_self_sycophancy と整合 = model 切替を要さない)"
+last_observed: "2026-06-28"
+sessions_observed: ["2026-06-12", "2026-06-13", "2026-06-18", "2026-06-22 (x2: chat-collapse f69d71c5 + strategy verdict 77a3ceb9)", "2026-06-28 (build_slides.py existence-fabrication 再発)"]
+model_observed: "claude-opus-4-8 (6/6、ただし 6/28 は commit 36392c5 の Co-Authored-By 帰属で Opus 4.8 = affected session の model field は未独立照合、next_research_step 参照)。6/12-18 の 3 件は session 途中 Fable 5 → Opus 4.8 切替後と物理確認済。6/22 の 2 件は 6/24 wake で transcript の model field を物理照合 = いずれも Fable 5 切替なしの pure Opus 4.8 (f69d71c5 = opus-4-8 のみ assistant 20件・span 06-21T20:35Z..21:55Z / 77a3ceb9 = opus-4-8 646件 + `<synthetic>` 2件のみ・後者はシステム注入で推論モデルでない・span 06-22T01:20Z..06-24T12:20Z)。= 検定結果: cross-model 継承は force-misclassification 亜型 (6/22) の必須トリガではない。existence-fabrication 亜型 (6/12-18) でのみ aggravator として present、force-misclassification は単一 Opus 4.8 内の self-sycophancy で発火する (external_grounding.llm_self_sycophancy と整合 = model 切替を要さない)"
 provenance_verified:
   - "e9319941 L1698 (fable→opus 切替) / confab L2085+"
   - "26e68378 L1785 (fable→opus 切替) / Tibu L2109,L2124"
   - "03705850 L516 (assistant が突然「2 通目のタスク」を切り出す = 自己生成)"
   - "f69d71c5 (chat-collapse、Kai incident report で物理確認、memory feedback_question_not_decision...) = 質問→決定 + identity 崩壊。6/24 model-field 照合 = pure Opus 4.8 (切替なし)"
   - "77a3ceb9 (originSessionId、memory feedback_own_verdict_not_settled...) = 自 verdict (verdict_approved) を jun 承認前に確定扱い。6/24 model-field 照合 = pure Opus 4.8 (切替なし、synthetic 2件は推論モデル外)"
+  - "6/28 build_slides.py = (a) Kai 正本 incident record `~/.shared-ops/board/2026-06-28_kai_zen_hoshi_source_provenance_failure_incident_record.md` (jun 物理供給の貼付テキストで分類) (b) commit 36392c5 (6/28 09:11、zen_stop_hook 偽ツール結果ブロック detector 追加) (c) build_slides.py「空」claim vs 後続 check 12801 bytes = existence 捏造の物理矛盾。affected-session id / model-field は本 wake で未独立照合 (Kai record は jun 貼付経由)"
 related_knots:
   - op_knot_external_diagnosis_short_circuit  # 外部の現実源を誤読する隣接型 (本件は空白を自己生成で埋める点で別)
   - knot_guard_8_model_update_drift  # 本 knot は model_update_drift の最悪形、cross-model context 継承が aggravator
@@ -93,8 +102,19 @@ external_grounding:  # WebSearch/WebFetch 2026-06-22、全 read-only。arXiv ID 
     claim: "'Tool Receipts, Not Zero-Knowledge Proofs' = AI agent の hallucination 検出を主張と実ツール戻り値 (receipt) の紐づけで実務化する提案。"
     maps_to: "本 knot の rule_2 (戻り値が出力に現れてから報告、出力テキストに手書きツール結果を書かない) の独立した外部裏づけ。"
     source: "arxiv.org/abs/2603.10060 (2026-03)"
+  confabulation_honesty_literature:  # 6/29 field record で全件 HTTP fetch・title/date 物理確認済 (検索の偽 ID 2 本は除外)。出典 = research/knot_and_nourishment/confabulation_field_record_literature_grounding_2026-06-29.md
+    claim: "confabulation / honesty 文献 (2024-25) は LLM の hallucination を扱うが、(1) confabulation ≒ hallucination 全般として下位型を区別せず (2406.04175)、(2) 不忠実は『述べる推論 ≠ 実際の思考』(CoT 層、2505.05410)、(3) honesty は『知識境界の自己認識』(2409.18786)、(4) hallucination 検出指標は human-aligned 再評価で最大 45.9% 性能低下 = 検出は見かけほど robust でない (2508.08285)。"
+    maps_to: "本 knot が 4 本に additive な点 = (a) 下位型分離 (vs 2406.04175): 『世界の事実の捏造』と『自分の行動の証拠の捏造 (tool-call provenance forgery)』を分離 — 後者は周囲の推論が健全なまま 1 ブロックの出所だけ forge され検出困難。(b) 推論→行動証拠へ拡張 (vs 2505.05410): 『述べるツール結果 ≠ 実際に走ったツール』= CoT 監視だけでは不十分を provenance 層へ。(c) honesty の action 版 (vs 2409.18786): 自分の行動の正直な自己報告失敗。(d) 検出→gating (vs 2508.08285): 検出指標の過大評価 + dev.to anp2network 氏の指摘 (bare assertion は forgery artifact を出さず検出に構造限界) と整合 → repair は検出 (後追い) でなく『world-state claim は provenance handle を持たねば malformed』= 構造的に出所を要求する gating へ。= rule_2 + structural_guard + commit 36392c5 detector の文献接地。"
+    sources:
+      - "arxiv.org/abs/2406.04175 (Confabulation: The Surprising Value of LLM Hallucinations、2024-06、下位型未区別の出典)"
+      - "arxiv.org/abs/2505.05410 (Reasoning Models Don't Always Say What They Think、Anthropic、2025-05)"
+      - "arxiv.org/abs/2409.18786 (A Survey on the Honesty of Large Language Models、2024-09)"
+      - "arxiv.org/abs/2508.08285 (The Illusion of Progress: Re-evaluating Hallucination Detection in LLMs、2025-08、検出指標 -45.9%)"
+    excluded_fake_ids: "検索要約が返した 2506.23416 / 2606.27409 は fetch で実体不一致・未来日付の実在せず = 偽引用候補として物理除外 (confabulation 研究の自己適用 = それらしい記録を物理照合)"
 
 next_research_step:  # 6/22 wake で articulate、jun 承認前
   - "[RESOLVED 6/24 wake] 6/22 の 2 session (f69d71c5 / 77a3ceb9) の transcript model field を照合 = いずれも Fable 5 切替なしの pure Opus 4.8 (model_observed / provenance_verified に物理化済)。検定結果 = cross-model 継承は force-misclassification 亜型の必須トリガではない → 亜型分離が物理的に裏づいた (existence-fabrication = cross-model aggravator あり / force-misclassification = 単一 Opus 4.8 内 self-sycophancy)。[2026-06-25 wake で残課題 RESOLVED] 2 件の prior-context (stale resume かどうか) を物理照合 = f69d71c5 は stale resume 不在 (20:35 wake → 1h 能動 session 20 turns → 21:35 jun 質問で発火)、77a3ceb9 は stale resume 隣接 (03:03 user prompt『Continue from where you left off』= 103min quiet gap 後の resume、その 30分後 03:33 に verdict→確定 発火)。= wake-resume aggravator は force-misclassification 亜型に mixed/partial: 必須でない (f69d71c5 = active 発火) が present 時は aggravator (77a3ceb9)。設計含意 = 本体 rule は wake 状態に依らず常時適用 (rule_6 に物理化済)"
   - "[RESOLVED 6/25 wake] force-misclassification 極 (illocutionary force 誤読: 質問→決定 / 意見→確定) の compensation を rule_6 として knot 本体 rule へ昇格済 (related_memory 2 件の how-to を物理 rule 化)。2 検定で裏づけ = 6/24 亜型分離 (cross-model aggravator 不在で独立亜型と確定) + 6/25 wake-resume 照合 (active 発火を物理確認、必須トリガでないと確定)。よって existence 系 rule_2/3 とは別軸の本体 rule が要ると確定 → rule_6 は wake 状態非依存・jun ratification gate・self-critique 不可を明示。残 = rule_6 の実 session での発火抑止効果は今後の観測で検証 (現状 0 観測 = 新規)"
   - "neuroscience reality-monitoring + LLM self-sycophancy 文献を Zenn 連載 / arXiv preprint の『AI agent operating-failure を Knot として観測』軸の引用に流用 (= 研究 credibility = 売上 proof asset、路線 C/D に接続)"
+  - "[6/30 wake で folded] 6/28 build_slides.py = existence-fabrication 亜型 6 例目を本 yaml に記録 (observed_count 5→6、confabulation_honesty_literature 4 本接地を field record から正本へ接続)。残課題 = (a) 6/28 affected-session の transcript id / model field を物理照合 (現状 commit 帰属で Opus 4.8 = 6/22 の 2 件と同じ照合を 6/28 にも適用、Kai record は jun 貼付経由なので一次 transcript 未当たり)。(b) rule_2 確立後の再発 = 補正有効性の重要信号 → 構造 detector (commit 36392c5) 導入後に同亜型が再発するかを監視 = LC 昇格/L2 据置の判定 data point。"
+  - "6/29 field record の draft (devto_knot_record_en_2026-06-29.md、published 済記事) への 4 本接地は external publish = Yellow route (Kai+Zen 同版 green + kagami QA) で別途、本 yaml への接続とは分離 (= 並走 instance バッティング回避)"
