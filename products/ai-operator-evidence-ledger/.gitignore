@@ -1,0 +1,5 @@
+node_modules/
+*.log
+.DS_Store
+# Generated synthetic artifacts (recreated on start / npm run seed).
+data/artifacts/

@@ -1,0 +1,25 @@
+{
+  "name": "evidence-ledger-service",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AI Operator Evidence Ledger - a narrow control layer that checks whether an AI operator done-claim is backed by proof now, and rechecks whether it stays connected to a next action after a review window. Synthetic demo only.",
+  "type": "module",
+  "main": "src/server.js",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "seed": "node src/seed.js",
+    "test": "node --test \"test/*.test.js\""
+  },
+  "keywords": [
+    "ai-agent",
+    "completion-truth",
+    "evidence",
+    "verification",
+    "cloud-run",
+    "synthetic-demo"
+  ],
+  "license": "UNLICENSED"
+}
