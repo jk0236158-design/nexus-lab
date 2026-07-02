@@ -20,3 +20,9 @@ __pycache__/
 # Yuino dogfood (5/06+)
 aira/tmp/
 aira/data/digests/*_yuino_digest.md
+
+# 作業用一時置き場 (7/02: anp2 script / ctx vet clone / 納品 zip)
+.tmp/
+
+# 有料納品物の source — public repo に絶対に載せない (7/02 first_paid_ask、$12 pack)
+products/ai-operator-guard/paid-starter-v0/
