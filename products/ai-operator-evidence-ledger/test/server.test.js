@@ -35,10 +35,14 @@ test("server: dashboard, cases, and recheck flip over HTTP", async (t) => {
   const port = await listen(server);
   t.after(() => server.close());
 
-  // Health
+  // Health: /healthz (container-internal) and /health (run.app-safe alias —
+  // Google's frontend swallows /healthz on public run.app URLs).
   const health = await req(port, "GET", "/healthz");
   assert.equal(health.status, 200);
   assert.equal(health.json.status, "ok");
+  const healthAlias = await req(port, "GET", "/health");
+  assert.equal(healthAlias.status, 200);
+  assert.equal(healthAlias.json.status, "ok");
 
   // Dashboard renders HTML with all three case ids.
   const dash = await req(port, "GET", "/");

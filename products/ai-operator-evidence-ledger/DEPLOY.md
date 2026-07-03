@@ -84,8 +84,11 @@ gcloud run services update evidence-ledger \
 
 ## Health check
 
-The container serves `GET /healthz` (returns `{"status":"ok"}`), which Cloud Run
-can use as the startup/liveness probe.
+The container serves `GET /healthz` and `GET /health` (both return
+`{"status":"ok"}`). Cloud Run can use `/healthz` as the startup/liveness probe
+(those probes hit the container directly). When checking through the public
+`*.run.app` URL, use `/health`: Google's frontend intercepts `/healthz` on that
+domain and returns its own 404 before the request reaches the container.
 
 ## Verify after deploy
 
@@ -93,7 +96,7 @@ can use as the startup/liveness probe.
 SERVICE_URL=$(gcloud run services describe evidence-ledger \
   --region <REGION> --project <PROJECT_ID> --format 'value(status.url)')
 
-curl -s "$SERVICE_URL/healthz"
+curl -s "$SERVICE_URL/health"
 curl -s "$SERVICE_URL/api/cases"
 curl -s -X POST "$SERVICE_URL/api/recheck" \
   -H 'content-type: application/json' -d '{"advance_hours": 7}'

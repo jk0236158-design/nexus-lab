@@ -130,12 +130,16 @@ curl -s -X POST http://localhost:8080/api/enrich
 
 A single stateless web service binds `0.0.0.0:$PORT`. The container is built from
 the included `Dockerfile` (`node:20-slim`, no build step). `GET /healthz` serves as
-the Cloud Run probe. Deployment steps are in [DEPLOY.md](DEPLOY.md).
+the Cloud Run probe; use the `GET /health` alias when checking through a public
+`run.app` URL, because Google's frontend intercepts `/healthz` there and returns
+its own 404 before the request reaches the container. Deployment steps are in
+[DEPLOY.md](DEPLOY.md).
 
 ## Google Cloud components used
 
 - **Cloud Run** - hosts the single stateless web service (`0.0.0.0:$PORT`,
-  `/healthz` probe, `Dockerfile`-based deploy).
+  `/healthz` probe internally, `/health` via the public URL, `Dockerfile`-based
+  deploy).
 - **Gemini API** (`generativelanguage.googleapis.com`) - the AI enrichment step
   (claim classification, suggested evidence, public-safe failure summary).
 - **Secret Manager** (optional) - holds `GEMINI_API_KEY` so it is not baked into
@@ -178,7 +182,9 @@ key is required).
 
 - `GET /` - dashboard with the three cases, their verdicts, per-check proof
   summary, and the AI enrichment for each case.
-- `GET /healthz` - liveness probe.
+- `GET /healthz` - liveness probe (container-internal; Google's frontend
+  intercepts this path on public `run.app` URLs).
+- `GET /health` - same probe, reachable through the public `run.app` URL.
 - `GET /api/cases` - all case summaries as JSON (including enrichment).
 - `GET /api/cases/:id` - one case summary.
 - `POST /api/claims` - intake a new raw claim (normalize, store, check).

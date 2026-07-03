@@ -5,7 +5,7 @@
 //
 // Routes:
 //   GET  /                     -> HTML dashboard (3 cases, verdicts, proof summary)
-//   GET  /healthz              -> liveness probe
+//   GET  /healthz, /health     -> liveness probe (/health is the run.app-safe alias)
 //   GET  /api/cases            -> JSON: all case summaries
 //   GET  /api/cases/:id        -> JSON: one case summary
 //   POST /api/claims           -> intake a new raw claim (normalize + store)
@@ -56,7 +56,10 @@ export function createServer(ledger) {
       const url = new URL(req.url, `http://${req.headers.host ?? "localhost"}`);
       const { method } = req;
 
-      if (method === "GET" && url.pathname === "/healthz") {
+      // "/health" is the alias to use through Cloud Run's public run.app URL:
+      // Google's frontend intercepts "/healthz" before it reaches the container
+      // and serves its own 404, so the canonical probe path never answers there.
+      if (method === "GET" && (url.pathname === "/healthz" || url.pathname === "/health")) {
         return sendJson(res, 200, { status: "ok" });
       }
 
