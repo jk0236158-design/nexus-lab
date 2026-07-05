@@ -32,7 +32,7 @@ npx @nexus-lab/create-mcp-server my-server
 
 各テンプレートは複数巡の独立 QA を経て検証しています。Codex (OpenAI) によるクロスレビューと、Kagami (Claude Opus、QA Engineer) による独立 QA を、テンプレートごとに 5〜7 巡以上 走らせて出荷しています。具体的な巡数と修正内容は各テンプレートの `CHANGELOG.md` に脆弱性修正履歴として記録しています。
 
-→ [Polar.sh](https://polar.sh/nokaze) · [Gumroad](https://nexuslabzen.gumroad.com)
+→ [Gumroad](https://nexuslabzen.gumroad.com) · Polar.sh は上の表の「購入」リンクから
 
 各 route は同じテンプレートに繋がります。 1 商品につき 1 route のみご利用ください (= 重複購入の防止)。
 
