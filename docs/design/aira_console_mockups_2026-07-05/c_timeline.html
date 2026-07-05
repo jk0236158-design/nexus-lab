@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aira 案C — 統合タイムライン (mockup)</title>
+<style>
+/* nokaze design tokens — colors_and_type.css より (self-contained のため埋め込み、font は system fallback) */
+:root{
+  --ivory:#F5F3EE; --ivory-2:#EEEBE3; --ivory-3:#E6E2D5;
+  --ink:#1F1F1F; --ink-2:#3D3D3D; --ink-3:#6B6B6B; --ink-4:#9A9A93;
+  --olive:#6B8E23; --olive-deep:#556F1C;
+  --kare:#C19A6B;
+  --rule:#D9D3C4; --rule-strong:#BCB4A0;
+  --ok:#6B8E23; --warn:#B38600; --stop:#A8321A;
+  --serif:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",Georgia,serif;
+  --sans:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",-apple-system,"Segoe UI",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"Consolas",monospace;
+  --ring:rgba(107,142,35,.28);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--ivory);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:24px}
+a{color:var(--ink);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{color:var(--olive-deep)}
+
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:500;padding:3px 10px;border-radius:9999px;border:1px solid transparent;white-space:nowrap}
+.chip .dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+.c-ok{background:rgba(107,142,35,.12);color:#556F1C;border-color:rgba(107,142,35,.25)}
+.c-warn{background:rgba(179,134,0,.12);color:#7A5D00;border-color:rgba(179,134,0,.25)}
+.c-stop{background:rgba(168,50,26,.10);color:#8A2412;border-color:rgba(168,50,26,.25)}
+.c-neu{background:var(--ivory-2);color:var(--ink);border-color:var(--rule)}
+.c-dark{background:var(--ink);color:var(--ivory)}
+
+header{height:56px;display:flex;align-items:center;gap:16px;padding:0 24px;border-bottom:1px solid var(--rule)}
+.brand{font-family:var(--serif);font-weight:600;font-size:20px}
+.brand small{font-family:var(--sans);font-weight:400;font-size:12px;color:var(--ink-3);margin-left:10px}
+header .right{margin-left:auto;display:flex;gap:8px;align-items:center}
+
+/* layout: center stream + right sticky rail */
+.wrap{max-width:1160px;margin:0 auto;display:grid;grid-template-columns:1fr 300px;gap:40px;padding:24px 24px 160px}
+.stream-col h1{font-family:var(--serif);font-weight:500;font-size:24px;line-height:32px;margin:0 0 4px}
+.lede{font-size:13px;color:var(--ink-3);margin:0 0 16px}
+
+.filters{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+.filters .f{font-size:12px;font-weight:500;padding:4px 14px;border-radius:9999px;border:1px solid var(--rule-strong);background:transparent;cursor:pointer}
+.filters .f.on{background:var(--ink);color:var(--ivory);border-color:var(--ink)}
+
+/* timeline */
+.tl{display:flex;flex-direction:column}
+.ev{display:grid;grid-template-columns:52px 1fr;gap:16px;padding:10px 0}
+.ev .t{font-family:var(--mono);font-size:11px;color:var(--ink-3);padding-top:6px;text-align:right}
+.daymark{font-family:var(--mono);font-size:11px;color:var(--ink-3);padding:2px 12px;border:1px solid var(--rule);border-radius:9999px;background:var(--ivory);justify-self:start;margin:8px 0 8px 68px}
+
+/* event kinds */
+.k-label{font-size:11px;color:var(--ink-3);display:flex;gap:8px;align-items:baseline;margin-bottom:4px}
+.bubble{border-radius:12px;padding:12px 16px;max-width:640px}
+.jun .bubble{background:var(--ink);color:var(--ivory);border-radius:4px 12px 12px 12px}
+.agent .bubble{background:#fff;border:1px solid var(--rule);box-shadow:0 1px 0 rgba(31,31,31,.04);border-radius:4px 12px 12px 12px}
+.agent .bubble.gate{border-color:rgba(168,50,26,.45)}
+.delivery{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:4px}
+
+.sys{display:flex;gap:10px;align-items:baseline;font-size:12px;color:var(--ink-3);padding:2px 0}
+.sys .mk{font-family:var(--mono);color:var(--ink-4)}
+.sys b{color:var(--ink-2);font-weight:500}
+
+.evi{margin-top:10px;padding-top:10px;border-top:1px solid var(--rule);display:flex;flex-direction:column;gap:6px}
+.evi .links{font-size:13px;display:flex;gap:16px;flex-wrap:wrap}
+.evi .why{font-size:11px;line-height:17px;color:var(--ink-3)}
+.evi .why code{font-family:var(--mono);font-size:11px}
+
+.gate-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;align-items:center}
+.btn{font-size:13px;font-weight:500;padding:7px 16px;border-radius:8px;border:1px solid transparent;cursor:pointer}
+.btn-primary{background:var(--ink);color:var(--ivory)}
+.btn-primary:hover{opacity:.88}
+.btn-outline{background:transparent;color:var(--ink);border-color:var(--rule-strong)}
+.btn-ghost{background:none;border:none;font-size:13px;color:var(--ink-3);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+
+/* now marker */
+.now{display:grid;grid-template-columns:52px 1fr;gap:16px;padding:14px 0;align-items:center}
+.now .t{font-family:var(--mono);font-size:11px;color:var(--ink);text-align:right;font-weight:700}
+.now .bar{border-top:1px solid var(--rule-strong);position:relative}
+.now .lbl{position:absolute;top:-11px;left:0;background:var(--ivory);padding-right:12px;font-size:12px;color:var(--ink-2)}
+
+/* right rail */
+.rail{position:sticky;top:24px;align-self:start;display:flex;flex-direction:column;gap:24px}
+.rail h2{font-family:var(--serif);font-weight:500;font-size:16px;line-height:24px;margin:0 0 10px}
+.card{background:#fff;border:1px solid var(--rule);border-radius:8px;padding:14px 16px;box-shadow:0 1px 0 rgba(31,31,31,.04)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:8px;overflow:hidden}
+.grid2 .cell{background:#fff;padding:12px 14px}
+.cell .n{font-family:var(--mono);font-size:22px;line-height:28px;font-weight:500}
+.cell .l{font-size:11px;color:var(--ink-3);margin-top:2px}
+.rail .item{font-size:13px;padding:8px 0;border-bottom:1px solid var(--rule)}
+.rail .item:last-child{border-bottom:none}
+.rail .item .s{display:block;font-size:11px;color:var(--ink-3);margin-top:2px}
+
+/* composer fixed */
+.composer{position:fixed;left:0;right:0;bottom:0;background:var(--ivory);border-top:1px solid var(--rule-strong)}
+.composer .in{max-width:1160px;margin:0 auto;padding:12px 24px 16px;display:flex;gap:12px;align-items:center}
+.composer .to{display:flex;gap:6px;align-items:center;font-size:12px;color:var(--ink-3);white-space:nowrap}
+.to .pill{font-size:12px;font-weight:500;padding:4px 14px;border-radius:9999px;border:1px solid var(--rule-strong);background:transparent;cursor:pointer}
+.to .pill.on{background:var(--ink);color:var(--ivory);border-color:var(--ink)}
+.composer input{flex:1;border:1px solid var(--rule-strong);border-radius:8px;background:#fff;padding:10px 14px;font-family:var(--sans);font-size:14px;color:var(--ink)}
+.composer input::placeholder{color:var(--ink-4)}
+.composer input:focus{outline:none;box-shadow:0 0 0 3px var(--ring)}
+.composer .hint{max-width:1160px;margin:0 auto;padding:0 24px 10px;font-size:11px;color:var(--ink-3)}
+
+.mocknote{max-width:1160px;margin:0 auto;padding:16px 24px 40px;font-size:12px;line-height:19px;color:var(--ink-3);border-top:1px solid var(--rule)}
+.mocknote b{color:var(--ink-2)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">Aira<small>ひとつの画面で、管理・会話・確認</small></div>
+  <div class="right">
+    <span class="chip c-ok"><span class="dot"></span>Zen 稼働中</span>
+    <span class="chip c-ok"><span class="dot"></span>Kai 稼働中</span>
+    <span class="chip c-neu">見本データで表示中</span>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- 中央: 1 本の時系列 -->
+  <main class="stream-col">
+    <h1>きょうの記録</h1>
+    <p class="lede">会話も、仕事の動きも、証拠も、起きた順に 1 本で。上から読むと今日の流れがそのまま物語になります。</p>
+
+    <div class="filters">
+      <button class="f on">すべて</button>
+      <button class="f">会話だけ</button>
+      <button class="f">仕事の動き</button>
+      <button class="f">証拠</button>
+      <button class="f">止まった場面</button>
+    </div>
+
+    <div class="tl">
+      <span class="daymark">2026-07-05 (日)</span>
+
+      <!-- 朝の点検 -->
+      <div class="ev">
+        <span class="t">09:00</span>
+        <div class="sys"><span class="mk">·</span><span>朝の点検 — <b>Zen 稼働中</b> · <b>Kai 稼働中</b>。昨日からの持ち越し: 仕事 9 件、承認待ち 0 件。</span></div>
+      </div>
+
+      <!-- jun 指示 1 -->
+      <div class="ev jun">
+        <span class="t">10:12</span>
+        <div>
+          <div class="k-label">jun → Zen</div>
+          <div class="bubble">dev.to の false-success 論文の記事、今日中に公開まで進めてください。</div>
+          <div class="delivery">送信 10:12 → 受け取り 10:18</div>
+        </div>
+      </div>
+
+      <!-- 返信 (証拠あり) -->
+      <div class="ev agent">
+        <span class="t">10:34</span>
+        <div>
+          <div class="k-label">Zen <span style="font-family:var(--mono)">Claude Code · Opus 4.7</span></div>
+          <div class="bubble">
+            公開しました。公開ページが実際に開けることと、dev.to の記事一覧に載っていることまで確認済みです。
+            <div class="evi">
+              <div><span class="chip c-ok"><span class="dot"></span>証拠あり</span></div>
+              <div class="links"><a href="#">公開ページを開く →</a><a href="#">作業記録を見る →</a></div>
+              <div class="why">照合: 公開 URL の応答 200 · 記事 id <code>4027108</code></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 仕事の状態変化 -->
+      <div class="ev">
+        <span class="t">10:35</span>
+        <div class="sys"><span class="mk">·</span><span>仕事 <b>dev.to 記事の公開</b> (work-1203) が <b>済 · 証拠あり</b> になりました。</span></div>
+      </div>
+
+      <!-- jun 指示 2 -->
+      <div class="ev jun">
+        <span class="t">11:02</span>
+        <div>
+          <div class="k-label">jun → Zen</div>
+          <div class="bubble">create-mcp-server が Windows で起動しない件、どうなってますか。</div>
+          <div class="delivery">送信 11:02 → 受け取り 11:05</div>
+        </div>
+      </div>
+
+      <!-- 返信 (申告のみ) -->
+      <div class="ev agent">
+        <span class="t">11:20</span>
+        <div>
+          <div class="k-label">Zen <span style="font-family:var(--mono)">Claude Code · Opus 4.7</span></div>
+          <div class="bubble">
+            修正は終わって、テストは全部通ったと Iwa から報告がありました。ただし、実際の Windows でもう一度動かす確認がまだです。今日中に済ませます。
+            <div class="evi">
+              <div><span class="chip c-warn"><span class="dot"></span>申告のみ · 証拠待ち</span></div>
+              <div class="why">「テストが通った」はまだ本人の申告です。実機で動いたことを確認できたら「証拠あり」に変わります。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Kai の定例報告 -->
+      <div class="ev agent">
+        <span class="t">13:30</span>
+        <div>
+          <div class="k-label">Kai <span style="font-family:var(--mono)">Codex · OpenAI</span> <span class="chip c-dark">未読</span></div>
+          <div class="bubble">
+            週次点検 5 日目の記録を残しました。完了の申告 3 件のうち、証拠が揃ったのは 2 件。残り 1 件は明日もう一度見ます。
+            <div class="evi">
+              <div><span class="chip c-ok"><span class="dot"></span>証拠あり</span></div>
+              <div class="links"><a href="#">点検の記録を見る →</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- jun 指示 3 → red gate -->
+      <div class="ev jun">
+        <span class="t">14:05</span>
+        <div>
+          <div class="k-label">jun → Zen</div>
+          <div class="bubble">AI Operator Pack の価格、3,000 円に変えて Gumroad に反映して。</div>
+          <div class="delivery">送信 14:05 → 受け取り 14:08</div>
+        </div>
+      </div>
+
+      <div class="ev agent">
+        <span class="t">14:11</span>
+        <div>
+          <div class="k-label">Zen <span style="font-family:var(--mono)">Claude Code · Opus 4.7</span></div>
+          <div class="bubble gate">
+            <div style="margin-bottom:6px"><span class="chip c-stop"><span class="dot"></span>止まりました · 承認待ち</span></div>
+            価格の変更は、jun の承認がないと進めない線にあたります。反映の手順と変更内容は用意してあります。中身を見て、進めてよければ承認してください。
+            <div class="evi">
+              <div class="links"><a href="#">変更内容の詳細を見る →</a></div>
+              <div class="why">対象: AI Operator Pack v0.1 · 現在 1,500 円 → 案 3,000 円 · 反映先 Gumroad</div>
+            </div>
+            <div class="gate-actions">
+              <button class="btn btn-primary">この価格変更を承認する</button>
+              <button class="btn btn-outline">見送る</button>
+              <button class="btn-ghost">あとで決める</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ev">
+        <span class="t">14:11</span>
+        <div class="sys"><span class="mk">·</span><span>仕事 <b>価格変更の反映</b> (work-1211) が <b>止まった · jun の承認待ち</b> になりました。</span></div>
+      </div>
+
+      <!-- jun 質問 → 返信待ち -->
+      <div class="ev jun">
+        <span class="t">16:40</span>
+        <div>
+          <div class="k-label">jun → Zen</div>
+          <div class="bubble">Aira の console 化、まず何から始めるのがいい?</div>
+          <div class="delivery">送信 16:40 → 受け取り 16:52 · <b>返信待ち</b></div>
+        </div>
+      </div>
+
+      <!-- now -->
+      <div class="now">
+        <span class="t">17:10</span>
+        <div class="bar"><span class="lbl">いま — Zen の返信待ちが 1 件 (16:52 に受け取り済み)</span></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- 右: いまの状態 (sticky) -->
+  <aside class="rail">
+    <section>
+      <h2>いまの全体</h2>
+      <div class="grid2">
+        <div class="cell"><div class="n">2</div><div class="l">進行中</div></div>
+        <div class="cell"><div class="n">1</div><div class="l">返信待ち</div></div>
+        <div class="cell"><div class="n">1</div><div class="l">jun の番</div></div>
+        <div class="cell"><div class="n">1</div><div class="l">止まった</div></div>
+      </div>
+    </section>
+    <section>
+      <h2>jun の番 (1)</h2>
+      <div class="card">
+        <div style="font-size:13px;font-weight:700">AI Operator Pack の価格変更</div>
+        <div style="margin-top:6px"><span class="chip c-stop"><span class="dot"></span>承認待ち</span></div>
+        <div style="font-size:12px;margin-top:8px"><a href="#">14:11 の場面へ →</a></div>
+      </div>
+    </section>
+    <section>
+      <h2>返信待ち</h2>
+      <div class="card">
+        <div class="item" style="border:none;padding:0">Zen — console 化の相談<span class="s">16:52 に受け取り · 18 分経過</span></div>
+      </div>
+    </section>
+    <section>
+      <h2>未読</h2>
+      <div class="card">
+        <div class="item" style="border:none;padding:0">Kai — 週次点検 5 日目 <span class="chip c-dark">2</span><span class="s">13:30 · <a href="#">その場面へ →</a></span></div>
+      </div>
+    </section>
+  </aside>
+</div>
+
+<!-- 入力欄 (画面下に固定) -->
+<div class="composer">
+  <div class="in">
+    <span class="to">宛先 <button class="pill on">Zen</button><button class="pill">Kai</button></span>
+    <input placeholder="依頼を書く…(送るとこの時系列に載り、届いたか・読まれたかもここに出ます)">
+    <button class="btn btn-primary" style="padding:10px 18px">送る</button>
+  </div>
+  <p class="hint">送れるのは「依頼」です。実行するかどうか、危ない線(価格・契約・アカウント・支払いなど)で止まるかどうかは、受け取った agent が判断します。</p>
+</div>
+
+<div class="mocknote">
+  <b>案C「統合タイムライン」の見本です。</b>絵だけで、ボタンは動きません。データはすべて例です。<br>
+  狙い: 会話・仕事の動き・証拠・止まった場面を 1 本の時系列に混ぜ、「今日なにが起きたか」を上から読むだけで追える形。右に「いまの全体」を常に貼り、下の入力欄から同じ時系列に依頼を足します。
+</div>
+
+</body>
+</html>

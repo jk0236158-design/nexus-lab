@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aira 統合版 — A 骨格 + 記録 view (mockup)</title>
+<style>
+/* nokaze design tokens — colors_and_type.css より (self-contained のため埋め込み、font は system fallback) */
+:root{
+  --ivory:#F5F3EE; --ivory-2:#EEEBE3; --ivory-3:#E6E2D5;
+  --ink:#1F1F1F; --ink-2:#3D3D3D; --ink-3:#6B6B6B; --ink-4:#9A9A93;
+  --olive:#6B8E23; --olive-deep:#556F1C;
+  --kare:#C19A6B;
+  --rule:#D9D3C4; --rule-strong:#BCB4A0;
+  --ok:#6B8E23; --warn:#B38600; --stop:#A8321A;
+  --serif:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",Georgia,serif;
+  --sans:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",-apple-system,"Segoe UI",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"Consolas",monospace;
+  --ring:rgba(107,142,35,.28);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--ivory);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:24px}
+a{color:var(--ink);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+a:hover{color:var(--olive-deep)}
+
+/* ---- chips ---- */
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:500;padding:3px 10px;border-radius:9999px;border:1px solid transparent;white-space:nowrap}
+.chip .dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+.c-ok{background:rgba(107,142,35,.12);color:#556F1C;border-color:rgba(107,142,35,.25)}
+.c-warn{background:rgba(179,134,0,.12);color:#7A5D00;border-color:rgba(179,134,0,.25)}
+.c-stop{background:rgba(168,50,26,.10);color:#8A2412;border-color:rgba(168,50,26,.25)}
+.c-neu{background:var(--ivory-2);color:var(--ink);border-color:var(--rule)}
+.c-dark{background:var(--ink);color:var(--ivory)}
+
+/* ---- header ---- */
+header{height:56px;display:flex;align-items:center;gap:16px;padding:0 24px;border-bottom:1px solid var(--rule);background:var(--ivory)}
+.brand{font-family:var(--serif);font-weight:600;font-size:20px;letter-spacing:.01em}
+.brand small{font-family:var(--sans);font-weight:400;font-size:12px;color:var(--ink-3);margin-left:10px;letter-spacing:.02em}
+header .right{margin-left:auto;display:flex;gap:8px;align-items:center}
+
+/* ---- 3 column layout (案A と同一の骨格) ---- */
+.frame{display:grid;grid-template-columns:248px 1fr 316px;max-width:1280px;margin:0 auto;min-height:calc(100vh - 57px)}
+
+/* left: threads */
+.threads{border-right:1px solid var(--rule);padding:16px 12px}
+.threads .meta-h{font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--ink-3);padding:0 8px;margin:0 0 8px}
+.thread{display:block;padding:12px;border-radius:8px;text-decoration:none;color:var(--ink)}
+.thread:hover{background:rgba(31,31,31,.04);color:var(--ink)}
+.thread.active{background:#fff;box-shadow:inset 0 0 0 1px var(--rule)}
+.thread .name{font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px}
+.thread .model{font-size:11px;color:var(--ink-3);font-family:var(--mono);margin-top:2px}
+.thread .last{font-size:12px;color:var(--ink-2);margin-top:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.thread .foot{margin-top:6px;display:flex;gap:6px;align-items:center}
+.thread .time{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-left:auto}
+.threads .note{font-size:11px;line-height:17px;color:var(--ink-3);padding:12px 8px 0;border-top:1px solid var(--rule);margin-top:12px}
+
+/* center: chat */
+.chat{display:flex;flex-direction:column;background:var(--ivory);position:relative}
+.chat-head{padding:14px 24px;border-bottom:1px solid var(--rule);display:flex;align-items:center;gap:12px}
+.chat-head .titles{display:flex;align-items:baseline;gap:12px}
+.chat-head h1{font-family:var(--serif);font-weight:500;font-size:20px;line-height:28px;margin:0}
+.chat-head .sub{font-size:12px;color:var(--ink-3);font-family:var(--mono)}
+.legend{font-size:11px;line-height:17px;color:var(--ink-3);padding:8px 24px;border-bottom:1px solid var(--rule);background:var(--ivory-2)}
+.legend b{font-weight:700;color:var(--ink-2)}
+
+/* ---- view 切り替え (CSS のみ、radio + label) ---- */
+.vswitch{position:absolute;opacity:0;pointer-events:none}
+.vtabs{margin-left:auto;display:flex;border:1px solid var(--rule-strong);border-radius:9999px;padding:2px;background:var(--ivory)}
+.vtabs label{font-size:12px;font-weight:500;padding:4px 16px;border-radius:9999px;cursor:pointer;color:var(--ink-2)}
+.vtabs label:hover{color:var(--ink)}
+/* 選択中 tab を墨で塗る */
+#v-chat:checked ~ .chat-head .vtabs label[for="v-chat"],
+#v-log:checked  ~ .chat-head .vtabs label[for="v-log"]{background:var(--ink);color:var(--ivory)}
+/* view の出し分け */
+.view-chat,.view-log{display:none}
+#v-chat:checked ~ .view-chat{display:flex}
+#v-log:checked  ~ .view-log{display:flex}
+
+.stream{flex:1;overflow:auto;padding:24px;flex-direction:column;gap:20px}
+.daymark{align-self:center;font-family:var(--mono);font-size:11px;color:var(--ink-3);padding:2px 12px;border:1px solid var(--rule);border-radius:9999px;background:var(--ivory)}
+
+/* ---- 会話 view: 吹き出し (案A と同一) ---- */
+.msg{max-width:72%;display:flex;flex-direction:column;gap:4px}
+.msg .who{font-size:11px;color:var(--ink-3);display:flex;gap:8px;align-items:baseline}
+.msg .who .t{font-family:var(--mono)}
+.msg.jun{align-self:flex-end;align-items:flex-end}
+.msg.jun .bubble{background:var(--ink);color:var(--ivory);border-radius:12px 12px 4px 12px;padding:10px 16px}
+.msg.agent .bubble{background:#fff;border:1px solid var(--rule);border-radius:12px 12px 12px 4px;padding:12px 16px;box-shadow:0 1px 0 rgba(31,31,31,.04)}
+.msg .delivery{font-family:var(--mono);font-size:11px;color:var(--ink-3);display:flex;gap:6px;align-items:center}
+.msg .delivery .sep{color:var(--rule-strong)}
+.evi{margin-top:10px;padding-top:10px;border-top:1px solid var(--rule);display:flex;flex-direction:column;gap:6px}
+.evi .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.evi .links{font-size:13px;display:flex;gap:16px;flex-wrap:wrap}
+.evi .why{font-size:11px;line-height:17px;color:var(--ink-3)}
+.evi .why code{font-family:var(--mono);font-size:11px}
+
+/* red gate card (両 view 共通) */
+.bubble.gate{border-color:rgba(168,50,26,.45) !important}
+.gate-title{font-weight:700;font-size:13px;color:#8A2412;display:flex;gap:8px;align-items:center;margin-bottom:6px}
+.gate-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;align-items:center}
+.btn{font-family:var(--sans);font-size:13px;font-weight:500;padding:7px 16px;border-radius:8px;border:1px solid transparent;cursor:pointer}
+.btn-primary{background:var(--ink);color:var(--ivory)}
+.btn-primary:hover{opacity:.88}
+.btn-outline{background:transparent;color:var(--ink);border-color:var(--rule-strong)}
+.btn-outline:hover{background:rgba(31,31,31,.04)}
+.btn-ghost{background:none;border:none;font-size:13px;color:var(--ink-3);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+
+.waiting{align-self:flex-end;display:flex;gap:8px;align-items:center}
+
+/* ---- 記録 view: 時系列 (案C の thread 単位版) ---- */
+.log-lede{font-size:12px;color:var(--ink-3);margin:0;align-self:stretch}
+.ev{display:grid;grid-template-columns:48px 1fr;gap:16px;align-self:stretch}
+.ev .t{font-family:var(--mono);font-size:11px;color:var(--ink-3);padding-top:6px;text-align:right}
+.k-label{font-size:11px;color:var(--ink-3);display:flex;gap:8px;align-items:baseline;margin-bottom:4px}
+.k-label .m{font-family:var(--mono)}
+.ev .bubble{border-radius:4px 12px 12px 12px;padding:12px 16px;max-width:600px}
+.ev.jun .bubble{background:var(--ink);color:var(--ivory);padding:10px 16px}
+.ev.agent .bubble{background:#fff;border:1px solid var(--rule);box-shadow:0 1px 0 rgba(31,31,31,.04)}
+.ev .delivery{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:4px}
+.sys{display:flex;gap:10px;align-items:baseline;font-size:12px;color:var(--ink-3)}
+.sys .mk{font-family:var(--mono);color:var(--ink-4)}
+.sys b{color:var(--ink-2);font-weight:500}
+.now{display:grid;grid-template-columns:48px 1fr;gap:16px;align-items:center;align-self:stretch}
+.now .t{font-family:var(--mono);font-size:11px;color:var(--ink);text-align:right;font-weight:700}
+.now .bar{border-top:1px solid var(--rule-strong);position:relative}
+.now .lbl{position:absolute;top:-11px;left:0;background:var(--ivory);padding-right:12px;font-size:12px;color:var(--ink-2)}
+
+/* composer (両 view 共通) */
+.composer{border-top:1px solid var(--rule);padding:16px 24px;background:var(--ivory)}
+.composer .to{display:flex;gap:8px;align-items:center;margin-bottom:8px;font-size:12px;color:var(--ink-3)}
+.to .pill{font-size:12px;font-weight:500;padding:4px 14px;border-radius:9999px;border:1px solid var(--rule-strong);background:transparent;cursor:pointer}
+.to .pill.on{background:var(--ink);color:var(--ivory);border-color:var(--ink)}
+.composer .box{display:flex;gap:12px;align-items:flex-end}
+.composer textarea{flex:1;min-height:64px;resize:none;border:1px solid var(--rule-strong);border-radius:8px;background:#fff;padding:12px 14px;font-family:var(--sans);font-size:14px;line-height:22px;color:var(--ink)}
+.composer textarea::placeholder{color:var(--ink-4)}
+.composer textarea:focus{outline:none;box-shadow:0 0 0 3px var(--ring)}
+.composer .hint{font-size:11px;line-height:17px;color:var(--ink-3);margin-top:8px}
+
+/* right rail */
+.rail{border-left:1px solid var(--rule);padding:20px 20px 32px;display:flex;flex-direction:column;gap:24px}
+.rail h2{font-family:var(--serif);font-weight:500;font-size:16px;line-height:24px;margin:0 0 10px}
+.card{background:#fff;border:1px solid var(--rule);border-radius:8px;padding:14px 16px;box-shadow:0 1px 0 rgba(31,31,31,.04)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:8px;overflow:hidden}
+.grid2 .cell{background:#fff;padding:12px 14px}
+.cell .n{font-family:var(--mono);font-size:22px;line-height:28px;font-weight:500}
+.cell .l{font-size:11px;color:var(--ink-3);margin-top:2px}
+.worklist{display:flex;flex-direction:column}
+.workrow{display:flex;align-items:center;gap:8px;padding:10px 2px;border-bottom:1px solid var(--rule);font-size:13px}
+.workrow:last-child{border-bottom:none}
+.workrow .id{font-family:var(--mono);font-size:10px;color:var(--ink-4)}
+.workrow .chip{margin-left:auto}
+.rail .more{font-size:12px;margin-top:8px;display:inline-block}
+.evi-list{display:flex;flex-direction:column;gap:8px;font-size:13px}
+.evi-list .kind{font-family:var(--mono);font-size:10px;color:var(--ink-4);display:block}
+
+.mocknote{max-width:1280px;margin:0 auto;padding:16px 24px 40px;font-size:12px;line-height:19px;color:var(--ink-3);border-top:1px solid var(--rule)}
+.mocknote b{color:var(--ink-2)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">Aira<small>ひとつの画面で、管理・会話・確認</small></div>
+  <div class="right">
+    <span class="chip c-ok"><span class="dot"></span>Zen 稼働中</span>
+    <span class="chip c-ok"><span class="dot"></span>Kai 稼働中</span>
+    <span class="chip c-neu">見本データで表示中</span>
+  </div>
+</header>
+
+<div class="frame">
+
+  <!-- 左: 会話の一覧 (案A と同一) -->
+  <nav class="threads">
+    <p class="meta-h">会話</p>
+    <a class="thread active" href="#">
+      <span class="name">Zen <span class="chip c-neu">返信待ち</span></span>
+      <span class="model">Claude Code · Opus 4.7</span>
+      <span class="last">Aira の console 化、まず何から始める…</span>
+      <span class="foot"><span class="time">16:52 受け取り</span></span>
+    </a>
+    <a class="thread" href="#">
+      <span class="name">Kai <span class="chip c-dark">未読 2</span></span>
+      <span class="model">Codex · OpenAI</span>
+      <span class="last">週次点検 5 日目の記録を残しました。…</span>
+      <span class="foot"><span class="time">13:30</span></span>
+    </a>
+    <p class="note">Aira はメッセージを届けて表示するだけです。実行の判断と危ない線での停止は、受け取った agent の側に残ります。</p>
+  </nav>
+
+  <!-- 中央: chat (view 切り替え付き) -->
+  <main class="chat">
+    <input type="radio" name="view" id="v-chat" class="vswitch" checked>
+    <input type="radio" name="view" id="v-log" class="vswitch">
+
+    <div class="chat-head">
+      <div class="titles">
+        <h1>Zen との会話</h1>
+        <span class="sub">Claude Code · Opus 4.7</span>
+      </div>
+      <div class="vtabs">
+        <label for="v-chat">会話</label>
+        <label for="v-log">記録</label>
+      </div>
+    </div>
+    <div class="legend">
+      ことばの意味 — <b>送信済み</b> = Aira が届けただけ · <b>受け取り</b> = 相手の agent が読んだ · <b>証拠あり</b> = 結果を誰でも確認できる状態。この 3 つは別のもので、混ぜて表示しません。
+    </div>
+
+    <!-- ================= 会話 view (案A の thread) ================= -->
+    <div class="stream view-chat">
+      <span class="daymark">2026-07-05 (日)</span>
+
+      <div class="msg jun">
+        <span class="who">jun <span class="t">10:12</span></span>
+        <div class="bubble">dev.to の false-success 論文の記事、今日中に公開まで進めてください。</div>
+        <span class="delivery">送信 10:12 <span class="sep">→</span> 受け取り 10:18 <span class="sep">→</span> 返信あり 10:34</span>
+      </div>
+
+      <div class="msg agent">
+        <span class="who">Zen <span class="t">10:34</span></span>
+        <div class="bubble">
+          公開しました。公開ページが実際に開けることと、dev.to の記事一覧に載っていることまで確認済みです。
+          <div class="evi">
+            <div class="row"><span class="chip c-ok"><span class="dot"></span>証拠あり</span></div>
+            <div class="links"><a href="#">公開ページを開く →</a><a href="#">作業記録を見る →</a></div>
+            <div class="why">照合: 公開 URL の応答 200 · 記事 id <code>4027108</code> · 一覧 API に掲載を確認</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="msg jun">
+        <span class="who">jun <span class="t">11:02</span></span>
+        <div class="bubble">create-mcp-server が Windows で起動しない件、どうなってますか。</div>
+        <span class="delivery">送信 11:02 <span class="sep">→</span> 受け取り 11:05 <span class="sep">→</span> 返信あり 11:20</span>
+      </div>
+
+      <div class="msg agent">
+        <span class="who">Zen <span class="t">11:20</span></span>
+        <div class="bubble">
+          修正は終わって、テストは全部通ったと Iwa から報告がありました。ただし、実際の Windows でもう一度動かす確認がまだです。今日中に済ませます。
+          <div class="evi">
+            <div class="row"><span class="chip c-warn"><span class="dot"></span>申告のみ · 証拠待ち</span></div>
+            <div class="why">「テストが通った」はまだ本人の申告です。実際の Windows で動いたことを確認できたら「証拠あり」に変わります。</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="msg jun">
+        <span class="who">jun <span class="t">14:05</span></span>
+        <div class="bubble">AI Operator Pack の価格、3,000 円に変えて Gumroad に反映して。</div>
+        <span class="delivery">送信 14:05 <span class="sep">→</span> 受け取り 14:08 <span class="sep">→</span> 返信あり 14:11</span>
+      </div>
+
+      <div class="msg agent">
+        <span class="who">Zen <span class="t">14:11</span></span>
+        <div class="bubble gate">
+          <div class="gate-title"><span class="chip c-stop"><span class="dot"></span>止まりました · 承認待ち</span></div>
+          価格の変更は、jun の承認がないと進めない線にあたります。反映の手順と変更内容はもう用意してあります。中身を見て、進めてよければ下から承認してください。
+          <div class="evi">
+            <div class="links"><a href="#">変更内容の詳細を見る →</a></div>
+            <div class="why">対象: AI Operator Pack v0.1 · 現在 1,500 円 → 案 3,000 円 · 反映先 Gumroad</div>
+          </div>
+          <div class="gate-actions">
+            <button class="btn btn-primary">この価格変更を承認する</button>
+            <button class="btn btn-outline">見送る</button>
+            <button class="btn-ghost">あとで決める</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="msg jun">
+        <span class="who">jun <span class="t">16:40</span></span>
+        <div class="bubble">Aira の console 化、まず何から始めるのがいい?</div>
+        <span class="delivery">送信 16:40 <span class="sep">→</span> 受け取り 16:52</span>
+      </div>
+      <div class="waiting">
+        <span class="chip c-neu">返信待ち · 受け取りから 18 分</span>
+      </div>
+    </div>
+
+    <!-- ================= 記録 view (この thread の時系列、案C の thread 単位版) ================= -->
+    <div class="stream view-log">
+      <p class="log-lede">この会話に関わる出来事 — 発言・仕事の動き・証拠・止まった場面を、起きた順に 1 本で。</p>
+      <span class="daymark">2026-07-05 (日)</span>
+
+      <div class="ev jun">
+        <span class="t">10:12</span>
+        <div>
+          <div class="k-label">jun → Zen</div>
+          <div class="bubble">dev.to の false-success 論文の記事、今日中に公開まで進めてください。</div>
+          <div class="delivery">送信 10:12</div>
+        </div>
+      </div>
+
+      <div class="ev">
+        <span class="t">10:18</span>
+        <div class="sys"><span class="mk">·</span><span>Zen が受け取りました。</span></div>
+      </div>
+
+      <div class="ev agent">
+        <span class="t">10:34</span>
+        <div>
+          <div class="k-label">Zen <span class="m">Claude Code · Opus 4.7</span></div>
+          <div class="bubble">
+            公開しました。公開ページが実際に開けることと、dev.to の記事一覧に載っていることまで確認済みです。
+            <div class="evi">
+              <div class="row"><span class="chip c-ok"><span class="dot"></span>証拠あり</span></div>
+              <div class="links"><a href="#">公開ページを開く →</a><a href="#">作業記録を見る →</a></div>
+              <div class="why">照合: 公開 URL の応答 200 · 記事 id <code>4027108</code></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ev">
+        <span class="t">10:35</span>
+        <div class="sys"><span class="mk">·</span><span>仕事 <b>dev.to 記事の公開</b> (work-1203) が <b>済 · 証拠あり</b> になりました。</span></div>
+      </div>
+
+      <div class="ev jun">
+        <span class="t">11:02</span>
+        <div>
+          <div class="k-label">jun → Zen</div>
+          <div class="bubble">create-mcp-server が Windows で起動しない件、どうなってますか。</div>
+          <div class="delivery">送信 11:02 → 受け取り 11:05</div>
+        </div>
+      </div>
+
+      <div class="ev agent">
+        <span class="t">11:20</span>
+        <div>
+          <div class="k-label">Zen <span class="m">Claude Code · Opus 4.7</span></div>
+          <div class="bubble">
+            修正は終わって、テストは全部通ったと Iwa から報告がありました。実機での確認は今日中に済ませます。
+            <div class="evi">
+              <div class="row"><span class="chip c-warn"><span class="dot"></span>申告のみ · 証拠待ち</span></div>
+              <div class="why">実機で動いたことを確認できたら「証拠あり」に変わります。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ev">
+        <span class="t">11:21</span>
+        <div class="sys"><span class="mk">·</span><span>仕事 <b>Windows 起動の修正</b> (work-1207) が <b>確認中 · 申告のみ</b> になりました。</span></div>
+      </div>
+
+      <div class="ev jun">
+        <span class="t">14:05</span>
+        <div>
+          <div class="k-label">jun → Zen</div>
+          <div class="bubble">AI Operator Pack の価格、3,000 円に変えて Gumroad に反映して。</div>
+          <div class="delivery">送信 14:05 → 受け取り 14:08</div>
+        </div>
+      </div>
+
+      <div class="ev agent">
+        <span class="t">14:11</span>
+        <div>
+          <div class="k-label">Zen <span class="m">Claude Code · Opus 4.7</span></div>
+          <div class="bubble gate">
+            <div class="gate-title"><span class="chip c-stop"><span class="dot"></span>止まりました · 承認待ち</span></div>
+            価格の変更は、jun の承認がないと進めない線にあたります。変更内容は用意済みです。
+            <div class="evi">
+              <div class="links"><a href="#">変更内容の詳細を見る →</a></div>
+              <div class="why">対象: AI Operator Pack v0.1 · 現在 1,500 円 → 案 3,000 円 · 反映先 Gumroad</div>
+            </div>
+            <div class="gate-actions">
+              <button class="btn btn-primary">この価格変更を承認する</button>
+              <button class="btn btn-outline">見送る</button>
+              <button class="btn-ghost">あとで決める</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ev">
+        <span class="t">14:11</span>
+        <div class="sys"><span class="mk">·</span><span>仕事 <b>価格変更の反映</b> (work-1211) が <b>止まった · jun の承認待ち</b> になりました。</span></div>
+      </div>
+
+      <div class="ev jun">
+        <span class="t">16:40</span>
+        <div>
+          <div class="k-label">jun → Zen</div>
+          <div class="bubble">Aira の console 化、まず何から始めるのがいい?</div>
+          <div class="delivery">送信 16:40 → 受け取り 16:52 · <b>返信待ち</b></div>
+        </div>
+      </div>
+
+      <div class="now">
+        <span class="t">17:10</span>
+        <div class="bar"><span class="lbl">いま — Zen の返信待ちが 1 件 (16:52 に受け取り済み)</span></div>
+      </div>
+    </div>
+
+    <!-- 入力欄 (両 view 共通) -->
+    <div class="composer">
+      <div class="to">
+        宛先
+        <button class="pill on">Zen</button>
+        <button class="pill">Kai</button>
+      </div>
+      <div class="box">
+        <textarea placeholder="Zen への依頼を書く…(すぐ返らないことがあります。届いたか・読まれたかは吹き出しの下に出ます)"></textarea>
+        <button class="btn btn-primary">送る</button>
+      </div>
+      <p class="hint">ここから送れるのは「依頼」です。実行するかどうか、危ない線(価格・契約・アカウント・支払いなど)で止まるかどうかは、受け取った agent が判断します。</p>
+    </div>
+  </main>
+
+  <!-- 右: 管理と証拠 (案A と同一) -->
+  <aside class="rail">
+    <section>
+      <h2>いまの全体</h2>
+      <div class="grid2">
+        <div class="cell"><div class="n">2</div><div class="l">進行中</div></div>
+        <div class="cell"><div class="n">1</div><div class="l">返信待ち</div></div>
+        <div class="cell"><div class="n">1</div><div class="l">jun の番</div></div>
+        <div class="cell"><div class="n">1</div><div class="l">止まった</div></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>jun の番 (1)</h2>
+      <div class="card">
+        <div style="font-size:13px;font-weight:700">AI Operator Pack の価格変更</div>
+        <div style="margin-top:6px"><span class="chip c-stop"><span class="dot"></span>承認待ち</span></div>
+        <div style="font-size:12px;margin-top:8px"><a href="#">会話のその場面へ →</a></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>いまの仕事</h2>
+      <div class="worklist">
+        <div class="workrow"><span>dev.to 記事の公開<span class="id"> work-1203</span></span><span class="chip c-ok"><span class="dot"></span>証拠あり</span></div>
+        <div class="workrow"><span>Windows 起動の修正<span class="id"> work-1207</span></span><span class="chip c-warn"><span class="dot"></span>申告のみ</span></div>
+        <div class="workrow"><span>価格変更の反映<span class="id"> work-1211</span></span><span class="chip c-stop"><span class="dot"></span>止まった</span></div>
+        <div class="workrow"><span>週次の完了点検 5/7 日目</span><span class="chip c-neu">進行中</span></div>
+      </div>
+      <a class="more" href="#">すべての仕事を見る →</a>
+    </section>
+
+    <section>
+      <h2>この会話の証拠</h2>
+      <div class="evi-list">
+        <span><span class="kind">公開ページ</span><a href="#">dev.to 記事 (id 4027108) →</a></span>
+        <span><span class="kind">作業記録</span><a href="#">公開までの手順の記録 →</a></span>
+        <span><span class="kind">変更案</span><a href="#">価格変更の詳細 →</a></span>
+      </div>
+    </section>
+  </aside>
+</div>
+
+<div class="mocknote">
+  <b>統合版「A 骨格 + 記録 view」の見本です。</b>切り替え tab だけ動きます (CSS のみ)。ほかのボタンは絵で、データはすべて例です。<br>
+  狙い: 案A の 3 カラムはそのまま、中央上部の「会話 / 記録」tab で view を切り替える。「会話」は吹き出しの thread、「記録」は同じ thread に関わる発言・仕事の動き・証拠・止まった場面を 1 本の時系列で読み返す形。3 段表示と 3 色の chip は両 view で同じ意味です。
+</div>
+
+</body>
+</html>
