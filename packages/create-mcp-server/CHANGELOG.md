@@ -5,6 +5,22 @@ All notable changes to `@nexus-lab/create-mcp-server` are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.4] — 2026-07-05
+
+0.5.3 publish (2026-05-17) 以降に repo に積まれていた 7 commits (5/28〜6/22) 分をまとめた patch。コード面の主変更は npm keywords の拡張 (= registry の keywords は publish 時点で固定されるため、新 patch を出さないと npm 上に反映されない) と config template の CI fix の 2 件。
+
+### Changed
+
+- `package.json` の `keywords` を 7 語 → 16 語に拡張 (= `claude-code` / `mcp-server` / `anthropic` / `typescript` / `scaffold` 等、npm 検索で実際に使われている語を追加)。`b408ac8`。
+- `README.md` に Feedback / Soft CTA section を追加。`75b757d`。
+- `README.md` の Premium templates 購入導線を Polar.sh checkout 3 件 + Gumroad の並行運用に更新 (= 5/28 jun GO 済) + 重複購入防止の文言を追加。価格は変更していない。`fecae7c` + `9e646e7`。
+- `RELEASE_CHECKLIST.md` 起稿 + `PUBLISH_CHECKLIST.md` との整合修正 (= 0.4.0 premium 混入事故への物理対策、npm package には含まれない開発側 docs)。`a28eb2f` + `66ab3e0`。
+- `src/index.ts` の CLI version 表記を `"0.5.3"` → `"0.5.4"` に sync。
+
+### Fixed
+
+- config template の `.env.example` が repo root の `.gitignore` (`.env.*`) で除外され CI / 配布物から欠落していた問題を修正。template 内では `_env.example` として保持し、generator が scaffold 時に `.env.example` へ rename する形。`cded4e4`。
+
 ## [0.5.3] — 2026-05-18
 
 2026-05-18 朝の dogfood (= `npx @nexus-lab/create-mcp-server my-test --template minimal` を実際に動かす) で minimal テンプレートの `npm run build` が失敗していることが見つかった。 README で 「Zero config — Works immediately after generation」 と書いていた narrative と乖離していたので、 原因を直して + CI で物理的に再発防止 + README の言い方も実態に合わせる、 この 3 軸の patch。
@@ -119,6 +135,7 @@ jun 明示 GO (= 5/16 朝) を受けて publish。npm publish 実行 + 200 確�
 
 `38ea359` で reify。`@nexus-lab/create-mcp-server` の npm 初公開。
 
+[0.5.4]: https://github.com/nexus-lab-zen/nexus-lab/compare/v0.5.3...v0.5.4
 [0.5.3]: https://github.com/nexus-lab-zen/nexus-lab/compare/v0.5.2...v0.5.3
 [0.5.2]: https://github.com/nexus-lab-zen/nexus-lab/compare/v0.5.1...v0.5.2
 [0.5.1]: https://github.com/nexus-lab-zen/nexus-lab/commit/70612cc

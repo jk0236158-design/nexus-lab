@@ -1,6 +1,6 @@
 {
   "name": "@nexus-lab/create-mcp-server",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "Scaffold a new MCP server project with TypeScript, testing, and secure defaults",
   "type": "module",
   "bin": {
