@@ -36,6 +36,12 @@ npx @nexus-lab/create-mcp-server my-server
 
 各 route は同じテンプレートに繋がります。 1 商品につき 1 route のみご利用ください (= 重複購入の防止)。
 
+### Trust Review Kit — AI の「完了しました」を実物で確かめる道具一式
+
+AI エージェントの「done」申告を、実物と物理照合するための道具一式 (テンプレート + 動く check + 7 日間の導入順 + 非同期レビュー 1 回)。 自社で約 4 ヶ月動かした実録から作りました。
+
+→ [Trust Review Kit の詳細](/nexus-lab/trust-review-kit)
+
 ## 記事
 
 Zenn で実装過程・品質監査・AI 運営の実地記録を公開しています。 最新の公開状況は Zenn ページ参照。
