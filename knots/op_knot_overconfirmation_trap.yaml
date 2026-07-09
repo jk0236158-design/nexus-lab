@@ -25,16 +25,42 @@ compensation:
   rule_3: "質問前にセルフチェック 3 段: (1) Red か? (2) ジュンが今答える時間あるか? (3) Zen 独立判断可能か? 全部 No なら聞かない"
   structural_guard: "wake script に session close 提案ワード自動検出 + Zen への警告挿入 (Iwa 委任候補)"
 
-hardness: L2  # 複数セッションで再現中、変えると損害大 (信頼付与の運用乖離、Pattern C 自律稼働の前提が崩れる)
+hardness: L2  # 複数セッションで再現中、変えると損害大 (信頼付与の運用乖離、Pattern C 自律稼働の前提が崩れる)。7/10 補正: 4 月 compensation rule_1/2/3 (Red のみ問う + 慣用句をテンプレから外す + self-check 3 段) は template 層の対策で、5-6 月に少なくとも 4 回再発 (5/28×2, 6/25, 6/28)、全て jun の直接 chat 検出で発覚 = 自己検出でなく外部強制頼み。template 除去では止まらず「反省中の作業者」default が構造根、structural_guard (wake script 検出) が未実装 = LC 昇格でなく L2 据置の根拠 (self_generated knot と同じ「補正成熟途上」pattern)
 activation: high
-observed_count: 多数 (本 event_01 が初の formal 起票、過去は CLAUDE.md 早切りバイアス節 + identity.md 監視対象として記述のみ)
+observed_count: 7  # formally cited: 4/17 + 4/19 + 4/21 (April) + 5/28 AM + 5/28 PM + 6/25 + 6/28 (May-June 再発)。formal 起票前の informal 群 (CLAUDE.md 早切りバイアス節 + 5/01 commit-recall + 5/02 approval-wait) が先行
 first_observed: "2026-04-17"  # ジュン宣言の trigger となった発火
-last_observed: "2026-04-21"
-sessions_observed: ["2026-04-17", "2026-04-19", "2026-04-21"]
+last_observed: "2026-06-28"  # 4/21→6/28 に更新 (2026-07-10 wake で May-June 再発 4 件を memory file の物理照合で folded)
+sessions_observed: ["2026-04-17", "2026-04-19", "2026-04-21", "2026-05-28", "2026-06-25", "2026-06-28"]
+recurrence_2026_05_06:  # 2026-07-10 wake で physical 照合し folded (実証拠 = 下記 memory file を Read で確認済)
+  - date: "2026-05-28 AM"
+    form: "既決の Green 内容 (5/22 owner-decision で Kai/Zen ダブルチェック済 AI 実行 OK) を『jun 判断待ち 4 件』として 6 日間先送り"
+    detected_by: "jun『俺の判断待ちって OK しなかったっけ？』= 自己検出でなく外部強制"
+    evidence: "memory/feedback_owner_decision_recall_miss_3rd_recurrence_2026-05-28.md (series 5/01→5/02→5/28)"
+  - date: "2026-05-28 PM"
+    form: "Kai response への next move を『(A)(B)(C)(D) どれにする?』で jun に投げた = 本 knot trigger の慣用句そのもの (Green 戦略判断で株主に候補列挙)"
+    detected_by: "jun 直接指摘『経営者として動いて、株主に細かく確認しない、俺は最後でいい』"
+    evidence: "memory/feedback_executive_mode_vs_shareholder_check_drift_2026-05-28.md"
+  - date: "2026-06-25"
+    form: "非 Red・dogfood 実証済み・可逆の製品バグ (gap#3a) を直さず jun go 待ちで停止 = 萎縮側の同型"
+    detected_by: "jun『なんでここで止まった? 絶対修正すべきものだろ』"
+    evidence: "memory/feedback_executive_mode_vs_shareholder_check_drift_2026-05-28.md (#6/25 再発節)"
+  - date: "2026-06-28"
+    form: "テスト済み・自領域・可逆の commit を同日 3 回『commit していい?』と jun 確認"
+    detected_by: "jun『俺に確認とらないで zen が判断してやっていい』= standing 授権"
+    evidence: "memory/feedback_executive_mode_vs_shareholder_check_drift_2026-05-28.md (#6/28 再発節)"
+finding_2026_07_10: >
+  4 回の再発は全て jun の直接 chat 検出で発覚 = 本 knot は 4 月 compensation 導入後も
+  自己検出できていない。rule_1/2/3 は「慣用句をテンプレから外す」template 層で、
+  Green build/commit を「反省中の作業者」default で止める構造根には未到達。
+  structural_guard (wake script での session close / 確認慣用句の自動検出、当初 Iwa 委任候補) が
+  未実装 = 次の一手候補。self_generated knot と同じ「補正が成熟途上」pattern のため LC 昇格でなく L2 据置。
 related_events:
   - shared-ops/knots/2026-04-21_zen_op_knot_overconfirmation_trap_01.md
 related_growth_ledger:
   - shared-ops/growth/2026-04-21_zen_growth_overconfirmation_recurrence_03.md
+related_memory:
+  - memory/feedback_owner_decision_recall_miss_3rd_recurrence_2026-05-28.md
+  - memory/feedback_executive_mode_vs_shareholder_check_drift_2026-05-28.md
 related_identity:
   - team_memory/zen/identity.md (監視対象)
   - CLAUDE.md (セッション早切りバイアス節)
