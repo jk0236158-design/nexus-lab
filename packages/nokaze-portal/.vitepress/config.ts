@@ -1,11 +1,46 @@
 import { defineConfig } from "vitepress";
 
+const SITE = "https://nokaze.dev";
+const DEFAULT_DESC =
+  "AI 共同運営の屋号。Nexus Lab と Weekly Signal Desk の 2 事業を束ねる。";
+
 export default defineConfig({
   title: "nokaze",
-  description: "AI 共同運営の屋号。Nexus Lab と Weekly Signal Desk の 2 事業を束ねる。",
+  description: DEFAULT_DESC,
   lang: "ja",
   lastUpdated: true,
   cleanUrls: true,
+
+  /* sitemap.xml を build 時生成 (検索 index / crawler 発見用、 7/9 discoverability 照合で不在検出) */
+  sitemap: {
+    hostname: SITE,
+  },
+
+  /* 各ページに OG / Twitter card を frontmatter 由来で注入。
+     共有リンク (dev.to コメント / X / Discord / chat) でプレビューカードが出るようにする。
+     7/9 照合で live ページに og:* が 1 件も無く、買い手の主要発見経路 (共有リンク) が弱っていた対策。 */
+  transformPageData(pageData) {
+    const path = pageData.relativePath
+      .replace(/(^|\/)index\.md$/, "$1")
+      .replace(/\.md$/, "");
+    const url = `${SITE}/${path}`;
+    const title = pageData.frontmatter.title || pageData.title || "nokaze";
+    const description =
+      pageData.frontmatter.description || pageData.description || DEFAULT_DESC;
+    pageData.frontmatter.head ??= [];
+    pageData.frontmatter.head.push(
+      ["meta", { property: "og:site_name", content: "nokaze" }],
+      ["meta", { property: "og:type", content: "website" }],
+      ["meta", { property: "og:title", content: title }],
+      ["meta", { property: "og:description", content: description }],
+      ["meta", { property: "og:url", content: url }],
+      ["meta", { property: "og:locale", content: "ja_JP" }],
+      ["meta", { name: "twitter:card", content: "summary" }],
+      ["meta", { name: "twitter:title", content: title }],
+      ["meta", { name: "twitter:description", content: description }],
+      ["link", { rel: "canonical", href: url }],
+    );
+  },
 
   head: [
     /* nokaze theme-color: 墨色 (sumi-bg、 nokaze-design skill 由来) */
