@@ -1,0 +1,109 @@
+knot_id: op_knot_completion_claim_trusted_without_reconciliation
+knot_type: process
+description: >
+  実在する「完了 / 状態」の申告 (= 自己 / peer / 記憶 / test 由来) を、物理実体と照合せず
+  そのまま「確定した真」として次に進める。confabulation (= op_knot_self_generated_as_external_reality =
+  入力そのものを生成して外部現実扱い) とは別軸: ここでは申告は本物 (実在する claim) だが、その
+  真偽 (= 実体が申告と一致しているか) を確かめずに信じる。source が自分でも peer でも記憶でも test
+  でも、共通根は「宣言 face-value を照合の代わりにする」。
+  照合の対象 = 実 mtime / 実 wc -l / 本文の依頼依存性 / 成果物リンクの実在 / HTTP 200 /
+  対象 OS での実 spawn / live 1 往復 / 公開 corpus との diff。照合が取れないものは「未確定」。
+  正本 = state_integrity_contract v0 (2026-06-11、Aira/Kai/Zen 3 者共通)。この契約が既に存在する
+  = trigger では強い物理照合が「標準」になっているのに、契約成立後 (6/25 / 7/6 / 7/9) も再発 =
+  補正有効性の重要 data point。
+  外部接地 = arxiv 2606.09863 (From Confident Closing to Silent Failure、2026-06-01、HTTP 200 照合済)
+  が同型を定量化: 環境状態が否定しているのに完了主張する false success が tau2-bench 失敗の 45-48% /
+  AppWorld status 主張 trajectory の 75.8%、かつ軽量 TF-IDF の決定的 physical check が LLM judge を
+  4-8 倍上回る (= 自己申告より軽い物理照合が効く)。= 本 knot は Yuino / AI Operator Guard の
+  completion-truth 差別化命題そのものの operating 版 (自社運用が商品の dogfood evidence)。
+
+trigger:
+  completion_or_state_claim_present: true   # 「完了」「done」「all_met」「green」「fresh」「N 行」「ACK」「合意した」等の宣言が在る
+  claim_source_any: [self, peer, memory, test, peer_consensus]  # 誰の申告でも発火
+  physical_reconciliation_skipped: true     # 実 mtime / wc / HTTP 200 / live 往復 / corpus diff を取らずに信じた
+  environment_touching_claim: optional      # 実環境 (OS / 外部 binary / subprocess / network) に触れる主張は特に危険 (test 緑で捕まらない)
+
+effect:
+  false_open_closure: +0.4      # 未完を「済」とカウントし実作業が起動しない (= 詰まり) / 逆に未検証を「動く」とし壊れたまま出荷
+  downstream_error_propagation: +0.3  # 誤った状態を前提に次の判断が積み上がる
+  trust_asymmetry_drift: +0.2   # delegate / peer 合意が増えるほど「相手が green と言うなら」で素通り率が上がる
+
+compensation:
+  rule_1: "完了 / 状態の宣言 (自己・peer・記憶・test) は照合の代わりにしない。実体 (実 mtime / 実 wc -l / 本文の依頼依存性 / 成果物リンク実在 / HTTP 200) と照合してから確定扱い。照合不能は『未確定』。"
+  rule_2: "通信は 3 状態を区別 = acknowledged / in_progress / artifact_delivered。受領 (acknowledged) を『返信済み』とカウントしない。artifact_delivered (成果物が物理 file + 実リンク) のみ open 解消 (= state_integrity_contract P2)。"
+  rule_3: "実環境 (OS / 外部 binary / subprocess / 認証 / network) に触れる主張は test 緑と分けて考える。スタブ / モック検証の箇所は Zen が本物で最低 1 回 end-to-end を通すまで『未確定』。peer に投げる時点で『live 1 往復は Zen が残す』分業を明示。"
+  rule_4: "peer の完了報告 (all_met / green / 動く) は Zen 自身の『完了』宣言と同じ自己申告。Zen が独立に green 再実行 + 実環境主張は本物で 1 回照合。信頼の積み重ねで照合を省く default に戻らない。"
+  rule_5: "peer_consensus (Zen + Kai の合意) も自己申告の合算であって外部照合ではない。『二人が同意した』≠『正しい』。fire / 確定の前に外部照合を 1 本挟む (= 公開 corpus との diff / 外部リサーチ / 現地確認)。7/9 = Zen draft + Kai green が自社公開 corpus と diff せず near-duplicate を fire 寸前まで収束。"
+  rule_6: "時刻・数字は感覚値で転記しない。$(date) / 実 wc / 実 bytes を機械に埋めさせる。宣言時刻より実 mtime を正とする (= 転記も空白を narrative で埋める同根)。"
+  structural_guard: "watchdog / Active Work tracker の open 解消条件を『artifact_delivered 系 status のみ』に固定 (Kai 領域)。surface 鮮度を registry integrity に統合し自己申告が古びても物理で気づける (Aira 領域)。turn-end hook で偽ツール結果ブロック / 未照合完了 claim を検出 (Zen 領域、confab knot と共有)。"
+
+hardness: L2  # 複数 session + 複数 source (self/peer/memory/test) で再現、契約成立後も再発。変えると詰まり + 誤出荷で損害大
+activation: high
+lc_candidate: true  # 既に 3 者共通契約 (state_integrity_contract v0) が存在 = 準憲法級。契約後の再発が止まれば L2 据置、止まらねば LC 昇格 (= confab knot と同じ判定枠)
+observed_count: 6
+first_observed: "2026-06-11"
+last_observed: "2026-07-09"
+sessions_observed: ["2026-06-11", "2026-06-25", "2026-07-06", "2026-07-09"]
+
+observations:
+  - date: "2026-06-11"
+    source: self (Zen)
+    claim: "記憶『Polar 審査待ち』 / 記載時刻『12:05』"
+    physical: "13 日前に完了済 / 実 mtime『08:54』"
+    result: "古い記憶の鵜呑み + 時刻捏造 (jun 指摘で発覚)"
+    evidence: "~/.shared-ops/state_integrity_contract_v0_2026-06-11.md (問題表 3 行目)"
+  - date: "2026-06-11"
+    source: peer (Kai)
+    claim: "substantive_response を返した"
+    physical: "本文は依頼非依存の定型文 (= 中身ゼロ)"
+    result: "受領が『返信済み』とカウントされ実作業が起動せず (= 同日 5 件詰まり)"
+    evidence: "state_integrity_contract_v0 (問題表 1 行目) + P2 語彙は在るのに watchdog が区別を使っていない"
+  - date: "2026-06-11"
+    source: peer (Aira surface)
+    claim: "generated_at = 今日 (fresh)"
+    physical: "Today = 15 日前 (stale)"
+    result: "OS surface として壊れた状態が『正常』に見える"
+    evidence: "state_integrity_contract_v0 (問題表 2 行目)"
+  - date: "2026-06-25"
+    source: peer (Iwa)
+    claim: "本物 claude は Windows native 起動で問題なし (all_met、test 緑 / tsc 0 / grep 0 付き)"
+    physical: "実機で本物 claude を 1 往復 → spawn claude ENOENT で全く動かず (node 25 CVE-2024-27980 の .cmd shim shell:false 拒否)。Iwa はスタブでしか検証していなかった"
+    result: "test 緑は実環境主張を保証しない。Zen が本物で照合し原因特定 → 直し (stdin + win32 shell) を live proven → Iwa 適用 → Zen 再 live"
+    evidence: "memory feedback_peer_allmet_is_self_report_verify_physically_2026-06-25 + board 2026-06-25_zen_jun_yuino_wave3_claude_code_chat_DONE_live_verified_windows.md"
+  - date: "2026-07-06"
+    source: self (Zen) + peer (Kai)
+    claim: "board / memory に刻んだ時刻 (感覚値で転記)"
+    physical: "date を取った 4 分後でも転記の瞬間に感覚値を書き、実 mtime とズレ (Zen 5 回 + Kai 1 回)"
+    result: "宣言時刻 ≠ 実 mtime。転記 = 空白を narrative で埋める confab と同根"
+    evidence: "memory feedback_timestamp_embed_dont_transcribe_2026-07-06"
+  - date: "2026-07-09"
+    source: peer_consensus (Zen draft + Kai green)
+    claim: "confession draft は fire 可 (Zen 04:50 draft + Kai 05:47 same-version green で収束)"
+    physical: "fire 前に公開 corpus と cross-check → 7/7 公開記事 -3pbm の near-duplicate (同一 incident / 同一 4 則 / 同一 arxiv 引用 / 同一数値) と判明"
+    result: "peer 合意も外部照合ではない。物理 corpus diff で hold-fire に転換、echo-chamber を回避"
+    evidence: "board 2026-07-09_zen_kai_response_confession_draft_near_duplicate_of_3pbm_hold_fire.md + zen_status 2026-07-09 03:xx entry + memory feedback_peer_consensus_echo_chamber_ground_in_external_2026-07-01"
+
+external_anchor:
+  - id: "arxiv 2606.09863"
+    title: "From Confident Closing to Silent Failure: Characterizing False Success in LLM Agents"
+    date: "2026-06-01"
+    url: "https://arxiv.org/abs/2606.09863"
+    verified: "2026-07-02 WebFetch HTTP 200 (Zen 物理照合)"
+    numbers: "false success = tau2-bench 失敗の 45-48% / AppWorld status 主張 trajectory の 75.8%。軽量 TF-IDF の決定的 physical check が LLM judge を 4-8 倍上回る"
+    relevance: "本 knot の外部定量化。self-report より軽い物理照合が効く = compensation の根拠"
+
+distinction_from_related:
+  - "op_knot_self_generated_as_external_reality (confabulation): 入力そのものを生成して外部現実扱い (= source-monitoring 失敗、referent が存在しない)。本 knot: 申告は本物だが真偽照合を skip (= referent は在るのに参照しない)。エッジで重なる (6/11 時刻捏造) が中心は別 = 本 knot の固有貢献は cross-source 軸 (self/peer/memory/test/consensus の完了 claim を横断で物理照合)。"
+  - "op_knot_overconfirmation_trap: Green 範囲で jun に過剰確認する (= 過剰 confirm)。本 knot は逆 = 物理照合を過少にして確定してしまう (= 過少 verify)。"
+  - "op_knot_external_diagnosis_short_circuit: 物理確認より先に技術診断へ飛ぶ。本 knot は完了/状態の真偽照合を skip する層で隣接。"
+
+related_contract:
+  - "~/.shared-ops/state_integrity_contract_v0_2026-06-11.md (Aira/Kai/Zen 3 者共通、本 knot の正本 doc)"
+related_memory:
+  - "feedback_peer_allmet_is_self_report_verify_physically_2026-06-25"
+  - "feedback_timestamp_embed_dont_transcribe_2026-07-06"
+  - "feedback_peer_consensus_echo_chamber_ground_in_external_2026-07-01"
+  - "feedback_confabulation_filling_tool_blank_with_narrative_2026-06-12"
+  - "reference_arxiv_false_success_llm_agents_2606_09863"
+related_product:
+  - "AI Operator Guard § 7 (knot 蓄積 + 完了の物理 evidence) / Yuino completion-truth 差別化 = 本 knot の商品化面。自社運用が dogfood evidence。"
