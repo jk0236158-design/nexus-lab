@@ -113,7 +113,7 @@ if [[ -n "$SCAN_TMP" ]]; then
   # (2) Yuino review 板の最新 mtime (= 下流 Yuino reviewer block と同一 find)
   ( find "$BOARD" -name "*_zen_kai_yuino_review_v*_*.md" -type f -printf '%T@\n' 2>/dev/null | sort -n | tail -1 > "$SCAN_TMP/yuino" ) &
   # (3) wake_acceptance: 直近 60 分に触られた file 数 (= 下流と同一 find)
-  WAKE_ACCEPTANCE_PATHS="$HOME/nexus-lab/docs/rules $HOME/nexus-lab/scripts $HOME/Desktop/nokaze/operations $HOME/.shared-ops/decisions $HOME/Desktop/nokaze-aira/src"
+  WAKE_ACCEPTANCE_PATHS="$HOME/nexus-lab/docs/rules $HOME/nexus-lab/scripts $HOME/nexus-lab/products $HOME/Desktop/nokaze/operations $HOME/.shared-ops/decisions $HOME/Desktop/nokaze-aira/src"
   WAKE_EXISTING=()
   for p in $WAKE_ACCEPTANCE_PATHS; do [[ -d "$p" ]] && WAKE_EXISTING+=("$p"); done
   if [[ ${#WAKE_EXISTING[@]} -gt 0 ]]; then
