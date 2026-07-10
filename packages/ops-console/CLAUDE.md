@@ -17,16 +17,6 @@ Yuino の Judgment Amplification core value を embody する **内部 dogfood U
 - Zod 3.25 (validation)
 - Vitest 4 (test)
 
-## Working Directory
-
-- `src/app/` — Next.js App Router ページ + API routes
-- `src/components/` — UI components (shadcn + base-ui/react)
-- `src/lib/` — 共通 utility / DB / auth / Hono router
-- `src/middleware.ts` — Next.js middleware
-- `src/styles/` — Tailwind config + global CSS
-- `tests/` — Vitest test
-- `public/` — static assets
-
 ## 規約
 
 ### コード共通
@@ -54,19 +44,6 @@ Yuino の Judgment Amplification core value を embody する **内部 dogfood U
 - Vitest run、 全 pass が merge 条件
 - API route + middleware は HTTP fetch test 込み
 - UI component は @testing-library/react form
-
-## Commands
-
-```bash
-cd packages/ops-console
-
-npm run dev       # http://127.0.0.1:3100/ で開発 server
-npm run build     # production build (Next.js 16)
-npm run start     # production server
-npm run lint      # ESLint
-npm run test      # Vitest run
-npm run test:watch # Vitest watch mode
-```
 
 ## boundary
 
