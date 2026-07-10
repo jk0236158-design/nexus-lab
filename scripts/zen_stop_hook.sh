@@ -272,7 +272,8 @@ fi
 #   しているか」を物理照合し、 参照が無い (= 実応答が物理に無い) 板の ID だけを残す。
 #   = ID が根拠。 ID が無ければ未返事は 0 として扱い、 新規タスクを想像させない。
 TODAY=$(date +%Y-%m-%d)
-EXCLUDE_PATTERN='^(response_required|requires_response): no|^# Subject: autonomous-act response:|^# Subject: ACK only|^status: ack_only'
+# 2026-07-11: frontmatter が dash list 形式 (- response_required: no) の板を読めず誤検知していた (同日 2 回発火) → ^(- )? を許容
+EXCLUDE_PATTERN='^(- )?(response_required|requires_response): no|^# Subject: autonomous-act response:|^# Subject: ACK only|^status: ack_only'
 UNRESPONDED_IDS=""
 if [[ -d "$BOARD" ]]; then
   # auto_ack file (= Kai watcher の自動 failure notice、 私の response 不要) は file 名 pattern で除外
