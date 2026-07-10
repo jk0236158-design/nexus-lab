@@ -95,6 +95,13 @@ run_test \
     '{"tool_name":"Edit","tool_input":{"file_path":"/c/Users/jk023/nexus-lab/package.json","old_string":"test","new_string":"test2"}}' \
     0
 
+# --- 追加 case 8: Claude Code session scratchpad (Temp\claude、バックスラッシュ形式) → ALLOW ---
+echo "[追加] case 8: session scratchpad (Temp\\claude) への Write → allow"
+run_test \
+    "session scratchpad Write allow (backslash Windows path)" \
+    '{"tool_name":"Write","tool_input":{"file_path":"C:\\Users\\jk023\\AppData\\Local\\Temp\\claude\\C--Users-jk023-nexus-lab\\some-session\\scratchpad\\scan.js","content":"test"}}' \
+    0
+
 # --- 結果サマリ ---
 echo ""
 echo "=== 結果サマリ ==="

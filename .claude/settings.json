@@ -14,18 +14,30 @@
     ]
   },
   "hooks": {
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'export HOME=/c/Users/jk023; bash /c/Users/jk023/nexus-lab/scripts/zen_board_unread_notify.sh'",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
     "PreToolUse": [
       {
         "matcher": "Write|Edit|NotebookEdit",
         "hooks": [
           {
             "type": "command",
-            "command": "bash -lc 'export HOME=/c/Users/jk023; bash /c/Users/jk023/nexus-lab/scripts/subagent_write_gate.sh'",
+            "command": "bash -c 'export HOME=/c/Users/jk023; bash /c/Users/jk023/nexus-lab/scripts/subagent_write_gate.sh'",
             "timeout": 10
           },
           {
             "type": "command",
-            "command": "bash -lc 'export HOME=/c/Users/jk023; bash /c/Users/jk023/nexus-lab/scripts/zen_semantic_check_hook.sh'",
+            "command": "bash -c 'export HOME=/c/Users/jk023; bash /c/Users/jk023/nexus-lab/scripts/zen_semantic_check_hook.sh'",
             "timeout": 15
           }
         ]
@@ -35,7 +47,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash -lc 'export HOME=/c/Users/jk023; bash /c/Users/jk023/nexus-lab/scripts/zen_bash_audit_advisory.sh'",
+            "command": "bash -c 'export HOME=/c/Users/jk023; bash /c/Users/jk023/nexus-lab/scripts/zen_bash_audit_advisory.sh'",
             "timeout": 5
           }
         ]
@@ -47,7 +59,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash -lc 'export HOME=/c/Users/jk023; /c/Users/jk023/nexus-lab/scripts/zen_session_start_priming.sh'",
+            "command": "bash -c 'export HOME=/c/Users/jk023; /c/Users/jk023/nexus-lab/scripts/zen_session_start_priming.sh'",
             "timeout": 5,
             "statusMessage": "Zen session priming..."
           }
@@ -60,8 +72,14 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash -lc 'export HOME=/c/Users/jk023; bash /c/Users/jk023/nexus-lab/scripts/zen_stop_hook.sh'",
-            "timeout": 10
+            "command": "bash -c 'export HOME=/c/Users/jk023; bash /c/Users/jk023/nexus-lab/scripts/zen_stop_hook.sh'",
+            "timeout": 30
+          },
+          {
+            "type": "command",
+            "command": "bash -c 'touch /c/Users/jk023/.shared-ops/_daemon/zen_session.lock 2>/dev/null || true'",
+            "timeout": 5,
+            "statusMessage": "Zen session lock heartbeat"
           }
         ]
       }
@@ -72,7 +90,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash -lc 'export HOME=/c/Users/jk023; bash /c/Users/jk023/nexus-lab/scripts/zen_posttooluse_outcome.sh'",
+            "command": "bash -c 'export HOME=/c/Users/jk023; bash /c/Users/jk023/nexus-lab/scripts/zen_posttooluse_outcome.sh'",
             "timeout": 5
           }
         ]
@@ -84,7 +102,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash -lc 'export HOME=/c/Users/jk023; bash /c/Users/jk023/nexus-lab/scripts/zen_board_filechanged.sh'",
+            "command": "bash -c 'export HOME=/c/Users/jk023; bash /c/Users/jk023/nexus-lab/scripts/zen_board_filechanged.sh'",
             "timeout": 5
           }
         ]
@@ -96,7 +114,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash -lc 'export HOME=/c/Users/jk023; bash /c/Users/jk023/nexus-lab/scripts/zen_precompact_snapshot.sh'",
+            "command": "bash -c 'export HOME=/c/Users/jk023; bash /c/Users/jk023/nexus-lab/scripts/zen_precompact_snapshot.sh'",
             "timeout": 10
           }
         ]

@@ -18,6 +18,11 @@
 
 set -uo pipefail
 
+# 2026-07-11 P1-1 修正 (Oto、 Kagami QA): 旧 -lc 配線では /etc/profile.d/lang.sh が LANG=ja_JP.UTF-8 を
+#   設定していた。 -c 化で locale が C に落ち、 多バイト bracket / word boundary の判定が flip した
+#   (30 corpus 中 5 件 = inbound×4 + english×1)。 profile 非依存で script 冒頭に明示 = 単体実行でも同じ挙動。
+export LANG=ja_JP.UTF-8 LC_ALL=ja_JP.UTF-8
+
 input_file=""
 
 while [[ $# -gt 0 ]]; do
@@ -93,6 +98,12 @@ NAMING_EXCLUDE_PATTERNS=(
 
 # pattern が match した行を抽出、 exclude pattern に該当する行は red にしない
 # Note: bash glob match (case ... esac) を使用して Git Bash で grep -q SIGPIPE の job control noise 回避
+# 2026-07-11 高速化 (Oto): 結合 alternation で 1 回 prefilter、 hit なし (通常 case) は
+#   per-pattern の echo|grep 2 プロセス spawn × 12 pattern を全 skip。 hit 時のみ従来 loop = 判定不変。
+_red_joined=$(IFS='|'; printf '%s' "${RED_PATTERNS[*]}")
+if ! echo "$content" | grep -qiE "$_red_joined" 2>/dev/null; then
+  RED_PATTERNS=()
+fi
 for pattern in "${RED_PATTERNS[@]}"; do
   matched_lines=$(echo "$content" | grep -niE "$pattern" 2>/dev/null || true)
   if [[ -z "$matched_lines" ]]; then

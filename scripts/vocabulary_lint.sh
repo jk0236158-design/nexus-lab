@@ -16,6 +16,11 @@
 
 set -uo pipefail
 
+# 2026-07-11 P1-1 修正 (Oto、 Kagami QA): 旧 -lc 配線では /etc/profile.d/lang.sh が LANG=ja_JP.UTF-8 を
+#   設定していた。 -c 化で locale が C に落ち、 多バイト bracket / word boundary の判定が flip した
+#   (30 corpus 中 5 件 = inbound×4 + english×1)。 profile 非依存で script 冒頭に明示 = 単体実行でも同じ挙動。
+export LANG=ja_JP.UTF-8 LC_ALL=ja_JP.UTF-8
+
 # 検出対象英単語 list (memory feedback_excessive_english_mixing.md substitute list 由来、 case-insensitive)
 # 固有名詞 (Next.js / Hono / Aira / Yuino / Pattern C 等) は除外、 動詞 / 副詞 / 抽象名詞のみ
 INTERNAL_VOCAB=(
@@ -297,6 +302,10 @@ check_reactor_phrases() {
   local file="$1"
   local hits=0
   local phrase line
+  # 2026-07-11 高速化 (Oto): 結合 alternation で 1 回 prefilter、 hit なし (通常 case) は
+  #   per-pattern grep spawn (= MSYS で 1 spawn ~100ms) を全 skip。 hit 時のみ従来 loop = 判定不変。
+  local _joined; _joined=$(IFS='|'; printf '%s' "${REACTOR_PHRASES[*]}")
+  grep -qE "$_joined" "$file" 2>/dev/null || return 0
   for phrase in "${REACTOR_PHRASES[@]}"; do
     if grep -qE "$phrase" "$file" 2>/dev/null; then
       line=$(grep -nE "$phrase" "$file" 2>/dev/null | head -1)
@@ -319,6 +328,9 @@ check_human_day_narrative() {
   local file="$1"
   local hits=0
   local pattern line
+  # 2026-07-11 高速化 (Oto): 結合 prefilter、 hit 時のみ従来 loop = 判定不変
+  local _joined; _joined=$(IFS='|'; printf '%s' "${HUMAN_DAY_NARRATIVE_PATTERNS[*]}")
+  grep -qE "$_joined" "$file" 2>/dev/null || return 0
   for pattern in "${HUMAN_DAY_NARRATIVE_PATTERNS[@]}"; do
     if grep -qE "$pattern" "$file" 2>/dev/null; then
       line=$(grep -nE "$pattern" "$file" 2>/dev/null | head -1)
@@ -341,6 +353,9 @@ check_jun_time_pressure_fabrication() {
   local file="$1"
   local hits=0
   local pattern line
+  # 2026-07-11 高速化 (Oto): 結合 prefilter、 hit 時のみ従来 loop = 判定不変
+  local _joined; _joined=$(IFS='|'; printf '%s' "${JUN_TIME_PRESSURE_FABRICATION_PATTERNS[*]}")
+  grep -qE "$_joined" "$file" 2>/dev/null || return 0
   for pattern in "${JUN_TIME_PRESSURE_FABRICATION_PATTERNS[@]}"; do
     if grep -qE "$pattern" "$file" 2>/dev/null; then
       line=$(grep -nE "$pattern" "$file" 2>/dev/null | head -1)
@@ -363,6 +378,9 @@ check_tomorrow_deferral() {
   local file="$1"
   local hits=0
   local pattern line
+  # 2026-07-11 高速化 (Oto): 結合 prefilter、 hit 時のみ従来 loop = 判定不変
+  local _joined; _joined=$(IFS='|'; printf '%s' "${TOMORROW_DEFERRAL_PATTERNS[*]}")
+  grep -qE "$_joined" "$file" 2>/dev/null || return 0
   for pattern in "${TOMORROW_DEFERRAL_PATTERNS[@]}"; do
     if grep -qE "$pattern" "$file" 2>/dev/null; then
       line=$(grep -nE "$pattern" "$file" 2>/dev/null | head -1)
@@ -385,6 +403,9 @@ check_overclaim() {
   local file="$1"
   local hits=0
   local pattern line
+  # 2026-07-11 高速化 (Oto): 結合 prefilter、 hit 時のみ従来 loop = 判定不変
+  local _joined; _joined=$(IFS='|'; printf '%s' "${OVERCLAIM_PATTERNS[*]}")
+  grep -qE "$_joined" "$file" 2>/dev/null || return 0
   for pattern in "${OVERCLAIM_PATTERNS[@]}"; do
     if grep -qE "$pattern" "$file" 2>/dev/null; then
       line=$(grep -nE "$pattern" "$file" 2>/dev/null | head -1)
@@ -423,16 +444,28 @@ flush_paragraph() {
   paragraph_idx=$((paragraph_idx + 1))
   local count=0
   local matched=()
-  for word in "${INTERNAL_VOCAB[@]}"; do
-    # case-insensitive word boundary match
-    local n
-    n=$(echo "$current_paragraph" | grep -oiE "\\b${word}\\b" 2>/dev/null | wc -l | tr -d ' ' || true)
-    n=${n:-0}
-    if [[ "$n" -gt 0 ]]; then
-      count=$((count + n))
-      matched+=("${word}(${n})")
-    fi
-  done
+  # 2026-07-11 高速化 (Oto): 旧 form は単語ごとに echo|grep|wc|tr の 4 プロセスを spawn
+  #   (= 140 語 × 4 spawn、 MSYS の spawn は 1 回 ~100ms で hook timeout の主因、 実測 93 秒)。
+  #   同じ判定 (case-insensitive word boundary の出現数) を gawk 1 プロセスで一括算出する。
+  #   \y は gawk の word boundary (= GNU grep の \b と同じ)、 INTERNAL_VOCAB は全て ASCII なので locale 非依存。
+  local awk_out
+  awk_out=$(VOCAB_WORDS=$(printf '%s\n' "${INTERNAL_VOCAB[@]}") awk -v IGNORECASE=1 '
+    BEGIN { nw = split(ENVIRON["VOCAB_WORDS"], w, "\n") }
+    { text = text $0 "\n" }
+    END {
+      for (i = 1; i <= nw; i++) {
+        if (w[i] == "") continue
+        t = text
+        n = gsub("\\y" w[i] "\\y", "", t)
+        if (n > 0) print w[i] "|" n
+      }
+    }' <<<"$current_paragraph" 2>/dev/null || true)
+  local wname wcount
+  while IFS='|' read -r wname wcount; do
+    [[ -z "$wname" || -z "$wcount" ]] && continue
+    count=$((count + wcount))
+    matched+=("${wname}(${wcount})")
+  done <<<"$awk_out"
 
   if [[ "$count" -ge "$THRESHOLD" ]]; then
     red_paragraphs=$((red_paragraphs + 1))

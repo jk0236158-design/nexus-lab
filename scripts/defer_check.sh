@@ -12,6 +12,11 @@
 
 set -uo pipefail
 
+# 2026-07-11 P1-1 修正 (Oto、 Kagami QA): 旧 -lc 配線では /etc/profile.d/lang.sh が LANG=ja_JP.UTF-8 を
+#   設定していた。 -c 化で locale が C に落ち、 多バイト bracket / word boundary の判定が flip した
+#   (30 corpus 中 5 件 = inbound×4 + english×1)。 profile 非依存で script 冒頭に明示 = 単体実行でも同じ挙動。
+export LANG=ja_JP.UTF-8 LC_ALL=ja_JP.UTF-8
+
 DEFER_PHRASES=(
   "明日に回す"
   "明日やる"
@@ -76,15 +81,20 @@ echo "════════════════════════�
 echo "defer_check: ${input_file}"
 echo "═══════════════════════════════════════════════"
 
-for phrase in "${DEFER_PHRASES[@]}"; do
-  matches=$(echo "$content" | grep -oiE "$phrase" 2>/dev/null | wc -l | tr -d ' ' || true)
-  matches=${matches:-0}
-  if [[ "$matches" -gt 0 ]]; then
-    red_count=$((red_count + matches))
-    findings+=("${phrase}(${matches})")
-    echo "  🔴 deferred 表現 「${phrase}」 ${matches} 件"
-  fi
-done
+# 2026-07-11 高速化 (Oto): 結合 alternation で 1 回 prefilter、 hit なし (通常 case) は
+#   per-phrase の echo|grep|wc|tr 4 プロセス spawn × 19 phrase を全 skip。 hit 時のみ従来 loop = 判定不変。
+_joined=$(IFS='|'; printf '%s' "${DEFER_PHRASES[*]}")
+if echo "$content" | grep -qiE "$_joined" 2>/dev/null; then
+  for phrase in "${DEFER_PHRASES[@]}"; do
+    matches=$(echo "$content" | grep -oiE "$phrase" 2>/dev/null | wc -l | tr -d ' ' || true)
+    matches=${matches:-0}
+    if [[ "$matches" -gt 0 ]]; then
+      red_count=$((red_count + matches))
+      findings+=("${phrase}(${matches})")
+      echo "  🔴 deferred 表現 「${phrase}」 ${matches} 件"
+    fi
+  done
+fi
 
 # evidence check: defer narrative + 着手日 / deadline / blocker 物理 evidence
 has_evidence=false

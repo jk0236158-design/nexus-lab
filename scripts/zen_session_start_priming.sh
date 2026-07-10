@@ -24,6 +24,11 @@
 
 set -uo pipefail
 
+# 2026-07-11 P1-1 修正 (Oto、 Kagami QA): 旧 -lc 配線では /etc/profile.d/lang.sh が LANG=ja_JP.UTF-8 を
+#   設定していた。 -c 化で locale が C に落ち、 多バイト bracket / word boundary の判定が flip した
+#   (30 corpus 中 5 件 = inbound×4 + english×1)。 profile 非依存で script 冒頭に明示 = 単体実行でも同じ挙動。
+export LANG=ja_JP.UTF-8 LC_ALL=ja_JP.UTF-8
+
 SHARED_OPS="$HOME/.shared-ops"
 INBOX_DIR="$SHARED_OPS/inbox"
 WAKE_QUEUE_DIR="$SHARED_OPS/wake-queue/zen"

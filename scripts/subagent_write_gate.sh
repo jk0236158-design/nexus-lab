@@ -26,6 +26,7 @@
 #   /c/Users/jk023/Nexus.Lab.Zen   (Zenn 記事 repo、 5/08 追加)
 #   /c/Users/jk023/Desktop/broadcast-os  (5/11 追加、 nokaze 4 layer ecosystem の broadcast layer、 jun + Kai + Zen 3 者合意 write OK、 5/04 evening 確定)
 #   /c/Users/jk023/.claude/skills  (5/22 追加、 Zen 側 skill draft / promoted 保管 path、 zen_role 5/22 skill 軸 articulate と整合、 事後 Kai audit へ)
+#   /c/Users/jk023/AppData/Local/Temp/claude  (7/11 追加、 Claude Code が session ごとに作る一時 scratchpad、 harness 自身の作業領域で deny する理由がない、 /checkup 診断で実ブロック検出)
 #
 # 明示 deny (Red 境界):
 #   project-nia  (C:\Users\jk023\Desktop\project-nia)
@@ -35,6 +36,11 @@
 #   nokaze-aira  (C:\Users\jk023\Desktop\nokaze-aira) — Kai-side Aira 正本、 readonly 参照のみ
 
 set -uo pipefail
+
+# 2026-07-11 P1-1 修正 (Oto、 Kagami QA): 旧 -lc 配線では /etc/profile.d/lang.sh が LANG=ja_JP.UTF-8 を
+#   設定していた。 -c 化で locale が C に落ち、 多バイト bracket / word boundary の判定が flip した
+#   (30 corpus 中 5 件 = inbound×4 + english×1)。 profile 非依存で script 冒頭に明示 = 単体実行でも同じ挙動。
+export LANG=ja_JP.UTF-8 LC_ALL=ja_JP.UTF-8
 
 # --- stdin から JSON を読み取る ---
 INPUT=$(cat)
@@ -147,6 +153,7 @@ ALLOWED_PREFIXES=(
     "/c/Users/jk023/Desktop/broadcast-os"
     "/c/Users/jk023/Desktop/nokaze"
     "/c/Users/jk023/.claude/skills"
+    "/c/Users/jk023/AppData/Local/Temp/claude"
 )
 
 for allowed_prefix in "${ALLOWED_PREFIXES[@]}"; do
