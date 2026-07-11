@@ -35,16 +35,23 @@ STATE_CACHE="$HOME/.shared-ops/_daemon/zen_board_dirstate_cache"
 # marker (zen_board_last_check) は「Zen 本人が board を見た時刻」の正本。subagent /
 # QA session がこの script を発火させて marker を進めると、Zen main session への
 # 新着通知が silent に消える (7/11 04:25 実測 leak)。mutate + 通知は main のみ。
-# 判別は二重 (fail toward skip): stdin の subagent 限定 field / subagents path。
-# 偽 skip の害 = その turn だけ通知が出ない (marker 不変なので次 turn で再検出)。
-GUARD_LOG="$HOME/.shared-ops/_daemon/zen_session_guard_skips.log"
+# Kai cross-review RETURN 対応 (P1 + P2-2): fail-closed 反転 = main の証拠が構造的に
+# 揃った時だけ続行。判別は共通 helper で decoded top-level field のみ (prompt 本文の
+# 字面に反応しない)。空/壊れた stdin・python 不在は skip = 通知 1 turn 遅延のみ
+# (marker 不変なので次 turn で再検出)。
+GUARD_LOG="${ZEN_GUARD_LOG:-$HOME/.shared-ops/_daemon/zen_session_guard_skips.log}"
+IDENTITY_CHECKER="${ZEN_IDENTITY_CHECKER:-/c/Users/jk023/nexus-lab/scripts/zen_session_identity_check.py}"
 HOOK_INPUT=$(cat 2>/dev/null || true)
-if [[ "$HOOK_INPUT" == *'"agent_id"'* ]]; then
-  echo "$(date +%Y-%m-%dT%H:%M:%S) skip=board_notify reason=agent_id_present" >> "$GUARD_LOG" 2>/dev/null
-  exit 0
+GUARD_PY=""
+if command -v python3 &>/dev/null; then GUARD_PY="python3";
+elif command -v python &>/dev/null; then GUARD_PY="python"; fi
+if [ -z "$GUARD_PY" ]; then
+  SESSION_VERDICT="skip:no_python_fail_closed"
+else
+  SESSION_VERDICT=$(printf '%s' "$HOOK_INPUT" | "$GUARD_PY" "$IDENTITY_CHECKER" 2>/dev/null || echo "skip:checker_failed")
 fi
-if [[ "$HOOK_INPUT" == *'/subagents/'* || "$HOOK_INPUT" == *'\\subagents\\'* ]]; then
-  echo "$(date +%Y-%m-%dT%H:%M:%S) skip=board_notify reason=subagents_transcript_path" >> "$GUARD_LOG" 2>/dev/null
+if [ "$SESSION_VERDICT" != "main" ]; then
+  { echo "$(date +%Y-%m-%dT%H:%M:%S) skip=board_notify reason=${SESSION_VERDICT#skip:}" >> "$GUARD_LOG"; } 2>/dev/null || true
   exit 0
 fi
 
