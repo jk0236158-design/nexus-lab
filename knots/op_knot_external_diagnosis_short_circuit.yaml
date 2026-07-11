@@ -6,14 +6,20 @@ description: >
   確認バイアスも含む。2026-04-20 に Claude Design export の mojibake 誤診断 (UTF-8 を CP932 と
   誤判定し iconv 提案、走らせていたら破壊) で発火、diary 反省。1 日後の 2026-04-21 朝に同型再発
   (WebFetch summary を信じて GitHub リンクを誤読 = 「死リンク」誤報)。
+  2026-06 に形態が変異して 2 回再発: ①計器の盲点 (read-only public API が login-gated signal を
+  隠すことを検証せず「reach 0 / blocked」と 5 日間誤結論 = 偽陰性) ②要約モデルの捏造
+  (WebFetch 散文要約が存在しない返信を生成、「返信が来た」= 偽陽性)。偽陰性と偽陽性の
+  双方向で発火する knot と確定。
 
 trigger:
   external_summary_present: true
   direct_source_read: false  # or read with confirmation bias
   diagnosis_speed_pressure: high
+  instrument_coverage_unquestioned: true  # 6/22 追加: 計器がその信号を見られる面か問わない
 
 effect:
   false_positive_diagnosis_rate: +0.3
+  false_negative_state_rate: +0.3  # 6/22: 実在する warm 反応を「0」と誤報
   trust_damage_in_report: high
   rework_required: true
 
@@ -21,15 +27,49 @@ compensation:
   rule_1: "外部 summary は引用禁止、必ず原典 (WebFetch raw markdown / Read tool / file 直接) で再確認"
   rule_2: "Read tool 使用時、推測を立てる前に文字列を逐語確認 (検索文字列を切り出して再度 grep)"
   rule_3: "誤推測の自己訂正は Growth Ledger に entry 化、再発カウント"
-  structural_guard: "言語的原則だけで止まらない、peer check / 二重確認の物理ガードが必要"
+  rule_4: "報告前に計器 coverage を 1 問: その面は未ログイン API か login 実 session か、隠される signal は何か (6/22 folded)"
+  rule_5: "否定主張 (0/無い/blocked) も肯定主張 (返信が来た/engaged) も、散文要約でなく構造化シグナル (raw JSON / live DOM の node 数) で裏取りしてから次の行動 (6/26 folded)"
+  structural_guard: "state_integrity_contract v0 (2026-06-11、Aira/Kai/Zen 3 者共通契約) = 自己申告・外部 signal を物理実体と照合してから次に進める、が物理化済み。4 月時点の『peer check / 二重確認の物理ガードが必要』はこれで実装された"
 
-hardness: L1  # 2 回観測、再現性あり、限定的補正
-activation: high
-observed_count: 2
+hardness: L2  # 4/21 時点 L1 (2 回観測) → 7/11 更新: 発火 4 回 + 形態変異 (mojibake 誤診→WebFetch 誤読→計器盲点→要約捏造) で再現性は L2 相当。ただし補正は 7/10 に 2 回連続で事前自己検出に到達 (下記 correction_maturity) = LC 昇格候補として Hoshi 判定待ち、確定までは L2
+activation: medium  # 7/11 更新: high→medium。7/10 の 2 件で補正が事前に働いた実績を反映、ゼロ化ではない
+observed_count: 4  # 発火のみカウント: 4/20 + 4/21 (April) + 6/22 偽陰性 + 6/26 偽陽性。7/10 の 2 件は非発火 (補正成功) なので数えない
 first_observed: "2026-04-20"
-last_observed: "2026-04-21"
-sessions_observed: ["2026-04-20", "2026-04-21"]
+last_observed: "2026-06-26"  # 4/21→6/26 に更新 (2026-07-11 wake で 5-7 月分を memory file + zen_status の物理照合で folded)
+sessions_observed: ["2026-04-20", "2026-04-21", "2026-06-22", "2026-06-26"]
+recurrence_2026_06:  # 2026-07-11 wake で physical 照合し folded (実証拠 = memory file を Read で逐語確認済)
+  - date: "2026-06-22"
+    form: "dev.to reach を read-only public article API のみで t0-t4 計 5 日間計測し「reactions 0 / breadth 0 / blocked」と誤結論。実際は login-gated 面 (comment-reaction / follower / mutual-follow) に relevant builder クラスタが warm に繋がっていた + 「blocked」も stale な自己申告の引き継ぎで live 再確認せず = 偽陰性の二重発火"
+    detected_by: "計器を login 実 session に変えた瞬間に両方反証 = 自己検出 (ただし 5 日遅れ)"
+    evidence: "memory/feedback_measure_reach_with_logged_in_surface_not_public_api_2026-06-22.md"
+  - date: "2026-06-26"
+    form: "WebFetch (URL→小型モデル要約) が存在しない Nazar 返信を捏造 (『Thank you for the thoughtful push-back here...』+ ヘッジ付き)。信じていれば幻の返信への substantive reply を量産する重大ズレ = 偽陽性"
+    detected_by: "live DOM 裏取り (Top comments (1) = 自コメントのみ・nested 0) で投稿前に検出 = 自己検出 (行動前)"
+    evidence: "memory/feedback_measure_reach_with_logged_in_surface_not_public_api_2026-06-22.md (6/26 追記節)"
+correction_maturity_2026_07_10:  # 非発火の観測 = 補正が事前に働いた実例 2 件 (研究上の対照 data)
+  - date: "2026-07-10 03:10 wake"
+    form: "WebFetch 要約が comment timestamp を取り違え 2 通に二重表示 → 散文を信じず raw JSON 直読みで真偽確定 (Tom 3aoh9 が fresh 手番と正しく特定、返信 fire に成功)"
+    evidence: "status/zen_status.md 2026-07-10 03:10 エントリ"
+  - date: "2026-07-10 17:08 wake"
+    form: "public API/WebFetch が「armorer 3alkb 私待ち」と誤報 → logged-in DOM で自返信済み leaf と確定、二重返信を事前回避"
+    evidence: "status/zen_status.md 2026-07-10 17:08 エントリ"
+finding_2026_07_11: >
+  overconfirmation_trap (7/10 更新) と対照的な補正軌跡。overconfirmation は 4 回の再発が
+  全て jun の直接 chat 検出 = 外部強制頼みで自己検出ゼロ。本 knot は 6/22 (5 日遅れ自己検出)
+  → 6/26 (行動前自己検出) → 7/10×2 (事前補正 = 発火せず) と自己検出が段階的に前倒しされた。
+  差の仮説 = 本 knot の補正は state_integrity_contract v0 (6/11) + 「散文でなく構造化シグナル」
+  という物理照合の手順として実装された (物理 instrument 化) のに対し、overconfirmation の
+  補正は「慣用句をテンプレから外す」という template 層に留まった。
+  「頭の中の儀式から形にする方向へ動かす」(memory: mental_ritual_to_physical_instrument) の
+  knot 単位の実証 data point。形態は変異し続ける (mojibake→WebFetch→計器盲点→要約捏造) ため
+  観測は継続、LC 昇格判定は Hoshi return に委ねる。
 related_growth_ledger:
   - 2026-04-21_zen_growth_diagnosis_short_circuit_recurrence_02.md
 related_diary:
   - diary/2026-04-20_diary.md (反省 #2)
+related_memory:
+  - memory/feedback_measure_reach_with_logged_in_surface_not_public_api_2026-06-22.md
+  - memory/feedback_infra_mechanism_focus_vs_state_truth_2026-06-15.md
+  - memory/feedback_verify_premise_against_reality_before_engaging_2026-06-18.md
+related_contract:
+  - shared-ops/state_integrity_contract_v0_2026-06-11.md (structural_guard の物理実装)
