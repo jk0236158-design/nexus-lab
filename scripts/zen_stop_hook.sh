@@ -212,7 +212,9 @@ emit_warnings() {
   p3n=0
   for m in "${WARN_P3[@]:-}"; do [[ -n "$m" ]] && p3n=$((p3n+1)); done
   if (( p3n > 0 )); then
-    idx=$(( $(date +%M) % p3n ))
+    # 10# 強制: date +%M は 08/09 を返すと $(( )) が 8 進解釈で fatal になり
+    # 毎時 2 分間 P3 行が欠落していた (Oto 7/11 発見 P3③、12:09 に実発火を目撃して修正)
+    idx=$(( 10#$(date +%M) % p3n ))
     echo "[P3 全 ${p3n} 件中 輪番 1 件] ${WARN_P3[$idx]}" >&2
   fi
 }
