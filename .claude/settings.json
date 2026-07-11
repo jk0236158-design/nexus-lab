@@ -77,9 +77,9 @@
           },
           {
             "type": "command",
-            "command": "bash -c 'touch /c/Users/jk023/.shared-ops/_daemon/zen_session.lock 2>/dev/null || true'",
+            "command": "bash -c 'bash /c/Users/jk023/nexus-lab/scripts/zen_session_lock_touch.sh'",
             "timeout": 5,
-            "statusMessage": "Zen session lock heartbeat"
+            "statusMessage": "Zen session lock heartbeat (main session only)"
           }
         ]
       }

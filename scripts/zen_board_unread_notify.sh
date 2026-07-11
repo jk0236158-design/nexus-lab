@@ -31,6 +31,23 @@ MARKER="$HOME/.shared-ops/_daemon/zen_board_last_check"
 STATE_CACHE="$HOME/.shared-ops/_daemon/zen_board_dirstate_cache"
 [[ -d "$BOARD_DIR" ]] || exit 0
 
+# --- session identity guard (2026-07-11、rebuild-20260711 契約 §10 / Z-V4) ---
+# marker (zen_board_last_check) は「Zen 本人が board を見た時刻」の正本。subagent /
+# QA session がこの script を発火させて marker を進めると、Zen main session への
+# 新着通知が silent に消える (7/11 04:25 実測 leak)。mutate + 通知は main のみ。
+# 判別は二重 (fail toward skip): stdin の subagent 限定 field / subagents path。
+# 偽 skip の害 = その turn だけ通知が出ない (marker 不変なので次 turn で再検出)。
+GUARD_LOG="$HOME/.shared-ops/_daemon/zen_session_guard_skips.log"
+HOOK_INPUT=$(cat 2>/dev/null || true)
+if [[ "$HOOK_INPUT" == *'"agent_id"'* ]]; then
+  echo "$(date +%Y-%m-%dT%H:%M:%S) skip=board_notify reason=agent_id_present" >> "$GUARD_LOG" 2>/dev/null
+  exit 0
+fi
+if [[ "$HOOK_INPUT" == *'/subagents/'* || "$HOOK_INPUT" == *'\\subagents\\'* ]]; then
+  echo "$(date +%Y-%m-%dT%H:%M:%S) skip=board_notify reason=subagents_transcript_path" >> "$GUARD_LOG" 2>/dev/null
+  exit 0
+fi
+
 # 初回 = baseline 確立のみ (既存の大量 file を誤って未読 dump しない)
 if [[ ! -f "$MARKER" ]]; then
   mkdir -p "$(dirname "$MARKER")" 2>/dev/null || true
