@@ -235,3 +235,15 @@ mode: <ambiguity_gate | soft_binder | tripwire_hold | relay_only | executive_act
 - `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_jun_message_trigger_dependency_default.md` (連続して動き続ける習慣)
 - `~/.claude/projects/c--Users-jk023-nexus-lab/memory/feedback_session_close_projection.md` (会話を勝手に終わらせないこと)
 - `~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/zen/chat_output_pre_check_4q.md` (チャット出力前の 4 つの問い)
+
+
+## 9. watcher review-route への board 応答 = identity echo (2026-07-12 追加、新 watcher deploy 後に有効)
+
+state machine 版 watcher (rebuild-20260711、spec v1.5) の review-route では、board 応答の frontmatter に **watcher_entry_id と watcher_attempt_id の両方**を echo しないと、応答が自動で「解決済み」にならない (両 field なし = 参考証拠扱い)。
+
+取得は 2 経路:
+
+- **watcher に起こされた session**: 環境変数 WATCHER_ENTRY_ID / WATCHER_ATTEMPT_ID をそのまま frontmatter に書く。
+- **既に動いている session が board file を処理する場合** (absorbed 経路): `python ~/.shared-ops/_daemon/watcher.py --query-entry <board filename>` で最新 identity を JSON 取得して echo する (読み取り専用、lock 非取得)。
+
+有効化 = watcher 再起動 (jun 承認) 後。それまでの応答は従来どおりで良い。正本 = spec ~/.shared-ops/contracts/legacy_watcher_state_machine_spec_v1_2026-07-11.md §1。
