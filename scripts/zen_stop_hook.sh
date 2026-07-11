@@ -113,11 +113,17 @@ if [[ -n "$SCAN_TMP" ]]; then
   # (2) Yuino review 板の最新 mtime (= 下流 Yuino reviewer block と同一 find)
   ( find "$BOARD" -name "*_zen_kai_yuino_review_v*_*.md" -type f -printf '%T@\n' 2>/dev/null | sort -n | tail -1 > "$SCAN_TMP/yuino" ) &
   # (3) wake_acceptance: 直近 60 分に触られた file 数 (= 下流と同一 find)
-  WAKE_ACCEPTANCE_PATHS="$HOME/nexus-lab/docs/rules $HOME/nexus-lab/scripts $HOME/nexus-lab/products $HOME/Desktop/nokaze/operations $HOME/.shared-ops/decisions $HOME/Desktop/nokaze-aira/src"
+  # 2026-07-11: shared-ops の実行ルール実物 (owner-decisions / contracts / rules) を追加 (= 7/11 14:2x 偽陰性の修復、7/10 products 追加と同型)。
+  #   _daemon は別 find で *.py / *.sh のみ (= watcher 等の意図的変更だけ数える。_wake_deferred.json / _dispatch_log.json / _wake_consumed/*.md は
+  #   watcher が毎 tick 自動更新するため、含めると gate が常時非ゼロ = 偽陽性で死ぬのを実測で確認済)。root どうしは互いに素のまま。
+  WAKE_ACCEPTANCE_PATHS="$HOME/nexus-lab/docs/rules $HOME/nexus-lab/scripts $HOME/nexus-lab/products $HOME/Desktop/nokaze/operations $HOME/.shared-ops/decisions $HOME/.shared-ops/owner-decisions $HOME/.shared-ops/contracts $HOME/.shared-ops/rules $HOME/Desktop/nokaze-aira/src"
   WAKE_EXISTING=()
   for p in $WAKE_ACCEPTANCE_PATHS; do [[ -d "$p" ]] && WAKE_EXISTING+=("$p"); done
-  if [[ ${#WAKE_EXISTING[@]} -gt 0 ]]; then
-    ( find "${WAKE_EXISTING[@]}" -type f \( -name "*.md" -o -name "*.json" -o -name "*.sh" -o -name "*.ts" \) -mmin -60 2>/dev/null | wc -l | tr -d ' ' > "$SCAN_TMP/wake" ) &
+  if [[ ${#WAKE_EXISTING[@]} -gt 0 || -d "$SHARED_OPS/_daemon" ]]; then
+    ( {
+        [[ ${#WAKE_EXISTING[@]} -gt 0 ]] && find "${WAKE_EXISTING[@]}" -type f \( -name "*.md" -o -name "*.json" -o -name "*.sh" -o -name "*.ts" \) -mmin -60 2>/dev/null
+        [[ -d "$SHARED_OPS/_daemon" ]] && find "$SHARED_OPS/_daemon" -maxdepth 1 -type f \( -name "*.py" -o -name "*.sh" \) -mmin -60 2>/dev/null
+      } | wc -l | tr -d ' ' > "$SCAN_TMP/wake" ) &
   fi
   # (4) キリル文字混入 scan (= 下流と同一 find + grep、 prune は -not -path と集合一致を実測確認済)
   CYRILLIC_PATHS="$HOME/nexus-lab $HOME/.shared-ops/board $HOME/.shared-ops/status $HOME/.claude/projects/c--Users-jk023-nexus-lab/memory $HOME/.claude/projects/c--Users-jk023-nexus-lab/team_memory $HOME/Nexus.Lab.Zen/articles"
