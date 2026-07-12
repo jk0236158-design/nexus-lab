@@ -97,6 +97,7 @@ jun 明示承認なしに進めない:
 - `codex-review.sh` = Codex クロスレビュー
 - `zen_stop_hook.sh` = turn end hook (= 5/18 z-r-5/6/8/15 軸の物理化済)
 - `rule_lookup.sh` = Rule Registry v0 引き方
+- `board_new.sh` = board file を時刻機械埋めで作る (= 実例 4 時刻捏造の producer 側対策、手打ち date 拒否)
 
 ## 商品
 
