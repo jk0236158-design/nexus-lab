@@ -181,13 +181,25 @@
       ],
       "status": "active",
       "related_files": ["docs/rules/drift.md § 17"]
+    },
+    {
+      "id": 18,
+      "title": "自作 form を変えたのに読む側の検出器を同時に直さない",
+      "trigger": "2026-07-12 rebuild 中、 form (命名/frontmatter/出力の形) 新設・変更で読む側検出器を同変更内で直さず誤発火/見落とし = 1 日 5 回以上 (runtime 未返事 d5044cb / キリル生実例 7a7aab4 / wake_state 生キリル / pending form ズレ)。 15 段目 (同チャット内再発) の form 版 + 6/16 基準は配る経路まで の form 版",
+      "physical_tools": [
+        "scripts/zen_stop_hook_form_registry.json (= 検出器→form 対応 map の正本、 機械可読)",
+        "scripts/test_zen_stop_hook_forms.sh (= form 変化で割れる smoke test、 form-drift guard 双方向照合)",
+        "docs/rules/drift.md 18 段目 (= 人が読む契約: form を変えたら読む側を同変更内で更新)"
+      ],
+      "status": "active",
+      "related_files": ["docs/rules/drift.md 18", "scripts/zen_stop_hook.sh"]
     }
   ],
   "physical_tool_summary": {
-    "total_active_tools_actually_listed": 14,
+    "total_active_tools_actually_listed": 16,
     "comment_sync_correction": "= 5/19 Kagami audit で 主張 24 vs actual 14 のズレ検出 + sync 修正、 旧 24 主張は drifts 内の physical_tools list 累計の重複 count、 ここでの 14 件は unique tool 数",
     "by_layer": {
-      "scripts": ["zen_dogfood_preflight.sh", "zen_startup_sweep.sh", "pre_commit_public_docs_audit.sh", "zen_stop_hook.sh", "zen_session_start_priming.sh"],
+      "scripts": ["zen_dogfood_preflight.sh", "zen_startup_sweep.sh", "pre_commit_public_docs_audit.sh", "zen_stop_hook.sh", "zen_session_start_priming.sh", "test_zen_stop_hook_forms.sh", "zen_stop_hook_form_registry.json"],
       "yuino_modules_planned_5_modules_kai_main": ["yuino-cost-classification.ts", "yuino-budget-cap.ts", "yuino-credit-balance-probe.ts", "yuino-cost-cap-enforcer.ts", "yuino-night-cost-policy.ts"],
       "yuino_modules_actual_status": "5/19 朝時点 = cost-classification + budget-cap の 2 件 Kai 5/18 朝 実装済 (= P1)、 残 3 件 (= credit-balance-probe / cost-cap-enforcer / night-cost-policy) は P2 で 5/20+ 着手判断、 actual 存在は 2 件のみ",
       "rules": ["docs/rules/paraphrase_layer_acceptance.md", "docs/rules/drift.md (= pointer)", "drift_registry.json (= 本 file)"],

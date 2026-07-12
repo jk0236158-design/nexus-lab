@@ -172,6 +172,18 @@ AI の判断における 危険な / 過剰な 言い換えを 見つけて直�
 - `~/.claude/projects/c--Users-jk023-nexus-lab/memory/project_nokaze_north_star_phase_1_5.md` = ルート β' 書き出し済
 - `~/.claude/projects/c--Users-jk023-nexus-lab/team_memory/kura/2026-05-01.md` = 5/01 Polar.sh KYC fail + ルート β' 採用を書き出し済
 
+## 自作 form を変えたのに読む側の検出器を同時に直さないのを止める 形にする 道具 (= 18 段目専用、 2026-07-12 書き出し)
+
+**きっかけ**: 2026-07-12、 rebuild の中で自分達が作った form (= ファイル命名 / frontmatter フィールド / 出力の形) を新設・変更したのに、 その form を読む検出器 (= stop_hook 等) を同じ変更の中で直さず、 検出器が誤発火 (= false positive) or 見落とし (= false negative) する形を 1 日で 5 回以上観測した。 例: runtime 応答 (`aira_review_response_*`) の命名を新設したのに未返事検出器がそれを Zen の応答と認識できず smoke attempt2/3 を未返事と誤検出 (= 即修正 commit d5044cb) / CLAUDE.md にキリルの生実例を書いたら自分の Cyrillic 検出器と恒久衝突 (= pointer 化 7a7aab4) / wake_state に生キリル / pending の form ズレ。 15 段目 (= 同じチャットの中で form を認めた直後に同じ形が再発) の form 版、 かつ 6/16 メモリー `feedback_internal_standard_needs_distribution_path_to_all_surfaces.md` 「基準は配る経路まで作って初めて機能する」 の form 版 (= form を作ったら読む側まで揃えて初めて機能する)。
+
+**契約 (= 1 行)**: **form (= ファイル命名 / frontmatter フィールド / 出力の形) を新設・変更したら、 その form を読む側 (= 検出器 / hook / consumer) を同じ変更の中で更新する**。 「後で直す」 は 15 段目と同じ再発構造なので既定にしない。
+
+**形にする 道具 (= 二層構造、 guard / drift registry と同型)**:
+
+1. **機械が読む形** = `scripts/zen_stop_hook_form_registry.json` (= 各検出器が依存する form の正本、 detector → form の対応 map)
+2. **form 変化で割れる smoke test** = `scripts/test_zen_stop_hook_forms.sh` (= 実 board 形式の fixture を読ませ、 registry の form literal が hook 実体と一致するかを機械照合。 form を変えたのに検出器を直さなければ test が割れる = 配る経路の物理化)
+3. **このファイル (= ずれ抑止層の 18 段目)** = 人が読む form。 form を触る変更を書き出す時の既定ルール
+
 ## 関連ファイル
 
 - `docs/rules/README.md` (= このファイルの親、 分割の設計)

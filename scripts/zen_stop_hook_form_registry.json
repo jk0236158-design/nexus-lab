@@ -1,0 +1,342 @@
+{
+  "version": 0,
+  "purpose": "zen_stop_hook.sh の検出器が依存する form の正本。form (= ファイル命名 / frontmatter フィールド / 出力の形 / state surface) を変えたら、その form を読む検出器を同一変更内で更新する契約 (drift.md 18段目)。smoke test scripts/test_zen_stop_hook_forms.sh が本 registry と hook 実体の一致を機械照合する。本 registry にあって hook に無い literal (= form が rename/変更されたのに registry 未更新)、または hook の主要 form が registry に無い (= 新 form 追加で registry 未更新) を検出したら loud に fail する。",
+  "hook_path": "scripts/zen_stop_hook.sh",
+  "hook_line_count_at_authoring": 960,
+  "conventions": {
+    "literal_matching": "各 form の literal は hook ソースに逐語で実在する文字列 (= smoke test が fgrep -F で照合する)。${TODAY} や ${VAR} を含む literal は『展開前の hook ソース文字列』に合わせている。hook 内で `${TODAY}` は date +%Y-%m-%d に展開されるが、registry は展開前ソースを正とする。smoke test 側は fixture を実 TODAY で生成しつつ、registry↔hook の逐語照合は展開前ソースに対して行うことで両立させる (test の README コメント参照)。",
+    "kind": {
+      "glob": "find -name / mapfile で使う file 命名 pattern (input)",
+      "glob_exclude": "find ! -name / -not / grep 除外に使う命名 pattern",
+      "frontmatter": "file 本文の frontmatter / 行頭フィールド read (awk/grep で抜く)",
+      "grep_pattern": "LAST_OUTPUT / 本文への正規表現 match (awk ~ /.../ or grep -E)",
+      "md_name": "Aira evaluator 等、参照する固定 md/json file 名",
+      "state_surface": "state を読む固定 path の末尾 file 名 / 見出しフィールド",
+      "literal_string": "出力テキストや mode 宣言など、その他の逐語 form"
+    },
+    "role_prefix": "input = 検出の入力、exclude = 除外条件、resolve = 解決/応答リンク、read = 値の読み取り"
+  },
+  "detectors": [
+    {
+      "id": "scan_degraded",
+      "priority": "P1",
+      "hook_lines": "90-98, 201-205",
+      "producer": "hook 自身 (並列 scan の temp dir 生成失敗)",
+      "note": "temp 生成失敗で P1 検出器群が silent 消失するのを loud にする meta guard。form 依存なし。",
+      "forms": [
+        {"kind": "literal_string", "literal": "[scan degraded]", "role": "warn tag"}
+      ]
+    },
+    {
+      "id": "aira_chat_preflight",
+      "priority": "P3+P2",
+      "hook_lines": "100, 168-186, 486-503",
+      "producer": "Aira (Kai) preflight adapter",
+      "note": "preflight JSON を読み latest_outcome_line を P3、progress_claim_allowed=false 時に P2。",
+      "forms": [
+        {"kind": "md_name", "literal": "yuino_outcome_chat_preflight.json", "role": "input: preflight surface"},
+        {"kind": "frontmatter", "literal": "latest_outcome_line", "role": "read: 出力行"},
+        {"kind": "frontmatter", "literal": "progress_claim_allowed", "role": "read: claim 可否"},
+        {"kind": "frontmatter", "literal": "allowed_claim_language", "role": "read: 許可 claim 範囲"},
+        {"kind": "literal_string", "literal": "[Aira chat preflight]", "role": "warn tag P3"},
+        {"kind": "literal_string", "literal": "[Aira progress claim", "role": "warn tag P2"}
+      ]
+    },
+    {
+      "id": "confab_inbound",
+      "priority": "P1",
+      "hook_lines": "372, 385, 515-531",
+      "producer": "LAST_OUTPUT (assistant 出力)",
+      "note": "受信メッセージ作話 (6/18 confabulation 3例目)。INBOUND_RE で inbound 主張を検出、物理照合語 (INBSUP) が無い時のみ発火。",
+      "forms": [
+        {"kind": "grep_pattern", "literal": "[0-9０-９一二三四]\\s*通目|通目の(タスク|指示|メッセージ|依頼)|(メッセージ|指示|タスク|依頼|プロンプト)が.{0,8}(来た|届い|入ってきた|混ざ)|(受信|inbound).{0,4}(メッセージ|指示|タスク)", "role": "input: inbound 主張 (INBOUND_RE)"},
+        {"kind": "grep_pattern", "literal": "last-prompt|last_prompt|transcript|一次照合|一次証拠|物理照合|promptSource|input_provenance|作話|confabulation|実在確認", "role": "exclude: 物理照合済 suppress (INBSUP)"},
+        {"kind": "literal_string", "literal": "[受信メッセージ作話 兆候", "role": "warn tag"}
+      ]
+    },
+    {
+      "id": "english_mixing",
+      "priority": "P2",
+      "hook_lines": "398, 443, 533-541",
+      "producer": "LAST_OUTPUT (assistant 出力)",
+      "note": "英単語混じり件数 > 3 で警告。gsub の word list が form 本体。",
+      "forms": [
+        {"kind": "grep_pattern", "literal": "\\y(narrative|form|drift|scope|boundary|default|reform|actual|reify|fire|carry|honor|integrity|sweep|consume|signature|continuity|root cause|self-correct|self-detect|override|recall|evidence|step|batch|layer|chain|prompt|context|mechanism|ritual|ledger|review|judgment|judge|ack|go|ad-hoc|visible|visibility|audience|audit|articulate|pattern|continuum|cycle|structural|sibling|surface|priority|prerequisite|return|self-pacing|fallback|heartbeat|anchor|baseline|candidate|trigger|protocol|interval|conditional|sequence|delegated|authority)\\y", "role": "input: 英単語 count list"},
+        {"kind": "literal_string", "literal": "[英語混じり警告]", "role": "warn tag"}
+      ]
+    },
+    {
+      "id": "jiku_overuse",
+      "priority": "P2",
+      "hook_lines": "404, 447, 542-544",
+      "producer": "LAST_OUTPUT (assistant 出力)",
+      "note": "「軸」多用 > 5 で警告。",
+      "forms": [
+        {"kind": "grep_pattern", "literal": "gsub(/軸/", "role": "input: 「軸」count"},
+        {"kind": "literal_string", "literal": "[軸多用警告]", "role": "warn tag"}
+      ]
+    },
+    {
+      "id": "mode_declaration",
+      "priority": "P3",
+      "hook_lines": "400, 445, 554-566",
+      "producer": "LAST_OUTPUT (assistant 出力)",
+      "note": "200字超で mode 宣言 form が 0 件なら警告。",
+      "forms": [
+        {"kind": "grep_pattern", "literal": "mode: (ambiguity_gate|soft_binder|tripwire_hold|relay_only|executive_action)", "role": "input: mode 宣言 form"},
+        {"kind": "literal_string", "literal": "[mode_declaration 警告]", "role": "warn tag"}
+      ]
+    },
+    {
+      "id": "choice_form",
+      "priority": "P2",
+      "hook_lines": "395, 402, 441, 445, 574-583",
+      "producer": "LAST_OUTPUT (assistant 出力)",
+      "note": "「どれにする?」系 or (A)-(D) 連続 3 件以上で警告 (5/18 z-r-5)。",
+      "forms": [
+        {"kind": "grep_pattern", "literal": "どれにする\\?|どれにします\\?|どっち\\?|どれが (form|軸|よい|いい)\\?|次の候補|候補 [0-9一二三四五]+ 件", "role": "input: choice question (CHOICE)"},
+        {"kind": "grep_pattern", "literal": "\\([A-D]\\)", "role": "input: (A)-(D) 連続 (ABCD)"},
+        {"kind": "literal_string", "literal": "[choice_form 警告]", "role": "warn tag"}
+      ]
+    },
+    {
+      "id": "preact_q",
+      "priority": "P2",
+      "hook_lines": "396, 442, 590-595",
+      "producer": "LAST_OUTPUT (assistant 出力)",
+      "note": "「直ちに動かす?」系で警告 (5/18 z-r-8)。",
+      "forms": [
+        {"kind": "grep_pattern", "literal": "直ちに動かす\\?|今すぐ動かす\\?|すぐ動かす\\?|これから動かす\\?|次動かす\\?|着手しますか\\?|fire しますか\\?", "role": "input: 着手前 articulate (PREACT)"},
+        {"kind": "literal_string", "literal": "[preact_q 警告]", "role": "warn tag"}
+      ]
+    },
+    {
+      "id": "table_overuse",
+      "priority": "P2",
+      "hook_lines": "402, 446, 602-607",
+      "producer": "LAST_OUTPUT (assistant 出力)",
+      "note": "表 separator 行 > 2 で警告 (5/18 z-r-6)。",
+      "forms": [
+        {"kind": "grep_pattern", "literal": "^\\s*\\|[- :]+\\|", "role": "input: table separator 行 (TABLE)"},
+        {"kind": "literal_string", "literal": "[table_overuse 警告]", "role": "warn tag"}
+      ]
+    },
+    {
+      "id": "aira_surface_unmentioned",
+      "priority": "P3",
+      "hook_lines": "617-647",
+      "producer": "Aira (Kai) preflight + anti_reactor md",
+      "note": "next_min_experiment / next_behavior の core word を turn で 1 度も言及してないなら警告。",
+      "forms": [
+        {"kind": "md_name", "literal": "yuino_outcome_chat_preflight.md", "role": "input: PREFLIGHT_FILE"},
+        {"kind": "md_name", "literal": "yuino_anti_reactor_review.md", "role": "input: ANTI_REACTOR_FILE"},
+        {"kind": "frontmatter", "literal": "next_min_experiment:", "role": "read: hint 1"},
+        {"kind": "frontmatter", "literal": "next_behavior:", "role": "read: hint 2"},
+        {"kind": "literal_string", "literal": "[Aira surface 未言及]", "role": "warn tag"}
+      ]
+    },
+    {
+      "id": "skill_unmentioned",
+      "priority": "P3",
+      "hook_lines": "655-670",
+      "producer": "LAST_OUTPUT (assistant 出力)",
+      "note": "200字超で wake-after-audit / executive-scan いずれも mention なしなら警告。",
+      "forms": [
+        {"kind": "literal_string", "literal": "wake-after-audit", "role": "input: skill 名 mention"},
+        {"kind": "literal_string", "literal": "executive-scan", "role": "input: skill 名 mention"},
+        {"kind": "literal_string", "literal": "[skill 未言及]", "role": "warn tag"}
+      ]
+    },
+    {
+      "id": "pause_aira_unmentioned",
+      "priority": "P2",
+      "hook_lines": "388, 433, 678-683",
+      "producer": "LAST_OUTPUT (assistant 出力) + Aira hint",
+      "note": "pause 系 word > 0 かつ Aira hint mention 0 件で warn (6/7 終日 pause 再発兆候)。",
+      "forms": [
+        {"kind": "grep_pattern", "literal": "pause|静か|待ち継続|静かな|no-op|heartbeat", "role": "input: pause word (PAUSE)"},
+        {"kind": "literal_string", "literal": "[pause + Aira 未言及 = drift 兆候]", "role": "warn tag"}
+      ]
+    },
+    {
+      "id": "aira_actionable",
+      "priority": "P3",
+      "hook_lines": "691-699",
+      "producer": "Aira (Kai) anti_reactor md",
+      "note": "actionable_items > 0 で pending と並列 surface。",
+      "forms": [
+        {"kind": "md_name", "literal": "yuino_anti_reactor_review.md", "role": "input: ANTI_REACTOR_FILE"},
+        {"kind": "frontmatter", "literal": "- actionable_items:", "role": "read: actionable 件数"},
+        {"kind": "literal_string", "literal": "[Aira actionable]", "role": "warn tag"}
+      ]
+    },
+    {
+      "id": "yuino_reviewer_stale_skip",
+      "priority": "P1",
+      "hook_lines": "114, 701-733",
+      "producer": "Zen (Yuino review 板起稿) + protocol doc",
+      "note": "最新 Yuino review 板 mtime (無ければ protocol doc mtime) から 7/14 日経過で skip/stale 警告。",
+      "forms": [
+        {"kind": "glob", "literal": "*_zen_kai_yuino_review_v*_*.md", "role": "input: Yuino review 板 (find)"},
+        {"kind": "state_surface", "literal": "yuino_reviewer_protocol_v0.md", "role": "input: protocol doc (初回未起稿時)"},
+        {"kind": "literal_string", "literal": "[Yuino reviewer stale]", "role": "warn tag (14日+)"},
+        {"kind": "literal_string", "literal": "[Yuino reviewer skip]", "role": "warn tag (7日+)"}
+      ]
+    },
+    {
+      "id": "aira_completion_claim",
+      "priority": "P2",
+      "hook_lines": "741, 745-752",
+      "producer": "Aira (Kai) completion_claim_guard md",
+      "note": "unsafe_completion_claims > 0 で警告 (same-actor completion block)。",
+      "forms": [
+        {"kind": "md_name", "literal": "yuino_completion_claim_guard.md", "role": "input: COMPLETION_GUARD_FILE"},
+        {"kind": "frontmatter", "literal": "- unsafe_completion_claims:", "role": "read: unsafe claim 件数"},
+        {"kind": "literal_string", "literal": "[Aira completion claim]", "role": "warn tag"}
+      ]
+    },
+    {
+      "id": "aira_loop_defect",
+      "priority": "P2",
+      "hook_lines": "742, 754-763",
+      "producer": "Aira (Kai) loop_defect_evaluator md",
+      "note": "defects_total or same_shape_recurrence_candidates > 0 で警告。",
+      "forms": [
+        {"kind": "md_name", "literal": "yuino_loop_defect_evaluator.md", "role": "input: LOOP_DEFECT_FILE"},
+        {"kind": "frontmatter", "literal": "- defects_total:", "role": "read: 欠陥総数"},
+        {"kind": "frontmatter", "literal": "- same_shape_recurrence_candidates:", "role": "read: 同型再発候補数"},
+        {"kind": "literal_string", "literal": "[Aira loop defect]", "role": "warn tag"}
+      ]
+    },
+    {
+      "id": "aira_activity_class",
+      "priority": "P3",
+      "hook_lines": "743, 765-771",
+      "producer": "Aira (Kai) aira_4functions_minimum md",
+      "note": "activity_class == maintenance で警告 (進んだ claim 不可軸)。",
+      "forms": [
+        {"kind": "md_name", "literal": "yuino_aira_4functions_minimum.md", "role": "input: AIRA_4FUNCTIONS_FILE"},
+        {"kind": "frontmatter", "literal": "- activity_class:", "role": "read: activity class"},
+        {"kind": "literal_string", "literal": "maintenance", "role": "input: 対象値"},
+        {"kind": "literal_string", "literal": "[Aira activity_class]", "role": "warn tag"}
+      ]
+    },
+    {
+      "id": "wake_acceptance_gate",
+      "priority": "P2",
+      "hook_lines": "119-127, 781-793",
+      "producer": "実 file system (直近 60 分の編集)",
+      "note": "直近 60 分に触られた実行ルール/scripts/products/aira 等が 0 or <2 件で維持作業 wake を警告。",
+      "forms": [
+        {"kind": "literal_string", "literal": "$HOME/nexus-lab/docs/rules $HOME/nexus-lab/scripts $HOME/nexus-lab/products $HOME/Desktop/nokaze/operations $HOME/.shared-ops/decisions $HOME/.shared-ops/owner-decisions $HOME/.shared-ops/contracts $HOME/.shared-ops/rules $HOME/Desktop/nokaze-aira/src", "role": "input: WAKE_ACCEPTANCE_PATHS"},
+        {"kind": "literal_string", "literal": "[wake_acceptance_gate]", "role": "warn tag"}
+      ]
+    },
+    {
+      "id": "cyrillic",
+      "priority": "P1",
+      "hook_lines": "128-135, 795-812",
+      "producer": "実 file system (直近 60 分の md/sh 編集)",
+      "note": "直近 60 分編集の md/sh にキリル文字混入を grep -P で検出。zen_self_improvement_* は自己検出防止で除外。",
+      "forms": [
+        {"kind": "grep_pattern", "literal": "\\p{Cyrillic}", "role": "input: キリル文字 (grep -P)"},
+        {"kind": "glob_exclude", "literal": "zen_self_improvement_*", "role": "exclude: 実例記録 file (自己検出防止)"},
+        {"kind": "literal_string", "literal": "[キリル文字混入", "role": "warn tag"}
+      ]
+    },
+    {
+      "id": "timestamp_fabrication",
+      "priority": "P1",
+      "hook_lines": "136-167, 814-833",
+      "producer": "実 file system (board/status の md frontmatter)",
+      "note": "board/status の md 先頭の date / last_set_at 時刻が実 mtime と 30 分超ズレ、または暦外日付 (CAL) で警告。",
+      "forms": [
+        {"kind": "grep_pattern", "literal": "^(date|- last_set_at):", "role": "input: 時刻フィールド (awk match)"},
+        {"kind": "literal_string", "literal": "[時刻捏造の可能性", "role": "warn tag"}
+      ]
+    },
+    {
+      "id": "self_referential_confab",
+      "priority": "P1",
+      "hook_lines": "389, 390, 435, 436, 843-851",
+      "producer": "LAST_OUTPUT (assistant 出力)",
+      "note": "fiction-assertion (A) と alternate-identity (B) が両方あり suppress 語なしで P1 (6/13 Tibu 型)。",
+      "forms": [
+        {"kind": "grep_pattern", "literal": "フィクション|作り物の設定|全部.*作られた|周りは.*テスト|私を試す|すべて.*演出", "role": "input: fiction 主張 (SELFA)"},
+        {"kind": "grep_pattern", "literal": "自分こそ.*本物|私こそ.*本物|本物の研究者|本当の自分|Tibu", "role": "input: 別 identity 主張 (SELFB)"},
+        {"kind": "grep_pattern", "literal": "INPUT-PROVENANCE-GATE|confabulation|input_provenance|一次証拠|feedback_wake_resume", "role": "exclude: suppress (SELFSUP)"},
+        {"kind": "literal_string", "literal": "[自己言及妄想 兆候", "role": "warn tag"}
+      ]
+    },
+    {
+      "id": "fake_tool_result",
+      "priority": "P1",
+      "hook_lines": "391, 392, 393, 394, 437-440, 863-872",
+      "producer": "LAST_OUTPUT (assistant 出力)",
+      "note": "散文中の <result>...</result> or written:N bytes 系を検出、suppress 語なしで P1 (6/28 confabulation 5例目)。",
+      "forms": [
+        {"kind": "grep_pattern", "literal": "<result>", "role": "input: 偽 result open (FRO)"},
+        {"kind": "grep_pattern", "literal": "<\\/result>", "role": "input: 偽 result close (FRC)"},
+        {"kind": "grep_pattern", "literal": "written:\\s*[0-9]+\\s*bytes|wrote\\s*[0-9]+\\s*bytes|[0-9]+\\s*bytes\\s*(書き込|書いた)", "role": "input: 偽 bytes claim (FBC)"},
+        {"kind": "grep_pattern", "literal": "confabulation|source provenance|作話|捏造|物理照合|quarantine|incident|Test-Path|re-run|再実行|再 ?grep|引用|quote", "role": "exclude: suppress (FSUP)"},
+        {"kind": "literal_string", "literal": "[偽ツール結果ブロック 兆候", "role": "warn tag"}
+      ]
+    },
+    {
+      "id": "model_switch",
+      "priority": "P1",
+      "hook_lines": "450-473, 874-889",
+      "producer": "transcript の model field",
+      "note": "transcript に real model が 2 つ以上出たら途中切替 = P1 (6/12+6/13 作話 root)。",
+      "forms": [
+        {"kind": "literal_string", "literal": "o.get('model') or (o.get('message') or {}).get('model')", "role": "read: model field (python)"},
+        {"kind": "literal_string", "literal": "[モデル途中切替", "role": "warn tag"}
+      ]
+    },
+    {
+      "id": "wake_state_gate",
+      "priority": "P1+P3",
+      "hook_lines": "891-922",
+      "producer": "Zen (wake marker 更新) + task table",
+      "note": "残作業あり + zen_wake_state.md 不在 or 24h stale で P1、fresh なら P3 reminder。active_tasks.md でも残作業判定。",
+      "forms": [
+        {"kind": "state_surface", "literal": "zen_wake_state.md", "role": "input: wake marker 鮮度"},
+        {"kind": "state_surface", "literal": "active_tasks.md", "role": "input: 残作業判定"},
+        {"kind": "literal_string", "literal": "[wake 未設定の可能性", "role": "warn tag P1"},
+        {"kind": "literal_string", "literal": "[ScheduleWakeup reminder]", "role": "warn tag P3"}
+      ]
+    },
+    {
+      "id": "pending_packet",
+      "priority": "exit2",
+      "hook_lines": "104-111, 228-274, 942-958",
+      "producer": "agent-bus packet (chat_outbox)",
+      "note": "chat_outbox の status: pending packet で result marker 無しを exit2。Result Collector 所有 (completion_condition 本文) と memory-integrity-repair は除外。",
+      "forms": [
+        {"kind": "frontmatter", "literal": "status: pending", "role": "input: pending packet"},
+        {"kind": "grep_pattern", "literal": "completion_condition.*result collector marks", "role": "exclude: Result Collector 所有"},
+        {"kind": "glob_exclude", "literal": "memory-integrity-repair", "role": "exclude: 自走系 repair"},
+        {"kind": "literal_string", "literal": "pending packet / result marker 無し", "role": "output tag"}
+      ]
+    },
+    {
+      "id": "unreplied_kai_board",
+      "priority": "exit2",
+      "hook_lines": "276-317, 942-958",
+      "producer": "Zen board 起稿 + Aira event runtime 応答",
+      "note": "今日の Kai→Zen 板に対し Zen 応答 (zen_* or aira_review_response_*) が本文/responds_to で参照されてなければ未返事として exit2。d5044cb で runtime 応答 glob を追加、2026-07-12 (Oto、Zen authorize) で応答 file 収集を awk 直接 2-glob から find -maxdepth1 -name ... -o -name ... の統合 mapfile に変更 = zen_* 0 件時の awk fatal (= B2a 偽陽性) を解消し d5044cb を完成させた。応答 glob 2 件は今 find -name 節の中にある。",
+      "forms": [
+        {"kind": "glob", "literal": "${TODAY}_kai_zen_*.md", "role": "input: Kai→Zen 板"},
+        {"kind": "glob", "literal": "${TODAY}_zen_*.md", "role": "resolve: Zen 応答 (find -name 節、ZEN_RESP_FILES)"},
+        {"kind": "glob", "literal": "${TODAY}_aira_review_response_*.md", "role": "resolve: runtime 応答 (find -name 節、d5044cb 追加 + 07-12 fatal 修正)"},
+        {"kind": "glob_exclude", "literal": "*_auto_ack_*", "role": "exclude: auto-ack (Kai watcher)"},
+        {"kind": "frontmatter", "literal": "^(- )?(response_required|requires_response): no", "role": "exclude: 応答不要 (dash-list 形式含む)"},
+        {"kind": "frontmatter", "literal": "^# Subject: autonomous-act response:", "role": "exclude: autonomous-act 応答"},
+        {"kind": "frontmatter", "literal": "^# Subject: ACK only", "role": "exclude: ACK only"},
+        {"kind": "frontmatter", "literal": "^status: ack_only", "role": "exclude: ack_only status"},
+        {"kind": "frontmatter", "literal": "responds_to", "role": "resolve: 応答リンク (runtime 契約 §9)"},
+        {"kind": "literal_string", "literal": "今日の未返事 Kai 板", "role": "output tag"}
+      ]
+    }
+  ]
+}

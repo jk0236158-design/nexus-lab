@@ -295,7 +295,17 @@ if [[ -d "$BOARD" ]]; then
     # 2026-07-12 form 追随: event runtime が生成する応答 (aira_review_response_*、
     #   契約 §9 命名、frontmatter に responds_to を必ず持つ) も「Zen 側の応答」として
     #   blob に含める。runtime response で resolved 済みの request を未返事と誤検出しない。
-    ZEN_TODAY_BLOB=$(awk 'FNR==1 && NR>1 { printf "\n\x01\n" } { print }' "$BOARD"/${TODAY}_zen_*.md "$BOARD"/${TODAY}_aira_review_response_*.md 2>/dev/null)
+    # 2026-07-12 (Oto、 Zen authorize): 旧 form は 2 glob を awk に直接並べていたが、 同日に
+    #   ${TODAY}_zen_*.md が 1 件も無いと第 1 glob が literal path のまま残り gawk が fatal →
+    #   第 2 引数 (= aira 応答) を読まず blob が空 → runtime 単独応答の request を未返事に偽陽性
+    #   していた (= d5044cb 部分修正の穴、 test_zen_stop_hook_forms.sh B2a が surface)。 存在する
+    #   file だけ find で集めて awk に渡す形にして zen_* 0 件時の awk fatal を回避 (= d5044cb 完成)。
+    mapfile -t ZEN_RESP_FILES < <(find "$BOARD" -maxdepth 1 -type f \( -name "${TODAY}_zen_*.md" -o -name "${TODAY}_aira_review_response_*.md" \) 2>/dev/null)
+    if [[ ${#ZEN_RESP_FILES[@]} -gt 0 ]]; then
+      ZEN_TODAY_BLOB=$(awk 'FNR==1 && NR>1 { printf "\n\x01\n" } { print }' "${ZEN_RESP_FILES[@]}" 2>/dev/null)
+    else
+      ZEN_TODAY_BLOB=""
+    fi
     for kai_board in "${KAI_TODAY_FILES[@]}"; do
       [[ -z "$kai_board" ]] && continue
       kb_base="${kai_board##*/}"
