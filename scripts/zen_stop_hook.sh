@@ -292,7 +292,10 @@ if [[ -d "$BOARD" ]]; then
   mapfile -t KAI_TODAY_FILES < <(find "$BOARD" -maxdepth 1 -type f -name "${TODAY}_kai_zen_*.md" ! -name "*_auto_ack_*" 2>/dev/null)
   if [[ ${#KAI_TODAY_FILES[@]} -gt 0 ]]; then
     KAI_EXCLUDED=$'\n'"$(grep -lE "$EXCLUDE_PATTERN" "${KAI_TODAY_FILES[@]}" 2>/dev/null)"$'\n'
-    ZEN_TODAY_BLOB=$(awk 'FNR==1 && NR>1 { printf "\n\x01\n" } { print }' "$BOARD"/${TODAY}_zen_*.md 2>/dev/null)
+    # 2026-07-12 form 追随: event runtime が生成する応答 (aira_review_response_*、
+    #   契約 §9 命名、frontmatter に responds_to を必ず持つ) も「Zen 側の応答」として
+    #   blob に含める。runtime response で resolved 済みの request を未返事と誤検出しない。
+    ZEN_TODAY_BLOB=$(awk 'FNR==1 && NR>1 { printf "\n\x01\n" } { print }' "$BOARD"/${TODAY}_zen_*.md "$BOARD"/${TODAY}_aira_review_response_*.md 2>/dev/null)
     for kai_board in "${KAI_TODAY_FILES[@]}"; do
       [[ -z "$kai_board" ]] && continue
       kb_base="${kai_board##*/}"
